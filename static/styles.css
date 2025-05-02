@@ -54,7 +54,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    margin-top: -5px;
+    margin-top: -20px;
 }
 
 .logo {
@@ -98,5 +98,5 @@ header {
     padding: 5px;
     background-color: #222;
     color: white;
-    margin-bottom: -1px; /* Reduz espaço abaixo do logo */
+    margin-bottom: -10px; /* Reduz espaço abaixo do logo */
 }
