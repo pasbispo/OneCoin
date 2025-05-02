@@ -90,10 +90,10 @@ header {
 }
 
 .main-nav {
-    margin-top: 20px;
+    margin-top: -10px; /* Reduz espaço entre pesquisa e navegação */
 }
 
 .nav-links {
     display: flex;
-    gap: 120px;
+    gap: 15px; /* Aproxima os botões */
 }
