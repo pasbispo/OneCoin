@@ -19,10 +19,11 @@ header {
 }
 
 .search-bar {
-    padding: 8px;
-    width: 250px;
-    border-radius: 5px;
-    border: none;
+    padding: 12px;
+    width: 350px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
 .user-options {
@@ -78,4 +79,18 @@ header {
 
 .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+
+.top-bar {
+    padding-bottom: 15px;
+}
+
+.main-nav {
+    margin-top: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
 }
