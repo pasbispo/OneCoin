@@ -90,10 +90,20 @@ header {
 }
 
 .main-nav {
-    margin-top: -10px; /* Reduz espaço entre pesquisa e navegação */
+    margin-top: -15px; /* Reduz espaço entre pesquisa e navegação */
 }
 
 .nav-links {
     display: flex;
-    gap: 15px; /* Aproxima os botões */
+    gap: 10px; /* Aproxima os botões */
+}
+
+.site-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 5px;
+    background-color: #222;
+    color: white;
+    margin-bottom: -10px; /* Reduz espaço abaixo do logo */
 }
