@@ -44,3 +44,76 @@ nav ul li a {
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+
+
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search-container {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.search-bar {
+    padding: 8px;
+    width: 300px;
+    border-radius: 5px;
+    border: none;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    padding: 10px;
+    list-style: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.user-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.login, .signup {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #555;
+    border-radius: 5px;
+}
+
+.language-switch img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
