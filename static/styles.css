@@ -65,7 +65,7 @@ header {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 8 0px;
+    gap: 80px;
 }
 
 .nav-links li a {
