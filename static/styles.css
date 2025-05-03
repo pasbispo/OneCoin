@@ -65,6 +65,12 @@ header {
     position: relative; /* Mantém no fluxo normal do layout */
 }
 
+main {
+    margin-top: 20px; /* Ajuste se necessário */
+    position: relative;
+}
+
+
 .logo {
     font-size: 52px; /* Aumenta o tamanho do texto */
     font-weight: bold;
