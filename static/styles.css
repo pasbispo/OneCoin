@@ -33,6 +33,7 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-left: 20px; /* Afasta do botão de pesquisa */
 }
 
 .login, .signup {
