@@ -61,8 +61,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0; /* Removendo deslocamentos indesejados */
-    position: relative; /* Mantém no fluxo normal do layout */
+   
 }
 
 .logo {
@@ -102,7 +101,6 @@ header {
 
 .top-bar {
     padding-bottom: 15px;
-
 }
 
 
