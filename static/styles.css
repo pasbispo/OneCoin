@@ -23,10 +23,12 @@ header {
 }
 
 .search-bar {
-    padding: 5px;
-    width: 200px;
-    font-size: 14px;
-    border-radius: 5px;
+    padding: 8px; /* Ajusta o espaçamento interno */
+    width: 100%; /* Faz a barra ocupar todo o espaço disponível */
+    max-width: 400px; /* Define um tamanho máximo para evitar distorção */
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
 .user-options {
@@ -65,7 +67,7 @@ header {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 70px;
+    gap: 8 0px;
 }
 
 .nav-links li a {
