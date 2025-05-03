@@ -3,15 +3,17 @@ header {
     color: white;
     padding: 1px 7px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    height: 90px; /* Diminui a altura */
+    height: 90px;
 }
 
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     padding: 10px;
 }
 
@@ -66,7 +68,7 @@ header {
 .logo {
     font-size: 52px; /* Aumenta o tamanho do texto */
     font-weight: bold;
-    padding-left: 40px; /* Move o logo mais para a esquerda */
+    padding-left: 20px; /* Move o logo mais para a esquerda */
     display: flex;
     align-items: center;
     justify-content: flex-start; /* Alinha à esquerda */
