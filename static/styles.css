@@ -3,10 +3,9 @@ header {
     color: white;
     padding: 1px 7px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    height: 90px;
+    height: 90px; /* Diminui a altura */
 }
 
 .top-bar {
