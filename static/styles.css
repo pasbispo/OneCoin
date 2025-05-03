@@ -59,9 +59,9 @@ header {
 }
 
 .logo {
-    font-size: 32px; /* Aumenta o tamanho do texto */
+    font-size: 52px; /* Aumenta o tamanho do texto */
     font-weight: bold;
-    padding-left: 20px; /* Move o logo mais para a esquerda */
+    padding-left: 10px; /* Move o logo mais para a esquerda */
     display: flex;
     align-items: center;
 }
