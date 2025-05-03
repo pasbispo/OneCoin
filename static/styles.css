@@ -12,7 +12,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px;
 }
 
 .search-container {
@@ -69,6 +69,7 @@ header {
     padding-left: 40px; /* Move o logo mais para a esquerda */
     display: flex;
     align-items: center;
+    justify-content: flex-start; /* Alinha à esquerda */
 }
 
 
