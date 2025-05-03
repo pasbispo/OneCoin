@@ -55,13 +55,13 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    margin-top: -15px;
+    margin-top: -35px;
 }
 
 .logo {
     font-size: 52px; /* Aumenta o tamanho do texto */
     font-weight: bold;
-    padding-left: 80px; /* Move o logo mais para a esquerda */
+    padding-left: 40px; /* Move o logo mais para a esquerda */
     display: flex;
     align-items: center;
 }
