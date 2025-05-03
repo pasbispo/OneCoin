@@ -100,13 +100,10 @@ header {
 }
 
 
-
 .top-bar {
     padding-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Garante que o logo fique à esquerda */
 }
+
 
 .site-title {
     text-align: center;
