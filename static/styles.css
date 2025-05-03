@@ -50,6 +50,11 @@ header {
     cursor: pointer;
 }
 
+.language-switch {
+    margin-left: 15px;
+}
+
+
 .main-nav {
     display: flex;
     justify-content: space-between;
@@ -70,7 +75,7 @@ header {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 80px;
+    gap: 120px;
 }
 
 .nav-links li a {
