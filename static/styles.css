@@ -70,9 +70,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-start; /* Alinha à esquerda */
-    width: 120px; /* Ajuste conforme necessário */
-    height: auto;
-    margin-left: -20px; /* Move a i
+
 }
 
 
