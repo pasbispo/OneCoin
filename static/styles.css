@@ -65,7 +65,8 @@ header {
 .logo {
     font-size: 52px; /* Aumenta o tamanho do texto */
     font-weight: bold;
-    padding-left: 10px; /* Move o logo mais para a esquerda */
+    padding-left: 0px; /* Move o logo mais para a esquerda */
+    margin-left: 0; /* Remove qualquer margem inesperada */
     display: flex;
     align-items: center;
     justify-content: flex-start; /* Alinha à esquerda */
