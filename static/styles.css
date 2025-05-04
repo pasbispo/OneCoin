@@ -117,3 +117,24 @@ header {
     color: white;
     margin-bottom: -10px; /* Reduz espaço abaixo do logo */
 }
+
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    padding: 5px;
+    width: 600px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px; /* Espaçamento entre o campo de pesquisa e o ícone */
+    cursor: pointer;
+}
