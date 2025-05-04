@@ -1,0 +1,32 @@
+{
+    "br": {
+        "welcome": "Bem-vindo ao OneCoin",
+        "description": "Arrecade criptomoedas para suas campanhas de forma segura e transparente.",
+        "search_placeholder": "Pesquisar no site...",
+        "login": "Login",
+        "signup": "Cadastre-se",
+        "menu": {
+            "how_to_start": "Como começar sua campanha",
+            "what_is": "O que é o OneCoin",
+            "open_campaigns": "Campanhas Abertas",
+            "my_campaigns": "Minhas Campanhas",
+            "partners": "Parceiros",
+            "more": "Mais"
+        }
+    },
+    "en": {
+        "welcome": "Welcome to OneCoin",
+        "description": "Raise cryptocurrency for your campaigns safely and transparently.",
+        "search_placeholder": "Search the site...",
+        "login": "Login",
+        "signup": "Sign up",
+        "menu": {
+            "how_to_start": "How to start your campaign",
+            "what_is": "What is OneCoin",
+            "open_campaigns": "Open Campaigns",
+            "my_campaigns": "My Campaigns",
+            "partners": "Partners",
+            "more": "More"
+        }
+    }
+}
