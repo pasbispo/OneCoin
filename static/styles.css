@@ -50,9 +50,21 @@ header {
 }
 
 .language-switch {
-    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
+#language-select {
+    padding: 5px;
+    font-size: 14px;
+}
+
+#language-flag {
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
 
 .main-nav {
     display: flex;
