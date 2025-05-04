@@ -43,6 +43,15 @@ header {
     background-color: #555;
     border-radius: 5px;
 }
+.logo {
+    font-size: 52px;
+    font-weight: bold;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 
 .language-switch img {
     width: 30px;
