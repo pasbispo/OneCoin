@@ -92,8 +92,42 @@
             "partners": "パートナー",
             "more": "もっと見る"
         }
+    },
+
+    "pt": {
+        "welcome": "Bem-vindo ao OneCoin",
+        "description": "Arrecade criptomoedas para as suas campanhas de forma segura e transparente.",
+        "search_placeholder": "Pesquisar no site...",
+        "login": "Iniciar sessão",
+        "signup": "Registar-se",
+        "menu": {
+            "how_to_start": "Como começar a sua campanha",
+            "what_is": "O que é o OneCoin",
+            "open_campaigns": "Campanhas abertas",
+            "my_campaigns": "As minhas campanhas",
+            "partners": "Parceiros",
+            "more": "Mais"
+        }
+    },
+
+    "en-uk": {
+        "welcome": "Welcome to OneCoin",
+        "description": "Raise cryptocurrency for your campaigns safely and transparently.",
+        "search_placeholder": "Search the site...",
+        "login": "Sign in",
+        "signup": "Register",
+        "menu": {
+            "how_to_start": "How to start your campaign",
+            "what_is": "What is OneCoin?",
+            "open_campaigns": "Open campaigns",
+            "my_campaigns": "My campaigns",
+            "partners": "Partners",
+            "more": "More"
+        }
     }
 }
+
+
 
 
 
