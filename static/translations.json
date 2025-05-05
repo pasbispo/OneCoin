@@ -76,7 +76,24 @@
             "partners": "Partner",
             "more": "Mehr"
         }
+    },
+
+    "jp": {
+        "welcome": "OneCoinへようこそ",
+        "description": "暗号通貨を使って安全かつ透明な方法でキャンペーンを募金しましょう。",
+        "search_placeholder": "サイト内検索...",
+        "login": "ログイン",
+        "signup": "登録",
+        "menu": {
+            "how_to_start": "キャンペーンの始め方",
+            "what_is": "OneCoinとは？",
+            "open_campaigns": "公開キャンペーン",
+            "my_campaigns": "マイキャンペーン",
+            "partners": "パートナー",
+            "more": "もっと見る"
+        }
     }
 }
+
 
 
