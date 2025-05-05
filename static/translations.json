@@ -44,5 +44,39 @@
             "partners": "Socios",
             "more": "Más"
         }
+    },
+
+    "fr": {
+        "welcome": "Bienvenue sur OneCoin",
+        "description": "Collectez des cryptomonnaies pour vos campagnes de manière sécurisée et transparente.",
+        "search_placeholder": "Rechercher sur le site...",
+        "login": "Connexion",
+        "signup": "S'inscrire",
+        "menu": {
+            "how_to_start": "Comment démarrer votre campagne",
+            "what_is": "Qu'est-ce que OneCoin",
+            "open_campaigns": "Campagnes ouvertes",
+            "my_campaigns": "Mes campagnes",
+            "partners": "Partenaires",
+            "more": "Plus"
+        }
+    },
+
+    "de": {
+        "welcome": "Willkommen bei OneCoin",
+        "description": "Sammeln Sie Kryptowährungen für Ihre Kampagnen sicher und transparent.",
+        "search_placeholder": "Auf der Website suchen...",
+        "login": "Anmelden",
+        "signup": "Registrieren",
+        "menu": {
+            "how_to_start": "Wie starte ich meine Kampagne?",
+            "what_is": "Was ist OneCoin?",
+            "open_campaigns": "Offene Kampagnen",
+            "my_campaigns": "Meine Kampagnen",
+            "partners": "Partner",
+            "more": "Mehr"
+        }
     }
 }
+
+
