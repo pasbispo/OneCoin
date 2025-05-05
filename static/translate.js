@@ -12,7 +12,8 @@ function changeLanguage() {
     flag.src = flagSrc;
 
     // Carrega o JSON e altera os textos
-    fetch("static/translations.json")
+    fetch("./static/translations.json")
+
         .then(response => response.json())
         .then(data => {
             document.getElementById("welcome-text").textContent = data[selectedLang].welcome;
