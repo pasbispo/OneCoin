@@ -1,8 +1,11 @@
 function changeLanguage() {
     var select = document.getElementById("language-select");
     var flag = document.getElementById("language-flag");
-    var selectedLang = select.value;
-
+    var selectedOption = select.options[select.selectedIndex];
+    
+    var flagSrc = selectedOption.getAttribute("data-flag");
+    flag.src = flagSrc;
+}
     // Atualiza a bandeira
     var selectedOption = select.options[select.selectedIndex];
     var flagSrc = selectedOption.getAttribute("data-flag");
