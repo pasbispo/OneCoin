@@ -30,4 +30,4 @@ function changeLanguage() {
             document.getElementById("menu-partners").textContent = data[selectedLang].menu.partners;
             document.getElementById("menu-more").textContent = data[selectedLang].menu.more;
         });
-}
+
