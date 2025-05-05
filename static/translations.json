@@ -140,8 +140,42 @@
             "partners": "Partner",
             "more": "Di più"
         }
+    },
+
+    "nl": {
+        "welcome": "Welkom bij OneCoin",
+        "description": "Verzamel cryptocurrency voor je campagnes op een veilige en transparante manier.",
+        "search_placeholder": "Zoek op de site...",
+        "login": "Inloggen",
+        "signup": "Registreren",
+        "menu": {
+            "how_to_start": "Hoe start je je campagne?",
+            "what_is": "Wat is OneCoin?",
+            "open_campaigns": "Open campagnes",
+            "my_campaigns": "Mijn campagnes",
+            "partners": "Partners",
+            "more": "Meer"
+        }
+    },
+
+    "pl": {
+        "welcome": "Witamy w OneCoin",
+        "description": "Zbieraj kryptowaluty na swoje kampanie w bezpieczny i przejrzysty sposób.",
+        "search_placeholder": "Szukaj na stronie...",
+        "login": "Zaloguj się",
+        "signup": "Zarejestruj się",
+        "menu": {
+            "how_to_start": "Jak rozpocząć kampanię?",
+            "what_is": "Co to jest OneCoin?",
+            "open_campaigns": "Otwarte kampanie",
+            "my_campaigns": "Moje kampanie",
+            "partners": "Partnerzy",
+            "more": "Więcej"
+        }
     }
 }
+
+
 
 
 
