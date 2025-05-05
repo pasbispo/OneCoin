@@ -28,5 +28,21 @@
             "partners": "Partners",
             "more": "More"
         }
+    },
+
+    "es": {
+        "welcome": "Bienvenido a OneCoin",
+        "description": "Recaude criptomonedas para sus campañas de manera segura y transparente.",
+        "search_placeholder": "Buscar en el sitio...",
+        "login": "Iniciar sesión",
+        "signup": "Registrarse",
+        "menu": {
+            "how_to_start": "Cómo comenzar tu campaña",
+            "what_is": "Qué es OneCoin",
+            "open_campaigns": "Campañas abiertas",
+            "my_campaigns": "Mis campañas",
+            "partners": "Socios",
+            "more": "Más"
+        }
     }
 }
