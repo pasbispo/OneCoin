@@ -1,21 +1,24 @@
 function changeLanguage() {
     var select = document.getElementById("language-select");
     var flag = document.getElementById("language-flag");
+    var selectedLang = select.value; // Agora está definido!
+
     var selectedOption = select.options[select.selectedIndex];
+    var flagSrc = selectedOption.getAttribute("data-flag");
     
-    var flagSrc = selectedOption.getAttribute("data-flag");
-    flag.src = flagSrc;
-}
-    // Atualiza a bandeira
-    var selectedOption = select.options[select.selectedIndex];
-    var flagSrc = selectedOption.getAttribute("data-flag");
-    flag.src = flagSrc;
+    if (flagSrc) {
+        flag.src = flagSrc; // Atualiza a bandeira corretamente
+    }
 
     // Carrega o JSON e altera os textos
     fetch("./static/translations.json")
-
         .then(response => response.json())
         .then(data => {
+            if (!data[selectedLang]) {
+                console.error("Erro: Idioma não encontrado no JSON.");
+                return;
+            }
+
             document.getElementById("welcome-text").textContent = data[selectedLang].welcome;
             document.getElementById("description-text").textContent = data[selectedLang].description;
             document.getElementById("search-bar").placeholder = data[selectedLang].search_placeholder;
@@ -29,5 +32,6 @@ function changeLanguage() {
             document.getElementById("menu-my").textContent = data[selectedLang].menu.my_campaigns;
             document.getElementById("menu-partners").textContent = data[selectedLang].menu.partners;
             document.getElementById("menu-more").textContent = data[selectedLang].menu.more;
-        });
-
+        })
+        .catch(error => console.error("Erro ao carregar JSON:", error));
+}
