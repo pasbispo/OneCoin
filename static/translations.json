@@ -172,8 +172,314 @@
             "partners": "Partnerzy",
             "more": "Więcej"
         }
+    },
+
+    "ru": {
+        "welcome": "Добро пожаловать в OneCoin",
+        "description": "Собирайте криптовалюту для ваших кампаний безопасно и прозрачно.",
+        "search_placeholder": "Поиск по сайту...",
+        "login": "Войти",
+        "signup": "Регистрация",
+        "menu": {
+            "how_to_start": "Как начать свою кампанию",
+            "what_is": "Что такое OneCoin?",
+            "open_campaigns": "Открытые кампании",
+            "my_campaigns": "Мои кампании",
+            "partners": "Партнёры",
+            "more": "Больше"
+        }
+    },
+
+    "cn": {
+        "welcome": "欢迎来到 OneCoin",
+        "description": "安全透明地为您的活动筹集加密货币。",
+        "search_placeholder": "在网站上搜索...",
+        "login": "登录",
+        "signup": "注册",
+        "menu": {
+            "how_to_start": "如何开始您的活动",
+            "what_is": "什么是 OneCoin?",
+            "open_campaigns": "开放的活动",
+            "my_campaigns": "我的活动",
+            "partners": "合作伙伴",
+            "more": "更多"
+        }
+    },
+
+    "ko": {
+        "welcome": "OneCoin에 오신 것을 환영합니다",
+        "description": "안전하고 투명한 방식으로 캠페인을 위해 암호화폐를 모금하세요.",
+        "search_placeholder": "사이트 검색...",
+        "login": "로그인",
+        "signup": "가입하기",
+        "menu": {
+            "how_to_start": "캠페인 시작 방법",
+            "what_is": "OneCoin이란?",
+            "open_campaigns": "열린 캠페인",
+            "my_campaigns": "내 캠페인",
+            "partners": "파트너",
+            "more": "더 보기"
+        }
+    },
+
+    "ar": {
+        "welcome": "مرحبًا بك في OneCoin",
+        "description": "اجمع العملات المشفرة لحملاتك بطريقة آمنة وشفافة.",
+        "search_placeholder": "ابحث في الموقع...",
+        "login": "تسجيل الدخول",
+        "signup": "إنشاء حساب",
+        "menu": {
+            "how_to_start": "كيف تبدأ حملتك؟",
+            "what_is": "ما هو OneCoin؟",
+            "open_campaigns": "الحملات المفتوحة",
+            "my_campaigns": "حملاتي",
+            "partners": "الشركاء",
+            "more": "المزيد"
+        }
+  },
+
+    "tr": {
+        "welcome": "OneCoin'e Hoş Geldiniz",
+        "description": "Kampanyalarınız için güvenli ve şeffaf bir şekilde kripto para toplayın.",
+        "search_placeholder": "Sitede ara...",
+        "login": "Giriş Yap",
+        "signup": "Kaydol",
+        "menu": {
+            "how_to_start": "Kampanyanızı nasıl başlatırsınız?",
+            "what_is": "OneCoin nedir?",
+            "open_campaigns": "Açık kampanyalar",
+            "my_campaigns": "Benim kampanyalarım",
+            "partners": "Ortaklar",
+            "more": "Daha fazla"
+        }
+    },
+
+    "hi": {
+        "welcome": "OneCoin में आपका स्वागत है",
+        "description": "अपनी अभियानों के लिए सुरक्षित और पारदर्शी तरीके से क्रिप्टोकरेंसी जुटाएं।",
+        "search_placeholder": "साइट पर खोजें...",
+        "login": "लॉग इन करें",
+        "signup": "पंजीकरण करें",
+        "menu": {
+            "how_to_start": "अपनी अभियान कैसे शुरू करें?",
+            "what_is": "OneCoin क्या है?",
+            "open_campaigns": "खुली अभियानों",
+            "my_campaigns": "मेरी अभियानों",
+            "partners": "साझेदार",
+            "more": "अधिक"
+        }
+    },
+
+    "id": {
+        "welcome": "Selamat datang di OneCoin",
+        "description": "Kumpulkan cryptocurrency untuk kampanye Anda dengan cara yang aman dan transparan.",
+        "search_placeholder": "Cari di situs...",
+        "login": "Masuk",
+        "signup": "Daftar",
+        "menu": {
+            "how_to_start": "Bagaimana cara memulai kampanye Anda?",
+            "what_is": "Apa itu OneCoin?",
+            "open_campaigns": "Kampanye terbuka",
+            "my_campaigns": "Kampanye saya",
+            "partners": "Mitra",
+            "more": "Lainnya"
+        }
+    },
+
+    "th": {
+        "welcome": "ยินดีต้อนรับสู่ OneCoin",
+        "description": "รวบรวมสกุลเงินดิจิทัลสำหรับแคมเปญของคุณอย่างปลอดภัยและโปร่งใส",
+        "search_placeholder": "ค้นหาในเว็บไซต์...",
+        "login": "เข้าสู่ระบบ",
+        "signup": "สมัครสมาชิก",
+        "menu": {
+            "how_to_start": "วิธีเริ่มต้นแคมเปญของคุณ",
+            "what_is": "OneCoin คืออะไร?",
+            "open_campaigns": "แคมเปญที่เปิดอยู่",
+            "my_campaigns": "แคมเปญของฉัน",
+            "partners": "พันธมิตร",
+            "more": "เพิ่มเติม"
+        }
+    },
+
+    "vi": {
+        "welcome": "Chào mừng đến với OneCoin",
+        "description": "Huy động tiền điện tử cho chiến dịch của bạn một cách an toàn và minh bạch.",
+        "search_placeholder": "Tìm kiếm trên trang web...",
+        "login": "Đăng nhập",
+        "signup": "Đăng ký",
+        "menu": {
+            "how_to_start": "Cách bắt đầu chiến dịch của bạn",
+            "what_is": "OneCoin là gì?",
+            "open_campaigns": "Chiến dịch đang mở",
+            "my_campaigns": "Chiến dịch của tôi",
+            "partners": "Đối tác",
+            "more": "Thêm"
+        }
+    },
+
+    "he": {
+        "welcome": "ברוך הבא ל-OneCoin",
+        "description": "גייסו מטבעות קריפטוגרפיים לקמפיינים שלכם בצורה בטוחה ושקופה.",
+        "search_placeholder": "חפש באתר...",
+        "login": "התחברות",
+        "signup": "הרשמה",
+        "menu": {
+            "how_to_start": "איך להתחיל את הקמפיין שלך?",
+            "what_is": "מה זה OneCoin?",
+            "open_campaigns": "קמפיינים פתוחים",
+            "my_campaigns": "הקמפיינים שלי",
+            "partners": "שותפים",
+            "more": "עוד"
+        }
+  },
+
+    "sv": {
+        "welcome": "Välkommen till OneCoin",
+        "description": "Samla in kryptovaluta för dina kampanjer på ett säkert och transparent sätt.",
+        "search_placeholder": "Sök på webbplatsen...",
+        "login": "Logga in",
+        "signup": "Registrera",
+        "menu": {
+            "how_to_start": "Hur startar du din kampanj?",
+            "what_is": "Vad är OneCoin?",
+            "open_campaigns": "Öppna kampanjer",
+            "my_campaigns": "Mina kampanjer",
+            "partners": "Partners",
+            "more": "Mer"
+        }
+    },
+
+    "fi": {
+        "welcome": "Tervetuloa OneCoiniin",
+        "description": "Kerää kryptovaluuttaa kampanjoihisi turvallisesti ja läpinäkyvästi.",
+        "search_placeholder": "Etsi sivustolta...",
+        "login": "Kirjaudu sisään",
+        "signup": "Rekisteröidy",
+        "menu": {
+            "how_to_start": "Kuinka aloittaa kampanjasi?",
+            "what_is": "Mikä on OneCoin?",
+            "open_campaigns": "Avoimet kampanjat",
+            "my_campaigns": "Omat kampanjani",
+            "partners": "Yhteistyökumppanit",
+            "more": "Lisää"
+        }
+    },
+
+    "da": {
+        "welcome": "Velkommen til OneCoin",
+        "description": "Indsaml kryptovaluta til dine kampagner på en sikker og gennemsigtig måde.",
+        "search_placeholder": "Søg på siden...",
+        "login": "Log ind",
+        "signup": "Tilmeld dig",
+        "menu": {
+            "how_to_start": "Hvordan starter du din kampagne?",
+            "what_is": "Hvad er OneCoin?",
+            "open_campaigns": "Åbne kampagner",
+            "my_campaigns": "Mine kampagner",
+            "partners": "Partnere",
+            "more": "Mere"
+        }
+    },
+
+    "el": {
+        "welcome": "Καλώς ήρθατε στο OneCoin",
+        "description": "Συγκεντρώστε κρυπτονομίσματα για τις καμπάνιες σας με ασφάλεια και διαφάνεια.",
+        "search_placeholder": "Αναζήτηση στον ιστότοπο...",
+        "login": "Σύνδεση",
+        "signup": "Εγγραφή",
+        "menu": {
+            "how_to_start": "Πώς να ξεκινήσετε την καμπάνια σας",
+            "what_is": "Τι είναι το OneCoin;",
+            "open_campaigns": "Ανοιχτές καμπάνιες",
+            "my_campaigns": "Οι καμπάνιες μου",
+            "partners": "Συνεργάτες",
+            "more": "Περισσότερα"
+        }
+    },
+
+    "hu": {
+        "welcome": "Üdvözöljük a OneCoin-nál",
+        "description": "Gyűjtsön kriptovalutát kampányaihoz biztonságosan és átláthatóan.",
+        "search_placeholder": "Keresés az oldalon...",
+        "login": "Bejelentkezés",
+        "signup": "Regisztráció",
+        "menu": {
+            "how_to_start": "Hogyan kezdje el kampányát?",
+            "what_is": "Mi az a OneCoin?",
+            "open_campaigns": "Nyitott kampányok",
+            "my_campaigns": "Saját kampányaim",
+            "partners": "Partnerek",
+            "more": "Több"
+        }
+    },
+
+    "cs": {
+        "welcome": "Vítejte v OneCoin",
+        "description": "Sbírejte kryptoměny pro své kampaně bezpečně a transparentně.",
+        "search_placeholder": "Hledat na webu...",
+        "login": "Přihlásit se",
+        "signup": "Registrovat se",
+        "menu": {
+            "how_to_start": "Jak začít svou kampaň?",
+            "what_is": "Co je OneCoin?",
+            "open_campaigns": "Otevřené kampaně",
+            "my_campaigns": "Moje kampaně",
+            "partners": "Partneři",
+            "more": "Více"
+        }
+    },
+
+    "ro": {
+        "welcome": "Bine ai venit la OneCoin",
+        "description": "Strânge criptomonede pentru campaniile tale într-un mod sigur și transparent.",
+        "search_placeholder": "Căutare pe site...",
+        "login": "Autentificare",
+        "signup": "Înregistrare",
+        "menu": {
+            "how_to_start": "Cum să începi campania ta?",
+            "what_is": "Ce este OneCoin?",
+            "open_campaigns": "Campanii deschise",
+            "my_campaigns": "Campaniile mele",
+            "partners": "Parteneri",
+            "more": "Mai mult"
+        }
+    },
+
+    "uk": {
+        "welcome": "Ласкаво просимо до OneCoin",
+        "description": "Збирайте криптовалюту для своїх кампаній безпечно та прозоро.",
+        "search_placeholder": "Шукати на сайті...",
+        "login": "Увійти",
+        "signup": "Зареєструватися",
+        "menu": {
+            "how_to_start": "Як розпочати свою кампанію?",
+            "what_is": "Що таке OneCoin?",
+            "open_campaigns": "Відкриті кампанії",
+            "my_campaigns": "Мої кампанії",
+            "partners": "Партнери",
+            "more": "Більше"
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
