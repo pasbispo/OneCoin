@@ -24,3 +24,26 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Botão 'Mais' não encontrado!");
     }
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let menuButton = document.getElementById("menu-more");
+    let menu = document.querySelector(".menu-container");
+
+    if (menuButton && menu) {
+        menuButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!menu.contains(event.target) && event.target !== menuButton) {
+                menu.style.display = "none";
+            }
+        });
+    } else {
+        console.error("Botão 'Mais' ou menu não encontrado!");
+    }
+});
