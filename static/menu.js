@@ -1,12 +1,16 @@
 document.getElementById("menu-more").addEventListener("click", function (event) {
     event.preventDefault();
-    let menu = this.nextElementSibling;
+    let menu = this.parentElement.querySelector(".menu-container"); // Seleciona apenas o menu correto
 
-    if (menu.style.visibility === "visible") {
+    if (menu.style.display === "block") {
         menu.style.opacity = "0";
-        menu.style.visibility = "hidden";
+        setTimeout(() => {
+            menu.style.display = "none";
+        }, 300);
     } else {
-        menu.style.visibility = "visible";
-        menu.style.opacity = "1";
+        menu.style.display = "block";
+        setTimeout(() => {
+            menu.style.opacity = "1";
+        }, 10);
     }
 });
