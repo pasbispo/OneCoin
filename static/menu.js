@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (menuButton) {
         menuButton.addEventListener("click", function (event) {
             event.preventDefault();
-            let menu = this.parentElement.querySelector(".menu-container"); // Seleciona apenas o menu correto
+            let menu = this.closest(".dropdown").querySelector(".menu-container");
 
             if (menu.style.display === "block") {
                 menu.style.opacity = "0";

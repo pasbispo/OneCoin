@@ -148,12 +148,12 @@ header {
     z-index: 100;
 }
 
-
 .menu-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
+    justify-content: space-between; /* Alinha corretamente os itens */
+    padding: 5px;
+    gap: 10px; /* Ajusta a separação */
 }
 
 .menu-item {
@@ -161,6 +161,7 @@ header {
     padding: 10px;
     text-align: center;
     font-weight: bold;
+    white-space: nowrap; /* Garante que a frase fique em uma única linha */
 }
 
 .separator {
