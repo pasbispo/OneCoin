@@ -136,17 +136,18 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    right: 0; /* Fixa o menu no lado direito do botão */
-    transform: translateX(0%); /* Move o menu totalmente para a esquerda */
-    width: 500px; /* Ajusta para garantir espaço adequado */
+    right: 0; /* Expande para a esquerda */
+    transform: translateX(-50%); /* Garante que ele se alinhe corretamente */
+    width: 250px; /* Ajuste para caber dentro dos limites */
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
-    z-index: 100;
+    z-index: 999; /* Mantém o menu acima dos outros elementos */
 }
+
 
 
 
