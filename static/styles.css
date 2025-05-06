@@ -181,7 +181,7 @@ header {
 }
 
 .light {
-    background-color: #d1d1d1;
+    background-color: #f3f3f3;
     color: #000;
 }
 
@@ -191,15 +191,14 @@ header {
 }
 
 .light {
-    background-color: #d1d1d1; /* Tom mais escuro para melhor visibilidade */
-    color: #000; /* Mantém o texto escuro para legibilidade */
-    padding: 10px;
-    font-weight: bold;
-}
-
-.dark {
-    background-color: #444; /* Cor mais escura para contraste */
+    background-color: #808080; /* Cinza médio para melhor contraste */
     color: #fff; /* Texto branco para facilitar leitura */
     padding: 10px;
     font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.light:hover {
+    background-color: #606060; /* Tom mais escuro ao passar o mouse */
 }
