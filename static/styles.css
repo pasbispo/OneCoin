@@ -136,9 +136,8 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 220px; /* Ajuste menor para evitar ultrapassagem */
+    left: 0; /* Alinha à esquerda do botão */
+    width: 300px; /* Expande mais para a esquerda */
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
@@ -147,6 +146,7 @@ header {
     transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
     z-index: 100;
 }
+
 
 
 .menu-row {
