@@ -1,8 +1,8 @@
 
 
-    document.getElementById("menu-more").addEventListener("click", function (event) {
+   document.getElementById("menu-more").addEventListener("click", function (event) {
     event.preventDefault();
-    let menu = this.nextElementSibling; // Seleciona apenas o menu dentro do dropdown
+    let menu = this.nextElementSibling;
 
     if (menu.style.display === "block") {
         menu.style.opacity = "0";
@@ -16,6 +16,7 @@
         }, 10);
     }
 });
+
 
 
 
