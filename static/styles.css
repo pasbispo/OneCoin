@@ -136,8 +136,9 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    right: -50; /* Ajusta para expandir à esquerda */
-    width: 300px; /* Expande corretamente para o lado esquerdo */
+    right: 0; /* Fixa o menu no lado direito do botão */
+    transform: translateX(-100%); /* Move o menu totalmente para a esquerda */
+    width: 300px; /* Ajusta para garantir espaço adequado */
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
