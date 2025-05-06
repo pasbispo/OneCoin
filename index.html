@@ -69,6 +69,8 @@
         </div>
     </div>
 
+    
+<header>
     <nav class="main-nav">
         <ul class="nav-links">
             <li><a href="#" id="menu-how">Como começar sua campanha</a></li>
@@ -77,37 +79,38 @@
             <li><a href="#" id="menu-my">Minhas Campanhas</a></li>
             <li><a href="#" id="menu-partners">Parceiros</a></li>
 
-           <li class="dropdown">
-    <a href="#" id="menu-more">Mais</a>
-    <div class="menu-container">
-        <div class="menu-row">
-            <div class="menu-item light">Escolha das criptomoedas</div>
-            <div class="separator"></div>
-            <div class="menu-item dark">Segurança e Transparência</div>
-        </div>
-        <div class="menu-row">
-            <div class="menu-item light">Facilidade para Usuários</div>
-            <div class="separator"></div>
-            <div class="menu-item dark">Taxa e Conversão</div>
-        </div>
-        <div class="menu-row">
-            <div class="menu-item light">Regulamentação</div>
-            <div class="separator"></div>
-            <div class="menu-item dark">Parcerias Estratégicas</div>
-        </div>
-        <div class="menu-row">
-            <div class="menu-item light">Taxas e Modelo de Monetização</div>
-            <div class="separator"></div>
-            <div class="menu-item dark">Regulamentos e Expansão</div>
-        </div>
-        <div class="menu-row">
-            <div class="menu-item light">Aplicativo para Smartphones</div>
-            <div class="separator"></div>
-            <div class="menu-item dark">Suporte ao Cliente</div>
-        </div>
-    </div>
-</li>
-
+            <li class="dropdown">
+                <a href="#" id="menu-more">Mais</a>
+                <div class="menu-container">
+                    <div class="menu-row">
+                        <div class="menu-item light">Escolha das criptomoedas</div>
+                        <div class="separator"></div>
+                        <div class="menu-item dark">Segurança e Transparência</div>
+                    </div>
+                    <div class="menu-row">
+                        <div class="menu-item light">Facilidade para Usuários</div>
+                        <div class="separator"></div>
+                        <div class="menu-item dark">Taxa e Conversão</div>
+                    </div>
+                    <div class="menu-row">
+                        <div class="menu-item light">Regulamentação</div>
+                        <div class="separator"></div>
+                        <div class="menu-item dark">Parcerias Estratégicas</div>
+                    </div>
+                    <div class="menu-row">
+                        <div class="menu-item light">Taxas e Modelo de Monetização</div>
+                        <div class="separator"></div>
+                        <div class="menu-item dark">Regulamentos e Expansão</div>
+                    </div>
+                    <div class="menu-row">
+                        <div class="menu-item light">Aplicativo para Smartphones</div>
+                        <div class="separator"></div>
+                        <div class="menu-item dark">Suporte ao Cliente</div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
 </header>
 
 
@@ -127,21 +130,22 @@
 
 <script>
     document.getElementById("menu-more").addEventListener("click", function (event) {
-        event.preventDefault();
-        let menu = document.querySelector(".menu-container");
-        
-        if (menu.style.display === "block") {
-            menu.style.opacity = "0";
-            setTimeout(() => {
-                menu.style.display = "none";
-            }, 300);
-        } else {
-            menu.style.display = "block";
-            setTimeout(() => {
-                menu.style.opacity = "1";
-            }, 10);
-        }
-    });
+    event.preventDefault();
+    let menu = this.nextElementSibling; // Seleciona apenas o menu dentro do dropdown
+
+    if (menu.style.display === "block") {
+        menu.style.opacity = "0";
+        setTimeout(() => {
+            menu.style.display = "none";
+        }, 300);
+    } else {
+        menu.style.display = "block";
+        setTimeout(() => {
+            menu.style.opacity = "1";
+        }, 10);
+    }
+});
+
 </script>
 
 

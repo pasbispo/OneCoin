@@ -133,14 +133,15 @@ header {
 .menu-container {
     display: none;
     position: absolute;
-    top: 100%; /* Ajusta a posição abaixo do botão */
+    top: 40px; /* Ajusta a posição abaixo do botão */
     left: 0;
-    width: 100%;
+    width: 350px;
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    z-index: 100; /* Garante que apareça acima de outros elementos */
 }
 
 .menu-row {
