@@ -1,21 +1,18 @@
 
 
-    document.getElementById("menu-more").addEventListener("click", function (event) {
+   document.getElementById("menu-more").addEventListener("click", function (event) {
     event.preventDefault();
-    let menu = this.nextElementSibling; // Seleciona apenas o menu dentro do dropdown
+    let menu = this.parentElement.querySelector(".menu-container"); // Apenas o menu correto
 
-    if (menu.style.display === "block") {
+    if (menu.style.visibility === "visible") {
         menu.style.opacity = "0";
-        setTimeout(() => {
-            menu.style.display = "none";
-        }, 300);
+        menu.style.visibility = "hidden";
     } else {
-        menu.style.display = "block";
-        setTimeout(() => {
-            menu.style.opacity = "1";
-        }, 10);
+        menu.style.visibility = "visible";
+        menu.style.opacity = "1";
     }
 });
+
 
 
 

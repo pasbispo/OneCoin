@@ -108,6 +108,9 @@ header {
     display: block;
 }
 
+.dropdown {
+    position: relative; /* Define que o dropdown é a referência para o submenu */
+}
 
 .top-bar {
     display: flex;
@@ -132,15 +135,15 @@ header {
 .menu-container {
     display: none;
     position: absolute;
-    top: 100%; /* Faz com que apareça abaixo do botão */
-    left: 50%; /* Ajusta para o centro */
-    transform: translateX(-50%); /* Centraliza corretamente */
-    width: 350px;
+    top: 100%;
+    left: 0;
+    width: 100%;
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Melhor animação */
+    visibility: hidden; /* Garante que o menu não ocupe espaço quando fechado */
     z-index: 100;
 }
 
