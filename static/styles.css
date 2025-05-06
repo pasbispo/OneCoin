@@ -180,10 +180,6 @@ header {
     height: 80%; /* Ajusta altura para não ficar muito grande */
 }
 
-.light {
-    background-color: #f3f3f3;
-    color: #000;
-}
 
 .dark {
     background-color: #8B4513; /* Marrom padrão (saddle brown) */
