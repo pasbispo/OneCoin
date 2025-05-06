@@ -136,8 +136,9 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
-    width: 250px; /* Reduzi a largura para evitar que ultrapasse os limites */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px; /* Ajuste menor para evitar ultrapassagem */
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
