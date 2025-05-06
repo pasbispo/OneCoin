@@ -131,10 +131,11 @@ header {
 }
 
 .menu-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: none;
+    position: absolute;
+    background-color: white;
     padding: 10px;
+    border: 1px solid #ccc;
 }
 
 .menu-row {
