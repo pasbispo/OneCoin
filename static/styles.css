@@ -138,15 +138,16 @@ header {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    width: 350px;
+    width: 200px;
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
     opacity: 0;
-    visibility: hidden; /* Garante que fique invisível até ser ativado */
+    visibility: hidden; /* Começa oculto */
     transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
     z-index: 100;
 }
+
 
 .menu-row {
     display: flex;
