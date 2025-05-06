@@ -137,7 +137,7 @@ header {
     position: absolute;
     top: 100%;
     right: 0; /* Fixa o menu no lado direito do botão */
-    transform: translateX(-50%); /* Move o menu totalmente para a esquerda */
+    transform: translateX(-30%); /* Move o menu totalmente para a esquerda */
     width: 300px; /* Ajusta para garantir espaço adequado */
     background-color: white;
     padding: 10px;
