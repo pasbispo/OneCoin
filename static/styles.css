@@ -130,4 +130,40 @@ header {
     margin-bottom: -10px; /* Reduz espaço abaixo do logo */
 }
 
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.menu-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.menu-item {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.separator {
+    width: 2px;
+    background-color: black;
+    height: 100%;
+}
+
+.light {
+    background-color: #f3f3f3;
+    color: #000;
+}
+
+.dark {
+    background-color: #d9d9d9;
+    color: #000;
+}
 
