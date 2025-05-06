@@ -186,8 +186,16 @@ header {
 }
 
 .dark {
-    background-color: #d9d9d9;
-    color: #000;
+    background-color: #8B4513; /* Marrom padrão (saddle brown) */
+    color: #fff; /* Texto branco para melhor visibilidade */
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.dark:hover {
+    background-color: #5A2E0A; /* Tom mais escuro ao passar o mouse */
 }
 
 .light {
@@ -199,6 +207,3 @@ header {
     transition: background-color 0.3s ease-in-out;
 }
 
-.light:hover {
-    background-color: #606060; /* Tom mais escuro ao passar o mouse */
-}
