@@ -1,10 +1,10 @@
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     let menuButton = document.getElementById("menu-more");
     
     if (menuButton) {
         menuButton.addEventListener("click", function (event) {
             event.preventDefault();
-            let menu = this.nextElementSibling; // Seleciona o menu correto dentro da <li>
+            let menu = this.nextElementSibling; // Encontra o menu correto dentro da <li>
 
             if (menu.style.display === "block") {
                 menu.style.opacity = "0";
@@ -22,9 +22,3 @@
         console.error("Botão 'Mais' não encontrado!");
     }
 });
-
-
-
-
-
-

@@ -143,7 +143,7 @@ header {
     padding: 10px;
     border: 1px solid #ccc;
     opacity: 0;
-    visibility: hidden; /* Garante que ele fique invisível até ser ativado */
+    visibility: hidden; /* Garante que fique invisível até ser ativado */
     transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
     z-index: 100;
 }
