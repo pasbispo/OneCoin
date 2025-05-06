@@ -132,9 +132,9 @@ header {
 .menu-container {
     display: none;
     position: absolute;
-    top: 100%; /* Faz com que apareça abaixo do botão */
-    left: 50%; /* Ajusta para o centro */
-    transform: translateX(-50%); /* Centraliza corretamente */
+    top: 100%; /* Coloca abaixo do botão "Mais" */
+    left: 50%;
+    transform: translateX(-50%);
     width: 350px;
     background-color: white;
     padding: 10px;
