@@ -133,9 +133,14 @@ header {
 .menu-container {
     display: none;
     position: absolute;
+    top: 100%; /* Ajusta a posição */
+    left: 0;
+    width: 100%;
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .menu-row {
