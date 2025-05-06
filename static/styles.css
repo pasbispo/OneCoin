@@ -132,7 +132,7 @@ header {
 .menu-container {
     display: none;
     position: absolute;
-    top: 100%; /* Coloca abaixo do botão "Mais" */
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     width: 350px;
@@ -140,7 +140,8 @@ header {
     padding: 10px;
     border: 1px solid #ccc;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    visibility: hidden; /* Impede que o menu ocupe espaço quando escondido */
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s; /* Melhor efeito */
     z-index: 100;
 }
 
@@ -174,3 +175,6 @@ header {
     color: #000;
 }
 
+.dropdown {
+    position: relative; /* Define que o menu "Mais" será referência para o submenu */
+}
