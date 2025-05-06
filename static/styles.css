@@ -153,9 +153,9 @@ header {
 .menu-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Distribui os itens corretamente */
     padding: 5px;
-    gap: 5px; /* Reduzi o espaçamento para evitar deslocamento excessivo */
+    gap: 5px;
 }
 
 .menu-item {
@@ -163,7 +163,9 @@ header {
     padding: 10px;
     text-align: center;
     font-weight: bold;
-    white-space: nowrap; /* Evita quebra de linha nos textos */
+    white-space: nowrap; /* Impede que o texto quebre para fora do botão */
+    overflow: hidden; /* Evita que o texto saia da borda */
+    text-overflow: ellipsis; /* Adiciona "..." caso o texto fique muito longo */
 }
 
 .separator {
