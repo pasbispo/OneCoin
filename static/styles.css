@@ -133,7 +133,7 @@ header {
 .menu-container {
     display: none;
     position: absolute;
-    top: 100%; /* Ajusta a posição */
+    top: 100%; /* Ajusta a posição abaixo do botão */
     left: 0;
     width: 100%;
     background-color: white;
