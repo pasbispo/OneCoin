@@ -136,7 +136,7 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    right: 100; /* Ajusta para expandir à esquerda */
+    right: -50; /* Ajusta para expandir à esquerda */
     width: 300px; /* Expande corretamente para o lado esquerdo */
     background-color: white;
     padding: 10px;
