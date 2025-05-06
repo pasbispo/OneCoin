@@ -68,10 +68,9 @@ header {
 
 .main-nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Mantém os itens no centro */
     align-items: center;
-    padding: 10px 0;
-    margin-top: -35px;
+    flex-wrap: wrap; /* Permite ajuste automático caso os itens fiquem apertados */
 }
 
 .logo {
