@@ -191,13 +191,15 @@ header {
 }
 
 .light {
-    background-color: #f3f3f3; /* Cor mais clara para o lado esquerdo */
-    color: #000;
+    background-color: #d1d1d1; /* Tom mais escuro para melhor visibilidade */
+    color: #000; /* Mantém o texto escuro para legibilidade */
     padding: 10px;
+    font-weight: bold;
 }
 
 .dark {
-    background-color: #d9d9d9; /* Cor um pouco mais escura para o lado direito */
-    color: #000;
+    background-color: #444; /* Cor mais escura para contraste */
+    color: #fff; /* Texto branco para facilitar leitura */
     padding: 10px;
+    font-weight: bold;
 }
