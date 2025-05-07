@@ -229,11 +229,13 @@ header {
     display: flex;
     justify-content: center; /* Centraliza horizontalmente */
     align-items: center; /* Centraliza verticalmente */
+    text-align: center; /* Garante alinhamento correto */
 }
 
 .swiper-slide img {
-    max-width: 100%; /* Garante que a imagem não ultrapasse os limites */
-    height: auto; /* Mantém a proporção correta */
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; /* Evita cortes indesejados */
 }
 
 .swiper-pagination {
