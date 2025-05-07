@@ -8,9 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
         navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev"
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true
         }
     });
 
+    // Pausa o carrossel ao passar o mouse e retoma ao sair
     document.querySelector(".swiper-container").addEventListener("mouseenter", function () {
         swiper.autoplay.stop();
     });
