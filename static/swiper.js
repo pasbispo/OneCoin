@@ -10,12 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
             prevEl: ".swiper-button-prev"
         },
         pagination: {
-            el: ".swiper-pagination",
-            clickable: true
+            el: ".swiper-pagination", // Ativa os pontos indicadores
+            clickable: true // Permite clicar nos pontos para navegar
         }
     });
 
-    // Pausa o carrossel ao passar o mouse e retoma ao sair
     document.querySelector(".swiper-container").addEventListener("mouseenter", function () {
         swiper.autoplay.stop();
     });
