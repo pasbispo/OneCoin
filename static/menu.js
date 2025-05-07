@@ -57,3 +57,29 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    var swiper = new Swiper(".swiper-container", {
+        loop: true, // Permite rolagem infinita dos slides
+        autoplay: {
+            delay: 3000, // Troca de slide a cada 3 segundos
+            disableOnInteraction: false // Continua rodando após interação
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev"
+        }
+    });
+
+    // Pausa o carrossel ao passar o mouse e retorna ao sair
+    document.querySelector(".swiper-container").addEventListener("mouseenter", function () {
+        swiper.autoplay.stop();
+    });
+
+    document.querySelector(".swiper-container").addEventListener("mouseleave", function () {
+        swiper.autoplay.start();
+    });
+});

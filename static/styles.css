@@ -219,3 +219,13 @@ header {
     transition: background-color 0.3s ease-in-out;
 }
 
+
+.swiper-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.swiper-slide img {
+    width: 100%;
+    cursor: pointer; /* Indica que o usuário pode clicar */
+}
