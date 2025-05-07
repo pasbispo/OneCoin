@@ -232,3 +232,20 @@ header {
     height: auto;
 }
 
+.swiper-pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.swiper-pagination-bullet {
+    background-color: #fff; /* Cor dos pontos */
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #000; /* Cor do ponto ativo */
+}
+
