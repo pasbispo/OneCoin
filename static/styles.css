@@ -234,17 +234,22 @@ header {
 
 .swiper-pagination {
     position: absolute;
-    bottom: 10px;
+    bottom: 15px; /* Ajusta a posição dos pontos */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
 }
 
 .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
     background-color: #fff; /* Cor dos pontos */
-    opacity: 1;
+    border-radius: 50%;
+    opacity: 0.6;
+    margin: 5px;
 }
 
 .swiper-pagination-bullet-active {
     background-color: #000; /* Cor do ponto ativo */
+    opacity: 1;
 }

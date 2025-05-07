@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
             prevEl: ".swiper-button-prev"
         },
         pagination: {
-            el: ".swiper-pagination", // Ativa os pontos indicadores
-            clickable: true // Permite clicar nos pontos para navegar
+            el: ".swiper-pagination",
+            clickable: true, // Permite clicar nos pontos
+            dynamicBullets: true // Torna os pontos mais interativos
         }
     });
 
