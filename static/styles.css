@@ -219,17 +219,13 @@ header {
     transition: background-color 0.3s ease-in-out;
 }
 
-
 .swiper-container {
     width: 100%;
-    height: 100px; /* Ajuste a altura aqui */
+    height: 300px; /* Ajuste a altura aqui */
     overflow: hidden;
 }
 
 .swiper-slide img {
-    display: block;
-    width: 100%;
-    max-width: 100%;
     height: 100%; /* Garante que a imagem se adapte ao novo tamanho */
     object-fit: cover; /* Mantém o aspecto das imagens sem distorcer */
 }
