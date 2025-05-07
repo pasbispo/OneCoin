@@ -44,3 +44,16 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Botão 'Mais' ou menu não encontrado!");
     }
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let logo = document.getElementById("site-logo");
+
+    if (logo) {
+        logo.addEventListener("click", function (event) {
+            event.preventDefault(); // Evita comportamento padrão do link
+            location.reload(); // Recarrega a página
+        });
+    }
+});
