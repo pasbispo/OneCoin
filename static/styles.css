@@ -84,6 +84,9 @@ header {
     justify-content: center;
 }
 
+.logo a {
+    text-decoration: none; /* Remove qualquer sublinhado */
+}
 
 
 .nav-links {
