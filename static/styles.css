@@ -247,7 +247,9 @@ header {
     margin: 5px;
 }
 
-.swiper-pagination-bullet-active {
-    background-color: #000; /* Cor do ponto ativo */
-    opacity: 1;
+.swiper-pagination-bullet {
+    margin: 2px; /* Reduz espaço entre os pontos */
+}
+.swiper-container {
+    position: relative; /* Permite que os pontos fiquem dentro do carrossel */
 }
