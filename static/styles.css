@@ -226,6 +226,9 @@ header {
 }
 
 .swiper-slide img {
+    display: block;
     width: 100%;
-    cursor: pointer; /* Indica que o usuário pode clicar */
+    max-width: 100%;
+    height: auto;
 }
+
