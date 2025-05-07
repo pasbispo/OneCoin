@@ -74,15 +74,16 @@ header {
 }
 
 .logo {
-    font-size: 80px; /* Aumenta o tamanho do texto */
+    font-size: 90px; /* Aumenta o tamanho do logo */
     font-weight: bold;
-    padding-left: 0px; /* Move o logo mais para a esquerda */
-    margin-left: 0 auto; /* Remove qualquer margem inesperada */
+    padding: 0; /* Remove espaçamentos extras */
+    margin: 0 auto; /* Garante que o logo fique centralizado */
+    text-decoration: none; /* Remove linha de baixo */
     display: flex;
     align-items: center;
-    justify-content: center; /* Alinha à esquerda */
-
+    justify-content: center;
 }
+
 
 
 .nav-links {
