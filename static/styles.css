@@ -225,9 +225,15 @@ header {
     overflow: hidden;
 }
 
+.swiper-slide {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
 .swiper-slide img {
-    height: 100%; /* Garante que a imagem se adapte ao novo tamanho */
-    object-fit: cover; /* Mantém o aspecto das imagens sem distorcer */
+    max-width: 100%; /* Garante que a imagem não ultrapasse os limites */
+    height: auto; /* Mantém a proporção correta */
 }
 
 .swiper-pagination {
