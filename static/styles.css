@@ -125,7 +125,7 @@ header {
 }
 
 #site-logo {
-    font-size: 80px; /* Define tamanho maior para o logo */
+    font-size: 50px; /* Define tamanho maior para o logo */
     font-weight: bold;
     text-decoration: none; /* Remove sublinhado */
     display: block;
