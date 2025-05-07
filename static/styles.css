@@ -232,7 +232,7 @@ header {
 
 .swiper-pagination {
     position: absolute;
-    bottom: 5px; /* Ajusta a posição dos pontos */
+    bottom: -5px; /* Ajusta a posição dos pontos */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
