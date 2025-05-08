@@ -263,3 +263,46 @@ header {
 }
 
 
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px; /* Espaçamento entre as colunas */
+    padding: 20px;
+}
+
+.info-box {
+    width: 30%;
+    text-align: center;
+}
+
+.info-box h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info-box img {
+    width: 100px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.info-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-box ul li {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Linha vertical para separação */
+.vertical-line {
+    width: 3px;
+    background-color: #ccc;
+    height: 100%;
+}
+
