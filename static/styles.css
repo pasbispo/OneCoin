@@ -305,5 +305,6 @@ header {
     background-color: #ccc; /* Cor da linha */
     height: 100%; /* Garante que a linha ocupe a altura da seção */
     display: inline-block; /* Permite que fique entre os blocos */
+    min-height: 100%; /* Garante altura mínima */
 }
 
