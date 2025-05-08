@@ -307,12 +307,13 @@ header {
     align-items: stretch;
 }
 .justificado {
-    text-align: justify; /* Garante a justificação do texto */
-    list-style-type: disc; /* Ativa os bullets como círculos padrão */
-    padding-left: 20px; /* Ajusta o espaçamento para os bullets */
+    text-align: justify; /* Justifica somente o texto dentro da lista */
+    list-style-type: disc; /* Mantém os marcadores padrão */
+    padding-left: 20px; /* Ajusta espaçamento para os bullets */
 }
 
 .justificado li {
-    margin-bottom: 8px; /* Espaçamento entre itens da lista */
+    display: block; /* Garante alinhamento correto dos itens da lista */
+    margin-bottom: 8px; /* Espaçamento entre os tópicos */
 }
 
