@@ -301,12 +301,11 @@ header {
 
 /* Linha vertical para separação */
 .vertical-line {
-    width: 3px;
-    background-color: #ccc;
-    height: 100%;
-    min-height: 150px; /* Força altura mínima */
-    display: flex;
-    align-items: stretch;
+    width: 3px; /* Define largura fina da linha */
+    background-color: #ccc; /* Cor da linha */
+    height: auto; /* Ajusta a altura dinamicamente */
+    min-height: 100px; /* Força altura mínima */
+    align-self: stretch; /* Garante que a linha ocupe toda a altura da coluna */
 }
 
 
