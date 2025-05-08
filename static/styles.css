@@ -376,4 +376,9 @@ header {
     height: auto;
 }
 
+footer {
+    margin-top: 50px; /* Adiciona espaço antes do rodapé */
+    text-align: center; /* Mantém o logo centralizado */
+}
+
 /* ==== Estilos da página "Como começar sua campanha" ==== */
