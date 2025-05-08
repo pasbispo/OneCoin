@@ -267,7 +267,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-top: 20px;
+    gap: 20px; /* Espaçamento entre seções */
     padding: 20px;
 }
 
@@ -303,5 +303,5 @@ header {
     width: 3px;
     background-color: #ccc;
     height: auto;
-    margin: 0 20px;
+    flex-grow: 1;
 }
