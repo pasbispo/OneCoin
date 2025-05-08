@@ -301,8 +301,9 @@ header {
 
 /* Linha vertical para separação */
 .vertical-line {
-    width: 3px;
-    background-color: #ccc;
-    height: 100%;
+    width: 3px; /* Largura da linha */
+    background-color: #ccc; /* Cor da linha */
+    height: 100%; /* Garante que a linha ocupe a altura da seção */
+    display: inline-block; /* Permite que fique entre os blocos */
 }
 
