@@ -371,7 +371,7 @@ header {
 
 .footer-logo {
     display: block;
-    margin: 20px auto; /* Centraliza o logo */
+    margin: 60px auto; /* Centraliza o logo */
     width: 150px; /* Ajuste o tamanho conforme necessário */
     height: auto;
 }
