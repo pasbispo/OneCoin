@@ -306,4 +306,13 @@ header {
     display: flex;
     align-items: stretch;
 }
+.justificado {
+    text-align: justify; /* Garante a justificação do texto */
+    list-style-type: disc; /* Ativa os bullets como círculos padrão */
+    padding-left: 20px; /* Ajusta o espaçamento para os bullets */
+}
+
+.justificado li {
+    margin-bottom: 8px; /* Espaçamento entre itens da lista */
+}
 
