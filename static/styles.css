@@ -308,7 +308,7 @@ header {
 }
 
 .justificado {
-    text-align: justify; /* Apenas o texto será justificado */
+    text-align: left; /* Apenas o texto será justificado */
     list-style-type: disc; /* Mantém os bullets padrão */
     padding-left: 20px; /* Ajusta espaçamento para os bullets */
     display: block; /* Mantém os itens da lista em bloco */
