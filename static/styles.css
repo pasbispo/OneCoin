@@ -88,10 +88,10 @@ header {
     text-decoration: none; /* Remove qualquer sublinhado */
 }
 
-
 .nav-links {
     display: flex;
-    gap: 50px; /* Ajuste para manter espaçamento equilibrado */
+    align-items: center;
+    gap: 40px; /* Ajuste para manter espaçamento equilibrado */
 }
 
 .nav-links li {
@@ -106,8 +106,9 @@ header {
     padding: 10px 15px; /* Garante espaçamento adequado */
 }
 
+/* Mantém o botão "Mais" no lugar */
 .dropdown {
-    position: relative; /* Mantém o botão "Mais" no lugar */
+    position: relative;
 }
 
 .menu-container {
@@ -119,23 +120,18 @@ header {
     padding: 10px;
     border: 1px solid #ccc;
     z-index: 100;
+    display: none; /* Mantém oculto até o hover */
 }
 
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: #444;
-    padding: 10px;
-    list-style: none;
-}
-
-.dropdown:hover .dropdown-menu {
+/* Exibe o menu ao passar o mouse */
+.dropdown:hover .menu-container {
     display: block;
 }
 
-.dropdown {
-    position: relative; /* Define que o dropdown é a referência para o submenu */
-}
+
+
+
+
 
 .top-bar {
     display: flex;
