@@ -306,14 +306,4 @@ header {
     display: flex;
     align-items: stretch;
 }
-.justificado {
-    text-align: justify; /* Justifica somente o texto dentro da lista */
-    list-style-type: disc; /* Mantém os marcadores padrão */
-    padding-left: 20px; /* Ajusta espaçamento para os bullets */
-}
-
-.justificado li {
-    display: block; /* Garante alinhamento correto dos itens da lista */
-    margin-bottom: 8px; /* Espaçamento entre os tópicos */
-}
 
