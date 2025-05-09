@@ -9,12 +9,11 @@
 <body>
 
     <!-- Logo no canto superior direito -->
-   <div class="logo-container">
-    <a href="index.html" onclick="location.reload();">
-        <img src="static/img/logo.png" alt="OneCoin">
-    </a>
-</div>
-
+    <div class="logo-container">
+        <a href="index.html">
+            <img src="static/img/logo.png" alt="OneCoin">
+        </a>
+    </div>
 
     <!-- Título centralizado -->
     <h1 class="page-title">Escolha Suas Criptomoedas</h1>
@@ -34,17 +33,27 @@
         </div>
     </div>
 
-    <!-- Linha horizontal separadora -->
+    <!-- Barra de pesquisa acima da linha horizontal -->
+    <div class="search-crypto">
+        <input type="text" id="search-bar" placeholder="Digite o nome da criptomoeda..." oninput="filterCryptos()">
+    </div>
+
+    <!-- Linha horizontal separadora, ajustada para baixo -->
     <div class="horizontal-line"></div>
 
-    <!-- Lista com 5 criptomoedas disponíveis para escolha -->
+    <!-- Lista com várias criptomoedas disponíveis para escolha -->
     <div class="crypto-list">
         <img src="static/img/btc.png" onclick="selectCrypto('btc')" alt="Bitcoin">
         <img src="static/img/eth.png" onclick="selectCrypto('eth')" alt="Ethereum">
         <img src="static/img/usdt.png" onclick="selectCrypto('usdt')" alt="Tether">
         <img src="static/img/ada.png" onclick="selectCrypto('ada')" alt="Cardano">
         <img src="static/img/xrp.png" onclick="selectCrypto('xrp')" alt="XRP">
+        <img src="static/img/sol.png" onclick="selectCrypto('sol')" alt="Solana">
+        <img src="static/img/doge.png" onclick="selectCrypto('doge')" alt="Dogecoin">
+        <img src="static/img/dot.png" onclick="selectCrypto('dot')" alt="Polkadot">
     </div>
+
+    
 
    
 
