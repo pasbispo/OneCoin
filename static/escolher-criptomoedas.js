@@ -58,3 +58,14 @@ function limitDecimals(input) {
 
     input.value = value;
 }
+
+
+function selectCrypto(crypto, name) {
+    let cryptoImage = document.getElementById("crypto-image");
+    let cryptoName = document.getElementById("crypto-name");
+
+    cryptoImage.src = `static/img/${crypto}.png`;
+    cryptoImage.classList.remove("hidden"); // Exibir imagem
+    cryptoName.textContent = name; // Atualizar nome da criptomoeda
+}
+
