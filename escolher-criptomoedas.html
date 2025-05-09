@@ -18,28 +18,29 @@
         <h1>Escolha suas Criptomoedas</h1>
 
         <!-- Retângulo principal -->
-        <div class="crypto-box">
-            <img id="crypto-image" src="static/img/default-crypto.png" alt="Criptomoeda Escolhida">
-            <div class="vertical-line"></div>
-            <input type="number" id="crypto-amount" placeholder="0.00000000">
-            <div class="vertical-line"></div>
-            <input type="text" id="crypto-value" placeholder="Valor estimado">
-        </div>
+       <div class="crypto-box">
+    <!-- Imagem da criptomoeda escolhida -->
+    <div class="crypto-section">
+        <img id="crypto-image" src="static/img/default-crypto.png" alt="Criptomoeda Escolhida">
+    </div>
 
-        <!-- Retângulo secundário aparece automaticamente -->
-        <div id="extra-box" class="hidden">
-            <p>Informações adicionais aparecerão aqui...</p>
-        </div>
+    <!-- Linha vertical separadora -->
+    <div class="vertical-line"></div>
 
-        <!-- Linha horizontal separadora -->
-        <hr>
+    <!-- Quantidade desejada -->
+    <div class="crypto-section">
+        <input type="number" id="crypto-amount" placeholder="0.00000000">
+    </div>
 
-        <!-- Lista das criptomoedas disponíveis -->
-        <div class="crypto-list">
-            <img src="static/img/btc.png" onclick="selectCrypto('btc')">
-            <img src="static/img/eth.png" onclick="selectCrypto('eth')">
-            <img src="static/img/usdt.png" onclick="selectCrypto('usdt')">
-        </div>
+    <!-- Linha vertical separadora -->
+    <div class="vertical-line"></div>
+
+    <!-- Valor estimado -->
+    <div class="crypto-section">
+        <input type="text" id="crypto-value" placeholder="Valor estimado">
+    </div>
+</div>
+
     </main>
 
     <script src="static/escolher-criptomoedas.js"></script>
