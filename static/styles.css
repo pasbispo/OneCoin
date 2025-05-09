@@ -554,3 +554,20 @@ button:hover {
 .crypto-list img:hover {
     transform: scale(1.1); /* Efeito ao passar o mouse */
 }
+
+.logo-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.logo-container img {
+    width: 120px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 60px; /* Ajustando espaço abaixo do logo */
+}
