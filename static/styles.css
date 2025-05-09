@@ -484,6 +484,31 @@ button:hover {
 
 
 
+.hidden {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.horizontal-line {
+    width: 100%;
+    height: 2px;
+    background-color: #888;
+    margin: 50px 0; /* Abaixando a linha */
+}
 
 .crypto-box {
     display: flex;
@@ -514,20 +539,18 @@ button:hover {
     border-radius: 5px;
 }
 
-.vertical-line {
-    width: 2px;
-    height: 50px;
-    background-color: #888;
+.crypto-list {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
 }
 
-.horizontal-line {
-    width: 100%;
-    height: 2px;
-    background-color: #888;
-    margin: 30px 0;
+.crypto-list img {
+    width: 80px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
-.hidden {
-    display: none;
+.crypto-list img:hover {
+    transform: scale(1.1); /* Efeito ao passar o mouse */
 }
-

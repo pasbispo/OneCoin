@@ -8,8 +8,10 @@ function selectCrypto(crypto) {
 }
 
 
+
+
 function selectCrypto(crypto) {
     let cryptoImage = document.getElementById("crypto-image");
     cryptoImage.src = `static/img/${crypto}.png`;
-    cryptoImage.classList.remove("hidden"); // Remove a classe "hidden" para exibir a imagem
+    cryptoImage.classList.remove("hidden"); // Exibir imagem
 }
