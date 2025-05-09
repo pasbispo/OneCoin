@@ -79,3 +79,5 @@ function selectCrypto(crypto, name) {
     cryptoName.textContent = name; // Atualizar nome da criptomoeda
 }
 
+
+
