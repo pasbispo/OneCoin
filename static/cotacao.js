@@ -1,5 +1,5 @@
 async function getCryptoPrice(crypto) {
-    let apiKey = "SUA_CHAVE_AQUI"; // Substitua pela sua chave de API
+    let apiKey = "bdf7d0eb-b427-4f59-b721-664d807c1fe2"; // Substitua pela sua chave de API
     let url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${crypto}&convert=USD`;
 
     let response = await fetch(url, {
