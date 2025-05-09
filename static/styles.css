@@ -594,16 +594,32 @@ button:hover {
     margin-top: 80px; /* Baixando a linha */
 }
 
+
+
+
+
+
 .search-crypto {
-    text-align: center;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 20px; /* Movendo para o lado esquerdo */
+    top: 250px; /* Ajustando posição abaixo do título */
 }
 
 .search-crypto input {
-    width: 60%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-right: 5px;
 }
 
+#search-button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
