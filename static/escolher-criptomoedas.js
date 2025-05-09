@@ -36,3 +36,25 @@ function filterCryptos() {
         }
     });
 }
+
+
+function limitDecimals(input) {
+    let value = input.value;
+    
+    // Permitir apenas números e ponto decimal
+    value = value.replace(/[^0-9.]/g, '');
+
+    // Certificar que há apenas um ponto decimal
+    let parts = value.split('.');
+    if (parts.length > 2) {
+        value = parts[0] + '.' + parts.slice(1).join('');
+    }
+
+    // Limitar para no máximo oito casas decimais
+    if (parts.length === 2 && parts[1].length > 8) {
+        parts[1] = parts[1].substring(0, 8);
+        value = parts.join('.');
+    }
+
+    input.value = value;
+}

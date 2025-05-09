@@ -503,17 +503,16 @@ button:hover {
 
 
 
-
 .crypto-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px; /* Reduzindo o espaçamento interno */
+    padding: 15px;
     background-color: #f4f4f4;
     border-radius: 8px;
-    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
     width: 80%;
-    height: 80px; /* Altura reduzida */
+    height: 80px; /* Mantém um tamanho profissional */
     margin: 30px auto; /* Ajustando a posição */
 }
 
@@ -522,17 +521,32 @@ button:hover {
     text-align: center;
 }
 
-.crypto-section img {
-    width: 50px;
+.crypto-section label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .crypto-section input {
-    width: 100%;
-    padding: 10px;
+    width: 90%; /* Ajuste para evitar que ultrapasse a borda */
+    padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+.vertical-line {
+    width: 2px;
+    height: 60px; /* Ajustado para não ultrapassar os campos */
+    background-color: #888;
+}
+
+
+.crypto-section img {
+    width: 50px;
+}
+
 
 .crypto-list {
     display: flex;
@@ -546,9 +560,12 @@ button:hover {
     transition: transform 0.2s ease-in-out;
 }
 
+
+
 .crypto-list img:hover {
     transform: scale(1.1); /* Efeito ao passar o mouse */
 }
+
 
 .logo-container {
     position: absolute;
@@ -624,12 +641,4 @@ button:hover {
     border-radius: 5px;
 }
 
-
-
-.crypto-section label {
-    display: block;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
 
