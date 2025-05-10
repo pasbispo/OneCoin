@@ -16,9 +16,10 @@ async function getCryptoPrice(crypto) {
         }
 
         let data = await response.json();
-        return data.data[crypto].quote.USD.price;
+        return data.data[crypto].quote.USD.price; // Retorna apenas o preço
     } catch (error) {
         console.error("Erro ao buscar cotação:", error);
         return null;
     }
 }
+
