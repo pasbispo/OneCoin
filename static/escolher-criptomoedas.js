@@ -1,3 +1,11 @@
+
+
+
+// Definição global para permitir acesso em todas as funções
+let selectedCrypto = "BTC"; // Define um valor inicial padrão
+
+
+
 // Função para buscar cotação da criptomoeda na API CoinMarketCap
 async function getCryptoPrice(crypto) {
     let response = await fetch(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${crypto}&convert=USD`, {
@@ -9,8 +17,6 @@ async function getCryptoPrice(crypto) {
     return data?.data?.[crypto]?.quote?.USD?.price || null;
 }
 
-// Definição global para permitir acesso em todas as funções
-let selectedCrypto = "BTC"; // Define um valor inicial padrão
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("crypto-amount").addEventListener("input", async function() {
