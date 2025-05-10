@@ -56,3 +56,16 @@ function selectCrypto(crypto, name) {
         window.location.href = "index.html";
     });
 
+
+async function getCryptoPrice(crypto) {
+    let response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=usd`);
+    let data = await response.json();
+    return data[crypto]?.usd || null;
+}
+
+
+document.getElementById("crypto-amount").addEventListener("input", function() {
+    console.log("Valor digitado:", this.value);
+});
+
+
