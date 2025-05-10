@@ -1,15 +1,13 @@
+// Função para buscar cotação da criptomoeda na API CoinMarketCap
 async function getCryptoPrice(crypto) {
     let response = await fetch(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${crypto}&convert=USD`, {
         headers: {
-            "X-CMC_PRO_API_KEY": "bdf7d0eb-b427-4f59-b721-664d807c1fe2"
+            "X-CMC_PRO_API_KEY": "SUA_CHAVE_DE_API_AQUI"
         }
     });
     let data = await response.json();
     return data?.data?.[crypto]?.quote?.USD?.price || null;
 }
-
-
-
 
 // Definição global para permitir acesso em todas as funções
 let selectedCrypto = "BTC"; // Define um valor inicial padrão
@@ -28,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Atualizar a criptomoeda selecionada e exibir no retângulo
-
 async function selectCrypto(crypto, name) {
     selectedCrypto = crypto; // Atualiza variável global
     let cryptoImage = document.getElementById("crypto-image");
@@ -50,49 +47,3 @@ async function selectCrypto(crypto, name) {
         document.getElementById("crypto-value").value = "Erro na cotação";
     }
 }
-
-
-    // Filtrar criptomoedas na pesquisa
-    function filterCryptos() {
-        let input = document.getElementById("search-bar").value.toLowerCase();
-        let images = document.querySelectorAll(".crypto-list img");
-
-        images.forEach(img => {
-            let cryptoName = img.getAttribute("alt").toLowerCase();
-            img.style.display = cryptoName.includes(input) ? "inline-block" : "none";
-        });
-    }
-
-    // Limitar casas decimais no campo de entrada
-    function limitDecimals(input) {
-        let value = input.value.replace(/[^0-9.]/g, ''); // Apenas números e ponto decimal
-        let parts = value.split('.');
-        if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
-        if (parts.length === 2 && parts[1].length > 8) parts[1] = parts[1].substring(0, 8);
-        input.value = parts.join('.');
-    }
-
-    // Redirecionamento ao clicar no logo
-    document.querySelector(".logo-container img").addEventListener("click", function() {
-        window.location.href = "index.html";
-    });
-
-
-document.getElementById("crypto-amount").addEventListener("input", async function() {
-    let amount = parseFloat(this.value);
-    let price = await getCryptoPrice(selectedCrypto); // Usa a criptomoeda escolhida
-
-    if (price) {
-        document.getElementById("crypto-value").value = (amount * price).toFixed(2) + " USD";
-    } else {
-        document.getElementById("crypto-value").value = "Erro na cotação";
-    }
-});
-
-
-
-document.getElementById("crypto-amount").addEventListener("input", function() {
-    console.log("Valor digitado:", this.value);
-});
-
-
