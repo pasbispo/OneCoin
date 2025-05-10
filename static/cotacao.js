@@ -6,7 +6,7 @@ async function getCryptoPrice(crypto) {
         let response = await fetch(url, {
             method: "GET",
             headers: {
-                "X-CMC_PRO-API-KEY": apiKey,
+                "X-CMC_PRO_API_KEY": apiKey,
                 "Accept": "application/json"
             }
         });
