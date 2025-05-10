@@ -1,5 +1,8 @@
+Definição global para permitir acesso em todas as funções
+let selectedCrypto = "BTC"; // Define um valor inicial padrão
+
 document.addEventListener("DOMContentLoaded", function() {
-    let selectedCrypto = "BTC"; // Define um valor padrão inicial
+   
 
     document.getElementById("crypto-amount").addEventListener("input", async function() {
         let amount = parseFloat(this.value);
