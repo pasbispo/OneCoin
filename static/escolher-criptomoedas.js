@@ -58,10 +58,11 @@ function selectCrypto(crypto, name) {
 
 
 async function getCryptoPrice(crypto) {
-    let response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=usd`);
+    let response = await fetch(`https://pro.coinmarketcap.com/v1/criptomoeda/cotações/mais recentes?symbol=${crypto}&convert=USD`);
     let data = await response.json();
-    return data[crypto]?.usd || null;
+    return data.data?.[crypto]?.quote?.USD?.price || null;
 }
+
 
 
 document.getElementById("crypto-amount").addEventListener("input", function() {
