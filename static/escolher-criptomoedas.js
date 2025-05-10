@@ -1,3 +1,15 @@
+async function getCryptoPrice(crypto) {
+    let response = await fetch(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${crypto}&convert=USD`, {
+        headers: {
+            "X-CMC_PRO_API_KEY": "bdf7d0eb-b427-4f59-b721-664d807c1fe2"
+        }
+    });
+    let data = await response.json();
+    return data?.data?.[crypto]?.quote?.USD?.price || null;
+}
+
+
+
 
 // Definição global para permitir acesso em todas as funções
 let selectedCrypto = "BTC"; // Define um valor inicial padrão
