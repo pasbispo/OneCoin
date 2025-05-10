@@ -1,9 +1,8 @@
-Definição global para permitir acesso em todas as funções
+
+// Definição global para permitir acesso em todas as funções
 let selectedCrypto = "BTC"; // Define um valor inicial padrão
 
 document.addEventListener("DOMContentLoaded", function() {
-   
-
     document.getElementById("crypto-amount").addEventListener("input", async function() {
         let amount = parseFloat(this.value);
         let price = await getCryptoPrice(selectedCrypto); // Usa a criptomoeda escolhida
@@ -14,21 +13,23 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("crypto-value").value = "Erro na cotação";
         }
     });
+});
 
-    // Atualizar a criptomoeda selecionada
-    function selectCrypto(crypto, name) {
-        selectedCrypto = crypto; // Atualiza variável global
-        let cryptoImage = document.getElementById("crypto-image");
-        let cryptoName = document.getElementById("crypto-name");
+// Atualizar a criptomoeda selecionada e exibir no retângulo
+function selectCrypto(crypto, name) {
+    selectedCrypto = crypto; // Atualiza variável global
+    let cryptoImage = document.getElementById("crypto-image");
+    let cryptoName = document.getElementById("crypto-name");
 
-        if (cryptoImage && cryptoName) { // Evita erros se os elementos não existirem
-            cryptoImage.src = `static/img/${crypto}.png`;
-            cryptoImage.classList.remove("hidden");
-            cryptoName.textContent = name;
-        } else {
-            console.error("Erro: Elementos da criptomoeda não encontrados!");
-        }
+    if (cryptoImage && cryptoName) { // Evita erros se os elementos não existirem
+        cryptoImage.src = `static/img/${crypto}.png`;
+        cryptoImage.classList.remove("hidden");
+        cryptoName.textContent = name;
+    } else {
+        console.error("Erro: Elementos da criptomoeda não encontrados!");
     }
+}
+
 
     // Filtrar criptomoedas na pesquisa
     function filterCryptos() {
