@@ -8,7 +8,7 @@ app.use(cors());
 app.get('/crypto/:symbol', async (req, res) => {
     const crypto = req.params.symbol.toUpperCase();
     const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${crypto}&convert=USD`;
-    const options = { headers: { 'X-CMC_PRO_API_KEY': 'SUA_CHAVE_API' } };
+    const options = { headers: { 'X-CMC_PRO_API_KEY': 'bdf7d0eb-b427-4f59-b721-664d807c1fe2' } };
 
     try {
         const response = await fetch(url, options);
