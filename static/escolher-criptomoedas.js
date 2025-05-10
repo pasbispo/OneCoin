@@ -16,17 +16,26 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // Atualizar a criptomoeda selecionada e exibir no retângulo
-function selectCrypto(crypto, name) {
+
+async function selectCrypto(crypto, name) {
     selectedCrypto = crypto; // Atualiza variável global
     let cryptoImage = document.getElementById("crypto-image");
     let cryptoName = document.getElementById("crypto-name");
 
-    if (cryptoImage && cryptoName) { // Evita erros se os elementos não existirem
+    if (cryptoImage && cryptoName) {
         cryptoImage.src = `static/img/${crypto}.png`;
         cryptoImage.classList.remove("hidden");
         cryptoName.textContent = name;
     } else {
         console.error("Erro: Elementos da criptomoeda não encontrados!");
+    }
+
+    // Atualiza a cotação automaticamente ao selecionar a criptomoeda
+    let price = await getCryptoPrice(selectedCrypto);
+    if (price) {
+        document.getElementById("crypto-value").value = (price).toFixed(2) + " USD"; // Mostra o valor unitário da criptomoeda
+    } else {
+        document.getElementById("crypto-value").value = "Erro na cotação";
     }
 }
 
