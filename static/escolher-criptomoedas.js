@@ -70,6 +70,8 @@ function limitDecimals(input) {
 }
 
 
+
+
 function selectCrypto(crypto, name) {
     let cryptoImage = document.getElementById("crypto-image");
     let cryptoName = document.getElementById("crypto-name");
@@ -80,4 +82,16 @@ function selectCrypto(crypto, name) {
 }
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("crypto-amount").addEventListener("input", async function() {
+        let amount = parseFloat(this.value);
+        let price = await getCryptoPrice(selectedCrypto);
+
+        if (price) {
+            document.getElementById("crypto-value").value = (amount * price).toFixed(2) + " USD";
+        } else {
+            document.getElementById("crypto-value").value = "Erro na cotação";
+        }
+    });
+});
 
