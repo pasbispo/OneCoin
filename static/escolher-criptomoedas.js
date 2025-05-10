@@ -57,11 +57,16 @@ function selectCrypto(crypto, name) {
     });
 
 
-async function getCryptoPrice(crypto) {
-    let response = await fetch(`https://pro.coinmarketcap.com/v1/criptomoeda/cotações/mais recentes?symbol=${crypto}&convert=USD`);
-    let data = await response.json();
-    return data.data?.[crypto]?.quote?.USD?.price || null;
-}
+document.getElementById("crypto-amount").addEventListener("input", async function() {
+    let amount = parseFloat(this.value);
+    let price = await getCryptoPrice(selectedCrypto); // Usa a criptomoeda escolhida
+
+    if (price) {
+        document.getElementById("crypto-value").value = (amount * price).toFixed(2) + " USD";
+    } else {
+        document.getElementById("crypto-value").value = "Erro na cotação";
+    }
+});
 
 
 
