@@ -55,4 +55,4 @@ function selectCrypto(crypto, name) {
     document.querySelector(".logo-container img").addEventListener("click", function() {
         window.location.href = "index.html";
     });
-});
+
