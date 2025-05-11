@@ -579,7 +579,7 @@ button:hover {
 }
 
 #crypto-table td:first-child {
-    width: 50px; /* Ajuste conforme necessário */
+    width: 0px; /* Ajuste conforme necessário */
     max-width: 50px;
     text-align: center;
     overflow: hidden;
