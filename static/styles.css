@@ -574,7 +574,7 @@ button:hover {
 
 
 #crypto-table td:first-child {
-    width: 10px; /* Ajuste conforme necessário */
+    width: 90px; /* Ajuste conforme necessário */
     text-align: center; /* Centraliza a imagem */
 }
 
