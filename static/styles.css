@@ -555,7 +555,7 @@ button:hover {
 }
 
 .crypto-list img {
-    width: 80px;
+    width: 40px;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 }
