@@ -575,7 +575,7 @@ button:hover {
 
 #crypto-table {
     table-layout: fixed; /* Garante que os tamanhos das colunas sejam respeitados */
-    width: 100%; /* Mantém a tabela responsiva */
+    width: 50%; /* Mantém a tabela responsiva */
 }
 
 #crypto-table th:first-child,
