@@ -573,6 +573,11 @@ button:hover {
 }
 
 
+#crypto-table td:first-child {
+    width: 50px; /* Ajuste conforme necessário */
+    text-align: center; /* Centraliza a imagem */
+}
+
 
 .logo-container {
     position: absolute;
