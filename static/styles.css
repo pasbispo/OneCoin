@@ -573,10 +573,11 @@ button:hover {
 }
 
 
-
-#crypto-table {
-    width: 40%; /* Ajuste conforme necessário */
-    margin: auto; /* Centraliza a tabela */
+#crypto-table th:first-child,
+#crypto-table td:first-child {
+    width: 60px; /* Ajuste conforme necessário */
+    max-width: 60px;
+    text-align: center;
 }
 
 
