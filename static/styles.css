@@ -573,10 +573,16 @@ button:hover {
 }
 
 
+
+#crypto-table th:first-child,
 #crypto-table td:first-child {
-    width: 90px; /* Ajuste conforme necessário */
-    text-align: center; /* Centraliza a imagem */
+    width: 60px; /* Ajuste conforme necessário */
+    max-width: 60px;
+    text-align: center;
 }
+
+
+
 
 
 .logo-container {
