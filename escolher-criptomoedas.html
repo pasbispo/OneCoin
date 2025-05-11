@@ -88,13 +88,17 @@
 
 
 
-
-
-
-
-
-<!-- Botão Próximo ao lado direito do retângulo -->
-<button id="next-button">Próximo</button>
+<div id="crypto-selection">
+    <img id="crypto-image" class="hidden" src="" alt="Criptomoeda">
+    <span id="crypto-name">Nome da Criptomoeda</span>
+    
+    <!-- Campo para quantidade e valor estimado -->
+    <input id="crypto-amount" type="number" placeholder="Quantidade">
+    <input id="crypto-value" type="text" readonly placeholder="Valor Estimado">
+    
+    <!-- Botão próximo ao lado direito do campo "Valor Estimado" -->
+    <button id="next-button">Próximo</button>
+</div>
 
 <!-- Tabela para exibir os dados -->
 <table id="crypto-table" border="1">
@@ -104,9 +108,6 @@
         <th>Valor Estimado</th>
     </tr>
 </table>
-
-
-
 
 
 

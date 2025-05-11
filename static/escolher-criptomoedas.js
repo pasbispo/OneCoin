@@ -67,21 +67,4 @@ app.get('/crypto/:symbol', async (req, res) => {
 });
 
 
-document.getElementById("next-button").addEventListener("click", function() {
-    let cryptoSymbol = selectedCrypto; // Símbolo da criptomoeda escolhida
-    let cryptoAmount = document.getElementById("crypto-amount").value; // Quantidade escolhida
-    let cryptoValue = document.getElementById("crypto-value").value; // Valor estimado
-
-    if (!cryptoSymbol || !cryptoAmount || cryptoValue === "Erro na cotação") {
-        alert("Escolha uma criptomoeda e insira a quantidade!");
-        return;
-    }
-
-    // Criando a linha da tabela
-    let newRow = document.createElement("tr");
-    newRow.innerHTML = `<td>${cryptoSymbol}</td><td>${cryptoAmount}</td><td>${cryptoValue}</td>`;
-
-    // Adicionando à tabela
-    document.getElementById("crypto-table").appendChild(newRow);
-});
 
