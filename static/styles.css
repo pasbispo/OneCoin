@@ -578,11 +578,16 @@ button:hover {
     width: 100%; /* Mantém a tabela responsiva */
 }
 
+#crypto-table th:first-child,
 #crypto-table td:first-child {
-    width: 0px; /* Ajuste conforme necessário */
-    max-width: 50px;
+    width: 50px; /* Ajuste conforme necessário */
     text-align: center;
-    overflow: hidden;
+}
+
+#crypto-table td:first-child img {
+    width: 30px; /* Diminui a imagem dentro da célula */
+    display: block;
+    margin: auto;
 }
 
 
