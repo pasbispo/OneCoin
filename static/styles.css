@@ -631,11 +631,12 @@ button:hover {
     top: 250px; /* Ajustando posição abaixo do título */
 }
 
-.search-crypto {
-    display: flex;
-    flex-direction: column; /* Garante que os elementos fiquem um abaixo do outro */
-    align-items: center;
-    margin-top: 20px; /* Ajuste conforme necessário */
+.search-crypto input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
 }
 
 #search-button {
@@ -645,7 +646,6 @@ button:hover {
     padding: 10px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 15px; /* Isso empurra o botão para baixo */
 }
 
 
