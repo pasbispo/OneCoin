@@ -13,11 +13,14 @@ app.get('/crypto/:symbol', async (req, res) => {
     try {
         const response = await fetch(url, options);
         const data = await response.json();
+
+        console.log("Resposta da API:", JSON.stringify(data, null, 2)); // ✅ Agora está no lugar certo!
+
         res.json(data);
     } catch (error) {
+        console.error("Erro ao buscar dados:", error);
         res.status(500).json({ error: 'Erro ao buscar dados' });
     }
 });
-
 
 app.listen(3000, () => console.log('Servidor rodando na porta 3000'));

@@ -8,9 +8,9 @@ let selectedCrypto = "BTC"; // Define um valor inicial padrão
 
 // Função para buscar cotação da criptomoeda na API CoinMarketCap
 async function getCryptoPrice(crypto) {
-    let response = await fetch(`http://localhost:3000/crypto/${crypto}`);
+    let response = await fetch(`http://localhost:3000/crypto/${crypto.toUpperCase()}`);
     let data = await response.json();
-    return data?.data?.[crypto]?.quote?.USD?.price || null;
+    return data?.data?.[crypto.toUpperCase()]?.quote?.USD?.price || null;
 }
 
 
@@ -49,3 +49,20 @@ async function selectCrypto(crypto, name) {
         document.getElementById("crypto-value").value = "Erro na cotação";
     }
 }
+
+app.get('/crypto/:symbol', async (req, res) => {
+    const crypto = req.params.symbol.toUpperCase();
+    const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${crypto}&convert=USD`;
+    const options = { headers: { 'X-CMC_PRO_API_KEY': 'bdf7d0eb-b427-4f59-b721-664d807c1fe2' } };
+
+    try {
+        const response = await fetch(url, options);
+        const data = await response.json();
+        console.log("Resposta da API:", data); // <-- Adicionado para depuração
+        res.json(data);
+    } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+        res.status(500).json({ error: 'Erro ao buscar dados' });
+    }
+});
+
