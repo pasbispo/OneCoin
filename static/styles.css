@@ -512,7 +512,7 @@ button:hover {
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
     width: 80%;
-    height: 80px; /* Mantém um tamanho profissional */
+    height: 50px; /* Mantém um tamanho profissional */
     margin: 30px auto; /* Ajustando a posição */
 }
 
