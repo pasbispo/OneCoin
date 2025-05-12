@@ -538,7 +538,7 @@ button:hover {
 
 .vertical-line {
     width: 2px;
-    height: 60px; /* Ajustado para não ultrapassar os campos */
+    height: 40px; /* Ajustado para não ultrapassar os campos */
     background-color: #888;
 }
 
