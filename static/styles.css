@@ -510,7 +510,7 @@ button:hover {
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 8px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
     width: 80%;
     height: 80px; /* Mantém um tamanho profissional */
     margin: 30px auto; /* Ajustando a posição */
@@ -538,7 +538,7 @@ button:hover {
 
 .vertical-line {
     width: 2px;
-    height: 60px; /* Ajustado para não ultrapassar os campos */
+    height: 80px; /* Ajustado para não ultrapassar os campos */
     background-color: #888;
 }
 
@@ -573,11 +573,6 @@ button:hover {
 }
 
 
-#crypto-table {
-    width: 10%; /* Diminui a largura da tabela */
-    max-width: 100px; /* Define um tamanho máximo */
-    margin: auto; /* Centraliza a tabela */
-}
 
 
 
