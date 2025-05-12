@@ -500,6 +500,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Mantém os elementos separados */
+    margin-bottom: 10px; /* Move para cima */
 }
 
 #next-button {
@@ -511,6 +512,7 @@ button:hover {
     border-radius: 5px;
     font-size: 16px;
     margin-left: auto; /* Empurra o botão para o lado direito */
+    margin-top: 10px; /* Move para baixo */
 }
 
 
