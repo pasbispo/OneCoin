@@ -574,18 +574,9 @@ button:hover {
 
 
 #crypto-table {
-    table-layout: fixed; /* Garante que os tamanhos das colunas sejam respeitados */
-    width: 100%; /* Mantém a tabela responsiva */
-    border-collapse: collapse;
-}
-
-#crypto-table th:first-child,
-#crypto-table td:first-child {
-    width: 20px; /* Ajuste conforme necessário */
-    max-width: 20px;
-    text-align: center;
-    overflow: hidden;
-    padding: 5px;
+    width: 80%; /* Diminui a largura da tabela */
+    max-width: 500px; /* Define um tamanho máximo */
+    margin: auto; /* Centraliza a tabela */
 }
 
 
