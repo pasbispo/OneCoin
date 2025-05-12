@@ -496,6 +496,16 @@ button:hover {
 
 
 
+#next-button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: auto; /* Isso empurra o botão para a direita */
+}
 
 
 
