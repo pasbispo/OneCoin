@@ -496,6 +496,12 @@ button:hover {
 
 
 
+.crypto-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Mantém os elementos separados */
+}
+
 #next-button {
     background-color: #008CBA;
     color: white;
@@ -504,7 +510,7 @@ button:hover {
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    margin-left: auto; /* Isso empurra o botão para a direita */
+    margin-left: auto; /* Empurra o botão para o lado direito */
 }
 
 
