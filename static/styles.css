@@ -497,26 +497,6 @@ button:hover {
 
 
 
-#next-button {
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.crypto-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Mantém elementos separados */
-}
-
-#next-button {
-    margin-left: auto; /* Empurra o botão para a direita */
-}
-
 
 
 
