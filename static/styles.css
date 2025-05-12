@@ -574,8 +574,8 @@ button:hover {
 
 
 #crypto-table {
-    width: 80%; /* Diminui a largura da tabela */
-    max-width: 500px; /* Define um tamanho máximo */
+    width: 50%; /* Diminui a largura da tabela */
+    max-width: 300px; /* Define um tamanho máximo */
     margin: auto; /* Centraliza a tabela */
 }
 
