@@ -725,8 +725,9 @@ button:hover {
 
 
 .continue-container {
-    text-align: center;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* ✅ Centraliza horizontalmente */
+    margin-top: 20px; /* Adiciona espaçamento acima */
 }
 
 #continue-button {
@@ -737,6 +738,8 @@ button:hover {
     font-size: 18px;
     cursor: pointer;
     border-radius: 5px;
+    width: 200px; /* Define um tamanho fixo */
+    text-align: center;
 }
 
 #continue-button:hover {
