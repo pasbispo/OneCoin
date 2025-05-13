@@ -74,7 +74,6 @@ app.get('/crypto/:symbol', async (req, res) => {
 
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
     let nextButton = document.getElementById("next-button");
 
@@ -83,7 +82,10 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
 
+    // Adiciona o evento de clique ao botão
     nextButton.addEventListener("click", function() {
+        console.log("Botão Próximo clicado!");
+
         let cryptoName = document.getElementById("crypto-name")?.textContent.trim() || "";
         let cryptoImage = document.getElementById("crypto-image")?.src || "";
         let cryptoAmount = document.getElementById("crypto-amount")?.value.trim() || "";
@@ -123,6 +125,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let nextButton = document.getElementById("next-button");
+
+    if (!nextButton) {
+        console.error("Erro: O botão Próximo não foi encontrado!");
+        return;
+    }
+
+    nextButton.addEventListener("click", function() {
+        console.log("Botão Próximo clicado!");
+    });
+});
+
+// Função para limitar casas decimais na entrada
 function limitDecimals(input) {
     let value = input.value;
     input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
