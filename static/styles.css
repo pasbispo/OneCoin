@@ -498,9 +498,9 @@ button:hover {
 
 .crypto-box {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between; /* Mantém os elementos separados */
-    margin-bottom: 15px; /* Move para cima */
+
 }
 
 #next-button {
@@ -512,7 +512,9 @@ button:hover {
     border-radius: 5px;
     font-size: 16px;
     margin-left: auto; /* Empurra o botão para o lado direito */
-    margin-top: 30px; /* Move para baixo */
+    position: relative;
+    top: 10px; /* Move para baixo */
+
 }
 
 
