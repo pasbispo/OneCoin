@@ -71,56 +71,58 @@ app.get('/crypto/:symbol', async (req, res) => {
 
 
 
-document.getElementById("next-button").addEventListener("click", function() {
-    let cryptoName = document.getElementById("crypto-name").textContent;
-    let cryptoImage = document.getElementById("crypto-image").src;
-    let cryptoAmount = document.getElementById("crypto-amount").value;
-    let cryptoValue = document.getElementById("crypto-value").value;
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("next-button").addEventListener("click", function() {
+        let cryptoName = document.getElementById("crypto-name").textContent;
+        let cryptoImage = document.getElementById("crypto-image").src;
+        let cryptoAmount = document.getElementById("crypto-amount").value;
+        let cryptoValue = document.getElementById("crypto-value").value;
 
-    if (!cryptoName || !cryptoAmount || !cryptoValue) {
-        alert("Preencha todos os campos antes de continuar!");
-        return;
-    }
-
-    let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
-
-    // Remover linha vazia inicial, se existir
-    let emptyRow = document.querySelector(".empty-row");
-    if (emptyRow) emptyRow.remove();
-
-    let newRow = table.insertRow();
-
-    let cell1 = newRow.insertCell(0);
-    let cell2 = newRow.insertCell(1);
-    let cell3 = newRow.insertCell(2);
-    let cell4 = newRow.insertCell(3);
-
-    // Adicionando imagem e nome da criptomoeda
-    cell1.innerHTML = `<img src="${cryptoImage}" width="30"> ${cryptoName}`;
-
-    // Adicionando os valores
-    cell2.textContent = cryptoAmount;
-    cell3.textContent = cryptoValue;
-
-    // Criando botão "Excluir"
-    let deleteButton = document.createElement("button");
-    deleteButton.textContent = "Excluir";
-    deleteButton.addEventListener("click", function() {
-        newRow.remove();
-        
-        // Se todas as linhas forem removidas, recria a linha vazia
-        if (table.rows.length === 0) {
-            let emptyRow = table.insertRow();
-            let emptyCell = emptyRow.insertCell(0);
-            emptyCell.colSpan = 4;
-            emptyCell.textContent = "Nenhum dado cadastrado ainda.";
-            emptyCell.style.textAlign = "center";
-            emptyCell.style.color = "gray";
-            emptyRow.classList.add("empty-row");
+        if (!cryptoName || !cryptoAmount || !cryptoValue) {
+            alert("Preencha todos os campos antes de continuar!");
+            return;
         }
-    });
 
-    cell4.appendChild(deleteButton);
+        let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
+
+        // Remover linha vazia inicial, se existir
+        let emptyRow = document.querySelector(".empty-row");
+        if (emptyRow) emptyRow.remove();
+
+        let newRow = table.insertRow();
+
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+        let cell4 = newRow.insertCell(3);
+
+        // Adicionando imagem e nome da criptomoeda
+        cell1.innerHTML = `<img src="${cryptoImage}" width="30"> ${cryptoName}`;
+
+        // Adicionando os valores
+        cell2.textContent = cryptoAmount;
+        cell3.textContent = cryptoValue;
+
+        // Criando botão "Excluir"
+        let deleteButton = document.createElement("button");
+        deleteButton.textContent = "Excluir";
+        deleteButton.addEventListener("click", function() {
+            newRow.remove();
+            
+            // Se todas as linhas forem removidas, recria a linha vazia
+            if (table.rows.length === 0) {
+                let emptyRow = table.insertRow();
+                let emptyCell = emptyRow.insertCell(0);
+                emptyCell.colSpan = 4;
+                emptyCell.textContent = "Nenhum dado cadastrado ainda.";
+                emptyCell.style.textAlign = "center";
+                emptyCell.style.color = "gray";
+                emptyRow.classList.add("empty-row");
+            }
+        });
+
+        cell4.appendChild(deleteButton);
+    });
 });
 
 
