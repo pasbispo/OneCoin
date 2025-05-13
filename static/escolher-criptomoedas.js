@@ -15,26 +15,10 @@ async function selectCrypto(crypto, name) {
     }
 
 
-// Atualizar a criptomoeda selecionada e exibir no retângulo
-async function selectCrypto(crypto, name) {
-    if (chosenCryptos.has(crypto)) {
-        alert("Você já adicionou essa criptomoeda à tabela! Escolha outra.");
-        return;
-    }
 
-    selectedCrypto = crypto; // Atualiza variável global
-    let cryptoImage = document.getElementById("crypto-image");
-    let cryptoName = document.getElementById("crypto-name");
 
-    if (cryptoImage && cryptoName) {
-        cryptoImage.src = `static/img/${crypto}.png`;
-        cryptoImage.classList.remove("hidden");
-        cryptoName.textContent = name;
-    } else {
-        console.error("Erro: Elementos da criptomoeda não encontrados!");
-    }
 
-    // Atualiza a cotação automaticamente ao selecionar a criptomoeda
+    // Atualiza a cotação ao selecionar a criptomoeda
     let price = await getCryptoPrice(selectedCrypto);
     document.getElementById("crypto-value").value = price ? (price).toFixed(2) + " USD" : "Erro na cotação";
 }
@@ -47,6 +31,14 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Erro: Elementos não encontrados!");
         return;
     }
+
+    // Atualiza valor estimado com base na cotação
+    cryptoAmountInput.addEventListener("input", async function() {
+        let amount = parseFloat(this.value);
+        let price = await getCryptoPrice(selectedCrypto);
+
+        document.getElementById("crypto-value").value = price ? (amount * price).toFixed(2) + " USD" : "Erro na cotação";
+    });
 
     // Evento de clique no botão "Próximo"
     nextButton.addEventListener("click", function() {
@@ -68,9 +60,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let emptyRow = document.querySelector(".empty-row");
         if (emptyRow) emptyRow.remove();
 
-        // Adicionar criptomoeda ao conjunto para evitar repetição
-        chosenCryptos.add(selectedCrypto);
-
         // Criando nova linha na tabela
         let newRow = table.insertRow();
         newRow.innerHTML = `
@@ -81,20 +70,17 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
 
         newRow.querySelector(".delete-button").addEventListener("click", function() {
-            chosenCryptos.delete(selectedCrypto); // Remove criptomoeda ao excluir da tabela
             newRow.remove();
             
             if (table.rows.length === 0) {
                 table.innerHTML = `<tr class="empty-row"><td colspan="4" style="text-align: center; color: gray;">Nenhum dado cadastrado ainda.</td></tr>`;
             }
         });
-
-        // ❗ Limpar os dados do retângulo para nova escolha
-        document.getElementById("crypto-name").textContent = "";
-        document.getElementById("crypto-image").src = "static/img/default-crypto.png";
-        document.getElementById("crypto-image").classList.add("hidden");
-        cryptoAmountInput.value = "";
-        document.getElementById("crypto-value").value = "";
-        selectedCrypto = null;
     });
 });
+
+// Função para limitar casas decimais na entrada
+function limitDecimals(input) {
+    let value = input.value;
+    input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
+}
