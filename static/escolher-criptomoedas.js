@@ -72,15 +72,23 @@ app.get('/crypto/:symbol', async (req, res) => {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Captura o botão "Próximo"
-    document.getElementById("next-button").addEventListener("click", function() {
-        let cryptoName = document.getElementById("crypto-name").textContent.trim();
-        let cryptoImage = document.getElementById("crypto-image").src;
-        let cryptoAmount = document.getElementById("crypto-amount").value.trim();
-        let cryptoValue = document.getElementById("crypto-value").value.trim();
 
-        // Validação: impede que dados vazios sejam adicionados
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let nextButton = document.getElementById("next-button");
+
+    if (!nextButton) {
+        console.error("Erro: O botão Próximo não foi encontrado!");
+        return;
+    }
+
+    nextButton.addEventListener("click", function() {
+        let cryptoName = document.getElementById("crypto-name")?.textContent.trim() || "";
+        let cryptoImage = document.getElementById("crypto-image")?.src || "";
+        let cryptoAmount = document.getElementById("crypto-amount")?.value.trim() || "";
+        let cryptoValue = document.getElementById("crypto-value")?.value.trim() || "";
+
         if (!cryptoName || cryptoAmount === "" || cryptoValue === "") {
             alert("Preencha todos os campos antes de continuar!");
             return;
@@ -94,46 +102,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Criando nova linha na tabela
         let newRow = table.insertRow();
+        newRow.innerHTML = `
+            <td><img src="${cryptoImage}" width="30"> ${cryptoName}</td>
+            <td>${cryptoAmount}</td>
+            <td>${cryptoValue}</td>
+            <td><button class="delete-button">Excluir</button></td>
+        `;
 
-        let cell1 = newRow.insertCell(0);
-        let cell2 = newRow.insertCell(1);
-        let cell3 = newRow.insertCell(2);
-        let cell4 = newRow.insertCell(3);
-
-        // Adicionando imagem e nome da criptomoeda
-        cell1.innerHTML = `<img src="${cryptoImage}" width="30"> ${cryptoName}`;
-
-        // Adicionando os valores nas células correspondentes
-        cell2.textContent = cryptoAmount;
-        cell3.textContent = cryptoValue;
-
-        // Criando botão "Excluir"
-        let deleteButton = document.createElement("button");
-        deleteButton.textContent = "Excluir";
-        deleteButton.style.backgroundColor = "red";
-        deleteButton.style.color = "white";
-        deleteButton.style.border = "none";
-        deleteButton.style.padding = "5px 10px";
-        deleteButton.style.cursor = "pointer";
-        deleteButton.style.borderRadius = "5px";
-        deleteButton.addEventListener("click", function() {
+        newRow.querySelector(".delete-button").addEventListener("click", function() {
             newRow.remove();
             
-            // Se todas as linhas forem removidas, recria a linha vazia
             if (table.rows.length === 0) {
-                let emptyRow = table.insertRow();
-                let emptyCell = emptyRow.insertCell(0);
-                emptyCell.colSpan = 4;
-                emptyCell.textContent = "Nenhum dado cadastrado ainda.";
-                emptyCell.style.textAlign = "center";
-                emptyCell.style.color = "gray";
-                emptyRow.classList.add("empty-row");
+                table.innerHTML = `<tr class="empty-row"><td colspan="4" style="text-align: center; color: gray;">Nenhum dado cadastrado ainda.</td></tr>`;
             }
         });
-
-        cell4.appendChild(deleteButton);
     });
 });
+
+
 
 
 
@@ -141,3 +127,22 @@ function limitDecimals(input) {
     let value = input.value;
     input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
 }
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(() => { // Adiciona um pequeno atraso para garantir que tudo seja carregado
+        let nextButton = document.getElementById("next-button");
+
+        if (!nextButton) {
+            console.error("Erro: O botão Próximo não foi encontrado!");
+            return;
+        }
+
+        nextButton.addEventListener("click", function() {
+            console.log("Botão Próximo clicado!"); // Para testar no console
+        });
+    }, 500); // Aguarda meio segundo antes de executar o código
+});
