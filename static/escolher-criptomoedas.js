@@ -14,10 +14,6 @@ async function selectCrypto(crypto, name) {
         console.error("Erro: Elementos da criptomoeda não encontrados!");
     }
 
-
-
-
-
     // Atualiza a cotação ao selecionar a criptomoeda
     let price = await getCryptoPrice(selectedCrypto);
     document.getElementById("crypto-value").value = price ? (price).toFixed(2) + " USD" : "Erro na cotação";
