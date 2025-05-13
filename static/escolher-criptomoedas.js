@@ -71,14 +71,17 @@ app.get('/crypto/:symbol', async (req, res) => {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("next-button").addEventListener("click", function() {
-        let cryptoName = document.getElementById("crypto-name").textContent;
-        let cryptoImage = document.getElementById("crypto-image").src;
-        let cryptoAmount = document.getElementById("crypto-amount").value;
-        let cryptoValue = document.getElementById("crypto-value").value;
 
-        if (!cryptoName || !cryptoAmount || !cryptoValue) {
+document.addEventListener("DOMContentLoaded", function() {
+    // Captura o clique no botão "Próximo"
+    document.getElementById("next-button").addEventListener("click", function() {
+        let cryptoName = document.getElementById("crypto-name").textContent.trim();
+        let cryptoImage = document.getElementById("crypto-image").src;
+        let cryptoAmount = document.getElementById("crypto-amount").value.trim();
+        let cryptoValue = document.getElementById("crypto-value").value.trim();
+
+        // Validação: impede que dados vazios sejam adicionados
+        if (!cryptoName || cryptoAmount === "" || cryptoValue === "") {
             alert("Preencha todos os campos antes de continuar!");
             return;
         }
@@ -89,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let emptyRow = document.querySelector(".empty-row");
         if (emptyRow) emptyRow.remove();
 
+        // Criando nova linha na tabela
         let newRow = table.insertRow();
 
         let cell1 = newRow.insertCell(0);
@@ -99,13 +103,19 @@ document.addEventListener("DOMContentLoaded", function() {
         // Adicionando imagem e nome da criptomoeda
         cell1.innerHTML = `<img src="${cryptoImage}" width="30"> ${cryptoName}`;
 
-        // Adicionando os valores
+        // Adicionando os valores nas células correspondentes
         cell2.textContent = cryptoAmount;
         cell3.textContent = cryptoValue;
 
         // Criando botão "Excluir"
         let deleteButton = document.createElement("button");
         deleteButton.textContent = "Excluir";
+        deleteButton.style.backgroundColor = "red";
+        deleteButton.style.color = "white";
+        deleteButton.style.border = "none";
+        deleteButton.style.padding = "5px 10px";
+        deleteButton.style.cursor = "pointer";
+        deleteButton.style.borderRadius = "5px";
         deleteButton.addEventListener("click", function() {
             newRow.remove();
             
@@ -124,5 +134,6 @@ document.addEventListener("DOMContentLoaded", function() {
         cell4.appendChild(deleteButton);
     });
 });
+
 
 
