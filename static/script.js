@@ -13,7 +13,6 @@ document.getElementById("signup-button").addEventListener("click", function(even
 
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
     let nextButton = document.getElementById("next-button");
 
@@ -23,6 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     nextButton.addEventListener("click", function() {
-        console.log("Botão Próximo clicado!"); // Para testar no console
+        console.log("Botão Próximo clicado!");
     });
 });

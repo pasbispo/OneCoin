@@ -1,94 +1,45 @@
-
-
-
-
 // Definição global para permitir acesso em todas as funções
 let selectedCrypto = "BTC"; // Define um valor inicial padrão
 
-
-
 // Função para buscar cotação da criptomoeda na API CoinMarketCap
 async function getCryptoPrice(crypto) {
-    let response = await fetch(`http://localhost:3000/crypto/${crypto.toUpperCase()}`);
-    let data = await response.json();
-    return data?.data?.[crypto.toUpperCase()]?.quote?.USD?.price || null;
-}
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("crypto-amount").addEventListener("input", async function() {
-        let amount = parseFloat(this.value);
-        let price = await getCryptoPrice(selectedCrypto); // Usa a criptomoeda escolhida
-
-        if (price) {
-            document.getElementById("crypto-value").value = (amount * price).toFixed(2) + " USD";
-        } else {
-            document.getElementById("crypto-value").value = "Erro na cotação";
-        }
-    });
-});
-
-// Atualizar a criptomoeda selecionada e exibir no retângulo
-async function selectCrypto(crypto, name) {
-    selectedCrypto = crypto; // Atualiza variável global
-    let cryptoImage = document.getElementById("crypto-image");
-    let cryptoName = document.getElementById("crypto-name");
-
-    if (cryptoImage && cryptoName) {
-        cryptoImage.src = `static/img/${crypto}.png`;
-        cryptoImage.classList.remove("hidden");
-        cryptoName.textContent = name;
-    } else {
-        console.error("Erro: Elementos da criptomoeda não encontrados!");
-    }
-
-    // Atualiza a cotação automaticamente ao selecionar a criptomoeda
-    let price = await getCryptoPrice(selectedCrypto);
-    if (price) {
-        document.getElementById("crypto-value").value = (price).toFixed(2) + " USD"; // Mostra o valor unitário da criptomoeda
-    } else {
-        document.getElementById("crypto-value").value = "Erro na cotação";
-    }
-}
-
-app.get('/crypto/:symbol', async (req, res) => {
-    const crypto = req.params.symbol.toUpperCase();
-    const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${crypto}&convert=USD`;
-    const options = { headers: { 'X-CMC_PRO_API_KEY': 'bdf7d0eb-b427-4f59-b721-664d807c1fe2' } };
-
     try {
-        const response = await fetch(url, options);
-        const data = await response.json();
-        console.log("Resposta da API:", data); // <-- Adicionado para depuração
-        res.json(data);
+        let response = await fetch(`http://localhost:3000/crypto/${crypto.toUpperCase()}`);
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status}`);
+        }
+        let data = await response.json();
+        return data?.data?.[crypto.toUpperCase()]?.quote?.USD?.price || null;
     } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-        res.status(500).json({ error: 'Erro ao buscar dados' });
+        console.error("Erro ao buscar cotação:", error);
+        return "Erro na cotação";
     }
-});
-
-
-
-
-
-
-
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     let nextButton = document.getElementById("next-button");
+    let cryptoAmountInput = document.getElementById("crypto-amount");
 
-    if (!nextButton) {
-        console.error("Erro: O botão Próximo não foi encontrado!");
+    if (!nextButton || !cryptoAmountInput) {
+        console.error("Erro: Elementos não encontrados!");
         return;
     }
 
-    // Adiciona o evento de clique ao botão
+    // Atualiza valor estimado com base na cotação
+    cryptoAmountInput.addEventListener("input", async function() {
+        let amount = parseFloat(this.value);
+        let price = await getCryptoPrice(selectedCrypto);
+
+        document.getElementById("crypto-value").value = price ? (amount * price).toFixed(2) + " USD" : "Erro na cotação";
+    });
+
+    // Evento de clique no botão "Próximo"
     nextButton.addEventListener("click", function() {
         console.log("Botão Próximo clicado!");
 
         let cryptoName = document.getElementById("crypto-name")?.textContent.trim() || "";
         let cryptoImage = document.getElementById("crypto-image")?.src || "";
-        let cryptoAmount = document.getElementById("crypto-amount")?.value.trim() || "";
+        let cryptoAmount = cryptoAmountInput.value.trim() || "";
         let cryptoValue = document.getElementById("crypto-value")?.value.trim() || "";
 
         if (!cryptoName || cryptoAmount === "" || cryptoValue === "") {
@@ -121,44 +72,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let nextButton = document.getElementById("next-button");
-
-    if (!nextButton) {
-        console.error("Erro: O botão Próximo não foi encontrado!");
-        return;
-    }
-
-    nextButton.addEventListener("click", function() {
-        console.log("Botão Próximo clicado!");
-    });
-});
-
 // Função para limitar casas decimais na entrada
 function limitDecimals(input) {
     let value = input.value;
     input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
 }
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(() => { // Adiciona um pequeno atraso para garantir que tudo seja carregado
-        let nextButton = document.getElementById("next-button");
-
-        if (!nextButton) {
-            console.error("Erro: O botão Próximo não foi encontrado!");
-            return;
-        }
-
-        nextButton.addEventListener("click", function() {
-            console.log("Botão Próximo clicado!"); // Para testar no console
-        });
-    }, 500); // Aguarda meio segundo antes de executar o código
-});

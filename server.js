@@ -1,9 +1,8 @@
 const express = require('express');
-const fetch = require('node-fetch');
-const cors = require('cors'); // Para permitir requisições do seu frontend
+const cors = require('cors'); // Permite requisições externas
 
 const app = express();
-app.use(cors());
+app.use(cors()); // Habilita CORS para que o frontend possa acessar a API
 
 app.get('/crypto/:symbol', async (req, res) => {
     const crypto = req.params.symbol.toUpperCase();
@@ -12,9 +11,13 @@ app.get('/crypto/:symbol', async (req, res) => {
 
     try {
         const response = await fetch(url, options);
-        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status}`);
+        }
 
-        console.log("Resposta da API:", JSON.stringify(data, null, 2)); // ✅ Agora está no lugar certo!
+        const data = await response.json();
+        console.log("Resposta da API:", JSON.stringify(data, null, 2));
 
         res.json(data);
     } catch (error) {
@@ -23,4 +26,5 @@ app.get('/crypto/:symbol', async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Servidor rodando na porta 3000'));
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
