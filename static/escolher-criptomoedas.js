@@ -69,3 +69,43 @@ app.get('/crypto/:symbol', async (req, res) => {
 
 
 
+
+
+document.getElementById("next-button").addEventListener("click", function() {
+    let cryptoName = document.getElementById("crypto-name").textContent;
+    let cryptoImage = document.getElementById("crypto-image").src;
+    let cryptoAmount = document.getElementById("crypto-amount").value;
+    let cryptoValue = document.getElementById("crypto-value").value;
+
+    if (!cryptoName || !cryptoAmount || !cryptoValue) {
+        alert("Preencha todos os campos antes de continuar!");
+        return;
+    }
+
+    let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
+    
+    let newRow = table.insertRow();
+    
+    let cell1 = newRow.insertCell(0);
+    let cell2 = newRow.insertCell(1);
+    let cell3 = newRow.insertCell(2);
+    let cell4 = newRow.insertCell(3);
+
+    // Adicionando a imagem e nome da criptomoeda na primeira célula
+    cell1.innerHTML = `<img src="${cryptoImage}" width="30"> ${cryptoName}`;
+    
+    // Adicionando os valores nas células correspondentes
+    cell2.textContent = cryptoAmount;
+    cell3.textContent = cryptoValue;
+
+    // Criando o botão "Excluir"
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "Excluir";
+    deleteButton.addEventListener("click", function() {
+        newRow.remove();
+    });
+
+    cell4.appendChild(deleteButton);
+});
+
+
