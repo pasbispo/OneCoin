@@ -83,26 +83,41 @@ document.getElementById("next-button").addEventListener("click", function() {
     }
 
     let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
-    
+
+    // Remover linha vazia inicial, se existir
+    let emptyRow = document.querySelector(".empty-row");
+    if (emptyRow) emptyRow.remove();
+
     let newRow = table.insertRow();
-    
+
     let cell1 = newRow.insertCell(0);
     let cell2 = newRow.insertCell(1);
     let cell3 = newRow.insertCell(2);
     let cell4 = newRow.insertCell(3);
 
-    // Adicionando a imagem e nome da criptomoeda na primeira célula
+    // Adicionando imagem e nome da criptomoeda
     cell1.innerHTML = `<img src="${cryptoImage}" width="30"> ${cryptoName}`;
-    
-    // Adicionando os valores nas células correspondentes
+
+    // Adicionando os valores
     cell2.textContent = cryptoAmount;
     cell3.textContent = cryptoValue;
 
-    // Criando o botão "Excluir"
+    // Criando botão "Excluir"
     let deleteButton = document.createElement("button");
     deleteButton.textContent = "Excluir";
     deleteButton.addEventListener("click", function() {
         newRow.remove();
+        
+        // Se todas as linhas forem removidas, recria a linha vazia
+        if (table.rows.length === 0) {
+            let emptyRow = table.insertRow();
+            let emptyCell = emptyRow.insertCell(0);
+            emptyCell.colSpan = 4;
+            emptyCell.textContent = "Nenhum dado cadastrado ainda.";
+            emptyCell.style.textAlign = "center";
+            emptyCell.style.color = "gray";
+            emptyRow.classList.add("empty-row");
+        }
     });
 
     cell4.appendChild(deleteButton);
