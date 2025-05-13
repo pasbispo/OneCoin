@@ -73,7 +73,7 @@ app.get('/crypto/:symbol', async (req, res) => {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Captura o clique no botão "Próximo"
+    // Captura o botão "Próximo"
     document.getElementById("next-button").addEventListener("click", function() {
         let cryptoName = document.getElementById("crypto-name").textContent.trim();
         let cryptoImage = document.getElementById("crypto-image").src;
