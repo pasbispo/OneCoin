@@ -1,19 +1,22 @@
 // Definição global para permitir acesso em todas as funções
 let selectedCrypto = "BTC"; // Define um valor inicial padrão
 
-// Função para buscar cotação da criptomoeda na API CoinMarketCap
-async function getCryptoPrice(crypto) {
-    try {
-        let response = await fetch(`http://localhost:3000/crypto/${crypto.toUpperCase()}`);
-        if (!response.ok) {
-            throw new Error(`Erro na API: ${response.status}`);
-        }
-        let data = await response.json();
-        return data?.data?.[crypto.toUpperCase()]?.quote?.USD?.price || null;
-    } catch (error) {
-        console.error("Erro ao buscar cotação:", error);
-        return "Erro na cotação";
+async function selectCrypto(crypto, name) {
+    selectedCrypto = crypto; // Atualiza variável global
+    let cryptoImage = document.getElementById("crypto-image");
+    let cryptoName = document.getElementById("crypto-name");
+
+    if (cryptoImage && cryptoName) {
+        cryptoImage.src = `static/img/${crypto}.png`;
+        cryptoImage.classList.remove("hidden"); // ✅ Remove a classe "hidden"
+        cryptoName.textContent = name;
+    } else {
+        console.error("Erro: Elementos da criptomoeda não encontrados!");
     }
+
+    // Atualiza a cotação ao selecionar a criptomoeda
+    let price = await getCryptoPrice(selectedCrypto);
+    document.getElementById("crypto-value").value = price ? (price).toFixed(2) + " USD" : "Erro na cotação";
 }
 
 document.addEventListener("DOMContentLoaded", function() {
