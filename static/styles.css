@@ -512,8 +512,8 @@ button:hover {
     border-radius: 5px;
     font-size: 16px;
     margin-left: auto; /* Empurra o botão para o lado direito */
-    margin-bottom: 40px; /* Move para cima */
-
+    position: relative;
+    top: 15px; /* Move para baixo */
 
 }
 
