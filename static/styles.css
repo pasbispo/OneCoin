@@ -722,3 +722,24 @@ button:hover {
     border-radius: 5px;
 }
 
+
+
+.continue-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#continue-button {
+    background-color: #008CBA; /* Azul */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#continue-button:hover {
+    background-color: #005f73; /* Tom mais escuro ao passar o mouse */
+}
+
