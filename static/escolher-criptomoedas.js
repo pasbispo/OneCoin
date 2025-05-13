@@ -137,3 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+function limitDecimals(input) {
+    let value = input.value;
+    input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
+}
