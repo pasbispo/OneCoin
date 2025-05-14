@@ -82,14 +82,18 @@ document.addEventListener("DOMContentLoaded", function() {
             <td><button class="delete-button">Excluir</button></td>
         `;
 
-        newRow.querySelector(".delete-button").addEventListener("click", function() {
-    chosenCryptos.delete(selectedCrypto); // ✅ Remove a criptomoeda da lista de escolhidas
+       newRow.querySelector(".delete-button").addEventListener("click", function() {
+    let cryptoImage = newRow.querySelector("td img").src; 
+    let cryptoSymbol = cryptoImage.split("/").pop().split(".")[0]; // ✅ Obtém o nome da criptomoeda pelo caminho da imagem
+
+    chosenCryptos.delete(cryptoSymbol); // ✅ Agora a criptomoeda pode ser escolhida novamente
     newRow.remove();
-    
+
     if (table.rows.length === 0) {
         table.innerHTML = `<tr class="empty-row"><td colspan="4" style="text-align: center; color: gray;">Nenhum dado cadastrado ainda.</td></tr>`;
     }
 });
+
 
         // ❗ Limpar os dados do retângulo para nova escolha
         document.getElementById("crypto-name").textContent = "";
