@@ -674,7 +674,11 @@ button:hover {
     border-radius: 5px;
     margin-top: 570px
 }
-
+.search-crypto {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px; /* Ajusta conforme novos dados são adicionados */
+}
 
 
 
@@ -755,38 +759,5 @@ button:hover {
 
 
 
-
-
-
-
-
-
-
-.crypto-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.search-crypto {
-    position: relative;
-    width: 100%;
-    margin-bottom: 10px; /* Ajusta conforme novos dados são adicionados */
-    margin-top: 570px
-}
-
-.horizontal-line {
-    width: 100%;
-    height: 2px;
-    background-color: gray;
-    margin-top: 10px;
-}
-
-.crypto-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
 
 
