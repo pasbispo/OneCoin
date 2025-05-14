@@ -48,3 +48,18 @@ function limitDecimals(input) {
     let value = input.value;
     input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
 }
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let searchContainer = document.querySelector(".search-crypto");
+    let table = document.querySelector(".crypto-table");
+
+    new MutationObserver(function() {
+        let tableHeight = table.getBoundingClientRect().height;
+        searchContainer.style.marginTop = tableHeight + "px"; // Ajusta a posição
+    }).observe(table, { childList: true, subtree: true });
+});
