@@ -677,7 +677,7 @@ button:hover {
 .search-crypto {
     position: relative;
     width: 100%;
-    margin-bottom: 10px; /* Ajusta conforme novos dados são adicionados */
+    margin-bottom: 50px; /* Ajusta conforme novos dados são adicionados */
 }
 
 
