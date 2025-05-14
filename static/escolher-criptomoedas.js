@@ -83,13 +83,13 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
 
         newRow.querySelector(".delete-button").addEventListener("click", function() {
-            chosenCryptos.delete(selectedCrypto); // Remove criptomoeda ao excluir da tabela
-            newRow.remove();
-            
-            if (table.rows.length === 0) {
-                table.innerHTML = `<tr class="empty-row"><td colspan="4" style="text-align: center; color: gray;">Nenhum dado cadastrado ainda.</td></tr>`;
-            }
-        });
+    chosenCryptos.delete(selectedCrypto); // ✅ Remove a criptomoeda da lista de escolhidas
+    newRow.remove();
+    
+    if (table.rows.length === 0) {
+        table.innerHTML = `<tr class="empty-row"><td colspan="4" style="text-align: center; color: gray;">Nenhum dado cadastrado ainda.</td></tr>`;
+    }
+});
 
         // ❗ Limpar os dados do retângulo para nova escolha
         document.getElementById("crypto-name").textContent = "";
@@ -136,11 +136,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-newRow.querySelector(".delete-button").addEventListener("click", function() {
-    chosenCryptos.delete(selectedCrypto); // ✅ Remove a criptomoeda da lista de escolhidas
-    newRow.remove();
-    
-    if (table.rows.length === 0) {
-        table.innerHTML = `<tr class="empty-row"><td colspan="4" style="text-align: center; color: gray;">Nenhum dado cadastrado ainda.</td></tr>`;
-    }
-});
