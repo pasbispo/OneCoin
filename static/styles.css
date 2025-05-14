@@ -662,7 +662,7 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-right: 5px;
-    margin-top: 300px
+    margin-top: 570px
 }
 
 #search-button {
@@ -672,7 +672,7 @@ button:hover {
     padding: 10px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 300px
+    margin-top: 570px
 }
 
 
@@ -773,6 +773,7 @@ button:hover {
     position: relative;
     width: 100%;
     margin-bottom: 10px; /* Ajusta conforme novos dados são adicionados */
+    margin-top: 570px
 }
 
 .horizontal-line {
