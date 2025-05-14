@@ -132,3 +132,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+
+
+
+newRow.querySelector(".delete-button").addEventListener("click", function() {
+    chosenCryptos.delete(selectedCrypto); // ✅ Remove a criptomoeda da lista de escolhidas
+    newRow.remove();
+    
+    if (table.rows.length === 0) {
+        table.innerHTML = `<tr class="empty-row"><td colspan="4" style="text-align: center; color: gray;">Nenhum dado cadastrado ainda.</td></tr>`;
+    }
+});
