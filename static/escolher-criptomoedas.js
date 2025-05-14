@@ -85,11 +85,10 @@ document.addEventListener("DOMContentLoaded", function() {
        newRow.querySelector(".delete-button").addEventListener("click", function() {
     let cryptoName = newRow.querySelector("td:nth-child(1)").textContent.trim(); // Obtém o nome da criptomoeda
     
-    chosenCryptos.forEach((crypto) => {
-        if (cryptoName.includes(crypto)) { // Se o nome corresponder a um registro do conjunto
-            chosenCryptos.delete(crypto); // ✅ Remove a criptomoeda do conjunto
-        }
-    });
+    let cryptoSymbol = cryptoImage.src.split("/").pop().split(".")[0]; // Extrai o símbolo da criptomoeda a partir da imagem
+
+chosenCryptos.delete(cryptoSymbol); // ✅ Agora a criptomoeda é corretamente removida
+
 
     newRow.remove();
     
