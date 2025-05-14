@@ -1,70 +1,47 @@
 document.addEventListener("DOMContentLoaded", function() {
-    let nextButton = document.getElementById("next-button");
-    let signupButton = document.getElementById("signup-button");
-    let cryptoAmountInput = document.getElementById("crypto-amount");
     let searchButton = document.getElementById("search-button");
-    let searchInput = document.getElementById("search-crypto");
+    let searchInput = document.getElementById("search-bar"); // ⬅ Corrigido para 'search-bar'
     let cryptoImage = document.getElementById("crypto-image");
     let cryptoName = document.getElementById("crypto-name");
 
-    // ✅ Verifica se os elementos existem antes de adicionar eventos
-    if (nextButton) {
-        nextButton.addEventListener("click", function() {
-            console.log("Botão Próximo clicado!");
-        });
-    } else {
-        console.error("Erro: O botão Próximo não foi encontrado!");
-    }
-
-    if (signupButton) {
-        signupButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            window.location.href = "cadastro.html";
-        });
-    } else {
-        console.error("Erro: O botão de cadastro não foi encontrado!");
-    }
-
-    if (cryptoAmountInput) {
-        cryptoAmountInput.addEventListener("input", function() {
-            limitDecimals(this);
-        });
-    } else {
-        console.error("Erro: O campo de quantidade de criptomoeda não foi encontrado!");
-    }
-
-    if (searchButton && searchInput && cryptoImage && cryptoName) {
-        searchButton.addEventListener("click", function() {
-            let query = searchInput.value.trim().toLowerCase();
-
-            if (query === "") {
-                alert("Digite o nome da criptomoeda para pesquisar!");
-                return;
-            }
-
-            // Simulação de lista de criptomoedas
-            const cryptoList = [
-                { name: "Bitcoin", symbol: "BTC", image: "static/img/bitcoin.png" },
-                { name: "Ethereum", symbol: "ETH", image: "static/img/ethereum.png" },
-                { name: "Dogecoin", symbol: "DOGE", image: "static/img/dogecoin.png" },
-                { name: "Cardano", symbol: "ADA", image: "static/img/cardano.png" }
-            ];
-
-            // Busca a criptomoeda pelo nome digitado
-            let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
-
-            if (foundCrypto) {
-                cryptoImage.src = foundCrypto.image;
-                cryptoImage.classList.remove("hidden");
-                cryptoName.textContent = foundCrypto.name;
-            } else {
-                alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
-            }
-        });
-    } else {
+    if (!searchButton || !searchInput || !cryptoImage || !cryptoName) {
         console.error("Erro: Elementos de pesquisa não encontrados!");
+        return;
     }
+
+    searchButton.addEventListener("click", function() {
+        let query = searchInput.value.trim().toLowerCase();
+
+        if (query === "") {
+            alert("Digite o nome da criptomoeda para pesquisar!");
+            return;
+        }
+
+        // Lista de criptomoedas
+        const cryptoList = [
+            { name: "Bitcoin", symbol: "BTC", image: "static/img/btc.png" },
+            { name: "Ethereum", symbol: "ETH", image: "static/img/eth.png" },
+            { name: "Tether", symbol: "USDT", image: "static/img/usdt.png" },
+            { name: "Cardano", symbol: "ADA", image: "static/img/ada.png" },
+            { name: "XRP", symbol: "XRP", image: "static/img/xrp.png" },
+            { name: "Solana", symbol: "SOL", image: "static/img/sol.png" },
+            { name: "Dogecoin", symbol: "DOGE", image: "static/img/doge.png" },
+            { name: "Polkadot", symbol: "DOT", image: "static/img/dot.png" }
+        ];
+
+        // Busca a criptomoeda pelo nome digitado
+        let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
+
+        if (foundCrypto) {
+            cryptoImage.src = foundCrypto.image;
+            cryptoImage.classList.remove("hidden");
+            cryptoName.textContent = foundCrypto.name;
+        } else {
+            alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
+        }
+    });
 });
+
 
 // ✅ Correção da função limitDecimals
 function limitDecimals(input) {
