@@ -3,13 +3,14 @@ document.addEventListener("DOMContentLoaded", function() {
     let searchInput = document.getElementById("search-crypto");
     let cryptoImage = document.getElementById("crypto-image");
     let cryptoName = document.getElementById("crypto-name");
+    let cryptoValue = document.getElementById("crypto-value");
 
-    if (!searchButton || !searchInput || !cryptoImage || !cryptoName) {
+    if (!searchButton || !searchInput || !cryptoImage || !cryptoName || !cryptoValue) {
         console.error("Erro: Elementos de pesquisa não encontrados!");
         return;
     }
 
-    searchButton.addEventListener("click", function() {
+    searchButton.addEventListener("click", async function() {
         let query = searchInput.value.trim().toLowerCase();
 
         if (query === "") {
@@ -32,16 +33,27 @@ document.addEventListener("DOMContentLoaded", function() {
             cryptoImage.src = foundCrypto.image;
             cryptoImage.classList.remove("hidden");
             cryptoName.textContent = foundCrypto.name;
+
+            // Buscar a cotação da criptomoeda
+            let price = await getCryptoPrice(foundCrypto.symbol);
+            cryptoValue.value = price ? `${price.toFixed(2)} USD` : "Erro na cotação";
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
     });
 });
 
-
-
-// ✅ Correção da função limitDecimals
-function limitDecimals(input) {
-    let value = input.value;
-    input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
+// Função para buscar a cotação
+async function getCryptoPrice(crypto) {
+    try {
+        let response = await fetch(`http://localhost:3000/crypto/${crypto.toUpperCase()}`);
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status}`);
+        }
+        let data = await response.json();
+        return data?.data?.[crypto.toUpperCase()]?.quote?.USD?.price || null;
+    } catch (error) {
+        console.error("Erro ao buscar cotação:", error);
+        return null;
+    }
 }
