@@ -38,6 +38,8 @@ function limitDecimals(input) {
     input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
 }
 
+
+
 document.addEventListener("DOMContentLoaded", function() {
     let searchButton = document.getElementById("search-button");
     let searchInput = document.getElementById("search-crypto");
