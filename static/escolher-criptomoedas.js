@@ -100,3 +100,35 @@ document.addEventListener("DOMContentLoaded", function() {
         selectedCrypto = null;
     });
 });
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoAmountInput = document.getElementById("crypto-amount");
+
+    if (!cryptoAmountInput) {
+        console.error("Erro: Campo de quantidade não encontrado!");
+        return;
+    }
+
+    // ✅ Atualiza o valor estimado sempre que a quantidade mudar
+    cryptoAmountInput.addEventListener("input", async function() {
+        let amount = parseFloat(this.value);
+        if (isNaN(amount) || amount <= 0) {
+            document.getElementById("crypto-value").value = "Valor inválido";
+            return;
+        }
+
+        // ✅ Recalcula com base na criptomoeda escolhida
+        if (selectedCrypto) {
+            let price = await getCryptoPrice(selectedCrypto);
+            if (price) {
+                document.getElementById("crypto-value").value = (amount * price).toFixed(2) + " USD";
+            } else {
+                document.getElementById("crypto-value").value = "Erro na cotação";
+            }
+        }
+    });
+});
