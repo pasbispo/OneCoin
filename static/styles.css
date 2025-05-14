@@ -672,6 +672,14 @@ button:hover {
 
 
 
+.search-crypto {
+    position: relative; /* Permite que os elementos dentro se movam */
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px; /* Ajusta conforme os dados aumentam */
+}
+
+
 
 
 
