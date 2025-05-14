@@ -1,16 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let siteLogo = document.getElementById("site-logo");
-
-    if (!siteLogo) {
-        console.error("Erro: O elemento #site-logo não foi encontrado!");
-        return;
-    }
-
-    siteLogo.addEventListener("click", function(event) {
-        event.preventDefault();
-        window.location.href = "index.html";
-    });
-});
 
 
 
