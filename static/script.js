@@ -54,12 +54,3 @@ function limitDecimals(input) {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    let searchContainer = document.querySelector(".search-crypto");
-    let table = document.querySelector(".crypto-table");
-
-    new MutationObserver(function() {
-        let tableHeight = table.getBoundingClientRect().height;
-        searchContainer.style.marginTop = tableHeight + "px"; // Ajusta a posição
-    }).observe(table, { childList: true, subtree: true });
-});

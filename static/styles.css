@@ -651,6 +651,11 @@ button:hover {
     top: 250px; /* Ajustando posição abaixo do título */
 }
 
+
+
+
+
+
 .search-crypto input {
     padding: 10px;
     font-size: 16px;
@@ -747,4 +752,40 @@ button:hover {
 #continue-button:hover {
     background-color: #005f73; /* Tom mais escuro ao passar o mouse */
 }
+
+
+
+
+
+
+
+
+
+
+.crypto-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.search-crypto {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px; /* Ajusta conforme novos dados são adicionados */
+}
+
+.horizontal-line {
+    width: 100%;
+    height: 2px;
+    background-color: gray;
+    margin-top: 10px;
+}
+
+.crypto-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 
