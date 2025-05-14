@@ -1,4 +1,18 @@
 
+document.addEventListener("DOMContentLoaded", function() {
+    let nextButton = document.getElementById("next-button");
+
+    if (!nextButton) {
+        console.error("Erro: O botão Próximo não foi encontrado!");
+        return;
+    }
+
+    nextButton.addEventListener("click", function() {
+        console.log("Botão Próximo clicado!");
+    });
+});
+
+
 
 
 document.getElementById("signup-button").addEventListener("click", function(event) {
@@ -30,16 +44,3 @@ function limitDecimals(input) {
 }
 
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    let nextButton = document.getElementById("next-button");
-
-    if (!nextButton) {
-        console.error("Erro: O botão Próximo não foi encontrado!");
-        return;
-    }
-
-    nextButton.addEventListener("click", function() {
-        console.log("Botão Próximo clicado!");
-    });
-});
