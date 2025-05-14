@@ -1,6 +1,15 @@
-document.getElementById("site-logo").addEventListener("click", function(event) {
-    event.preventDefault(); // Evita comportamento padrão do link
-    window.location.href = "index.html"; // Redireciona para a página principal
+document.addEventListener("DOMContentLoaded", function() {
+    let siteLogo = document.getElementById("site-logo");
+
+    if (!siteLogo) {
+        console.error("Erro: O elemento #site-logo não foi encontrado!");
+        return;
+    }
+
+    siteLogo.addEventListener("click", function(event) {
+        event.preventDefault();
+        window.location.href = "index.html";
+    });
 });
 
 
@@ -25,3 +34,10 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Botão Próximo clicado!");
     });
 });
+
+
+
+function limitDecimals(input) {
+    let value = input.value;
+    input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
+}
