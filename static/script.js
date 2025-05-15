@@ -33,9 +33,12 @@ document.addEventListener("DOMContentLoaded", function() {
         let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
 
         if (foundCrypto) {
-            cryptoImage.src = foundCrypto.image;
-            cryptoImage.classList.remove("hidden");
-            cryptoName.textContent = foundCrypto.name;
+            document.getElementById("crypto-image").src = foundCrypto.image;
+            document.getElementById("crypto-image").classList.remove("hidden");
+            document.getElementById("crypto-name").textContent = foundCrypto.name;
+
+            // ✅ Limpa o campo de pesquisa após o usuário realizar a busca
+            searchInput.value = "";
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
