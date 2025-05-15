@@ -755,6 +755,9 @@ button:hover {
 
 
 
+
+
+
 .crypto-container {
     display: flex;
     flex-direction: column;
@@ -764,7 +767,7 @@ button:hover {
 
 .search-crypto {
     position: sticky; /* Mantém a barra visível conforme a rolagem */
-    top: 10px; /* Ajusta a posição inicial da barra */
+    top: 50px; /* Ajusta a posição inicial da barra */
     background-color: white; /* Evita sobreposição visual */
     z-index: 1000; /* Mantém a barra acima de outros elementos */
     width: 100%;
