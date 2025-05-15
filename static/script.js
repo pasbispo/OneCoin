@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     let searchInput = document.getElementById("search-bar");
     let cryptoImage = document.getElementById("crypto-image");
     let cryptoName = document.getElementById("crypto-name");
-    let cryptoAmountInput = document.getElementById("crypto-amount"); // Campo onde o usuário define a quantidade
+    let cryptoAmountInput = document.getElementById("crypto-amount"); // ✅ Campo de quantidade
+    let addCryptoButton = document.getElementById("add-crypto-button"); // ✅ Botão para confirmar
     let selectedCryptos = new Set(); // ✅ Evita duplicações
     let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
 
@@ -18,27 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { name: "Polkadot", symbol: "DOT", image: "static/img/dot.png" }
     ];
 
-    function addCryptoToTable(foundCrypto, quantity) {
-        if (selectedCryptos.has(foundCrypto.symbol)) {
-            alert("Você já adicionou essa criptomoeda! Escolha outra.");
-            return;
-        }
-
-        selectedCryptos.add(foundCrypto.symbol); // ✅ Adiciona ao conjunto para evitar duplicação
-
-        let newRow = table.insertRow();
-        newRow.innerHTML = `
-            <td><img src="${foundCrypto.image}" width="30"> ${foundCrypto.name}</td>
-            <td>${quantity}</td>
-            <td><span class="crypto-value">Calculando...</span></td>
-            <td><button class="delete-button">Excluir</button></td>
-        `;
-
-        newRow.querySelector(".delete-button").addEventListener("click", function() {
-            selectedCryptos.delete(foundCrypto.symbol); // ✅ Remove do conjunto ao excluir
-            newRow.remove();
-        });
-    }
+    let selectedCrypto = null;
 
     searchButton.addEventListener("click", function() {
         let query = searchInput.value.trim().toLowerCase();
@@ -47,24 +28,46 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
-        if (foundCrypto) {
-            cryptoImage.src = foundCrypto.image;
+        selectedCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
+        if (selectedCrypto) {
+            cryptoImage.src = selectedCrypto.image;
             cryptoImage.classList.remove("hidden");
-            cryptoName.textContent = foundCrypto.name;
+            cryptoName.textContent = selectedCrypto.name;
             cryptoAmountInput.value = ""; // ✅ Limpa o campo de quantidade para o usuário definir
-
-            // ✅ Aguarda o usuário digitar a quantidade antes de adicionar na tabela
-            cryptoAmountInput.addEventListener("change", function() {
-                let quantity = cryptoAmountInput.value.trim();
-                if (quantity && !selectedCryptos.has(foundCrypto.symbol)) {
-                    addCryptoToTable(foundCrypto, quantity);
-                }
-            });
-
-            searchInput.value = ""; // ✅ Limpa o campo de pesquisa após a busca
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
+    });
+
+    addCryptoButton.addEventListener("click", function() {
+        if (!selectedCrypto) {
+            alert("Pesquise uma criptomoeda primeiro!");
+            return;
+        }
+
+        let quantity = cryptoAmountInput.value.trim();
+        if (!quantity || selectedCryptos.has(selectedCrypto.symbol)) {
+            alert("Você já adicionou essa criptomoeda ou não definiu uma quantidade válida!");
+            return;
+        }
+
+        selectedCryptos.add(selectedCrypto.symbol); // ✅ Adiciona ao conjunto para evitar duplicação
+
+        let newRow = table.insertRow();
+        newRow.innerHTML = `
+            <td><img src="${selectedCrypto.image}" width="30"> ${selectedCrypto.name}</td>
+            <td>${quantity}</td>
+            <td><span class="crypto-value">Calculando...</span></td>
+            <td><button class="delete-button">Excluir</button></td>
+        `;
+
+        newRow.querySelector(".delete-button").addEventListener("click", function() {
+            selectedCryptos.delete(selectedCrypto.symbol); // ✅ Remove do conjunto ao excluir
+            newRow.remove();
+        });
+
+        searchInput.value = "";
+        cryptoAmountInput.value = "";
+        selectedCrypto = null;
     });
 });
