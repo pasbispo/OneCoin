@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let searchButton = document.getElementById("search-button");
     let searchInput = document.getElementById("search-bar");
     let selectedCryptos = new Set(); // ✅ Conjunto para evitar duplicações
+    let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
 
     const cryptoList = [
         { name: "Bitcoin", symbol: "BTC", image: "static/img/btc.png" },
@@ -22,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         selectedCryptos.add(foundCrypto.symbol); // ✅ Adiciona ao conjunto para evitar duplicação
 
-        let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
         let newRow = table.insertRow();
         newRow.innerHTML = `
             <td><img src="${foundCrypto.image}" width="30"> ${foundCrypto.name}</td>
@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // ✅ Evento do botão de pesquisa
     searchButton.addEventListener("click", function() {
         let query = searchInput.value.trim().toLowerCase();
         if (query === "") {
@@ -54,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // ✅ Evento para selecionar pela imagem
     document.querySelectorAll(".crypto-list img").forEach(img => {
         img.addEventListener("click", function() {
             let symbol = img.getAttribute("onclick").split("'")[1];
