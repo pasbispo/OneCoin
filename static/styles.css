@@ -780,7 +780,7 @@ button:hover {
 }
 
 #search-button {
-    margin-left: 90px; /* Ajuste a distância entre o botão e o campo de pesquisa */
+    margin-left: 85px; /* Ajuste a distância entre o botão e o campo de pesquisa */
 }
 .horizontal-line {
     width: 100%;
