@@ -1,13 +1,20 @@
 document.addEventListener("DOMContentLoaded", function() {
     let searchButton = document.getElementById("search-button");
-    let searchInput = document.getElementById("search-bar"); // ⬅ Corrigido para 'search-bar'
+    let searchInput = document.getElementById("search-bar");
     let cryptoImage = document.getElementById("crypto-image");
     let cryptoName = document.getElementById("crypto-name");
+    let selectedCryptos = new Set(); // ✅ Evita duplicações
 
-    if (!searchButton || !searchInput || !cryptoImage || !cryptoName) {
-        console.error("Erro: Elementos de pesquisa não encontrados!");
-        return;
-    }
+    const cryptoList = [
+        { name: "Bitcoin", symbol: "BTC", image: "static/img/btc.png" },
+        { name: "Ethereum", symbol: "ETH", image: "static/img/eth.png" },
+        { name: "Tether", symbol: "USDT", image: "static/img/usdt.png" },
+        { name: "Cardano", symbol: "ADA", image: "static/img/ada.png" },
+        { name: "XRP", symbol: "XRP", image: "static/img/xrp.png" },
+        { name: "Solana", symbol: "SOL", image: "static/img/sol.png" },
+        { name: "Dogecoin", symbol: "DOGE", image: "static/img/doge.png" },
+        { name: "Polkadot", symbol: "DOT", image: "static/img/dot.png" }
+    ];
 
     searchButton.addEventListener("click", function() {
         let query = searchInput.value.trim().toLowerCase();
@@ -17,40 +24,40 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Lista de criptomoedas
-        const cryptoList = [
-            { name: "Bitcoin", symbol: "BTC", image: "static/img/btc.png" },
-            { name: "Ethereum", symbol: "ETH", image: "static/img/eth.png" },
-            { name: "Tether", symbol: "USDT", image: "static/img/usdt.png" },
-            { name: "Cardano", symbol: "ADA", image: "static/img/ada.png" },
-            { name: "XRP", symbol: "XRP", image: "static/img/xrp.png" },
-            { name: "Solana", symbol: "SOL", image: "static/img/sol.png" },
-            { name: "Dogecoin", symbol: "DOGE", image: "static/img/doge.png" },
-            { name: "Polkadot", symbol: "DOT", image: "static/img/dot.png" }
-        ];
-
-        // Busca a criptomoeda pelo nome digitado
         let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
 
         if (foundCrypto) {
-            document.getElementById("crypto-image").src = foundCrypto.image;
-            document.getElementById("crypto-image").classList.remove("hidden");
-            document.getElementById("crypto-name").textContent = foundCrypto.name;
+            if (selectedCryptos.has(foundCrypto.symbol)) {
+                alert("Você já adicionou essa criptomoeda! Escolha outra.");
+                return;
+            }
 
-            // ✅ Limpa o campo de pesquisa após o usuário realizar a busca
-            searchInput.value = "";
+            selectedCryptos.add(foundCrypto.symbol); // ✅ Adiciona ao conjunto para evitar duplicação
+
+            cryptoImage.src = foundCrypto.image;
+            cryptoImage.classList.remove("hidden");
+            cryptoName.textContent = foundCrypto.name;
+
+            let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
+            let newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><img src="${foundCrypto.image}" width="30"> ${foundCrypto.name}</td>
+                <td><input type="number" min="0" step="0.00000001"></td>
+                <td><span class="crypto-value">Calculando...</span></td>
+                <td><button class="delete-button">Excluir</button></td>
+            `;
+
+            newRow.querySelector(".delete-button").addEventListener("click", function() {
+                selectedCryptos.delete(foundCrypto.symbol); // ✅ Remove do conjunto ao excluir
+                newRow.remove();
+            });
+
+            searchInput.value = ""; // ✅ Limpa o campo de entrada após a busca
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
     });
 });
-
-
-// ✅ Correção da função limitDecimals
-function limitDecimals(input) {
-    let value = input.value;
-    input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
-}
 
 
 
