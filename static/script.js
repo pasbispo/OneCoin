@@ -1,17 +1,5 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
+    let searchButton = document.getElementById("search-button"); // ✅ Adicionado corretamente
     let searchInput = document.getElementById("search-bar");
     let suggestionsBox = document.getElementById("suggestions");
 
@@ -55,11 +43,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    document.addEventListener("click", function(event) {
-        if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
-            suggestionsBox.style.display = "none";
+    // ✅ Corrigido: Evento para o botão de pesquisa
+    searchButton.addEventListener("click", function() {
+        let query = searchInput.value.trim().toLowerCase();
+
+        if (query === "") {
+            alert("Digite o nome da criptomoeda para pesquisar!");
+            return;
         }
- // Busca a criptomoeda pelo nome digitado
+
         let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
 
         if (foundCrypto) {
@@ -67,33 +59,16 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("crypto-image").classList.remove("hidden");
             document.getElementById("crypto-name").textContent = foundCrypto.name;
 
-            // ✅ Limpa o campo de pesquisa após o usuário realizar a busca
+            // ✅ Limpa o campo de pesquisa após a busca
             searchInput.value = "";
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
     });
+
+    document.addEventListener("click", function(event) {
+        if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
+            suggestionsBox.style.display = "none";
+        }
+    });
 });
-
-
-
- // ✅ Correção da função limitDecimals
-function limitDecimals(input) {
-    let value = input.value;
-    input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
-}
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let searchContainer = document.querySelector(".search-crypto");
-    let table = document.querySelector(".crypto-table");
-
-    new MutationObserver(function() {
-        let tableHeight = table.getBoundingClientRect().height;
-        searchContainer.style.marginTop = tableHeight + "px"; // Ajusta a posição automaticamente
-    }).observe(table, { childList: true, subtree: true });
-});
-   
