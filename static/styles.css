@@ -663,7 +663,6 @@ button:hover {
     border-radius: 5px;
     margin-right: 5px;
     margin-top: 800px
-    margin-bottom: 40px; /* Ajusta conforme novos dados são adicionados */
 }
 
 #search-button {
@@ -674,8 +673,13 @@ button:hover {
     cursor: pointer;
     border-radius: 5px;
     margin-top: 800px
+}
+.search-crypto {
+    position: relative;
+    width: 100%;
     margin-bottom: 40px; /* Ajusta conforme novos dados são adicionados */
 }
+
 
 
 
