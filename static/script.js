@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     let searchButton = document.getElementById("search-button");
     let searchInput = document.getElementById("search-bar");
-    let cryptoImage = document.getElementById("crypto-image");
-    let cryptoName = document.getElementById("crypto-name");
-    let selectedCryptos = new Set(); // ✅ Evita duplicações em qualquer método
+    let selectedCryptos = new Set(); // ✅ Conjunto para evitar duplicações
 
     const cryptoList = [
         { name: "Bitcoin", symbol: "BTC", image: "static/img/btc.png" },
@@ -39,9 +37,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    // ✅ Evento do botão de pesquisa
     searchButton.addEventListener("click", function() {
         let query = searchInput.value.trim().toLowerCase();
-
         if (query === "") {
             alert("Digite o nome da criptomoeda para pesquisar!");
             return;
@@ -56,10 +54,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // ✅ Evento para selecionar pela imagem
     document.querySelectorAll(".crypto-list img").forEach(img => {
         img.addEventListener("click", function() {
-            let symbol = this.getAttribute("onclick").split("'")[1];
-            let name = this.getAttribute("alt");
+            let symbol = img.getAttribute("onclick").split("'")[1];
             let foundCrypto = cryptoList.find(crypto => crypto.symbol === symbol);
             if (foundCrypto) {
                 addCryptoToTable(foundCrypto);
@@ -67,31 +65,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
-
-
-
-// ✅ Correção da função limitDecimals
-function limitDecimals(input) {
-    let value = input.value;
-    input.value = value.match(/^\d*(\.\d{0,8})?/)[0]; // Limita a 8 casas decimais
-}
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let searchContainer = document.querySelector(".search-crypto");
-    let table = document.querySelector(".crypto-table");
-
-    new MutationObserver(function() {
-        let tableHeight = table.getBoundingClientRect().height;
-        searchContainer.style.marginTop = tableHeight + "px"; // Ajusta a posição automaticamente
-    }).observe(table, { childList: true, subtree: true });
-});
-
-
-
-
-
-
