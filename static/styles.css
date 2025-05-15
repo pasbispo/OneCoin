@@ -804,7 +804,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Reduz o espaçamento entre os elementos */
+    gap: 100px; /* Reduz o espaçamento entre os elementos */
 }
 
 .crypto-table {
