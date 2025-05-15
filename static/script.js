@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
     let searchButton = document.getElementById("search-button");
     let searchInput = document.getElementById("search-bar");
-    let selectedCryptos = new Set(); // ✅ Conjunto para evitar duplicações
+    let cryptoImage = document.getElementById("crypto-image");
+    let cryptoName = document.getElementById("crypto-name");
+    let cryptoAmountInput = document.getElementById("crypto-amount"); // Campo onde o usuário define a quantidade
+    let selectedCryptos = new Set(); // ✅ Evita duplicações
     let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
 
     const cryptoList = [
@@ -15,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { name: "Polkadot", symbol: "DOT", image: "static/img/dot.png" }
     ];
 
-    function addCryptoToTable(foundCrypto) {
+    function addCryptoToTable(foundCrypto, quantity) {
         if (selectedCryptos.has(foundCrypto.symbol)) {
             alert("Você já adicionou essa criptomoeda! Escolha outra.");
             return;
@@ -26,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let newRow = table.insertRow();
         newRow.innerHTML = `
             <td><img src="${foundCrypto.image}" width="30"> ${foundCrypto.name}</td>
-            <td><input type="number" min="0" step="0.00000001"></td>
+            <td>${quantity}</td>
             <td><span class="crypto-value">Calculando...</span></td>
             <td><button class="delete-button">Excluir</button></td>
         `;
@@ -46,20 +49,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
         if (foundCrypto) {
-            addCryptoToTable(foundCrypto);
-            searchInput.value = ""; // ✅ Limpa o campo de pesquisa
+            cryptoImage.src = foundCrypto.image;
+            cryptoImage.classList.remove("hidden");
+            cryptoName.textContent = foundCrypto.name;
+            cryptoAmountInput.value = ""; // ✅ Limpa o campo de quantidade para o usuário definir
+
+            // ✅ Aguarda o usuário digitar a quantidade antes de adicionar na tabela
+            cryptoAmountInput.addEventListener("change", function() {
+                let quantity = cryptoAmountInput.value.trim();
+                if (quantity && !selectedCryptos.has(foundCrypto.symbol)) {
+                    addCryptoToTable(foundCrypto, quantity);
+                }
+            });
+
+            searchInput.value = ""; // ✅ Limpa o campo de pesquisa após a busca
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
-    });
-
-    document.querySelectorAll(".crypto-list img").forEach(img => {
-        img.addEventListener("click", function() {
-            let symbol = img.getAttribute("onclick").split("'")[1];
-            let foundCrypto = cryptoList.find(crypto => crypto.symbol === symbol);
-            if (foundCrypto) {
-                addCryptoToTable(foundCrypto);
-            }
-        });
     });
 });
