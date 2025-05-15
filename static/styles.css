@@ -798,16 +798,3 @@ button:hover {
 
 
 
-
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 100px; /* Reduz o espaçamento entre os elementos */
-}
-
-.crypto-table {
-    margin-bottom: 10px; /* Reduz o espaço antes do botão Continuar */
-}
-
