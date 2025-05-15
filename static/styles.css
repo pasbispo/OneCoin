@@ -798,3 +798,25 @@ button:hover {
 
 
 
+
+.suggestion-box {
+    position: absolute;
+    background: white;
+    border: 1px solid gray;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none; /* Começa oculto */
+}
+
+.suggestion-box div {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.suggestion-box div:hover {
+    background: #ddd;
+}
+
+
+
