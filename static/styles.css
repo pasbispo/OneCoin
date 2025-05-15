@@ -776,7 +776,7 @@ button:hover {
     justify-content: flex-start; /* Move para o lado esquerdo */
     align-items: center; /* Alinha verticalmente */
     margin-bottom: 5px; /* Reduz a distância da linha */
-    gap: 1px;
+    gap:3px;
 }
 
 #search-button {
