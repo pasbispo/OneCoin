@@ -42,8 +42,46 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
+  
+  searchInput.addEventListener("input", function() {
+        let query = searchInput.value.trim().toLowerCase();
+        suggestionsBox.innerHTML = "";
+
+        if (query === "") {
+            suggestionsBox.style.display = "none";
+            return;
+        }
+
+        let filteredCryptos = cryptoList.filter(crypto =>
+            crypto.name.toLowerCase().includes(query)
+        );
+
+        if (filteredCryptos.length > 0) {
+            suggestionsBox.style.display = "block";
+            filteredCryptos.forEach(crypto => {
+                let suggestion = document.createElement("div");
+                suggestion.innerHTML = `<img src="${crypto.image}" width="20"> ${crypto.name}`;
+                suggestion.addEventListener("click", function() {
+                    searchInput.value = crypto.name;
+                    suggestionsBox.style.display = "none";
+                });
+                suggestionsBox.appendChild(suggestion);
+            });
+        } else {
+            suggestionsBox.style.display = "none";
+        }
+    });
+
+    document.addEventListener("click", function(event) {
+        if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
+            suggestionsBox.style.display = "none";
+        }
     });
 });
+
+
+
+
 
 
 // ✅ Correção da função limitDecimals
