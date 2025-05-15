@@ -1,55 +1,78 @@
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
+    let searchButton = document.getElementById("search-button");
     let searchInput = document.getElementById("search-bar");
-    let suggestionsBox = document.getElementById("suggestions");
+    let cryptoAmountInput = document.getElementById("crypto-amount"); // ✅ Campo de quantidade
+    let addCryptoButton = document.getElementById("add-crypto-button"); // ✅ Botão para confirmar
+    let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
+    let selectedCryptos = new Set(); // ✅ Evita duplicações
+    let selectedCrypto = null;
 
     const cryptoList = [
-        { name: "Bitcoin", symbol: "BTC", image: "static/img/btc.png" },
-        { name: "Ethereum", symbol: "ETH", image: "static/img/eth.png" },
-        { name: "Tether", symbol: "USDT", image: "static/img/usdt.png" },
-        { name: "Cardano", symbol: "ADA", image: "static/img/ada.png" },
-        { name: "XRP", symbol: "XRP", image: "static/img/xrp.png" },
-        { name: "Solana", symbol: "SOL", image: "static/img/sol.png" },
-        { name: "Dogecoin", symbol: "DOGE", image: "static/img/doge.png" },
-        { name: "Polkadot", symbol: "DOT", image: "static/img/dot.png" }
+        { name: "Bitcoin", symbol: "bitcoin", image: "static/img/btc.png" },
+        { name: "Ethereum", symbol: "ethereum", image: "static/img/eth.png" },
+        { name: "Tether", symbol: "tether", image: "static/img/usdt.png" },
+        { name: "Cardano", symbol: "cardano", image: "static/img/ada.png" },
+        { name: "XRP", symbol: "xrp", image: "static/img/xrp.png" },
+        { name: "Solana", symbol: "solana", image: "static/img/sol.png" },
+        { name: "Dogecoin", symbol: "dogecoin", image: "static/img/doge.png" },
+        { name: "Polkadot", symbol: "polkadot", image: "static/img/dot.png" }
     ];
 
-    searchInput.addEventListener("input", function() {
-        let query = searchInput.value.trim().toLowerCase();
-        suggestionsBox.innerHTML = "";
+    function fetchCryptoPrice(symbol) {
+        return fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${symbol}&vs_currencies=usd`)
+            .then(response => response.json())
+            .then(data => data[symbol]?.usd || null)
+            .catch(() => null);
+    }
 
-        if (query === "") {
-            suggestionsBox.style.display = "none";
+    function showCryptoSelection(foundCrypto) {
+        if (selectedCryptos.has(foundCrypto.symbol)) {
+            alert("Você já adicionou essa criptomoeda! Escolha outra.");
             return;
         }
 
-        let filteredCryptos = cryptoList.filter(crypto =>
-            crypto.name.toLowerCase().includes(query)
+        selectedCrypto = foundCrypto;
+        document.getElementById("crypto-image").src = foundCrypto.image;
+        document.getElementById("crypto-name").textContent = foundCrypto.name;
+        cryptoAmountInput.value = ""; // ✅ Aguarda o usuário definir quantidade
+        document.getElementById("crypto-value").textContent = "Buscando preço..."; // ✅ Atualiza status inicial
+
+        fetchCryptoPrice(foundCrypto.symbol).then(price => {
+            if (price !== null) {
+                document.getElementById("crypto-value").textContent = `${price} USD`;
+                selectedCrypto.price = price;
+            } else {
+                document.getElementById("crypto-value").textContent = "Erro ao buscar preço.";
+            }
+        });
+    }
+
+    function handleCryptoSelection(query) {
+        let foundCrypto = cryptoList.find(crypto => 
+            crypto.name.toLowerCase() === query.toLowerCase() || 
+            crypto.symbol.toLowerCase() === query.toLowerCase()
         );
 
-        if (filteredCryptos.length > 0) {
-            suggestionsBox.style.display = "block";
-            filteredCryptos.forEach(crypto => {
-                let suggestion = document.createElement("div");
-                suggestion.innerHTML = `<img src="${crypto.image}" width="20"> ${crypto.name}`;
-                suggestion.addEventListener("click", function() {
-                    searchInput.value = crypto.name;
-                    suggestionsBox.style.display = "none";
-                });
-                suggestionsBox.appendChild(suggestion);
-            });
+        if (foundCrypto) {
+            showCryptoSelection(foundCrypto);
         } else {
-            suggestionsBox.style.display = "none";
+            alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
+    }
+
+    searchButton.addEventListener("click", function() {
+        let query = searchInput.value.trim();
+        if (query === "") {
+            alert("Digite o nome da criptomoeda para pesquisar!");
+            return;
+        }
+        handleCryptoSelection(query);
     });
 
-    document.addEventListener("click", function(event) {
-        if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
-            suggestionsBox.style.display = "none";
-        }
+    document.querySelectorAll(".crypto-list img").forEach(img => {
+        img.addEventListener("click", function() {
+            let symbol = img.getAttribute("data-symbol"); // ✅ Use 'data-symbol' para corresponder à lista
+            handleCryptoSelection(symbol);
+        });
     });
 });
