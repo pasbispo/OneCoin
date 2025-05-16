@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         selectedCrypto = foundCrypto;
-        selectedCryptos.add(foundCrypto.symbol); // ✅ Adiciona à lista de criptomoedas selecionadas
+        selectedCryptos.add(foundCrypto.symbol); // ✅ Adiciona à lista de criptomoedas escolhidas
         cryptoImage.src = foundCrypto.image;
         cryptoImage.classList.remove("hidden");
         cryptoName.textContent = foundCrypto.name;
