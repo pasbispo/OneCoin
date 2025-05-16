@@ -45,43 +45,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-searchButton.addEventListener("click", function() {
+
+    // ✅ Corrigido: Evento para o botão de pesquisa
+    searchButton.addEventListener("click", function() {
         let query = searchInput.value.trim().toLowerCase();
+
         if (query === "") {
-            alert("Digite o nome da criptomoeda para pesquisar!");
+            alert("Digite à criptomoeda!");
             return;
         }
+
         let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
+
         if (foundCrypto) {
-            showCryptoSelection(foundCrypto);
+            document.getElementById("crypto-image").src = foundCrypto.image;
+            document.getElementById("crypto-image").classList.remove("hidden");
+            document.getElementById("crypto-name").textContent = foundCrypto.name;
+
+            // ✅ Limpa o campo de pesquisa após a busca
+            searchInput.value = "";
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
     });
 
-    cryptoAmountInput.addEventListener("input", async function() {
-        let amount = parseFloat(this.value);
-        if (isNaN(amount) || amount <= 0) {
-            cryptoValue.textContent = "Valor inválido";
-            return;
+    document.addEventListener("click", function(event) {
+        if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
+            suggestionsBox.style.display = "none";
         }
-        if (selectedCrypto) {
-            let price = await getCryptoPrice(selectedCrypto.symbol);
-            if (price) {
-                cryptoValue.textContent = (amount * price).toFixed(2) + " USD";
-            } else {
-                cryptoValue.textContent = "Erro na cotação";
-            }
-        }
-    });
-
-    document.querySelectorAll(".crypto-list img").forEach(img => {
-        img.addEventListener("click", function() {
-            let symbol = img.getAttribute("data-symbol");
-            let foundCrypto = cryptoList.find(crypto => crypto.symbol === symbol);
-            if (foundCrypto) {
-                showCryptoSelection(foundCrypto);
-            }
-        });
     });
 });
