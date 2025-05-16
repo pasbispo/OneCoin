@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function() {
     let cryptoName = document.getElementById("crypto-name");
     let cryptoAmountInput = document.getElementById("crypto-amount");
     let cryptoValue = document.getElementById("crypto-value");
-    let selectedCryptos = new Set(); // ✅ Usa um conjunto para impedir duplicações
+    let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
+    let selectedCryptos = new Set();
     let selectedCrypto = null;
 
     const cryptoList = [
@@ -19,6 +20,10 @@ document.addEventListener("DOMContentLoaded", function() {
         { name: "Polkadot", symbol: "polkadot", image: "static/img/dot.png" }
     ];
 
+    function isCryptoSelected(symbol) {
+        return selectedCryptos.has(symbol);
+    }
+
     async function getCryptoPrice(symbol) {
         try {
             let response = await fetch(`https://api.coinmarketcap.com/v1/ticker/${symbol}/`);
@@ -29,8 +34,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    async function selectCrypto(foundCrypto) {
-        if (selectedCryptos.has(foundCrypto.symbol)) {
+    async function showCryptoSelection(foundCrypto) {
+        if (isCryptoSelected(foundCrypto.symbol)) {
             alert("Você já selecionou essa criptomoeda! Escolha outra.");
             return;
         }
@@ -62,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
         if (foundCrypto) {
-            await selectCrypto(foundCrypto);
+            await showCryptoSelection(foundCrypto);
         } else {
             alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
         }
@@ -73,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let symbol = img.getAttribute("data-symbol");
             let foundCrypto = cryptoList.find(crypto => crypto.symbol === symbol);
             if (foundCrypto) {
-                await selectCrypto(foundCrypto);
+                await showCryptoSelection(foundCrypto);
             }
         });
     });
