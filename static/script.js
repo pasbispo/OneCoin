@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let cryptoName = document.getElementById("crypto-name");
     let cryptoAmountInput = document.getElementById("crypto-amount");
     let cryptoValue = document.getElementById("crypto-value");
+    let table = document.getElementById("crypto-table").getElementsByTagName("tbody")[0];
     let selectedCryptos = new Set();
     let selectedCrypto = null;
 
