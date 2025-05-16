@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
-    let searchButton = document.getElementById("search-button"); // ✅ Adicionado corretamente
+    let searchButton = document.getElementById("search-button");
     let searchInput = document.getElementById("search-bar");
     let suggestionsBox = document.getElementById("suggestions");
+    let cryptoImage = document.getElementById("crypto-image");
+    let cryptoName = document.getElementById("crypto-name");
 
     const cryptoList = [
         { name: "Bitcoin", symbol: "BTC", image: "static/img/btc.png" },
@@ -13,6 +15,29 @@ document.addEventListener("DOMContentLoaded", function() {
         { name: "Dogecoin", symbol: "DOGE", image: "static/img/doge.png" },
         { name: "Polkadot", symbol: "DOT", image: "static/img/dot.png" }
     ];
+
+    function showCryptoSelection(foundCrypto) {
+        document.getElementById("crypto-image").src = foundCrypto.image;
+        document.getElementById("crypto-image").classList.remove("hidden");
+        document.getElementById("crypto-name").textContent = foundCrypto.name;
+        searchInput.value = ""; // ✅ Limpa a barra de pesquisa após a escolha
+    }
+
+    searchButton.addEventListener("click", function() {
+        let query = searchInput.value.trim().toLowerCase();
+
+        if (query === "") {
+            alert("Digite o nome da criptomoeda para pesquisar!");
+            return;
+        }
+
+        let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
+        if (foundCrypto) {
+            showCryptoSelection(foundCrypto);
+        } else {
+            alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
+        }
+    });
 
     searchInput.addEventListener("input", function() {
         let query = searchInput.value.trim().toLowerCase();
@@ -35,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 suggestion.addEventListener("click", function() {
                     searchInput.value = crypto.name;
                     suggestionsBox.style.display = "none";
+                    showCryptoSelection(crypto); // ✅ Chama a função correta ao escolher uma sugestão
                 });
                 suggestionsBox.appendChild(suggestion);
             });
@@ -42,53 +68,6 @@ document.addEventListener("DOMContentLoaded", function() {
             suggestionsBox.style.display = "none";
         }
     });
-
-
-
-
-    // ✅ Corrigido: Evento para o botão de pesquisa
-    searchButton.addEventListener("click", function() {
-        let query = searchInput.value.trim().toLowerCase();
-
-        if (query === "") {
-            alert("Digite à criptomoeda!");
-            return;
-        }
-
-        let foundCrypto = cryptoList.find(crypto => crypto.name.toLowerCase() === query);
-
-        if (foundCrypto) {
-            document.getElementById("crypto-image").src = foundCrypto.image;
-            document.getElementById("crypto-image").classList.remove("hidden");
-            document.getElementById("crypto-name").textContent = foundCrypto.name;
-
-            // ✅ Limpa o campo de pesquisa após a busca
-            searchInput.value = "";
-        } else {
-            alert("Criptomoeda não encontrada! Verifique o nome e tente novamente.");
-        }
-    });
-
-
-
-if (filteredCryptos.length > 0) {
-            suggestionsBox.style.display = "block";
-            filteredCryptos.forEach(crypto => {
-                let suggestion = document.createElement("div");
-                suggestion.innerHTML = `<img src="${crypto.image}" width="20"> ${crypto.name}`;
-                suggestion.addEventListener("click", function() {
-                    searchInput.value = crypto.name;
-                    suggestionsBox.style.display = "none";
-                });
-                suggestionsBox.appendChild(suggestion);
-            });
-        } else {
-            suggestionsBox.style.display = "none";
-        }
-    });
-
-
-
 
     document.addEventListener("click", function(event) {
         if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
