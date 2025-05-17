@@ -1,28 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
-    let finalizeButton = document.getElementById("finalize-button");
+    let continueButton = document.getElementById("continue-button");
 
-    if (!finalizeButton) {
-        console.error("Erro: Botão Finalizar não encontrado!");
+    if (!continueButton) {
+        console.error("Erro: Botão Continuar não encontrado!");
         return;
     }
 
-    finalizeButton.addEventListener("click", function() {
-        let campaignName = document.getElementById("campaign-name").value.trim();
-        let campaignGoal = document.getElementById("campaign-goal").value.trim();
-        let campaignImage = document.getElementById("campaign-image"); // ✅ Corrigido para verificar arquivos
-        let cryptoInputs = document.querySelectorAll(".crypto-item input");
-
-        if (!campaignName || !campaignGoal || campaignImage.files.length === 0 || Array.from(cryptoInputs).some(input => !input.value.trim())) {
-            alert("Preencha todos os campos antes de finalizar!");
-            return;
-        }
-
+    continueButton.addEventListener("click", function() {
         let confirmation = confirm("Você confirma que todos os dados estão corretos?");
+        
         if (confirmation) {
-            alert("Campanha finalizada com sucesso!");
-
-            // ✅ Certifique-se de que `finalizacao.html` está na pasta correta antes do redirecionamento
-            window.location.href = "finalizacao.html"; 
+            window.location.href = "meu-onecoin.html"; // ✅ Direciona para a página correta
+        } else {
+            window.location.href = "cadastro.html"; // ✅ Retorna para cadastro da campanha
         }
     });
 });
