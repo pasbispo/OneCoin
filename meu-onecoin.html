@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu OneCoin</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+
+    <!-- Logo no canto superior direito -->
+    <div class="logo-container">
+        <img src="static/img/logo.png" alt="OneCoin">
+    </div>
+
+    <!-- Título principal -->
+    <h1 class="page-title">Meu OneCoin</h1>
+
+    <!-- Seção de informações da campanha -->
+    <div class="campaign-info">
+        <label for="campaign-name">Nome da Campanha:</label>
+        <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
+
+        <label for="campaign-goal">Objetivo da Campanha:</label>
+        <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha"></textarea>
+
+        <label for="campaign-image">Foto da Campanha:</label>
+        <input type="file" id="campaign-image">
+    </div>
+
+    <!-- Seção das criptomoedas escolhidas -->
+    <h2>Criptomoedas Escolhidas</h2>
+    <div class="crypto-list">
+        <div class="crypto-item">
+            <img src="static/img/btc.png" alt="Bitcoin">
+            <input type="text" placeholder="Endereço de depósito">
+        </div>
+        <div class="crypto-item">
+            <img src="static/img/eth.png" alt="Ethereum">
+            <input type="text" placeholder="Endereço de depósito">
+        </div>
+        <!-- Adicione mais criptomoedas conforme necessário -->
+    </div>
+
+    <!-- Botão para finalizar -->
+    <button id="finalize-button">Finalizar</button>
+
+
+<script src="static/meu-onecoin.js"></script>
+
+</body>
+</html>
+
+
+
+
