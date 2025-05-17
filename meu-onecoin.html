@@ -1,56 +1,26 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu OneCoin</title>
-    <link rel="stylesheet" href="static/styles.css">
-</head>
-<body>
+document.addEventListener("DOMContentLoaded", function() {
+    let finalizeButton = document.getElementById("finalize-button");
 
-    <!-- Logo no canto superior direito -->
-    <div class="logo-container">
-        <img src="static/img/logo.png" alt="OneCoin">
-    </div>
+    if (!finalizeButton) {
+        console.error("Erro: Botão Finalizar não encontrado!");
+        return;
+    }
 
-    <!-- Título principal -->
-    <h1 class="page-title">Meu OneCoin</h1>
+    finalizeButton.addEventListener("click", function() {
+        let campaignName = document.getElementById("campaign-name").value.trim();
+        let campaignGoal = document.getElementById("campaign-goal").value.trim();
+        let campaignImage = document.getElementById("campaign-image").value.trim();
+        let cryptoInputs = document.querySelectorAll(".crypto-item input");
 
-    <!-- Seção de informações da campanha -->
-    <div class="campaign-info">
-        <label for="campaign-name">Nome da Campanha:</label>
-        <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
+        if (!campaignName || !campaignGoal || !campaignImage || Array.from(cryptoInputs).some(input => !input.value.trim())) {
+            alert("Preencha todos os campos antes de finalizar!");
+            return;
+        }
 
-        <label for="campaign-goal">Objetivo da Campanha:</label>
-        <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha"></textarea>
-
-        <label for="campaign-image">Foto da Campanha:</label>
-        <input type="file" id="campaign-image">
-    </div>
-
-    <!-- Seção das criptomoedas escolhidas -->
-    <h2>Criptomoedas Escolhidas</h2>
-    <div class="crypto-list">
-        <div class="crypto-item">
-            <img src="static/img/btc.png" alt="Bitcoin">
-            <input type="text" placeholder="Endereço de depósito">
-        </div>
-        <div class="crypto-item">
-            <img src="static/img/eth.png" alt="Ethereum">
-            <input type="text" placeholder="Endereço de depósito">
-        </div>
-        <!-- Adicione mais criptomoedas conforme necessário -->
-    </div>
-
-    <!-- Botão para finalizar -->
-    <button id="finalize-button">Finalizar</button>
-
-
-<script src="static/meu-onecoin.js"></script>
-
-</body>
-</html>
-
-
-
-
+        let confirmation = confirm("Você confirma que todos os dados estão corretos?");
+        if (confirmation) {
+            alert("Campanha finalizada com sucesso!");
+            window.location.href = "finalizacao.html"; // ✅ Direciona para uma página final
+        }
+    });
+});
