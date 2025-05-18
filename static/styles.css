@@ -884,3 +884,30 @@ button:hover {
 .btn-primary:hover {
     background-color: #005f75;
 }
+
+
+
+
+
+
+
+
+.campaign-panel {
+    text-align: center; /* ✅ Centraliza o conteúdo */
+}
+
+#panel-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center; /* ✅ Centraliza o título */
+    margin-bottom: 20px;
+}
+
+#panel-image {
+    width: 300px; /* ✅ Limita a largura da imagem */
+    height: auto; /* ✅ Mantém proporção correta */
+    max-height: 200px; /* ✅ Define um limite de altura */
+    display: block;
+    margin: 0 auto;
+}
+
