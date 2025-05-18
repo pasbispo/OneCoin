@@ -19,4 +19,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let campaignNameInput = document.getElementById("campaign-name");
+
+    // ✅ Recupera o nome da campanha salva no cadastro
+    let storedCampaignName = localStorage.getItem("campaignName"); // Usa Local Storage para armazenar temporariamente
+
+    if (storedCampaignName) {
+        campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha no campo
+    } else {
+        campaignNameInput.placeholder = "Nome não encontrado";
+    }
+});
 
