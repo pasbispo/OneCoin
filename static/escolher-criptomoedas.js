@@ -176,3 +176,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let searchInput = document.getElementById("crypto-search");
+
+    if (searchInput) {
+        searchInput.placeholder = "Digite o nome da criptomoeda...";
+    } else {
+        console.error("Erro: Elemento com ID 'crypto-search' não encontrado.");
+    }
+});
+
