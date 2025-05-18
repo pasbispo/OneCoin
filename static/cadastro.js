@@ -38,3 +38,21 @@ document.getElementById("cadastroForm").addEventListener("submit", function(even
     mensagemErro.textContent = "Cadastro realizado com sucesso!";
     window.location.href = "meu-onecoin.html"; // ✅ Redireciona para Meu OneCoin
 });
+
+
+
+document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let campaignName = document.getElementById("campaign-name-input").value.trim(); // ✅ Obtém o nome da campanha
+
+    if (!campaignName) {
+        alert("Por favor, insira um nome válido para sua campanha.");
+        return;
+    }
+
+    localStorage.setItem("campaignName", campaignName); // ✅ Salva o nome corretamente
+
+    alert("Cadastro realizado com sucesso!");
+    window.location.href = "meu-onecoin.html"; // ✅ Redireciona para Meu OneCoin
+});
