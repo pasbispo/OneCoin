@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (storedCampaignName && campaignNameInput) {
         campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha automaticamente
     } else {
-        campaignNameInput.value = "Nome não encontrado"; // ✅ Se não houver nome salvo
+        campaignNameInput.value = "Erro ao carregar campanha"; // ✅ Mensagem mais intuitiva
     }
 });
+
