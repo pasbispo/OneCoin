@@ -16,19 +16,3 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let campaignNameInput = document.getElementById("campaign-name");
-
-    // ✅ Recupera o nome salvo no cadastro
-    let storedCampaignName = localStorage.getItem("campaignName");
-
-    if (storedCampaignName && campaignNameInput) {
-        campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha automaticamente
-    } else {
-        campaignNameInput.value = "Erro ao carregar campanha"; // ✅ Mensagem mais intuitiva
-    }
-});
-
