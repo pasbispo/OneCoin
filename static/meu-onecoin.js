@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // ✅ Recupera o nome salvo no cadastro
     let storedCampaignName = localStorage.getItem("campaignName");
 
-    if (storedCampaignName) {
-        campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha
+    if (storedCampaignName && campaignNameInput) {
+        campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha automaticamente
     } else {
-        campaignNameInput.placeholder = "Nome não encontrado"; // ✅ Se não houver nome salvo
+        campaignNameInput.value = "Nome não encontrado"; // ✅ Se não houver nome salvo
     }
 });
