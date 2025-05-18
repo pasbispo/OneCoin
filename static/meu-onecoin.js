@@ -22,13 +22,12 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function() {
     let campaignNameInput = document.getElementById("campaign-name");
 
-    // ✅ Recupera o nome da campanha salva no cadastro
-    let storedCampaignName = localStorage.getItem("campaignName"); // Usa Local Storage para armazenar temporariamente
+    // ✅ Recupera o nome salvo no cadastro
+    let storedCampaignName = localStorage.getItem("campaignName");
 
     if (storedCampaignName) {
-        campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha no campo
+        campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha
     } else {
-        campaignNameInput.placeholder = "Nome não encontrado";
+        campaignNameInput.placeholder = "Nome não encontrado"; // ✅ Se não houver nome salvo
     }
 });
-
