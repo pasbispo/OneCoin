@@ -29,3 +29,19 @@ document.getElementById("cadastroForm").addEventListener("submit", function(even
     // Se tudo estiver certo
     mensagemErro.textContent = "Cadastro realizado com sucesso!";
 });
+
+
+
+
+
+document.getElementById("register-button").addEventListener("click", function() {
+    let campaignName = document.getElementById("campaign-name-input").value.trim();
+
+    if (campaignName !== "") {
+        localStorage.setItem("campaignName", campaignName); // ✅ Salva o nome para uso futuro
+        alert("Cadastro realizado com sucesso!");
+        window.location.href = "meu-onecoin.html"; // ✅ Redireciona para Meu OneCoin
+    } else {
+        alert("Por favor, insira um nome válido para sua campanha.");
+    }
+});
