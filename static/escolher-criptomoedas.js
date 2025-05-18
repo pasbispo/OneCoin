@@ -163,3 +163,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let campaignNameInput = document.getElementById("campaign-name");
+
+    // ✅ Recupera o nome salvo no cadastro
+    let storedCampaignName = localStorage.getItem("campaignName");
+
+    if (storedCampaignName && campaignNameInput) {
+        campaignNameInput.value = storedCampaignName; // ✅ Exibe o nome da campanha
+    } else {
+        campaignNameInput.placeholder = "Nome não encontrado"; // ✅ Se não houver nome salvo
+    }
+});
+
