@@ -911,3 +911,17 @@ button:hover {
     margin: 0 auto;
 }
 
+
+
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+#duration {
+    width: 100px; /* ✅ Define um tamanho adequado para o campo */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
