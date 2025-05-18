@@ -1,18 +1,11 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let continueButton = document.getElementById("continue-button");
+document.getElementById("update-button").addEventListener("click", function() {
+    document.getElementById("panel-title").textContent = document.getElementById("campaign-name").value;
+    document.getElementById("panel-goal").textContent = document.getElementById("campaign-goal").value;
+    document.getElementById("panel-duration").textContent = document.getElementById("duration").value;
 
-    if (!continueButton) {
-        console.error("Erro: Botão Continuar não encontrado!");
-        return;
+    let imageInput = document.getElementById("campaign-image");
+    if (imageInput.files.length > 0) {
+        let imageUrl = URL.createObjectURL(imageInput.files[0]);
+        document.getElementById("panel-image").src = imageUrl;
     }
-
-    continueButton.addEventListener("click", function() {
-        let confirmation = confirm("Você confirma que todos os dados estão corretos?");
-        
-        if (confirmation) {
-            window.location.href = "meu-onecoin.html"; // ✅ Direciona para a página correta
-        } else {
-            window.location.href = "cadastro.html"; // ✅ Retorna para cadastro da campanha
-        }
-    });
 });

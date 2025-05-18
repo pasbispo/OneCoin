@@ -8,63 +8,75 @@
 </head>
 <body>
 
-    <!-- Logo e título, sem cabeçalho -->
-    <div class="logo-title-container">
-        <img src="static/img/logo.png" alt="OneCoin">
-        <h1 class="page-title">Meu OneCoin</h1>
+    <div class="container">
+        <!-- Lado esquerdo: Dados da campanha -->
+        <section class="campaign-input">
+            <h2>Informações da Campanha</h2>
+
+            <div class="form-group">
+                <label for="campaign-name">Nome da Campanha:</label>
+                <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
+            </div>
+
+            <div class="form-group">
+                <label for="campaign-goal">Objetivo da Campanha:</label>
+                <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 700 palavras)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="campaign-image">Foto da Campanha:</label>
+                <input type="file" id="campaign-image">
+            </div>
+
+            <h2>Criptomoedas Selecionadas</h2>
+            <table class="crypto-table">
+                <tr>
+                    <th>Criptomoeda</th>
+                    <th>Rede</th>
+                    <th>Quantidade</th>
+                    <th>Valor R$</th>
+                </tr>
+                <tr>
+                    <td><img src="static/img/btc.png" alt="Bitcoin"></td>
+                    <td><select><option>Ethereum</option><option>Solana</option></select></td>
+                    <td><input type="text" placeholder="Quantidade"></td>
+                    <td><input type="text" placeholder="Valor R$"></td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <label for="duration">Período de duração (dias):</label>
+                <input type="number" id="duration" min="1">
+            </div>
+        </section>
+
+        <!-- Lado direito: Painel da campanha -->
+        <section class="campaign-panel">
+            <h2 id="panel-title">Nome da Campanha</h2>
+            <p>Período: <span id="panel-duration"></span> dias</p>
+            <img id="panel-image" src="#" alt="Foto da campanha">
+            <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
+
+            <h3>Criptomoedas Selecionadas</h3>
+            <table class="crypto-panel-table">
+                <tr>
+                    <th>Criptomoeda</th>
+                    <th>Redes</th>
+                    <th>Quantidade</th>
+                    <th>Endereço <button id="copy-address">Copiar</button></th>
+                </tr>
+                <tr>
+                    <td><img src="static/img/btc.png" alt="Bitcoin"></td>
+                    <td><button>Selecionar Rede</button></td>
+                    <td><span id="panel-quantity"></span></td>
+                    <td><span id="panel-address"></span></td>
+                </tr>
+            </table>
+        </section>
     </div>
 
-    <!-- Seção de informações da campanha -->
-    <section class="campaign-section">
-        <h2>Informações da Campanha</h2>
-        
-        <div class="form-group">
-            <label for="campaign-name">Nome da Campanha:</label>
-            <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
-        </div>
+    <button id="update-button" class="btn-primary">Atualizar</button>
 
-        <div class="form-group">
-            <label for="campaign-goal">Objetivo da Campanha:</label>
-            <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="campaign-image">Foto da Campanha:</label>
-            <input type="file" id="campaign-image">
-        </div>
-    </section>
-
-    <!-- Seção das criptomoedas escolhidas -->
-    <section class="crypto-section">
-        <h2>Criptomoedas Escolhidas</h2>
-
-        <div class="crypto-container">
-            <div class="crypto-item">
-                <img src="static/img/btc.png" alt="Bitcoin">
-                <input type="text" placeholder="Endereço de depósito">
-            </div>
-            <div class="crypto-item">
-                <img src="static/img/eth.png" alt="Ethereum">
-                <input type="text" placeholder="Endereço de depósito">
-            </div>
-        </div>
-    </section>
-
-    <!-- Botão para finalizar -->
-    <div class="button-container">
-        <button id="finalize-button" class="btn-primary">Finalizar</button>
-    </div>
-
-<script src="static/meu-onecoin.js"></script>
+    <script src="static/meu-onecoin.js"></script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
