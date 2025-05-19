@@ -106,33 +106,16 @@ function startSlideshow() {
 
 
 
-function playLocalVideo() {
+
+function playVideo() {
     let videoInput = document.getElementById("video-file");
-    let localVideo = document.getElementById("local-video");
-    let onlineVideo = document.getElementById("online-video");
+    let videoPlayer = document.getElementById("video-player");
 
     if (videoInput.files.length > 0) {
         let videoUrl = URL.createObjectURL(videoInput.files[0]);
-        localVideo.src = videoUrl;
-        localVideo.style.display = "block";
-        onlineVideo.style.display = "none"; // Oculta o vídeo online se um arquivo for carregado
+        videoPlayer.src = videoUrl;
+        videoPlayer.load(); // ✅ Certifica que o vídeo será carregado corretamente
     }
 }
-
-function playOnlineVideo() {
-    let videoUrl = document.getElementById("video-link").value;
-    let onlineVideo = document.getElementById("online-video");
-    let localVideo = document.getElementById("local-video");
-
-    if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be") || videoUrl.includes("vimeo.com")) {
-        let embedUrl = videoUrl.replace("watch?v=", "embed/");
-        onlineVideo.src = embedUrl;
-        onlineVideo.style.display = "block";
-        localVideo.style.display = "none"; // Oculta o vídeo local se um link for inserido
-    } else {
-        alert("Insira um link válido do YouTube ou Vimeo!");
-    }
-}
-
 
 
