@@ -103,3 +103,18 @@ function startSlideshow() {
 }
 
 
+
+
+
+
+function playVideo() {
+    let videoInput = document.getElementById("video-file");
+    let videoPlayer = document.getElementById("video-player");
+
+    if (videoInput.files.length > 0) {
+        let videoUrl = URL.createObjectURL(videoInput.files[0]);
+        videoPlayer.src = videoUrl;
+    }
+}
+
+

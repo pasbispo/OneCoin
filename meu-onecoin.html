@@ -61,9 +61,8 @@
        
 
 <div class="form-group">
-    <label for="video-link">Link do Vídeo (máx. 1 minuto):</label>
-    <input type="url" id="video-link" placeholder="Cole o link do vídeo aqui">
-    <button onclick="updateVideo()">Carregar Vídeo</button>
+    <label for="video-file">Selecione um vídeo:</label>
+    <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
 </div>
 
 
@@ -105,9 +104,10 @@
         <img id="slideshow-image" src="#" alt="Imagem da campanha">
         <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
 
-<div class="video-container">
-    <iframe id="video-player" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
-</div>
+
+<video id="video-player" width="560" height="315" controls>
+    Seu navegador não suporta vídeos.
+</video>
 
         <h3>Criptomoedas Selecionadas</h3>
         <table class="crypto-panel-table">
