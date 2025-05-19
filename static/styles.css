@@ -954,7 +954,7 @@ button:hover {
     margin-bottom: 15px;
 }
 
-#panel-slideshow {
+#slideshow-image {
     width: 600px;
     max-height: 200px;
     display: block;
