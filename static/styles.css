@@ -957,11 +957,26 @@ button:hover {
 #slideshow-image {
     width: 600px;
     max-height: 200px;
-    display: block;
+    display: block !important;
     margin: 0 auto;
-    border-bottom: 1px solid #ccc; /* ✅ Linha fina abaixo da imagem */
+    border-bottom: 2px solid #ccc !important; /* ✅ Linha reforçada */
     padding-bottom: 10px;
+    transition: opacity 1s ease-in-out;
 }
+
+
+#slideshow-image {
+    width: 300px;
+    height: auto;
+    transition: opacity 1s ease-in-out;
+}
+
+
+
+
+
+
+
 
 #panel-goal {
     text-align: justify;
@@ -1005,12 +1020,6 @@ button:hover {
 
 
 
-
-#slideshow-image {
-    width: 300px;
-    height: auto;
-    transition: opacity 1s ease-in-out;
-}
 
 
 

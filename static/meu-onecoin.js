@@ -93,12 +93,15 @@ function startSlideshow() {
         imagesArray = Array.from(imageInput.files).map(file => URL.createObjectURL(file));
         imageIndex = 0;
 
-        // Inicia o slideshow
+        // Inicia o slideshow corretamente
         slideshowImage.src = imagesArray[imageIndex];
+
         setInterval(() => {
             imageIndex = (imageIndex + 1) % imagesArray.length;
             slideshowImage.src = imagesArray[imageIndex];
         }, 3000); // Troca de imagem a cada 3 segundos
+    } else {
+        console.error("Nenhuma imagem foi carregada.");
     }
 }
 
