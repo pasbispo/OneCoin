@@ -94,13 +94,6 @@
 
 
 
-
-
-
-
-
-
-
     <!-- Lado direito: Painel da campanha -->
     <section class="campaign-panel">
         <h2 id="panel-title">Nome da Campanha</h2>
@@ -109,9 +102,10 @@
             <p>Período: <span id="panel-duration">0</span> dias</p>
         </div>
 
-        <img id="slideshow-image" src="#" alt="Imagem da campanha">
-        <h3 id="panel-goal">Objetivo: [Texto aparece aqui]</h3>
-
+       <div class="panel-image">
+           <img id="slideshow-image" src="#" alt="Imagem da campanha">
+        <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
+       </div>
 
 <div class="video-container">
     <video id="video-player" width="200" height="120" controls onclick="expandVideo()">
@@ -120,7 +114,7 @@
 </div>
 
 
-        <h4>Criptomoedas Selecionadas</h4>
+        <h3>Criptomoedas Selecionadas</h3>
         <table class="crypto-panel-table">
             <tr>
                 <th>Criptomoeda</th>
