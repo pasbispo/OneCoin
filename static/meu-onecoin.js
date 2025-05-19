@@ -68,3 +68,15 @@ document.getElementById("update-button").addEventListener("click", function() {
 });
 
 
+
+function previewCampaignImage() {
+    let imageInput = document.getElementById("campaign-image");
+    let panelImage = document.getElementById("panel-image");
+
+    if (imageInput.files.length > 0) {
+        let imageUrl = URL.createObjectURL(imageInput.files[0]);
+        panelImage.src = imageUrl;
+    }
+}
+
+
