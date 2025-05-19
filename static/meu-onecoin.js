@@ -27,3 +27,29 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Erro: Dados da criptomoeda não encontrados.");
     }
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoTableBody = document.querySelector(".crypto-panel-table tbody");
+    let cryptoData = JSON.parse(localStorage.getItem("cryptoList"));
+
+    if (cryptoData && cryptoData.length > 0) {
+        cryptoTableBody.innerHTML = ""; // ✅ Limpa a tabela antes de preencher
+
+        cryptoData.forEach(crypto => {
+            let row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td><img src="${crypto.imageSrc}" alt="${crypto.name}"></td>
+                <td><button>Selecionar Rede</button></td>
+                <td>${crypto.quantity}</td>
+                <td>${crypto.value}</td>
+            `;
+
+            cryptoTableBody.appendChild(row);
+        });
+    } else {
+        console.error("Erro: Dados da criptomoeda não encontrados.");
+    }
+});

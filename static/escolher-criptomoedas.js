@@ -191,19 +191,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.getElementById("crypto-select-button").addEventListener("click", function() {
-    let selectedCrypto = document.getElementById("crypto-name").textContent; // Nome da criptomoeda
-    let cryptoQuantity = document.getElementById("crypto-quantity").value; // Quantidade inserida
-    let estimatedValue = document.getElementById("crypto-value").value; // Valor estimado
-    let cryptoImage = document.getElementById("crypto-image").src; // Imagem da criptomoeda
 
-    // ✅ Salvar no localStorage para ser usado na próxima página
-    localStorage.setItem("selectedCrypto", selectedCrypto);
-    localStorage.setItem("cryptoQuantity", cryptoQuantity);
-    localStorage.setItem("estimatedValue", estimatedValue);
-    localStorage.setItem("cryptoImage", cryptoImage);
 
-    alert("Criptomoeda salva com sucesso!");
+
+
+document.getElementById("continue-button").addEventListener("click", function() {
+    let cryptoRows = document.querySelectorAll("#crypto-table tbody tr:not(.empty-row)");
+    let cryptoData = [];
+
+    cryptoRows.forEach(row => {
+        let imageSrc = row.querySelector("td img").src;
+        let name = row.querySelector("td:nth-child(1)").textContent;
+        let quantity = row.querySelector("td:nth-child(2)").textContent;
+        let value = row.querySelector("td:nth-child(3)").textContent;
+
+        cryptoData.push({
+            imageSrc: imageSrc,
+            name: name,
+            quantity: quantity,
+            value: value
+        });
+    });
+
+    // ✅ Salvar os dados no localStorage
+    localStorage.setItem("cryptoList", JSON.stringify(cryptoData));
+
+    alert("Dados da criptomoeda salvos com sucesso!");
     window.location.href = "meu-onecoin.html"; // ✅ Redireciona para Meu OneCoin
 });
 
