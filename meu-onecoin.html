@@ -47,9 +47,10 @@
 
 
 <div class="form-group">
-    <label for="campaign-image">Imagem da Campanha:</label>
-    <input type="file" id="campaign-image" accept="image/*" onchange="previewCampaignImage()">
+    <label for="campaign-images">Imagens da Campanha:</label>
+    <input type="file" id="campaign-images" accept="image/*" multiple onchange="startSlideshow()">
 </div>
+
 
 
         <div class="form-group">
@@ -91,7 +92,7 @@
             <p>Período: <span id="panel-duration">0</span> dias</p>
         </div>
 
-        <img id="panel-image" src="#" alt="Foto da campanha">
+        <img id="slideshow-image" src="#" alt="Imagem da campanha">
         <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
 
         <h3>Criptomoedas Selecionadas</h3>
