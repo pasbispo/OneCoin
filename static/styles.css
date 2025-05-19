@@ -979,3 +979,26 @@ button:hover {
     border-collapse: collapse;
     margin-top: 10px;
 }
+
+
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* ✅ Título centralizado, logo no canto direito */
+    align-items: center;
+    padding: 20px;
+}
+
+.page-title {
+    flex-grow: 1;
+    text-align: center; /* ✅ Centraliza o título */
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.site-logo {
+    width: 100px; /* ✅ Ajusta o tamanho do logo */
+    height: auto;
+}
+
