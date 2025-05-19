@@ -107,15 +107,19 @@ function startSlideshow() {
 
 
 
-function playVideo() {
-    let videoInput = document.getElementById("video-file");
+
+function expandVideo() {
+    let videoContainer = document.querySelector(".video-container");
     let videoPlayer = document.getElementById("video-player");
 
-    if (videoInput.files.length > 0) {
-        let videoUrl = URL.createObjectURL(videoInput.files[0]);
-        videoPlayer.src = videoUrl;
-        videoPlayer.load(); // ✅ Certifica que o vídeo será carregado corretamente
+    videoContainer.classList.toggle("expanded");
+
+    if (videoContainer.classList.contains("expanded")) {
+        videoPlayer.play(); // ✅ O vídeo começa a tocar automaticamente ao expandir
+    } else {
+        videoPlayer.pause(); // ✅ Se minimizar, o vídeo pausa
     }
 }
+
 
 
