@@ -914,3 +914,12 @@ button:hover {
 
 
 
+.period-container {
+    text-align: left; /* ✅ Alinha o período à esquerda */
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+
+
