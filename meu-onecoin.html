@@ -47,9 +47,12 @@
 
 
 <div class="form-group">
-    <label for="campaign-image">Imagem da Campanha:</label>
-    <input type="file" id="campaign-image" accept="image/*" onchange="previewCampaignImage()">
+    <label for="campaign-images">Imagens da Campanha:</label>
+    <input type="file" id="campaign-images" accept="image/*" multiple onchange="startSlideshow()">
 </div>
+
+<img id="slideshow-image" src="#" alt="Imagem da campanha">
+
 
 
         <div class="form-group">

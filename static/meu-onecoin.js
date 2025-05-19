@@ -80,3 +80,26 @@ function previewCampaignImage() {
 }
 
 
+
+
+let imageIndex = 0;
+let imagesArray = [];
+
+function startSlideshow() {
+    let imageInput = document.getElementById("campaign-images");
+    let slideshowImage = document.getElementById("slideshow-image");
+
+    if (imageInput.files.length > 0) {
+        imagesArray = Array.from(imageInput.files).map(file => URL.createObjectURL(file));
+        imageIndex = 0;
+
+        // Inicia o slideshow
+        slideshowImage.src = imagesArray[imageIndex];
+        setInterval(() => {
+            imageIndex = (imageIndex + 1) % imagesArray.length;
+            slideshowImage.src = imagesArray[imageIndex];
+        }, 3000); // Troca de imagem a cada 3 segundos
+    }
+}
+
+
