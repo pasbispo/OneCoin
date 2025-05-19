@@ -29,24 +29,35 @@
        <section class="campaign-input">
     <h2>Informações da Campanha</h2>
 
-    <div class="campanha">
-    <h2>Informações da Campanha</h2>
-    <p><strong>Nome da Campanha:</strong> Pedro Anderson de Souza Bispo</p>
-    <p><strong>Objetivo da Campanha:</strong> Doador Sem Fronteiras</p>
-    <p>Doadores Sem Fronteiras são as pessoas que fazem doações mensais e recorrentes para MSF...</p>
-    <p><strong>Criptomoeda Selecionada:</strong> Nenhuma criptomoeda selecionada</p>
-    
-    <!-- Imagem da criptomoeda -->
-    <div class="imagem-cripto">
-        <p><strong>Imagem da Criptomoeda:</strong></p>
-        <img src="caminho-da-imagem.jpg" alt="Imagem da criptomoeda">
+    <div class="form-group">
+        <label for="campaign-name">Nome da Campanha:</label>
+        <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
     </div>
 
-    <p><strong>Quantidade:</strong> 0.00000000</p>
-    <p><strong>Valor Estimado:</strong> R$ 0,00</p>
-</div>
+    <div class="form-group">
+        <label for="campaign-goal">Objetivo da Campanha:</label>
+        <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 700 palavras)"></textarea>
+    </div>
 
+    <div class="form-group">
+        <label>Criptomoeda Selecionada:</label>
+        <p id="crypto-name">Nenhuma criptomoeda selecionada</p>
+    </div>
 
+    <div class="form-group">
+        <label>Imagem da Criptomoeda:</label>
+        <img id="crypto-image" src="#" alt="Imagem da criptomoeda">
+    </div>
+
+    <div class="form-group">
+        <label>Quantidade:</label>
+        <p id="crypto-quantity">0.00000000</p>
+    </div>
+
+    <div class="form-group">
+        <label>Valor Estimado:</label>
+        <p id="crypto-value">R$ 0,00</p>
+    </div>
 </section>
 
 
