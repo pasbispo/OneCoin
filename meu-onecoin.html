@@ -38,15 +38,20 @@
             <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
         </div>
 
+
+
+ <div class="form-group">
+            <label for="campaign-period">Período (dias):</label>
+            <input type="number" id="campaign-period" placeholder="Digite o período" oninput="updatePeriod()">
+        </div>
+
+
         <div class="form-group">
             <label for="campaign-goal">Objetivo da Campanha:</label>
             <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 700 palavras)"></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="campaign-period">Período (dias):</label>
-            <input type="number" id="campaign-period" placeholder="Digite o período" oninput="updatePeriod()">
-        </div>
+       
 
         <div class="form-group">
             <label>Criptomoeda Selecionada:</label>
@@ -68,6 +73,9 @@
             <p id="crypto-value">R$ 0,00</p>
         </div>
     </section>
+
+
+
 
     <!-- Lado direito: Painel da campanha -->
     <section class="campaign-panel">
