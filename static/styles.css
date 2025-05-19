@@ -940,3 +940,42 @@ button:hover {
 .crypto-panel-table td {
     text-align: justify; /* ✅ Deixa o texto justificado dentro das células da tabela */
 }
+
+
+
+
+
+
+
+
+.period-container {
+    border-bottom: 1px solid #ccc; /* ✅ Linha fina abaixo do período */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+#panel-image {
+    width: 300px;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px solid #ccc; /* ✅ Linha fina abaixo da imagem */
+    padding-bottom: 10px;
+}
+
+#panel-goal {
+    text-align: justify;
+    max-width: 80%;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+    border-bottom: 1px solid #ccc; /* ✅ Linha fina abaixo do texto */
+    padding-bottom: 10px;
+}
+
+.crypto-panel-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
