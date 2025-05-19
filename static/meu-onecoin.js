@@ -135,18 +135,4 @@ function expandVideo() {
 
 
 
-document.getElementById("update-button").addEventListener("click", function() {
-    let panelImage = document.getElementById("slideshow-image");
-
-    // Atualiza a imagem sem remover estilos
-    let imageInput = document.getElementById("campaign-images");
-    if (imageInput && imageInput.files.length > 0) {
-        let imageUrl = URL.createObjectURL(imageInput.files[0]);
-        panelImage.src = imageUrl;
-    }
-
-    // ✅ Aplica a linha sempre após atualizar
-    panelImage.style.borderBottom = "2px solid #ccc";
-    panelImage.style.paddingBottom = "10px";
-});
 
