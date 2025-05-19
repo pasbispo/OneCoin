@@ -119,6 +119,19 @@ function playVideo() {
 }
 
 
+function expandVideo() {
+    let videoContainer = document.querySelector(".video-container");
+    let videoPlayer = document.getElementById("video-player");
+
+    videoContainer.classList.toggle("expanded");
+
+    if (videoContainer.classList.contains("expanded")) {
+        videoPlayer.play(); // ✅ O vídeo começa a tocar automaticamente ao expandir
+    } else {
+        videoPlayer.pause(); // ✅ Se minimizar, o vídeo pausa
+    }
+}
+
 
 
 
