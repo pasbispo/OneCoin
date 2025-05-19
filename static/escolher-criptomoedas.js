@@ -179,26 +179,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    // Recupera os dados armazenados na página escolher-criptomoedas.html
-    let selectedCrypto = localStorage.getItem("selectedCrypto"); // Nome da criptomoeda
-    let cryptoQuantity = localStorage.getItem("cryptoQuantity"); // Quantidade
-    let estimatedValue = localStorage.getItem("estimatedValue"); // Valor estimado
-    let cryptoImage = localStorage.getItem("cryptoImage"); // URL da imagem
+    let searchInput = document.getElementById("crypto-search");
 
-    // Atualiza os elementos na página Meu OneCoin
-    if (selectedCrypto && cryptoQuantity && estimatedValue && cryptoImage) {
-        document.getElementById("crypto-name").textContent = selectedCrypto;
-        document.getElementById("crypto-quantity").textContent = cryptoQuantity;
-        document.getElementById("crypto-value").textContent = estimatedValue;
-        document.getElementById("crypto-image").src = cryptoImage;
+    if (searchInput) {
+        searchInput.placeholder = "Digite o nome da criptomoeda...";
     } else {
-        console.error("Erro: Dados da criptomoeda não encontrados.");
+        console.error("Erro: Elemento com ID 'crypto-search' não encontrado.");
     }
 });
+
+
+
+document.getElementById("crypto-select-button").addEventListener("click", function() {
+    let selectedCrypto = document.getElementById("crypto-name").textContent; // Nome da criptomoeda
+    let cryptoQuantity = document.getElementById("crypto-quantity").value; // Quantidade inserida
+    let estimatedValue = document.getElementById("crypto-value").value; // Valor estimado
+    let cryptoImage = document.getElementById("crypto-image").src; // Imagem da criptomoeda
+
+    // ✅ Salvar no localStorage para ser usado na próxima página
+    localStorage.setItem("selectedCrypto", selectedCrypto);
+    localStorage.setItem("cryptoQuantity", cryptoQuantity);
+    localStorage.setItem("estimatedValue", estimatedValue);
+    localStorage.setItem("cryptoImage", cryptoImage);
+
+    alert("Criptomoeda salva com sucesso!");
+    window.location.href = "meu-onecoin.html"; // ✅ Redireciona para Meu OneCoin
+});
+
+
 
