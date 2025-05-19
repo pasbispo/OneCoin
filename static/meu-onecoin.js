@@ -106,7 +106,6 @@ function startSlideshow() {
 
 
 
-
 function playLocalVideo() {
     let videoInput = document.getElementById("video-file");
     let localVideo = document.getElementById("local-video");
@@ -134,5 +133,6 @@ function playOnlineVideo() {
         alert("Insira um link válido do YouTube ou Vimeo!");
     }
 }
+
 
 

@@ -61,9 +61,24 @@
        
 
 <div class="form-group">
-    <label for="video-file">Selecione um vídeo:</label>
-    <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
+    <label for="video-file">Envie um vídeo do seu PC:</label>
+    <input type="file" id="video-file" accept="video/mp4,video/webm,video/ogg" onchange="playLocalVideo()">
 </div>
+
+<div class="form-group">
+    <label for="video-link">Ou insira um link do YouTube/Vimeo:</label>
+    <input type="url" id="video-link" placeholder="Cole o link do vídeo">
+    <button onclick="playOnlineVideo()">Carregar Vídeo</button>
+</div>
+
+<div class="video-container">
+    <video id="local-video" width="560" height="315" controls style="display: none;">
+        Seu navegador não suporta vídeos.
+    </video>
+
+    <iframe id="online-video" width="560" height="315" style="display: none;" frameborder="0" allowfullscreen></iframe>
+</div>
+
 
 
 
