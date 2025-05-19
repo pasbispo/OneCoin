@@ -923,3 +923,17 @@ button:hover {
 
 
 
+
+
+
+
+
+#panel-goal {
+    max-width: 80%; /* ✅ Limita a largura para um formato mais legível */
+    text-align: justify; /* ✅ Ajusta o texto para melhor leitura */
+    margin: 0 auto; /* ✅ Centraliza dentro do painel */
+    font-size: 16px; /* ✅ Mantém um tamanho confortável para leitura */
+    line-height: 1.5; /* ✅ Aumenta o espaçamento entre linhas */
+    overflow-wrap: break-word; /* ✅ Garante que o texto não ultrapasse o painel */
+}
+
