@@ -133,4 +133,14 @@ function expandVideo() {
 }
 
 
+document.getElementById("update-button").addEventListener("click", function() {
+    let panelImage = document.getElementById("panel-image");
+
+    // Atualiza os dados
+    panelImage.src = "caminho-da-nova-imagem.jpg"; 
+
+    // Garante que a linha reapareça
+    panelImage.style.borderBottom = "1px solid #ccc";
+    panelImage.style.paddingBottom = "10px";
+});
 
