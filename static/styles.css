@@ -959,7 +959,7 @@ button:hover {
     max-height: 200px;
     display: block !important;
     margin: 0 auto;
-    border-bottom: 2px solid #ccc !important; /* ✅ Linha reforçada */
+    border-bottom: 1px solid #ccc !important; /* ✅ Linha reforçada */
     padding-bottom: 10px;
     transition: opacity 1s ease-in-out;
 }
