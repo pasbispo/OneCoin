@@ -195,29 +195,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.getElementById("continue-button").addEventListener("click", function() {
-    let cryptoRows = document.querySelectorAll("#crypto-table tbody tr:not(.empty-row)");
-    let cryptoData = [];
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoTableBody = document.querySelector(".crypto-panel-table tbody");
+    let cryptoData = JSON.parse(localStorage.getItem("cryptoList"));
 
-    cryptoRows.forEach(row => {
-        let imageSrc = row.querySelector("td img").src;
-        let name = row.querySelector("td:nth-child(1)").textContent;
-        let quantity = row.querySelector("td:nth-child(2)").textContent;
-        let value = row.querySelector("td:nth-child(3)").textContent;
+    if (cryptoData && cryptoData.length > 0) {
+        cryptoTableBody.innerHTML = ""; // ✅ Limpa a tabela antes de preencher
 
-        cryptoData.push({
-            imageSrc: imageSrc,
-            name: name,
-            quantity: quantity,
-            value: value
+        cryptoData.forEach(crypto => {
+            let row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td><img src="${crypto.imageSrc}" alt="${crypto.name}"></td>
+                <td><button>Selecionar Rede</button></td>
+                <td>${crypto.quantity}</td>
+                <td>${crypto.value}</td>
+            `;
+
+            cryptoTableBody.appendChild(row);
         });
-    });
-
-    // ✅ Salvar os dados no localStorage
-    localStorage.setItem("cryptoList", JSON.stringify(cryptoData));
-
-    alert("Dados da criptomoeda salvos com sucesso!");
-    window.location.href = "meu-onecoin.html"; // ✅ Redireciona para Meu OneCoin
+    } else {
+        console.error("Erro: Dados da criptomoeda não encontrados. Verifique se a página 'Escolher Criptomoedas' salvou corretamente os valores.");
+    }
 });
 
 
