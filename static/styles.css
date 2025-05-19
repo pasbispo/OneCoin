@@ -956,10 +956,10 @@ button:hover {
 
 #panel-image {
     width: 600px;
-    max-height: 150px;
+    max-height: 200px;
     display: block;
     margin: 0 auto;
-    border-bottom: 1px solid #ccc; /* ✅ Linha fina abaixo da imagem */
+    border-bottom: 2px solid #ccc; /* ✅ Linha fina abaixo da imagem */
     padding-bottom: 10px;
 }
 
@@ -1014,21 +1014,4 @@ button:hover {
 
 
 
-.video-container {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 200px;
-    height: 120px;
-    transition: all 0.5s ease-in-out;
-    cursor: pointer;
-}
-
-.video-container.expanded {
-    width: 560px;
-    height: 315px;
-    bottom: 50%;
-    right: 50%;
-    transform: translate(50%, 50%);
-}
 
