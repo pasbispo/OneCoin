@@ -134,3 +134,8 @@ function expandVideo() {
 
 
 
+document.getElementById("update-button").addEventListener("click", function() {
+    let panelImage = document.getElementById("panel-image");
+    panelImage.style.borderBottom = "2px solid #ccc"; // ✅ Linha reaparece
+    panelImage.style.paddingBottom = "10px";
+});
