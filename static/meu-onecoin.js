@@ -80,6 +80,28 @@ document.getElementById("update-button").addEventListener("click", function() {
 });
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoName = localStorage.getItem("selectedCrypto");
+    let cryptoQuantity = localStorage.getItem("cryptoQuantity");
+    let estimatedValue = localStorage.getItem("estimatedValue");
+    let cryptoImage = localStorage.getItem("cryptoImage");
+
+    if (cryptoName && cryptoQuantity && estimatedValue && cryptoImage) {
+        let cryptoNameElem = document.getElementById("crypto-name");
+        let cryptoQuantityElem = document.getElementById("crypto-quantity");
+        let cryptoValueElem = document.getElementById("crypto-value");
+        let cryptoImageElem = document.getElementById("crypto-image");
+
+        if (cryptoNameElem) cryptoNameElem.textContent = cryptoName;
+        if (cryptoQuantityElem) cryptoQuantityElem.textContent = cryptoQuantity;
+        if (cryptoValueElem) cryptoValueElem.textContent = estimatedValue;
+        if (cryptoImageElem) cryptoImageElem.src = cryptoImage;
+    } else {
+        console.error("Erro: Dados da criptomoeda não encontrados.");
+    }
+});
+
+
 
 function previewCampaignImage() {
     let imageInput = document.getElementById("campaign-image");
