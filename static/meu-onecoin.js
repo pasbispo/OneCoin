@@ -170,3 +170,19 @@ function updatePeriodAutomatically() {
 
 // 🚀 Garante que a função seja executada ao carregar a página
 document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
+
+
+
+
+
+
+document.getElementById("campaign-goal").addEventListener("input", function () {
+    let goalInput = document.getElementById("campaign-goal");
+    let words = goalInput.value.trim().split(/\s+/); // Divide o texto em palavras
+
+    if (words.length > 55) {
+        goalInput.value = words.slice(0, 55).join(" "); // ✅ Limita a 55 palavras
+        alert("O limite é de 55 palavras!");
+    }
+});
+
