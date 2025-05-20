@@ -137,31 +137,36 @@ function expandVideo() {
 
 
 
-
-function updatePeriod() {
-    let periodInput = document.getElementById("campaign-period").value;
+function updatePeriodAutomatically() {
+    let totalDays = localStorage.getItem("campaign-period");
     let panelDuration = document.getElementById("panel-duration");
 
-    // Converte o período para número
-    let totalDays = parseInt(periodInput, 10);
+    if (!totalDays || isNaN(totalDays)) return;
 
-    if (!isNaN(totalDays) && totalDays > 0) {
-        panelDuration.textContent = totalDays + " dias";
-        
-        // Calcula 20% do tempo total
-        let threshold = Math.floor(totalDays * 0.2);
+    totalDays = parseInt(totalDays, 10);
 
-        if (totalDays <= threshold && totalDays > 0) {
-            panelDuration.style.color = "red"; // 🔴 Faltando menos de 20% do tempo, fica vermelho
-        } else {
-            panelDuration.style.color = "green"; // 🟢 Ainda dentro do prazo, fica verde
-        }
+    // Obtém a data inicial (ou define hoje como início)
+    let startDate = localStorage.getItem("campaign-start-date");
+    if (!startDate) {
+        startDate = new Date().toISOString().split("T")[0]; // ✅ Salva a data de hoje
+        localStorage.setItem("campaign-start-date", startDate);
+    }
 
-        // Quando o tempo zerar
-        if (totalDays <= 0) {
-            panelDuration.textContent = "Período: Encerrado!";
-            panelDuration.style.color = "red";
-        }
+    // Calcula dias restantes corretamente
+    let today = new Date();
+    let start = new Date(startDate);
+    let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+    let remainingDays = Math.max(totalDays - daysElapsed, 0); // ✅ Evita valores negativos
+
+    // 🟥 Ajusta a cor corretamente e exibe "Encerrado" quando acabar
+    if (remainingDays > 0) {
+        panelDuration.textContent = `Período: ${remainingDays} dias`;
+        panelDuration.style.color = remainingDays <= Math.floor(totalDays * 0.2) ? "red" : "green";
+    } else {
+        panelDuration.textContent = "Período: Encerrado!";
+        panelDuration.style.color = "red";
     }
 }
 
+// 🚀 Garante que a função seja executada ao carregar a página
+document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
