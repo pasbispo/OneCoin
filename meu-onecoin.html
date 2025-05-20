@@ -38,37 +38,25 @@
             <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
         </div>
 
-
-
  <div class="form-group">
             <label for="campaign-period">Período (dias):</label>
             <input type="number" id="campaign-period" placeholder="Digite o período" oninput="updatePeriod()">
         </div>
-
 
 <div class="form-group">
     <label for="campaign-images">Imagens da Campanha:</label>
     <input type="file" id="campaign-images" accept="image/*" multiple onchange="startSlideshow()">
 </div>
 
-
-
-
         <div class="form-group">
             <label for="campaign-goal">Objetivo da Campanha:</label>
             <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 55 palavras)"></textarea>
-        </div>
-
-       
+        </div>      
 
 <div class="form-group">
     <label for="video-file">Selecione um vídeo:</label>
     <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
 </div>
-
-
-
-
 
         <div class="form-group">
             <label>Criptomoeda Selecionada:</label>
@@ -94,22 +82,19 @@
 
 
 
+
+
     <!-- Lado direito: Painel da campanha -->
     <section class="campaign-panel">
         <h2 id="panel-title">Nome da Campanha</h2>
 
         <div class="period-container">
-            <p>Período: <span id="panel-duration">0</span> dias</p>
+            <p>Período: <span id="panel-duration">0</span></p>
         </div>
-
-       
+     
            <img id="slideshow-image" src="#" alt="Imagem da campanha">
         <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
       
-
-
-
-
         <h3>Criptomoedas Selecionadas</h3>
         <table class="crypto-panel-table">
             <tr>
@@ -125,6 +110,8 @@
                 <td><span id="panel-address"></span></td>
             </tr>
         </table>
+
+
 
 
 
