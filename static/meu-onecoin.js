@@ -50,7 +50,16 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
- 
+ document.getElementById("update-button").addEventListener("click", function() {
+    let campaignPeriod = document.getElementById("campaign-period").value;
+
+    if (campaignPeriod) {
+        localStorage.setItem("campaign-period", campaignPeriod); // ✅ Salva no localStorage corretamente
+        document.getElementById("panel-duration").textContent = `Período: ${campaignPeriod} dias`;
+    } else {
+        console.error("Erro: O período da campanha não foi definido corretamente.");
+    }
+});
 
 
 
@@ -161,62 +170,5 @@ function expandVideo() {
 
 
 
-
-
-function updatePeriod() {
-    let campaignPeriod = document.getElementById("campaign-period");
-    let panelDuration = document.getElementById("panel-duration");
-
-    if (campaignPeriod && panelDuration) {
-        localStorage.setItem("campaign-period", campaignPeriod.value); // ✅ Salva no localStorage
-        updatePeriodAutomatically(); // ✅ Atualiza imediatamente após alteração
-    } else {
-        console.error("Erro: Elementos não encontrados!");
-    }
-}
-
-function updatePeriodAutomatically() {
-    let panelDuration = document.getElementById("panel-duration");
-    let periodInput = localStorage.getItem("campaign-period");
-
-    if (!periodInput || isNaN(periodInput)) {
-        console.error("Erro: Período não foi salvo corretamente.");
-        return;
-    }
-
-    let totalDays = parseInt(periodInput, 10);
-
-    // Obtém a data de início
-    let startDate = localStorage.getItem("campaign-start-date");
-    if (!startDate) {
-        startDate = new Date().toISOString().split("T")[0];
-        localStorage.setItem("campaign-start-date", startDate);
-    }
-
-    // Calcula os dias restantes
-    let today = new Date();
-    let start = new Date(startDate);
-    let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-    let remainingDays = Math.max(totalDays - daysElapsed, 0);
-
-    // 🔹 Atualiza o período e aplica a cor corretamente
-    if (remainingDays > 0) {
-        panelDuration.textContent = `Período: ${remainingDays} dias`;
-
-        let threshold = Math.floor(totalDays * 0.2);
-
-        setTimeout(() => {
-            panelDuration.style.color = remainingDays > threshold ? "#008000" : "#FF0000"; // ✅ Verde acima de 20%, Vermelho abaixo
-        }, 100);
-    } else {
-        panelDuration.textContent = "Período: Encerrado!";
-        panelDuration.style.color = "#FF0000"; // 🔴 Campanha encerrada
-    }
-}
-
-// 🚀 Garante que o período seja atualizado ao carregar a página
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(updatePeriodAutomatically, 300);
-});
 
 
