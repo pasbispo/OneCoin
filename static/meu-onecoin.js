@@ -63,22 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.getElementById("update-button").addEventListener("click", function() {
-    let cryptoName = document.getElementById("crypto-name").textContent;
-    let cryptoQuantity = document.getElementById("crypto-quantity").textContent;
-    let estimatedValue = document.getElementById("crypto-value").textContent;
-    let cryptoImage = document.getElementById("crypto-image").src;
-
-    if (cryptoName && cryptoQuantity && estimatedValue && cryptoImage) {
-        localStorage.setItem("selectedCrypto", cryptoName);
-        localStorage.setItem("cryptoQuantity", cryptoQuantity);
-        localStorage.setItem("estimatedValue", estimatedValue);
-        localStorage.setItem("cryptoImage", cryptoImage);
-    } else {
-        console.error("Erro: Dados da criptomoeda não foram definidos corretamente.");
-    }
-});
-
 
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoName = localStorage.getItem("selectedCrypto");
