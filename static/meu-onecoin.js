@@ -185,36 +185,59 @@ function updatePeriod() {
 
 
 
-function updatePeriodAutomatically() {
-    let periodInput = localStorage.getItem("campaign-period");
+function updatePeriod() {
+    let periodInput = document.getElementById("campaign-period").value;
     let panelDuration = document.getElementById("panel-duration");
 
-    if (!periodInput || isNaN(periodInput)) return;
-
+    // Converte o período para número
     let totalDays = parseInt(periodInput, 10);
 
-    // Obtém a data de início armazenada (ou define hoje como início)
+    if (!isNaN(totalDays) && totalDays > 0) {
+        panelDuration.textContent = `Período: ${totalDays} dias`;
+
+        // Define o limite de 20% do tempo
+        let threshold = Math.floor(totalDays * 0.2);
+
+        // 🟥 Se faltar menos de 20% do tempo, fica vermelho
+        if (totalDays <= threshold) {
+            panelDuration.style.color = "red";
+        } else {
+            panelDuration.style.color = "green";
+        }
+    }
+}
+
+
+function updatePeriodAutomatically() {
+    let totalDays = localStorage.getItem("campaign-period");
+    let panelDuration = document.getElementById("panel-duration");
+
+    if (!totalDays || isNaN(totalDays)) return;
+
+    totalDays = parseInt(totalDays, 10);
+
+    // Obtém a data inicial (ou define hoje como início)
     let startDate = localStorage.getItem("campaign-start-date");
     if (!startDate) {
         startDate = new Date().toISOString().split("T")[0]; // ✅ Salva a data de hoje
         localStorage.setItem("campaign-start-date", startDate);
     }
 
-    // Calcula dias restantes
+    // Calcula dias restantes corretamente
     let today = new Date();
     let start = new Date(startDate);
     let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
     let remainingDays = Math.max(totalDays - daysElapsed, 0); // ✅ Evita valores negativos
 
-    // Atualiza o texto na interface
+    // 🟥 Ajusta a cor corretamente e exibe "Encerrado" quando acabar
     if (remainingDays > 0) {
         panelDuration.textContent = `Período: ${remainingDays} dias`;
-        panelDuration.style.color = remainingDays <= Math.floor(totalDays * 0.2) ? "red" : "green"; // 🔴🟢 Ajusta cor
+        panelDuration.style.color = remainingDays <= Math.floor(totalDays * 0.2) ? "red" : "green";
     } else {
         panelDuration.textContent = "Período: Encerrado!";
         panelDuration.style.color = "red";
     }
 }
 
-// Chama a função automaticamente ao carregar a página
+// 🚀 Garante que a função seja executada ao carregar a página
 document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
