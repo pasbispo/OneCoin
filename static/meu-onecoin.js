@@ -1,18 +1,33 @@
 document.getElementById("update-button").addEventListener("click", function() {
-    document.getElementById("panel-title").textContent = document.getElementById("campaign-name").value;
-    document.getElementById("panel-goal").textContent = document.getElementById("campaign-goal").value;
-    document.getElementById("panel-duration").textContent = document.getElementById("campaign-period").value;
-
-
+    let campaignName = document.getElementById("campaign-name");
+    let campaignGoal = document.getElementById("campaign-goal");
+    let campaignPeriod = document.getElementById("campaign-period");
+    let panelTitle = document.getElementById("panel-title");
+    let panelGoal = document.getElementById("panel-goal");
+    let panelDuration = document.getElementById("panel-duration");
     let imageInput = document.getElementById("campaign-image");
-    if (imageInput.files.length > 0) {
+    let panelImage = document.getElementById("panel-image");
+
+    // Verifica se todos os elementos existem antes de acessar suas propriedades
+    if (campaignName && panelTitle) {
+        panelTitle.textContent = campaignName.value;
+    }
+
+    if (campaignGoal && panelGoal) {
+        panelGoal.textContent = campaignGoal.value;
+    }
+
+    if (campaignPeriod && panelDuration) {
+        panelDuration.textContent = campaignPeriod.value;
+    }
+
+    if (imageInput && panelImage && imageInput.files.length > 0) {
         let imageUrl = URL.createObjectURL(imageInput.files[0]);
-        document.getElementById("panel-image").src = imageUrl;
+        panelImage.src = imageUrl;
     }
 });
 
-
-
+// 🚀 Executa automaticamente ao carregar a página
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoName = localStorage.getItem("selectedCrypto");
     let cryptoQuantity = localStorage.getItem("cryptoQuantity");
@@ -20,40 +35,20 @@ document.addEventListener("DOMContentLoaded", function() {
     let cryptoImage = localStorage.getItem("cryptoImage");
 
     if (cryptoName && cryptoQuantity && estimatedValue && cryptoImage) {
-        document.getElementById("crypto-name").textContent = cryptoName;
-        document.getElementById("crypto-quantity").textContent = cryptoQuantity;
-        document.getElementById("crypto-value").textContent = estimatedValue;
-        document.getElementById("crypto-image").src = cryptoImage;
+        let cryptoNameElem = document.getElementById("crypto-name");
+        let cryptoQuantityElem = document.getElementById("crypto-quantity");
+        let cryptoValueElem = document.getElementById("crypto-value");
+        let cryptoImageElem = document.getElementById("crypto-image");
+
+        if (cryptoNameElem) cryptoNameElem.textContent = cryptoName;
+        if (cryptoQuantityElem) cryptoQuantityElem.textContent = cryptoQuantity;
+        if (cryptoValueElem) cryptoValueElem.textContent = estimatedValue;
+        if (cryptoImageElem) cryptoImageElem.src = cryptoImage;
     } else {
         console.error("Erro: Dados da criptomoeda não encontrados.");
     }
 });
 
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let cryptoTableBody = document.querySelector(".crypto-panel-table tbody");
-    let cryptoData = JSON.parse(localStorage.getItem("cryptoList"));
-
-    if (cryptoData && cryptoData.length > 0) {
-        cryptoTableBody.innerHTML = ""; // ✅ Limpa a tabela antes de preencher
-
-        cryptoData.forEach(crypto => {
-            let row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td><img src="${crypto.imageSrc}" alt="${crypto.name}"></td>
-                <td><button>Selecionar Rede</button></td>
-                <td>${crypto.quantity}</td>
-                <td>${crypto.value}</td>
-            `;
-
-            cryptoTableBody.appendChild(row);
-        });
-    } else {
-        console.error("Erro: Dados da criptomoeda não encontrados.");
-    }
-});
 
 
 document.getElementById("update-button").addEventListener("click", function() {
@@ -67,7 +62,7 @@ document.getElementById("update-button").addEventListener("click", function() {
         document.getElementById("panel-image").src = imageUrl;
     }
 });
-
+  
 
 
 function previewCampaignImage() {
