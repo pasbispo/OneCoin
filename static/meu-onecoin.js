@@ -136,7 +136,6 @@ function expandVideo() {
 }
 
 
-
 function updatePeriodAutomatically() {
     let totalDays = localStorage.getItem("campaign-period");
     let panelDuration = document.getElementById("panel-duration");
@@ -158,10 +157,15 @@ function updatePeriodAutomatically() {
     let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
     let remainingDays = Math.max(totalDays - daysElapsed, 0); // ✅ Evita valores negativos
 
-    // 🟥 Ajusta a cor corretamente e exibe "Encerrado" quando acabar
+    // 🔹 Ajusta a cor corretamente
     if (remainingDays > 0) {
         panelDuration.textContent = `Período: ${remainingDays} dias`;
-        panelDuration.style.color = remainingDays <= Math.floor(totalDays * 0.2) ? "red" : "green";
+        
+        if (remainingDays <= Math.floor(totalDays * 0.2)) {
+            panelDuration.style.color = "red"; // 🔴 Se faltar menos de 20%, fica vermelho
+        } else {
+            panelDuration.style.color = "green"; // 🟢 Se estiver acima de 20%, fica verde
+        }
     } else {
         panelDuration.textContent = "Período: Encerrado!";
         panelDuration.style.color = "red";
@@ -170,8 +174,6 @@ function updatePeriodAutomatically() {
 
 // 🚀 Garante que a função seja executada ao carregar a página
 document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
-
-
 
 
 
