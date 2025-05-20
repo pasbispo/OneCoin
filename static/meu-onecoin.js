@@ -183,29 +183,38 @@ function updatePeriod() {
 }
 
 
-function updatePeriod() {
-    let periodInput = document.getElementById("campaign-period").value;
+
+
+function updatePeriodAutomatically() {
+    let periodInput = localStorage.getItem("campaign-period");
     let panelDuration = document.getElementById("panel-duration");
 
-    // Converte o período para número
+    if (!periodInput || isNaN(periodInput)) return;
+
     let totalDays = parseInt(periodInput, 10);
 
-    if (!isNaN(totalDays) && totalDays > 0) {
-        panelDuration.textContent = totalDays + " dias";
-        
-        // Calcula 20% do tempo total
-        let threshold = Math.floor(totalDays * 0.2);
+    // Obtém a data de início armazenada (ou define hoje como início)
+    let startDate = localStorage.getItem("campaign-start-date");
+    if (!startDate) {
+        startDate = new Date().toISOString().split("T")[0]; // ✅ Salva a data de hoje
+        localStorage.setItem("campaign-start-date", startDate);
+    }
 
-        if (totalDays <= threshold && totalDays > 0) {
-            panelDuration.style.color = "red"; // 🔴 Faltando menos de 20% do tempo, fica vermelho
-        } else {
-            panelDuration.style.color = "green"; // 🟢 Ainda dentro do prazo, fica verde
-        }
+    // Calcula dias restantes
+    let today = new Date();
+    let start = new Date(startDate);
+    let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+    let remainingDays = Math.max(totalDays - daysElapsed, 0); // ✅ Evita valores negativos
 
-        // Quando o tempo zerar
-        if (totalDays <= 0) {
-            panelDuration.textContent = "Período: Encerrado!";
-            panelDuration.style.color = "red";
-        }
+    // Atualiza o texto na interface
+    if (remainingDays > 0) {
+        panelDuration.textContent = `Período: ${remainingDays} dias`;
+        panelDuration.style.color = remainingDays <= Math.floor(totalDays * 0.2) ? "red" : "green"; // 🔴🟢 Ajusta cor
+    } else {
+        panelDuration.textContent = "Período: Encerrado!";
+        panelDuration.style.color = "red";
     }
 }
+
+// Chama a função automaticamente ao carregar a página
+document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
