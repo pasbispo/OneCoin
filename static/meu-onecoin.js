@@ -184,6 +184,7 @@ function updatePeriod() {
 
 
 
+
 function updatePeriodAutomatically() {
     let panelDuration = document.getElementById("panel-duration");
     let periodInput = localStorage.getItem("campaign-period");
@@ -208,24 +209,19 @@ function updatePeriodAutomatically() {
     let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
     let remainingDays = Math.max(totalDays - daysElapsed, 0);
 
-    // 🔹 Atualiza o período e aplica a cor corretamente
-    if (remainingDays > 0) {
-        panelDuration.textContent = `Período: ${remainingDays} dias`;
+    // 🔹 Aplica a cor corretamente
+    panelDuration.textContent = `${remainingDays} dias`;
 
-        let threshold = Math.floor(totalDays * 0.2);
-        
-        // ✅ Adicionamos um pequeno atraso para garantir que a cor seja aplicada corretamente
-        setTimeout(() => {
-            panelDuration.style.color = remainingDays > threshold ? "green" : "red";
-        }, 50);
-        
-    } else {
-        panelDuration.textContent = "Período: Encerrado!";
-        panelDuration.style.color = "red";
-    }
+    let threshold = Math.floor(totalDays * 0.2);
+    
+    setTimeout(() => {
+        let newColor = remainingDays > threshold ? "#008000" : "#FF0000"; // ✅ Verde acima de 20%, Vermelho abaixo
+        panelDuration.style.color = newColor;
+        console.log(`Cor do período atualizada para: ${newColor}`); // ✅ Log para depuração
+    }, 100);
 }
 
 // 🚀 Executa automaticamente ao carregar a página
 document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(updatePeriodAutomatically, 100); // ✅ Pequeno delay para garantir que o elemento foi atualizado corretamente
+    setTimeout(updatePeriodAutomatically, 300);
 });
