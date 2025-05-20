@@ -956,7 +956,7 @@ button:hover {
 
 #slideshow-image {
     width: 600px;
-    max-height: 200px;
+    max-height: 300px;
     object-fit: contain; /* ✅ Mantém a imagem dentro do espaço sem cortes */
     display: block !important;
     margin: 0 auto;
