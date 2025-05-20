@@ -50,16 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
- document.getElementById("update-button").addEventListener("click", function() {
-    let campaignPeriod = document.getElementById("campaign-period").value;
-
-    if (campaignPeriod) {
-        localStorage.setItem("campaign-period", campaignPeriod); // ✅ Salva no localStorage corretamente
-        document.getElementById("panel-duration").textContent = `Período: ${campaignPeriod} dias`;
-    } else {
-        console.error("Erro: O período da campanha não foi definido corretamente.");
-    }
-});
+ 
 
 
 
