@@ -140,7 +140,6 @@ function expandVideo() {
 
 
 
-
 function updatePeriodAutomatically() {
     let panelDuration = document.getElementById("panel-duration");
     let periodInput = localStorage.getItem("campaign-period");
@@ -167,19 +166,15 @@ function updatePeriodAutomatically() {
 
     // 🔹 Atualiza visualmente o período
     if (remainingDays > 0) {
-        panelDuration.textContent = `Período: ${remainingDays} dias`;
-        let threshold = Math.floor(totalDays * 0.2);
+        panelDuration.textContent = `${remainingDays} dias`;
 
-        if (remainingDays <= threshold) {
-            panelDuration.style.color = "red"; // 🔴 Menos de 20% do tempo restante
-        } else {
-            panelDuration.style.color = "green"; // 🟢 Tempo ainda normal
-        }
+        let threshold = Math.floor(totalDays * 0.2);
+        panelDuration.style.color = remainingDays > threshold ? "green" : "red"; // 🟢 Quando acima de 20%, fica verde
     } else {
-        panelDuration.textContent = "Período: Encerrado!";
+        panelDuration.textContent = "Encerrado!";
         panelDuration.style.color = "red"; // 🔴 Campanha encerrada
     }
 }
 
-// 🚀 Chama a função ao carregar a página
+// 🚀 Executa automaticamente ao carregar a página
 document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
