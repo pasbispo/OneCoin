@@ -138,4 +138,30 @@ function expandVideo() {
 
 
 
+function updatePeriod() {
+    let periodInput = document.getElementById("campaign-period").value;
+    let panelDuration = document.getElementById("panel-duration");
+
+    // Converte o período para número
+    let totalDays = parseInt(periodInput, 10);
+
+    if (!isNaN(totalDays) && totalDays > 0) {
+        panelDuration.textContent = totalDays + " dias";
+        
+        // Calcula 20% do tempo total
+        let threshold = Math.floor(totalDays * 0.2);
+
+        if (totalDays <= threshold && totalDays > 0) {
+            panelDuration.style.color = "red"; // 🔴 Faltando menos de 20% do tempo, fica vermelho
+        } else {
+            panelDuration.style.color = "green"; // 🟢 Ainda dentro do prazo, fica verde
+        }
+
+        // Quando o tempo zerar
+        if (totalDays <= 0) {
+            panelDuration.textContent = "Período: Encerrado!";
+            panelDuration.style.color = "red";
+        }
+    }
+}
 
