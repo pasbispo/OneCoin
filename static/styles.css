@@ -965,11 +965,6 @@ button:hover {
 }
 
 
-#slideshow-image {
-    width: 300px;
-    height: auto;
-    transition: opacity 1s ease-in-out;
-}
 
 
 
