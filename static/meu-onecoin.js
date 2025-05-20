@@ -171,17 +171,6 @@ function expandVideo() {
 
 
 
-function updatePeriod() {
-    let campaignPeriod = document.getElementById("campaign-period");
-    let panelDuration = document.getElementById("panel-duration");
-
-    if (campaignPeriod && panelDuration) {
-        panelDuration.textContent = `Período: ${campaignPeriod.value} dias`;
-    } else {
-        console.error("Erro: Elementos não encontrados!");
-    }
-}
-
 
 
 function updatePeriodAutomatically() {
