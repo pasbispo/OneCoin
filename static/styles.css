@@ -1040,3 +1040,12 @@ button:hover {
     transform: translate(50%, 50%);
 }
 
+
+
+
+
+#panel-duration {
+    font-weight: bold; 
+    color: inherit !important; /* ✅ Permite que o JavaScript altere a cor */
+}
+

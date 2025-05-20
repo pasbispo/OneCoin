@@ -151,28 +151,32 @@ function updatePeriodAutomatically() {
 
     let totalDays = parseInt(periodInput, 10);
 
-    // Obtém a data de início da campanha
+    // Obtém a data de início
     let startDate = localStorage.getItem("campaign-start-date");
     if (!startDate) {
-        startDate = new Date().toISOString().split("T")[0]; // ✅ Salva a data de hoje
+        startDate = new Date().toISOString().split("T")[0]; 
         localStorage.setItem("campaign-start-date", startDate);
     }
 
-    // Calcula dias restantes corretamente
+    // Calcula os dias restantes
     let today = new Date();
     let start = new Date(startDate);
     let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-    let remainingDays = Math.max(totalDays - daysElapsed, 0); // ✅ Evita valores negativos
+    let remainingDays = Math.max(totalDays - daysElapsed, 0);
 
-    // 🔹 Atualiza visualmente o período
+    // 🔹 Aplica a cor corretamente
     if (remainingDays > 0) {
-        panelDuration.textContent = `${remainingDays} dias`;
+        panelDuration.textContent = `Período: ${remainingDays} dias`;
 
         let threshold = Math.floor(totalDays * 0.2);
-        panelDuration.style.color = remainingDays > threshold ? "green" : "red"; // 🟢 Quando acima de 20%, fica verde
+        if (remainingDays > threshold) {
+            panelDuration.style.color = "#008000"; // ✅ Verde quando está acima de 20%
+        } else {
+            panelDuration.style.color = "#FF0000"; // 🔴 Vermelho quando faltam menos de 20%
+        }
     } else {
-        panelDuration.textContent = "Encerrado!";
-        panelDuration.style.color = "red"; // 🔴 Campanha encerrada
+        panelDuration.textContent = "Período: Encerrado!";
+        panelDuration.style.color = "#FF0000"; // 🔴 Campanha encerrada
     }
 }
 
