@@ -136,15 +136,23 @@ function expandVideo() {
 }
 
 
+
+
+
+
+
 function updatePeriodAutomatically() {
-    let totalDays = localStorage.getItem("campaign-period");
     let panelDuration = document.getElementById("panel-duration");
+    let periodInput = localStorage.getItem("campaign-period");
 
-    if (!totalDays || isNaN(totalDays)) return;
+    if (!periodInput || isNaN(periodInput)) {
+        console.error("Erro: Período não foi salvo corretamente.");
+        return;
+    }
 
-    totalDays = parseInt(totalDays, 10);
+    let totalDays = parseInt(periodInput, 10);
 
-    // Obtém a data inicial (ou define hoje como início)
+    // Obtém a data de início da campanha
     let startDate = localStorage.getItem("campaign-start-date");
     if (!startDate) {
         startDate = new Date().toISOString().split("T")[0]; // ✅ Salva a data de hoje
@@ -157,34 +165,21 @@ function updatePeriodAutomatically() {
     let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
     let remainingDays = Math.max(totalDays - daysElapsed, 0); // ✅ Evita valores negativos
 
-    // 🔹 Ajusta a cor corretamente
+    // 🔹 Atualiza visualmente o período
     if (remainingDays > 0) {
         panelDuration.textContent = `Período: ${remainingDays} dias`;
-        
-        if (remainingDays <= Math.floor(totalDays * 0.2)) {
-            panelDuration.style.color = "red"; // 🔴 Se faltar menos de 20%, fica vermelho
+        let threshold = Math.floor(totalDays * 0.2);
+
+        if (remainingDays <= threshold) {
+            panelDuration.style.color = "red"; // 🔴 Menos de 20% do tempo restante
         } else {
-            panelDuration.style.color = "green"; // 🟢 Se estiver acima de 20%, fica verde
+            panelDuration.style.color = "green"; // 🟢 Tempo ainda normal
         }
     } else {
         panelDuration.textContent = "Período: Encerrado!";
-        panelDuration.style.color = "red";
+        panelDuration.style.color = "red"; // 🔴 Campanha encerrada
     }
 }
 
-// 🚀 Garante que a função seja executada ao carregar a página
+// 🚀 Chama a função ao carregar a página
 document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
-
-
-
-
-document.getElementById("campaign-goal").addEventListener("input", function () {
-    let goalInput = document.getElementById("campaign-goal");
-    let words = goalInput.value.trim().split(/\s+/); // Divide o texto em palavras
-
-    if (words.length > 55) {
-        goalInput.value = words.slice(0, 55).join(" "); // ✅ Limita a 55 palavras
-        alert("O limite é de 55 palavras!");
-    }
-});
-
