@@ -821,11 +821,6 @@ button:hover {
 
 
 
-#panel-duration {
-    font-weight: bold; 
-    color: inherit !important; /* ✅ Permite que o JavaScript altere a cor */
-}
-
 
 
 
@@ -1048,3 +1043,8 @@ button:hover {
 
 
 
+
+#panel-duration {
+    font-weight: bold; 
+    color: inherit !important; /* ✅ Permite que o JavaScript altere a cor */
+}

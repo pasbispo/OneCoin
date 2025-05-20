@@ -1,7 +1,8 @@
 document.getElementById("update-button").addEventListener("click", function() {
     document.getElementById("panel-title").textContent = document.getElementById("campaign-name").value;
     document.getElementById("panel-goal").textContent = document.getElementById("campaign-goal").value;
-    document.getElementById("panel-duration").textContent = document.getElementById("duration").value;
+    document.getElementById("panel-duration").textContent = document.getElementById("campaign-period").value;
+
 
     let imageInput = document.getElementById("campaign-image");
     if (imageInput.files.length > 0) {
@@ -27,87 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Erro: Dados da criptomoeda não encontrados.");
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function updatePeriodAutomatically() {
-    let panelDuration = document.getElementById("panel-duration");
-    let periodInput = localStorage.getItem("campaign-period");
-
-    if (!periodInput || isNaN(periodInput)) {
-        console.error("Erro: Período não foi salvo corretamente.");
-        return;
-    }
-
-    let totalDays = parseInt(periodInput, 10);
-
-    // Obtém a data de início
-    let startDate = localStorage.getItem("campaign-start-date");
-    if (!startDate) {
-        startDate = new Date().toISOString().split("T")[0]; 
-        localStorage.setItem("campaign-start-date", startDate);
-    }
-
-    // Calcula os dias restantes
-    let today = new Date();
-    let start = new Date(startDate);
-    let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-    let remainingDays = Math.max(totalDays - daysElapsed, 0);
-
-    // 🔹 Atualiza o período e aplica a cor corretamente
-    if (remainingDays > 0) {
-        panelDuration.textContent = `Período: ${remainingDays} dias`;
-
-        let threshold = Math.floor(totalDays * 0.2);
-        
-        // ✅ Adicionamos um pequeno atraso para garantir que a cor seja aplicada corretamente
-        setTimeout(() => {
-            panelDuration.style.color = remainingDays > threshold ? "green" : "red";
-        }, 50);
-        
-    } else {
-        panelDuration.textContent = "Período: Encerrado!";
-        panelDuration.style.color = "red";
-    }
-}
-
-// 🚀 Executa automaticamente ao carregar a página
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(updatePeriodAutomatically, 100); // ✅ Pequeno delay para garantir que o elemento foi atualizado corretamente
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -221,3 +141,49 @@ function expandVideo() {
 
 
 
+
+function updatePeriodAutomatically() {
+    let panelDuration = document.getElementById("panel-duration");
+    let periodInput = localStorage.getItem("campaign-period");
+
+    if (!periodInput || isNaN(periodInput)) {
+        console.error("Erro: Período não foi salvo corretamente.");
+        return;
+    }
+
+    let totalDays = parseInt(periodInput, 10);
+
+    // Obtém a data de início
+    let startDate = localStorage.getItem("campaign-start-date");
+    if (!startDate) {
+        startDate = new Date().toISOString().split("T")[0]; 
+        localStorage.setItem("campaign-start-date", startDate);
+    }
+
+    // Calcula os dias restantes
+    let today = new Date();
+    let start = new Date(startDate);
+    let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+    let remainingDays = Math.max(totalDays - daysElapsed, 0);
+
+    // 🔹 Atualiza o período e aplica a cor corretamente
+    if (remainingDays > 0) {
+        panelDuration.textContent = `Período: ${remainingDays} dias`;
+
+        let threshold = Math.floor(totalDays * 0.2);
+        
+        // ✅ Adicionamos um pequeno atraso para garantir que a cor seja aplicada corretamente
+        setTimeout(() => {
+            panelDuration.style.color = remainingDays > threshold ? "green" : "red";
+        }, 50);
+        
+    } else {
+        panelDuration.textContent = "Período: Encerrado!";
+        panelDuration.style.color = "red";
+    }
+}
+
+// 🚀 Executa automaticamente ao carregar a página
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(updatePeriodAutomatically, 100); // ✅ Pequeno delay para garantir que o elemento foi atualizado corretamente
+});
