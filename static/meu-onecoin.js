@@ -171,50 +171,15 @@ function expandVideo() {
 
 
 
-
-
-function updatePeriodAutomatically() {
+function updatePeriod() {
+    let campaignPeriod = document.getElementById("campaign-period");
     let panelDuration = document.getElementById("panel-duration");
-    let periodInput = localStorage.getItem("campaign-period");
 
-    if (!periodInput || isNaN(periodInput)) {
-        console.error("Erro: Período não foi salvo corretamente.");
-        return;
-    }
-
-    let totalDays = parseInt(periodInput, 10);
-
-    // Obtém a data de início
-    let startDate = localStorage.getItem("campaign-start-date");
-    if (!startDate) {
-        startDate = new Date().toISOString().split("T")[0]; 
-        localStorage.setItem("campaign-start-date", startDate);
-    }
-
-    // Calcula os dias restantes
-    let today = new Date();
-    let start = new Date(startDate);
-    let daysElapsed = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-    let remainingDays = Math.max(totalDays - daysElapsed, 0);
-
-    // 🔹 Atualiza o período e aplica a cor corretamente
-    if (remainingDays > 0) {
-        panelDuration.textContent = `Período: ${remainingDays} dias`;
-
-        let threshold = Math.floor(totalDays * 0.2);
-        
-        // ✅ Adicionamos um pequeno atraso para garantir que a cor seja aplicada corretamente
-        setTimeout(() => {
-            panelDuration.style.color = remainingDays > threshold ? "green" : "red";
-        }, 50);
-        
+    if (campaignPeriod && panelDuration) {
+        panelDuration.textContent = `Período: ${campaignPeriod.value} dias`;
     } else {
-        panelDuration.textContent = "Período: Encerrado!";
-        panelDuration.style.color = "red";
+        console.error("Erro: Elementos não encontrados!");
     }
 }
 
-// 🚀 Executa automaticamente ao carregar a página
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(updatePeriodAutomatically, 100); // ✅ Pequeno delay para garantir que o elemento foi atualizado corretamente
-});
+
