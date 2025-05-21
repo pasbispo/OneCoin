@@ -1064,7 +1064,7 @@ button:hover {
 
 
 #campaign-goal {
-    width: 80%; /* ✅ Expande para ocupar o espaço disponível */
+    width: 90%; /* ✅ Expande para ocupar o espaço disponível */
     height: 150px; /* ✅ Aumenta a altura para mais conforto na digitação */
     font-size: 18px; /* ✅ Torna o texto maior */
     padding: 10px; /* ✅ Adiciona espaçamento interno */
