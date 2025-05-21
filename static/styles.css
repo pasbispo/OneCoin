@@ -1089,14 +1089,6 @@ th, td {
     text-align: center;
 }
 
-.network-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-}
-
 .modal {
     position: fixed;
     top: 50%;
@@ -1106,4 +1098,19 @@ th, td {
     padding: 20px;
     border: 2px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+
+.network-input, .address-input {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.save-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
 }
