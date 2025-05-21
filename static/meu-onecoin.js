@@ -275,6 +275,29 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
+function saveSelectedCryptos() {
+    let selectedCryptos = [
+        {
+            name: "Bitcoin",
+            image: "static/img/btc.png",
+            quantity: "0.5",
+            estimatedValue: "R$ 150,000.00"
+        },
+        {
+            name: "Ethereum",
+            image: "static/img/eth.png",
+            quantity: "2.0",
+            estimatedValue: "R$ 40,000.00"
+        }
+    ];
+
+    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
+    console.log("Criptomoedas salvas no localStorage!");
+}
+
+
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoTable = document.getElementById("crypto-table");
@@ -304,22 +327,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-function saveSelectedCryptos() {
-    let selectedCryptos = [
-        {
-            name: "Bitcoin",
-            image: "static/img/btc.png",
-            quantity: "0.5",
-            estimatedValue: "R$ 150,000.00"
-        },
-        {
-            name: "Ethereum",
-            image: "static/img/eth.png",
-            quantity: "2.0",
-            estimatedValue: "R$ 40,000.00"
-        }
-    ];
-
-    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-    console.log("Criptomoedas salvas no localStorage!");
-}
