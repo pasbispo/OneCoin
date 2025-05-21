@@ -322,10 +322,11 @@ function openNetworkTable(cryptoName) {
 
 
 
+
+
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoTable = document.getElementById("crypto-table");
 
-    // 🔹 Obtém os dados armazenados na página escolher-criptomoedas.html
     let selectedCrypto = JSON.parse(localStorage.getItem("selectedCrypto"));
 
     if (!selectedCrypto) {
@@ -345,39 +346,54 @@ document.addEventListener("DOMContentLoaded", function() {
     cellValue.textContent = selectedCrypto.estimatedValue;
 
     // ✅ Adiciona corretamente o botão "Redes"
-    cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${selectedCrypto.name}">Redes</button>`;
+    let networkButton = document.createElement("button");
+    networkButton.textContent = "Redes";
+    networkButton.classList.add("network-btn");
+    networkButton.setAttribute("data-crypto", selectedCrypto.name);
+    cellNetworks.appendChild(networkButton);
 
     // ✅ Adiciona evento ao botão para abrir tabela de redes
-    document.querySelector(".network-btn").addEventListener("click", function() {
+    networkButton.addEventListener("click", function() {
         openNetworkTable(selectedCrypto.name);
     });
 });
 
-// 🔹 Função para abrir a tabela de redes corretamente
+// 🔹 Função para abrir a tabela de redes com campos editáveis
 function openNetworkTable(cryptoName) {
-    let networkTable = document.createElement("table");
-    networkTable.innerHTML = `
-        <tr>
-            <th>Rede</th>
-            <th>Endereço</th>
-        </tr>
-        <tr><td>Ethereum</td><td>0x123abc...</td></tr>
-        <tr><td>Binance Smart Chain</td><td>0x456def...</td></tr>
-        <tr><td>Polygon</td><td>0x789ghi...</td></tr>
-        <tr><td>Solana</td><td>0xabc123...</td></tr>
-        <tr><td>Cardano</td><td>0xdef456...</td></tr>
-    `;
-
     let modal = document.createElement("div");
     modal.classList.add("modal");
-    modal.appendChild(networkTable);
+
+    let networkForm = document.createElement("div");
+    networkForm.innerHTML = `
+        <h3>Insira a Rede e o Endereço</h3>
+        <label>Rede:</label> <input type="text" class="network-input" placeholder="Digite a rede">
+        <label>Endereço:</label> <input type="text" class="address-input" placeholder="Digite o endereço">
+        <button class="save-btn">Salvar</button>
+    `;
+
+    // ✅ Adiciona evento ao botão "Salvar"
+    networkForm.querySelector(".save-btn").addEventListener("click", function() {
+        let network = document.querySelector(".network-input").value;
+        let address = document.querySelector(".address-input").value;
+
+        if (!network || !address) {
+            alert("Preencha todos os campos!");
+            return;
+        }
+
+        console.log(`Rede: ${network}, Endereço: ${address}`);
+        modal.remove(); // ✅ Fecha o modal após salvar
+    });
+
+    modal.appendChild(networkForm);
     document.body.appendChild(modal);
 
-    // 🔹 Fecha a tabela ao clicar fora
-    modal.addEventListener("click", function() {
-        modal.remove();
+    // ✅ Fechar o modal ao clicar fora
+    modal.addEventListener("click", function(e) {
+        if (e.target === modal) modal.remove();
     });
 }
+
 
 
 
