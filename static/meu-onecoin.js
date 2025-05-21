@@ -363,28 +363,24 @@ function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // ✅ Criar uma tabela com redes pré-definidas + opções editáveis
+    // ✅ Criar um formulário para o usuário digitar a rede e endereço manualmente
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
-        <h3>Selecione ou Edite a Rede e o Endereço</h3>
-        <table>
-            <tr><th>Rede</th><th>Endereço</th></tr>
-            <tr><td>Ethereum</td><td>0x123abc...</td></tr>
-            <tr><td>Binance Smart Chain</td><td>0x456def...</td></tr>
-            <tr><td>Solana</td><td>0x789ghi...</td></tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a rede"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o endereço"></td>
-            </tr>
-        </table>
+        <h3>Digite a Rede e o Endereço</h3>
+        <label for="network-name">Rede:</label>
+        <input type="text" id="network-name" class="network-input" placeholder="Digite a rede">
+        
+        <label for="crypto-address">Endereço:</label>
+        <input type="text" id="crypto-address" class="address-input" placeholder="Digite o endereço">
+        
         <button class="save-btn">Salvar</button>
         <button class="close-btn">Fechar</button>
     `;
 
     // ✅ Adiciona evento ao botão "Salvar"
     networkForm.querySelector(".save-btn").addEventListener("click", function() {
-        let network = document.querySelector(".network-input").value;
-        let address = document.querySelector(".address-input").value;
+        let network = document.getElementById("network-name").value;
+        let address = document.getElementById("crypto-address").value;
 
         if (!network || !address) {
             alert("Preencha todos os campos!");
