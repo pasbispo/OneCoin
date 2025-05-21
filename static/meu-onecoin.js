@@ -117,6 +117,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+document.getElementById("campaign-goal").addEventListener("input", function() {
+    let maxLength = 55;  // ✅ Define o limite
+    if (this.value.length > maxLength) {
+        this.value = this.value.substring(0, maxLength); // ✅ Corta o texto para 55 caracteres
+    }
+});
 
 
 
