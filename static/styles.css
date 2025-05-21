@@ -1044,7 +1044,7 @@ button:hover {
 
 
 #campaign-name {
-    width: 75%; /* ✅ Aumenta a largura para ocupar todo o espaço disponível */
+    width: 70%; /* ✅ Aumenta a largura para ocupar todo o espaço disponível */
     height: 50px; /* ✅ Ajusta a altura da caixa */
     font-size: 18px; /* ✅ Torna o texto maior para melhor visualização */
     padding: 10px; /* ✅ Adiciona espaçamento interno para melhor digitação */
