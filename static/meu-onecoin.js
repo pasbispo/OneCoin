@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 document.getElementById("campaign-goal").addEventListener("input", function() {
-    let maxLength = 55;  // ✅ Define o limite
+    let maxLength = 528;  // ✅ Define o limite
     let currentLength = this.value.length;
 
     if (currentLength > maxLength) {
