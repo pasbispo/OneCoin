@@ -327,6 +327,16 @@ function openNetworkTable(cryptoName) {
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoTable = document.getElementById("crypto-table");
 
+    // ✅ Limpa a tabela antes de preenchê-la
+    cryptoTable.innerHTML = `
+        <tr>
+            <th>Símbolo</th>
+            <th>Quantidade</th>
+            <th>Valor Estimado</th>
+            <th>Redes</th>
+        </tr>
+    `;
+
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     if (selectedCryptos.length === 0) {
