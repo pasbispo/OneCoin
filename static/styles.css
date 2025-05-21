@@ -1048,7 +1048,11 @@ button:hover {
     height: 35px; /* ✅ Ajusta a altura da caixa */
     font-size: 18px; /* ✅ Torna o texto maior para melhor visualização */
     padding: 10px; /* ✅ Adiciona espaçamento interno para melhor digitação */
-    border-bottom: 1px solid #ccc; /* ✅ Linha fina abaixo do texto */
+}
 
+.form-group {
+    border-bottom: 2px solid #ccc; /* ✅ Adiciona a linha entre os campos */
+    padding-bottom: 10px; /* ✅ Espaço para melhorar o visual */
+    margin-bottom: 10px; /* ✅ Afasta os elementos para não ficarem colados */
 }
 
