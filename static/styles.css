@@ -1081,6 +1081,7 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
+    position: relative; /* ✅ Agora a tabela se ajusta ao conteúdo */
 }
 
 th, td {
@@ -1106,9 +1107,8 @@ th, td {
     padding: 20px;
     border: 2px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-    width: 400px;
-    text-align: center;
 }
+
 
 .network-input, .address-input {
     width: 90%;
