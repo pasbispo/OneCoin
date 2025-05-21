@@ -1056,3 +1056,18 @@ button:hover {
     margin-bottom: 10px; /* ✅ Afasta os elementos para não ficarem colados */
 }
 
+
+
+
+
+
+
+
+#campaign-goal {
+    width: 100%; /* ✅ Expande para ocupar o espaço disponível */
+    height: 150px; /* ✅ Aumenta a altura para mais conforto na digitação */
+    font-size: 18px; /* ✅ Torna o texto maior */
+    padding: 10px; /* ✅ Adiciona espaçamento interno */
+    resize: vertical; /* ✅ Permite que o usuário ajuste a altura se necessário */
+}
+
