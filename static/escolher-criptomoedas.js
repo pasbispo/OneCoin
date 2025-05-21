@@ -221,3 +221,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
+document.getElementById("next-button").addEventListener("click", function() {
+    let cryptoName = document.getElementById("crypto-name").textContent;
+    let cryptoImage = document.getElementById("crypto-image").src;
+    let cryptoAmount = document.getElementById("crypto-amount").value;
+    let cryptoValue = document.getElementById("crypto-value").value;
+
+    if (cryptoName && cryptoAmount && cryptoValue) {
+        let selectedCrypto = {
+            name: cryptoName,
+            image: cryptoImage,
+            quantity: cryptoAmount,
+            estimatedValue: cryptoValue
+        };
+
+        localStorage.setItem("selectedCrypto", JSON.stringify(selectedCrypto));
+        console.log("Criptomoeda salva no localStorage!");
+
+        // 🔹 Redireciona para `meu-onecoin.html`
+        window.location.href = "meu-onecoin.html";
+    } else {
+        alert("Preencha todos os campos antes de continuar!");
+    }
+});
+
+

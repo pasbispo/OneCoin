@@ -275,55 +275,26 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
-function saveSelectedCryptos() {
-    let selectedCryptos = [
-        {
-            name: "Bitcoin",
-            image: "static/img/btc.png",
-            quantity: "0.5",
-            estimatedValue: "R$ 150,000.00"
-        },
-        {
-            name: "Ethereum",
-            image: "static/img/eth.png",
-            quantity: "2.0",
-            estimatedValue: "R$ 40,000.00"
-        }
-    ];
-
-    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-    console.log("Criptomoedas salvas no localStorage!");
-}
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoTable = document.getElementById("crypto-table");
 
-    // 🔹 Obtém os dados armazenados na página escolher-criptomoedas.html
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    let selectedCrypto = JSON.parse(localStorage.getItem("selectedCrypto"));
 
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda selecionada no localStorage.");
+    if (!selectedCrypto) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
         return;
     }
 
-    selectedCryptos.forEach(crypto => {
-        let row = cryptoTable.insertRow();
-        
-        let cellSymbol = row.insertCell(0);
-        let cellQuantity = row.insertCell(1);
-        let cellValue = row.insertCell(2);
-        let cellNetworks = row.insertCell(3);
+    let row = cryptoTable.insertRow();
+    
+    let cellSymbol = row.insertCell(0);
+    let cellQuantity = row.insertCell(1);
+    let cellValue = row.insertCell(2);
+    let cellNetworks = row.insertCell(3);
 
-        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
-        cellQuantity.textContent = crypto.quantity;
-        cellValue.textContent = crypto.estimatedValue;
-        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
-    });
+    cellSymbol.innerHTML = `<img src="${selectedCrypto.image}" alt="${selectedCrypto.name}" width="40">`;
+    cellQuantity.textContent = selectedCrypto.quantity;
+    cellValue.textContent = selectedCrypto.estimatedValue;
+    cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${selectedCrypto.name}">Redes</button>`;
 });
-
-
-
