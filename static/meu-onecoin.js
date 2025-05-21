@@ -102,6 +102,24 @@ document.getElementById("update-button").addEventListener("click", function() {
 
 
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    let updateButton = document.getElementById("update-button");
+
+    if (updateButton) {  // ✅ Garante que o elemento existe antes de adicionar o evento
+        updateButton.addEventListener("click", function() {
+            console.log("Botão clicado!");
+        });
+    } else {
+        console.error("Erro: O elemento 'update-button' não foi encontrado!");
+    }
+});
+
+
+
+
+
+
 function previewCampaignImage() {
     let imageInput = document.getElementById("campaign-image");
     let panelImage = document.getElementById("panel-image");
