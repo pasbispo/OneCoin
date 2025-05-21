@@ -118,11 +118,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 document.getElementById("campaign-goal").addEventListener("input", function() {
-    let maxLength = 528;  // ✅ Define o limite
+    let maxLength = 544;  // ✅ Define o limite
     let currentLength = this.value.length;
 
     if (currentLength > maxLength) {
-        this.value = this.value.substring(0, maxLength); // ✅ Corta o texto para 55 caracteres
+        this.value = this.value.substring(0, maxLength); // ✅ Corta o texto para 544 caracteres
     }
 });
 
@@ -232,6 +232,8 @@ function updatePeriod() {
         }
     }
 }
+
+
 
 
 function updatePeriodAutomatically() {
