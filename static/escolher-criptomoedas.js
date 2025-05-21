@@ -239,8 +239,7 @@ document.getElementById("next-button").addEventListener("click", function() {
         localStorage.setItem("selectedCrypto", JSON.stringify(selectedCrypto));
         console.log("Criptomoeda salva no localStorage!");
 
-        // 🔹 Redireciona para `meu-onecoin.html`
-        window.location.href = "meu-onecoin.html";
+        alert("Criptomoeda adicionada! Agora clique em 'Continuar' para prosseguir.");
     } else {
         alert("Preencha todos os campos antes de continuar!");
     }
