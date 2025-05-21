@@ -323,9 +323,18 @@ function openNetworkTable(cryptoName) {
 
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoTable = document.getElementById("crypto-table");
+    cryptoTable.innerHTML = `
+        <tr>
+            <th>Símbolo</th>
+            <th>Quantidade</th>
+            <th>Valor Estimado</th>
+            <th>Redes</th>
+        </tr>
+    `; // ✅ Limpa apenas a tabela, sem apagar os dados
+
+    console.log("Tabela visualmente resetada ao atualizar a página!");
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
@@ -422,22 +431,4 @@ function openNetworkTable(cryptoName) {
     });
 }
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    // ✅ Remove criptomoedas salvas no localStorage ao recarregar a página
-    localStorage.removeItem("selectedCryptos"); 
-
-    // ✅ Limpa a tabela visualmente
-    let cryptoTable = document.getElementById("crypto-table");
-    cryptoTable.innerHTML = `
-        <tr>
-            <th>Símbolo</th>
-            <th>Quantidade</th>
-            <th>Valor Estimado</th>
-            <th>Redes</th>
-        </tr>
-    `;
-
-    console.log("Tabela resetada ao atualizar a página!");
-});
 
