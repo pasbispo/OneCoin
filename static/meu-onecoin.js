@@ -363,13 +363,22 @@ function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
+    // ✅ Criar uma tabela com redes pré-definidas + opções editáveis
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
-        <h3>Insira a Rede e o Endereço</h3>
-        <label>Rede:</label> <input type="text" class="network-input" placeholder="Digite a rede">
-        <label>Endereço:</label> <input type="text" class="address-input" placeholder="Digite o endereço">
+        <h3>Selecione ou Edite a Rede e o Endereço</h3>
+        <table>
+            <tr><th>Rede</th><th>Endereço</th></tr>
+            <tr><td>Ethereum</td><td>0x123abc...</td></tr>
+            <tr><td>Binance Smart Chain</td><td>0x456def...</td></tr>
+            <tr><td>Solana</td><td>0x789ghi...</td></tr>
+            <tr>
+                <td><input type="text" class="network-input" placeholder="Digite a rede"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o endereço"></td>
+            </tr>
+        </table>
         <button class="save-btn">Salvar</button>
-        <button class="close-btn">Fechar</button> <!-- ✅ Novo botão de fechar -->
+        <button class="close-btn">Fechar</button>
     `;
 
     // ✅ Adiciona evento ao botão "Salvar"
@@ -399,8 +408,3 @@ function openNetworkTable(cryptoName) {
         if (e.target === modal) modal.remove();
     });
 }
-
-
-
-
-
