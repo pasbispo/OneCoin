@@ -301,3 +301,25 @@ document.addEventListener("DOMContentLoaded", function() {
         cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
     });
 });
+
+
+
+function saveSelectedCryptos() {
+    let selectedCryptos = [
+        {
+            name: "Bitcoin",
+            image: "static/img/btc.png",
+            quantity: "0.5",
+            estimatedValue: "R$ 150,000.00"
+        },
+        {
+            name: "Ethereum",
+            image: "static/img/eth.png",
+            quantity: "2.0",
+            estimatedValue: "R$ 40,000.00"
+        }
+    ];
+
+    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
+    console.log("Criptomoedas salvas no localStorage!");
+}
