@@ -283,6 +283,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // 🔹 Obtém os dados armazenados na página escolher-criptomoedas.html
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda selecionada.");
+        return;
+    }
+
     selectedCryptos.forEach(crypto => {
         let row = cryptoTable.insertRow();
         
@@ -306,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// 🔹 Função para abrir a tabela de redes
+// 🔹 Função para abrir a tabela de redes corretamente
 function openNetworkTable(cryptoName) {
     let networkTable = document.createElement("table");
     networkTable.innerHTML = `
@@ -326,8 +331,8 @@ function openNetworkTable(cryptoName) {
     modal.appendChild(networkTable);
     document.body.appendChild(modal);
 
+    // 🔹 Fecha a tabela ao clicar fora
     modal.addEventListener("click", function() {
         modal.remove();
     });
 }
-
