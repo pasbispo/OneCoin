@@ -369,6 +369,7 @@ function openNetworkTable(cryptoName) {
         <label>Rede:</label> <input type="text" class="network-input" placeholder="Digite a rede">
         <label>Endereço:</label> <input type="text" class="address-input" placeholder="Digite o endereço">
         <button class="save-btn">Salvar</button>
+        <button class="close-btn">Fechar</button> <!-- ✅ Novo botão de fechar -->
     `;
 
     // ✅ Adiciona evento ao botão "Salvar"
@@ -383,6 +384,11 @@ function openNetworkTable(cryptoName) {
 
         console.log(`Rede: ${network}, Endereço: ${address}`);
         modal.remove(); // ✅ Fecha o modal após salvar
+    });
+
+    // ✅ Adiciona evento ao botão "Fechar"
+    networkForm.querySelector(".close-btn").addEventListener("click", function() {
+        modal.remove(); // ✅ Fecha o modal ao clicar no botão "Fechar"
     });
 
     modal.appendChild(networkForm);
