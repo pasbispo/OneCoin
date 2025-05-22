@@ -252,3 +252,14 @@ document.getElementById("next-button").addEventListener("click", function() {
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let elemento = document.getElementById("update-button");
+
+    if (elemento) { // ✅ Garante que o elemento existe antes de adicionar o evento
+        elemento.addEventListener("click", function() {
+            console.log("Botão clicado!");
+        });
+    } else {
+        console.error("Erro: O elemento 'update-button' não foi encontrado!");
+    }
+});
