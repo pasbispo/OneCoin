@@ -1077,7 +1077,6 @@ button:hover {
 
 
 
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -1106,32 +1105,6 @@ th, td {
     padding: 20px;
     border: 2px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-    width: 400px;
-    text-align: center;
-}
-
-.network-input, .address-input {
-    width: 90%;
-    padding: 8px;
-    margin: 8px 0;
-}
-
-.save-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.close-btn {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
 }
 
 
