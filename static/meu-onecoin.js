@@ -302,29 +302,49 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-// 🔹 Função para abrir a tabela de redes corretamente
 function openNetworkTable(cryptoName) {
+    // ✅ Criar um modal para edição
+    let modal = document.createElement("div");
+    modal.classList.add("modal");
+
+    // ✅ Criar a tabela dentro do modal
     let networkTable = document.createElement("table");
     networkTable.innerHTML = `
         <tr>
             <th>Rede</th>
             <th>Endereço</th>
         </tr>
-        <tr><td>Ethereum</td><td>0x123abc...</td></tr>
-        <tr><td>Binance Smart Chain</td><td>0x456def...</td></tr>
-        <tr><td>Polygon</td><td>0x789ghi...</td></tr>
-        <tr><td>Solana</td><td>0xabc123...</td></tr>
-        <tr><td>Cardano</td><td>0xdef456...</td></tr>
+        <tr>
+            <td><input type="text" class="network-input" placeholder="Digite a rede"></td>
+            <td><input type="text" class="address-input" placeholder="Digite o endereço"></td>
+        </tr>
     `;
 
-    let modal = document.createElement("div");
-    modal.classList.add("modal");
+    // ✅ Botão para salvar os dados
+    let saveButton = document.createElement("button");
+    saveButton.textContent = "Salvar";
+    saveButton.classList.add("save-btn");
+    saveButton.addEventListener("click", function() {
+        let network = document.querySelector(".network-input").value;
+        let address = document.querySelector(".address-input").value;
+
+        if (!network || !address) {
+            alert("Preencha todos os campos!");
+            return;
+        }
+
+        console.log(`Rede: ${network}, Endereço: ${address}`);
+        modal.remove();
+    });
+
+    // ✅ Montar o modal
     modal.appendChild(networkTable);
+    modal.appendChild(saveButton);
     document.body.appendChild(modal);
 
-    // 🔹 Fecha a tabela ao clicar fora
-    modal.addEventListener("click", function() {
-        modal.remove();
+    // ✅ Fechar o modal ao clicar fora
+    modal.addEventListener("click", function(e) {
+        if (e.target === modal) modal.remove();
     });
 }
 

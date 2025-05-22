@@ -1107,12 +1107,10 @@ th, td {
     padding: 20px;
     border: 2px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-    width: 400px;
-    text-align: center;
 }
 
 .network-input, .address-input {
-    width: 90%;
+    width: 100%;
     padding: 5px;
     margin: 5px 0;
 }
@@ -1125,21 +1123,6 @@ th, td {
     cursor: pointer;
     margin-top: 10px;
 }
-
-.close-btn {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-
-
-
-
-
 
 
 
