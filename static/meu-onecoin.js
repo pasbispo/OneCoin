@@ -275,6 +275,65 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoTable = document.getElementById("crypto-table");
+
+    // 🔹 Obtém os dados armazenados na página escolher-criptomoedas.html
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda selecionada.");
+        return;
+    }
+
+    selectedCryptos.forEach(crypto => {
+        let row = cryptoTable.insertRow();
+        
+        let cellSymbol = row.insertCell(0);
+        let cellQuantity = row.insertCell(1);
+        let cellValue = row.insertCell(2);
+        let cellNetworks = row.insertCell(3);
+
+        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
+        cellQuantity.textContent = crypto.quantity;
+        cellValue.textContent = crypto.estimatedValue;
+        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
+    });
+
+    // 🔹 Adiciona evento para abrir a tabela de redes ao clicar no botão
+    document.querySelectorAll(".network-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            openNetworkTable(cryptoName);
+        });
+    });
+});
+
+// 🔹 Função para abrir a tabela de redes corretamente
+function openNetworkTable(cryptoName) {
+    let networkTable = document.createElement("table");
+    networkTable.innerHTML = `
+        <tr>
+            <th>Rede</th>
+            <th>Endereço</th>
+        </tr>
+        <tr><td>Ethereum</td><td>0x123abc...</td></tr>
+        <tr><td>Binance Smart Chain</td><td>0x456def...</td></tr>
+        <tr><td>Polygon</td><td>0x789ghi...</td></tr>
+        <tr><td>Solana</td><td>0xabc123...</td></tr>
+        <tr><td>Cardano</td><td>0xdef456...</td></tr>
+    `;
+
+    let modal = document.createElement("div");
+    modal.classList.add("modal");
+    modal.appendChild(networkTable);
+    document.body.appendChild(modal);
+
+    // 🔹 Fecha a tabela ao clicar fora
+    modal.addEventListener("click", function() {
+        modal.remove();
+    });
+}
 
 
 
