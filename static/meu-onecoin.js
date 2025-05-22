@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda selecionada.");
+        console.warn("Nenhuma criptomoeda selecionada no localStorage.");
         return;
     }
 
@@ -299,15 +299,8 @@ document.addEventListener("DOMContentLoaded", function() {
         cellValue.textContent = crypto.estimatedValue;
         cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
     });
-
-    // 🔹 Adiciona evento para abrir a tabela de redes ao clicar no botão
-    document.querySelectorAll(".network-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            let cryptoName = this.getAttribute("data-crypto");
-            openNetworkTable(cryptoName);
-        });
-    });
 });
+
 
 // 🔹 Função para abrir a tabela de redes corretamente
 function openNetworkTable(cryptoName) {
