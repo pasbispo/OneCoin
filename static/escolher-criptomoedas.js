@@ -225,27 +225,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
-document.getElementById("next-button").addEventListener("click", function() {
-    let cryptoName = document.getElementById("crypto-name").textContent;
-    let cryptoImage = document.getElementById("crypto-image").src;
-    let cryptoAmount = document.getElementById("crypto-amount").value;
-    let cryptoValue = document.getElementById("crypto-value").value;
-
-    if (cryptoName && cryptoAmount && cryptoValue) {
-        let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-        let newCrypto = {
-            name: cryptoName,
-            image: cryptoImage,
-            quantity: cryptoAmount,
-            estimatedValue: cryptoValue
-        };
-
-        selectedCryptos.push(newCrypto);
-        localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-        console.log("Criptomoedas salvas no localStorage!");
-    } else {
-        alert("Preencha todos os campos antes de continuar!");
-    }
-});
