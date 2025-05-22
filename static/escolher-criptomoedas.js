@@ -249,3 +249,18 @@ document.getElementById("next-button").addEventListener("click", function() {
         alert("Preencha todos os campos antes de continuar!");
     }
 });
+
+
+
+
+// No arquivo escolher-criptomoedas.js
+export function getCryptoPrice(crypto) {
+    try {
+        let response = await fetch(`http://localhost:3000/crypto/${crypto.toUpperCase()}`);
+        let data = await response.json();
+        return data?.data?.[crypto.toUpperCase()]?.quote?.USD?.price || null;
+    } catch (error) {
+        console.error("Erro ao buscar cotação:", error);
+        return "Erro na cotação";
+    }
+}
