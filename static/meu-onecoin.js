@@ -333,10 +333,10 @@ function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // ✅ Criar formulário dentro do modal para inserir três redes e endereços
+    // ✅ Criar um formulário para o usuário inserir as três redes e endereços manualmente
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
-        <h3>Redes de ${cryptoName}</h3>
+        <h3>Digite as Redes e seus Endereços</h3>
         <table>
             <tr><th>Rede</th><th>Endereço</th></tr>
             <tr>
@@ -374,7 +374,7 @@ function openNetworkTable(cryptoName) {
             networkData.push({ rede: network, endereco: address });
         }
 
-        console.log(`Redes e Endereços de ${cryptoName}:`, networkData);
+        console.log("Redes e Endereços Salvos:", networkData);
         modal.remove(); // ✅ Fecha o modal após salvar
     });
 
@@ -396,11 +396,11 @@ function openNetworkTable(cryptoName) {
 
 
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", function() {
     let cryptoTableBody = document.querySelector("#crypto-table tbody");
 
     // ✅ Limpa a tabela antes de preenchê-la
-    cryptoTableBody.innerHTML = ""; 
+    cryptoTableBody.innerHTML = "";
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
@@ -409,39 +409,40 @@ document.addEventListener("DOMContentLoaded", async function() {
         return;
     }
 
-    for (let crypto of selectedCryptos) {
-        let price = await getCryptoPrice(crypto.name);
-        crypto.estimatedValue = price ? (crypto.quantity * price).toFixed(2) + " USD" : "Erro na cotação";
+    // ✅ Remove criptomoedas duplicadas do localStorage
+    let uniqueCryptos = [];
+    let seenNames = new Set();
 
+    selectedCryptos.forEach(crypto => {
+        if (!seenNames.has(crypto.name)) {
+            uniqueCryptos.push(crypto);
+            seenNames.add(crypto.name);
+        }
+    });
+
+    // ✅ Atualiza o localStorage sem duplicatas
+    localStorage.setItem("selectedCryptos", JSON.stringify(uniqueCryptos));
+
+    uniqueCryptos.forEach(crypto => {
         let row = document.createElement("tr");
 
         row.innerHTML = `
             <td><img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}</td>
             <td>${crypto.quantity}</td>
             <td>${crypto.estimatedValue}</td>
-            <td>
-                <button class="network-btn" data-crypto="${crypto.name}">Redes</button>
-                <button class="delete-btn">Excluir</button>
-            </td>
+            <td><button class="delete-btn">Excluir</button></td>
         `;
 
-        // ✅ Adiciona evento ao botão "Excluir"
         row.querySelector(".delete-btn").addEventListener("click", function() {
             row.remove();
             updateLocalStorage(crypto.name);
         });
 
-        // ✅ Adiciona evento ao botão "Redes" para abrir o modal
-        row.querySelector(".network-btn").addEventListener("click", function() {
-            let cryptoName = this.getAttribute("data-crypto");
-            openNetworkTable(cryptoName);
-        });
-
         cryptoTableBody.appendChild(row);
-    }
+    });
 });
 
-// ✅ Função para remover do localStorage ao excluir uma criptomoeda da tabela
+// ✅ Função para remover do localStorage ao excluir uma criptomoeda
 function updateLocalStorage(cryptoName) {
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
     selectedCryptos = selectedCryptos.filter(crypto => crypto.name !== cryptoName);
