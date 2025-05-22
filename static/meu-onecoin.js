@@ -281,8 +281,6 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
-
-
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoTableBody = document.querySelector("#crypto-table tbody");
 
@@ -396,6 +394,40 @@ function openNetworkTable(cryptoName) {
 
 
 
+document.addEventListener("DOMContentLoaded", async function() {
+    let cryptoTableBody = document.querySelector("#crypto-table tbody");
+
+    // ✅ Limpa a tabela antes de preenchê-la
+    cryptoTableBody.innerHTML = ""; 
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
+        return;
+    }
+
+    for (let crypto of selectedCryptos) {
+        let price = await getCryptoPrice(crypto.name);
+        crypto.estimatedValue = price ? (crypto.quantity * price).toFixed(2) + " USD" : "Erro na cotação";
+
+        let row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td><img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}</td>
+            <td>${crypto.quantity}</td>
+            <td>${crypto.estimatedValue}</td>
+            <td><button class="delete-btn">Excluir</button></td>
+        `;
+
+        // ✅ Adiciona evento para remover criptomoeda da tabela
+        row.querySelector(".delete-btn").addEventListener("click", function() {
+            row.remove();
+        });
+
+        cryptoTableBody.appendChild(row);
+    }
+});
 
 
 
