@@ -306,23 +306,28 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function openNetworkTable(cryptoName) {
+ffunction openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
+    // ✅ Criar um formulário para o usuário digitar a rede e endereço manualmente
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
-        <h3>Insira a Rede e o Endereço</h3>
-        <label>Rede:</label> <input type="text" class="network-input" placeholder="Digite a rede">
-        <label>Endereço:</label> <input type="text" class="address-input" placeholder="Digite o endereço">
+        <h3>Digite a Rede e o Endereço</h3>
+        <label for="network-name">Rede:</label>
+        <input type="text" id="network-name" class="network-input" placeholder="Digite a rede">
+        
+        <label for="crypto-address">Endereço:</label>
+        <input type="text" id="crypto-address" class="address-input" placeholder="Digite o endereço">
+        
         <button class="save-btn">Salvar</button>
-        <button class="close-btn">Fechar</button> <!-- ✅ Novo botão de fechar -->
+        <button class="close-btn">Fechar</button>
     `;
 
     // ✅ Adiciona evento ao botão "Salvar"
     networkForm.querySelector(".save-btn").addEventListener("click", function() {
-        let network = document.querySelector(".network-input").value;
-        let address = document.querySelector(".address-input").value;
+        let network = document.getElementById("network-name").value;
+        let address = document.getElementById("crypto-address").value;
 
         if (!network || !address) {
             alert("Preencha todos os campos!");
@@ -346,5 +351,4 @@ function openNetworkTable(cryptoName) {
         if (e.target === modal) modal.remove();
     });
 }
-
 
