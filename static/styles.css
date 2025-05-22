@@ -1078,6 +1078,36 @@ button:hover {
 
 
 
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    position: relative; /* ✅ Agora a tabela se ajusta ao conteúdo */
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.network-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
 .modal {
     position: fixed;
     top: 50%;
