@@ -318,24 +318,6 @@ function openNetworkTable(cryptoName) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    // ✅ Remove criptomoedas salvas no localStorage ao recarregar a página
-    localStorage.removeItem("selectedCryptos"); 
-
-    // ✅ Limpa a tabela visualmente
-    let cryptoTable = document.getElementById("crypto-table");
-    cryptoTable.innerHTML = `
-        <tr>
-            <th>Símbolo</th>
-            <th>Quantidade</th>
-            <th>Valor Estimado</th>
-            <th>Redes</th>
-        </tr>
-    `;
-
-    console.log("Tabela resetada ao atualizar a página!");
-});
-
 
 
 
@@ -381,48 +363,31 @@ function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // ✅ Criar um formulário para o usuário inserir as três redes e endereços manualmente
+    // ✅ Criar um formulário para o usuário digitar a rede e endereço manualmente
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
-        <h3>Digite as Redes e seus Endereços</h3>
-        <table>
-            <tr><th>Rede</th><th>Endereço</th></tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 1"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 2"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 2"></td>
-            </tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 3"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 3"></td>
-            </tr>
-        </table>
+        <h3>Digite a Rede e o Endereço</h3>
+        <label for="network-name">Rede:</label>
+        <input type="text" id="network-name" class="network-input" placeholder="Digite a rede">
+        
+        <label for="crypto-address">Endereço:</label>
+        <input type="text" id="crypto-address" class="address-input" placeholder="Digite o endereço">
+        
         <button class="save-btn">Salvar</button>
         <button class="close-btn">Fechar</button>
     `;
 
     // ✅ Adiciona evento ao botão "Salvar"
     networkForm.querySelector(".save-btn").addEventListener("click", function() {
-        let networks = document.querySelectorAll(".network-input");
-        let addresses = document.querySelectorAll(".address-input");
+        let network = document.getElementById("network-name").value;
+        let address = document.getElementById("crypto-address").value;
 
-        let networkData = [];
-        for (let i = 0; i < networks.length; i++) {
-            let network = networks[i].value.trim();
-            let address = addresses[i].value.trim();
-
-            if (!network || !address) {
-                alert("Preencha todas as redes e endereços!");
-                return;
-            }
-
-            networkData.push({ rede: network, endereco: address });
+        if (!network || !address) {
+            alert("Preencha todos os campos!");
+            return;
         }
 
-        console.log("Redes e Endereços Salvos:", networkData);
+        console.log(`Rede: ${network}, Endereço: ${address}`);
         modal.remove(); // ✅ Fecha o modal após salvar
     });
 
@@ -439,5 +404,3 @@ function openNetworkTable(cryptoName) {
         if (e.target === modal) modal.remove();
     });
 }
-
-
