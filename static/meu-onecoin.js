@@ -283,6 +283,54 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoTable = document.getElementById("crypto-table");
+
+    // ✅ Limpa a tabela antes de preenchê-la
+    cryptoTable.innerHTML = `
+        <tr>
+            <th>Símbolo</th>
+            <th>Quantidade</th>
+            <th>Valor Estimado</th>
+            <th>Redes</th>
+        </tr>
+    `;
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
+        return;
+    }
+
+    selectedCryptos.forEach(crypto => {
+        let row = cryptoTable.insertRow();
+        
+        let cellSymbol = row.insertCell(0);
+        let cellQuantity = row.insertCell(1);
+        let cellValue = row.insertCell(2);
+        let cellNetworks = row.insertCell(3);
+
+        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
+        cellQuantity.textContent = crypto.quantity;
+        cellValue.textContent = crypto.estimatedValue;
+        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
+    });
+
+    // ✅ Adiciona evento ao botão "Redes" para abrir a tabela de redes
+    document.querySelectorAll(".network-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            openNetworkTable(cryptoName);
+        });
+    });
+});
+
+
+
+
 function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
@@ -345,48 +393,4 @@ function openNetworkTable(cryptoName) {
         if (e.target === modal) modal.remove();
     });
 }
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let cryptoTable = document.getElementById("crypto-table");
-
-    // ✅ Limpa a tabela antes de preenchê-la
-    cryptoTable.innerHTML = `
-        <tr>
-            <th>Símbolo</th>
-            <th>Quantidade</th>
-            <th>Valor Estimado</th>
-            <th>Redes</th>
-        </tr>
-    `;
-
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
-        return;
-    }
-
-    selectedCryptos.forEach(crypto => {
-        let row = cryptoTable.insertRow();
-        
-        let cellSymbol = row.insertCell(0);
-        let cellQuantity = row.insertCell(1);
-        let cellValue = row.insertCell(2);
-        let cellNetworks = row.insertCell(3);
-
-        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
-        cellQuantity.textContent = crypto.quantity;
-        cellValue.textContent = crypto.estimatedValue;
-        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
-    });
-
-    // ✅ Adiciona evento ao botão "Redes" para abrir a tabela de redes
-    document.querySelectorAll(".network-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            let cryptoName = this.getAttribute("data-crypto");
-            openNetworkTable(cryptoName);
-        });
-    });
-});
 
