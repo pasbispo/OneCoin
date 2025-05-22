@@ -274,57 +274,55 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoTable = document.getElementById("crypto-table");
 
-    // 🔹 Obtém os dados armazenados na página escolher-criptomoedas.html
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    let selectedCrypto = JSON.parse(localStorage.getItem("selectedCrypto"));
 
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda selecionada no localStorage.");
+    if (!selectedCrypto) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
         return;
     }
 
-    selectedCryptos.forEach(crypto => {
-        let row = cryptoTable.insertRow();
-        
-        let cellSymbol = row.insertCell(0);
-        let cellQuantity = row.insertCell(1);
-        let cellValue = row.insertCell(2);
-        let cellNetworks = row.insertCell(3);
+    let row = cryptoTable.insertRow();
+    
+    let cellSymbol = row.insertCell(0);
+    let cellQuantity = row.insertCell(1);
+    let cellValue = row.insertCell(2);
+    let cellNetworks = row.insertCell(3);
 
-        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
-        cellQuantity.textContent = crypto.quantity;
-        cellValue.textContent = crypto.estimatedValue;
-        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
+    cellSymbol.innerHTML = `<img src="${selectedCrypto.image}" alt="${selectedCrypto.name}" width="40">`;
+    cellQuantity.textContent = selectedCrypto.quantity;
+    cellValue.textContent = selectedCrypto.estimatedValue;
+
+    // ✅ Adiciona corretamente o botão "Redes"
+    let networkButton = document.createElement("button");
+    networkButton.textContent = "Redes";
+    networkButton.classList.add("network-btn");
+    networkButton.setAttribute("data-crypto", selectedCrypto.name);
+    cellNetworks.appendChild(networkButton);
+
+    // ✅ Adiciona evento ao botão para abrir tabela de redes
+    networkButton.addEventListener("click", function() {
+        openNetworkTable(selectedCrypto.name);
     });
 });
 
-
+// 🔹 Função para abrir a tabela de redes com campos editáveis
 function openNetworkTable(cryptoName) {
-    // ✅ Criar um modal para edição
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // ✅ Criar a tabela dentro do modal
-    let networkTable = document.createElement("table");
-    networkTable.innerHTML = `
-        <tr>
-            <th>Rede</th>
-            <th>Endereço</th>
-        </tr>
-        <tr>
-            <td><input type="text" class="network-input" placeholder="Digite a rede"></td>
-            <td><input type="text" class="address-input" placeholder="Digite o endereço"></td>
-        </tr>
+    let networkForm = document.createElement("div");
+    networkForm.innerHTML = `
+        <h3>Insira a Rede e o Endereço</h3>
+        <label>Rede:</label> <input type="text" class="network-input" placeholder="Digite a rede">
+        <label>Endereço:</label> <input type="text" class="address-input" placeholder="Digite o endereço">
+        <button class="save-btn">Salvar</button>
     `;
 
-    // ✅ Botão para salvar os dados
-    let saveButton = document.createElement("button");
-    saveButton.textContent = "Salvar";
-    saveButton.classList.add("save-btn");
-    saveButton.addEventListener("click", function() {
+    // ✅ Adiciona evento ao botão "Salvar"
+    networkForm.querySelector(".save-btn").addEventListener("click", function() {
         let network = document.querySelector(".network-input").value;
         let address = document.querySelector(".address-input").value;
 
@@ -334,12 +332,10 @@ function openNetworkTable(cryptoName) {
         }
 
         console.log(`Rede: ${network}, Endereço: ${address}`);
-        modal.remove();
+        modal.remove(); // ✅ Fecha o modal após salvar
     });
 
-    // ✅ Montar o modal
-    modal.appendChild(networkTable);
-    modal.appendChild(saveButton);
+    modal.appendChild(networkForm);
     document.body.appendChild(modal);
 
     // ✅ Fechar o modal ao clicar fora
@@ -347,7 +343,5 @@ function openNetworkTable(cryptoName) {
         if (e.target === modal) modal.remove();
     });
 }
-
-
 
 
