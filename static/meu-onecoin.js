@@ -318,16 +318,12 @@ function openNetworkTable(cryptoName) {
 }
 
 
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    let cryptoTable = document.getElementById("crypto-table");
+    // ✅ Remove criptomoedas salvas no localStorage ao recarregar a página
+    localStorage.removeItem("selectedCryptos"); 
 
-    // ✅ Limpa a tabela antes de preenchê-la
+    // ✅ Limpa a tabela visualmente
+    let cryptoTable = document.getElementById("crypto-table");
     cryptoTable.innerHTML = `
         <tr>
             <th>Símbolo</th>
@@ -336,6 +332,18 @@ document.addEventListener("DOMContentLoaded", function() {
             <th>Redes</th>
         </tr>
     `;
+
+    console.log("Tabela resetada ao atualizar a página!");
+});
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoTable = document.getElementById("crypto-table");
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
@@ -366,9 +374,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
-
-
-   
 
 
 // 🔹 Função para abrir a tabela de redes com campos editáveis
