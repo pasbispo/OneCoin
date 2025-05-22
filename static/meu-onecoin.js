@@ -306,35 +306,52 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-ffunction openNetworkTable(cryptoName) {
+function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // ✅ Criar um formulário para o usuário digitar a rede e endereço manualmente
+    // ✅ Criar um formulário para o usuário inserir as três redes e endereços manualmente
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
-        <h3>Digite a Rede e o Endereço</h3>
-        <label for="network-name">Rede:</label>
-        <input type="text" id="network-name" class="network-input" placeholder="Digite a rede">
-        
-        <label for="crypto-address">Endereço:</label>
-        <input type="text" id="crypto-address" class="address-input" placeholder="Digite o endereço">
-        
+        <h3>Digite as Redes e seus Endereços</h3>
+        <table>
+            <tr><th>Rede</th><th>Endereço</th></tr>
+            <tr>
+                <td><input type="text" class="network-input" placeholder="Digite a Rede 1"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o Endereço 1"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="network-input" placeholder="Digite a Rede 2"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o Endereço 2"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="network-input" placeholder="Digite a Rede 3"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o Endereço 3"></td>
+            </tr>
+        </table>
         <button class="save-btn">Salvar</button>
         <button class="close-btn">Fechar</button>
     `;
 
     // ✅ Adiciona evento ao botão "Salvar"
     networkForm.querySelector(".save-btn").addEventListener("click", function() {
-        let network = document.getElementById("network-name").value;
-        let address = document.getElementById("crypto-address").value;
+        let networks = document.querySelectorAll(".network-input");
+        let addresses = document.querySelectorAll(".address-input");
 
-        if (!network || !address) {
-            alert("Preencha todos os campos!");
-            return;
+        let networkData = [];
+        for (let i = 0; i < networks.length; i++) {
+            let network = networks[i].value.trim();
+            let address = addresses[i].value.trim();
+
+            if (!network || !address) {
+                alert("Preencha todas as redes e endereços!");
+                return;
+            }
+
+            networkData.push({ rede: network, endereco: address });
         }
 
-        console.log(`Rede: ${network}, Endereço: ${address}`);
+        console.log("Redes e Endereços Salvos:", networkData);
         modal.remove(); // ✅ Fecha o modal após salvar
     });
 
@@ -351,4 +368,48 @@ ffunction openNetworkTable(cryptoName) {
         if (e.target === modal) modal.remove();
     });
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let cryptoTable = document.getElementById("crypto-table");
+
+    // ✅ Limpa a tabela antes de preenchê-la
+    cryptoTable.innerHTML = `
+        <tr>
+            <th>Símbolo</th>
+            <th>Quantidade</th>
+            <th>Valor Estimado</th>
+            <th>Redes</th>
+        </tr>
+    `;
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
+        return;
+    }
+
+    selectedCryptos.forEach(crypto => {
+        let row = cryptoTable.insertRow();
+        
+        let cellSymbol = row.insertCell(0);
+        let cellQuantity = row.insertCell(1);
+        let cellValue = row.insertCell(2);
+        let cellNetworks = row.insertCell(3);
+
+        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
+        cellQuantity.textContent = crypto.quantity;
+        cellValue.textContent = crypto.estimatedValue;
+        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
+    });
+
+    // ✅ Adiciona evento ao botão "Redes" para abrir a tabela de redes
+    document.querySelectorAll(".network-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            openNetworkTable(cryptoName);
+        });
+    });
+});
 

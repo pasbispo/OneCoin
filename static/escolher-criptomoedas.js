@@ -242,13 +242,10 @@ document.getElementById("next-button").addEventListener("click", function() {
             estimatedValue: cryptoValue
         };
 
-        selectedCryptos.push(newCrypto); // ✅ Adiciona a nova criptomoeda ao array
+        selectedCryptos.push(newCrypto);
         localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
         console.log("Criptomoedas salvas no localStorage!");
-
-        alert("Criptomoeda adicionada! Agora clique em 'Continuar' para prosseguir.");
     } else {
         alert("Preencha todos os campos antes de continuar!");
     }
 });
-
