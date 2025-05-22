@@ -333,10 +333,10 @@ function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
-    // ✅ Criar um formulário para o usuário inserir as três redes e endereços manualmente
+    // ✅ Criar formulário dentro do modal para inserir três redes e endereços
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
-        <h3>Digite as Redes e seus Endereços</h3>
+        <h3>Redes de ${cryptoName}</h3>
         <table>
             <tr><th>Rede</th><th>Endereço</th></tr>
             <tr>
@@ -374,7 +374,7 @@ function openNetworkTable(cryptoName) {
             networkData.push({ rede: network, endereco: address });
         }
 
-        console.log("Redes e Endereços Salvos:", networkData);
+        console.log(`Redes e Endereços de ${cryptoName}:`, networkData);
         modal.remove(); // ✅ Fecha o modal após salvar
     });
 
