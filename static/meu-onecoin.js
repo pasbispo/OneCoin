@@ -1,5 +1,5 @@
 
-import { getCryptoPrice } from './static/escolher-criptomoedas.js';
+
 
 
 
