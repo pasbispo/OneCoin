@@ -423,11 +423,19 @@ document.addEventListener("DOMContentLoaded", async function() {
         // ✅ Adiciona evento para remover criptomoeda da tabela
         row.querySelector(".delete-btn").addEventListener("click", function() {
             row.remove();
+            updateLocalStorage(crypto.name);
         });
 
         cryptoTableBody.appendChild(row);
     }
 });
+
+// ✅ Função para remover do localStorage ao excluir uma criptomoeda da tabela
+function updateLocalStorage(cryptoName) {
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    selectedCryptos = selectedCryptos.filter(crypto => crypto.name !== cryptoName);
+    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
+}
 
 
 
