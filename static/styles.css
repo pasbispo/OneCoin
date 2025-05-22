@@ -1081,11 +1081,15 @@ button:hover {
 
 
 table {
-    position: relative; /* ✅ Agora a tabela se ajusta ao conteúdo dinamicamente */
     width: 100%;
     border-collapse: collapse;
-    max-height: none; /* ✅ Garante que não fique fixa */
+    position: relative;
+    max-height: none; /* ✅ Garante que a tabela se ajuste ao conteúdo */
     overflow: auto; /* ✅ Permite rolagem se necessário */
+}
+
+tbody {
+    display: table-row-group; /* ✅ Mantém a tabela dinâmica */
 }
 
 th, td {
