@@ -1082,7 +1082,10 @@ table {
     width: 100%;
     border-collapse: collapse;
     position: relative; /* ✅ Agora a tabela se ajusta ao conteúdo */
+    max-height: none; /* ✅ Garante que não fique fixa */
+    overflow: auto; /* ✅ Permite rolagem se necessário */
 }
+
 
 th, td {
     border: 1px solid #ccc;

@@ -368,6 +368,16 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+    // ✅ Adiciona evento ao botão "Redes" para abrir a tabela de redes
+    document.querySelectorAll(".network-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            openNetworkTable(cryptoName);
+        });
+    });
+});
+
+
 // 🔹 Função para abrir a tabela de redes com campos editáveis
 function openNetworkTable(cryptoName) {
     let modal = document.createElement("div");
