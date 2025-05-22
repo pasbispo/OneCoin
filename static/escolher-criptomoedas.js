@@ -221,6 +221,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
 document.getElementById("next-button").addEventListener("click", function() {
     let cryptoName = document.getElementById("crypto-name").textContent;
     let cryptoImage = document.getElementById("crypto-image").src;
@@ -228,18 +229,15 @@ document.getElementById("next-button").addEventListener("click", function() {
     let cryptoValue = document.getElementById("crypto-value").value;
 
     if (cryptoName && cryptoAmount && cryptoValue) {
-        let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-        let newCrypto = {
+        let selectedCrypto = {
             name: cryptoName,
             image: cryptoImage,
             quantity: cryptoAmount,
             estimatedValue: cryptoValue
         };
 
-        selectedCryptos.push(newCrypto); // ✅ Adiciona a nova criptomoeda ao array
-        localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-        console.log("Criptomoedas salvas no localStorage!");
+        localStorage.setItem("selectedCrypto", JSON.stringify(selectedCrypto));
+        console.log("Criptomoeda salva no localStorage!");
 
         alert("Criptomoeda adicionada! Agora clique em 'Continuar' para prosseguir.");
     } else {
