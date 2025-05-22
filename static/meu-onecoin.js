@@ -1,9 +1,5 @@
 
 
-
-
-
-
 document.getElementById("update-button").addEventListener("click", function() {
     let campaignName = document.getElementById("campaign-name");
     let campaignGoal = document.getElementById("campaign-goal");
@@ -400,11 +396,11 @@ function openNetworkTable(cryptoName) {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
     let cryptoTableBody = document.querySelector("#crypto-table tbody");
 
     // ✅ Limpa a tabela antes de preenchê-la
-    cryptoTableBody.innerHTML = "";
+    cryptoTableBody.innerHTML = ""; 
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
@@ -413,40 +409,39 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
 
-    // ✅ Remove criptomoedas duplicadas do localStorage
-    let uniqueCryptos = [];
-    let seenNames = new Set();
+    for (let crypto of selectedCryptos) {
+        let price = await getCryptoPrice(crypto.name);
+        crypto.estimatedValue = price ? (crypto.quantity * price).toFixed(2) + " USD" : "Erro na cotação";
 
-    selectedCryptos.forEach(crypto => {
-        if (!seenNames.has(crypto.name)) {
-            uniqueCryptos.push(crypto);
-            seenNames.add(crypto.name);
-        }
-    });
-
-    // ✅ Atualiza o localStorage sem duplicatas
-    localStorage.setItem("selectedCryptos", JSON.stringify(uniqueCryptos));
-
-    uniqueCryptos.forEach(crypto => {
         let row = document.createElement("tr");
 
         row.innerHTML = `
             <td><img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}</td>
             <td>${crypto.quantity}</td>
             <td>${crypto.estimatedValue}</td>
-            <td><button class="delete-btn">Excluir</button></td>
+            <td>
+                <button class="network-btn" data-crypto="${crypto.name}">Redes</button>
+                <button class="delete-btn">Excluir</button>
+            </td>
         `;
 
+        // ✅ Adiciona evento ao botão "Excluir"
         row.querySelector(".delete-btn").addEventListener("click", function() {
             row.remove();
             updateLocalStorage(crypto.name);
         });
 
+        // ✅ Adiciona evento ao botão "Redes" para abrir o modal
+        row.querySelector(".network-btn").addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            openNetworkTable(cryptoName);
+        });
+
         cryptoTableBody.appendChild(row);
-    });
+    }
 });
 
-// ✅ Função para remover do localStorage ao excluir uma criptomoeda
+// ✅ Função para remover do localStorage ao excluir uma criptomoeda da tabela
 function updateLocalStorage(cryptoName) {
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
     selectedCryptos = selectedCryptos.filter(crypto => crypto.name !== cryptoName);
