@@ -283,20 +283,8 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    let cryptoTable = document.getElementById("crypto-table");
-
-    // ✅ Limpa a tabela antes de preenchê-la
-    cryptoTable.innerHTML = `
-        <tr>
-            <th>Símbolo</th>
-            <th>Quantidade</th>
-            <th>Valor Estimado</th>
-            <th>Redes</th>
-        </tr>
-    `;
+    let cryptoTableBody = document.querySelector("#crypto-table tbody");
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
@@ -306,17 +294,24 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     selectedCryptos.forEach(crypto => {
-        let row = cryptoTable.insertRow();
-        
-        let cellSymbol = row.insertCell(0);
-        let cellQuantity = row.insertCell(1);
-        let cellValue = row.insertCell(2);
-        let cellNetworks = row.insertCell(3);
+        let row = document.createElement("tr");
+
+        let cellSymbol = document.createElement("td");
+        let cellQuantity = document.createElement("td");
+        let cellValue = document.createElement("td");
+        let cellNetworks = document.createElement("td");
 
         cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
         cellQuantity.textContent = crypto.quantity;
         cellValue.textContent = crypto.estimatedValue;
         cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
+
+        row.appendChild(cellSymbol);
+        row.appendChild(cellQuantity);
+        row.appendChild(cellValue);
+        row.appendChild(cellNetworks);
+
+        cryptoTableBody.appendChild(row);
     });
 
     // ✅ Adiciona evento ao botão "Redes" para abrir a tabela de redes
@@ -327,6 +322,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+
+
 
 
 
@@ -393,4 +391,11 @@ function openNetworkTable(cryptoName) {
         if (e.target === modal) modal.remove();
     });
 }
+
+
+
+
+
+
+
 
