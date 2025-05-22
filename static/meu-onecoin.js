@@ -439,12 +439,7 @@ function updateLocalStorage(cryptoName) {
 
 
 
-import { getCryptoPrice } from './escolher-criptomoedas.js';
 
-document.addEventListener("DOMContentLoaded", async function() {
-    let price = await getCryptoPrice("ETH");
-    console.log(price);
-});
 
 
 
