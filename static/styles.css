@@ -1081,9 +1081,11 @@ button:hover {
 
 
 table {
+    position: relative; /* ✅ Agora a tabela se ajusta ao conteúdo dinamicamente */
     width: 100%;
     border-collapse: collapse;
-    position: relative; /* ✅ Agora a tabela se ajusta ao conteúdo */
+    max-height: none; /* ✅ Garante que não fique fixa */
+    overflow: auto; /* ✅ Permite rolagem se necessário */
 }
 
 th, td {
@@ -1148,15 +1150,4 @@ th, td {
 
 
 
-
-.close-btn {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    display: block;
-    width: 100%;
-}
 
