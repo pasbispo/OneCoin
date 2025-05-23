@@ -344,6 +344,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+
+
 // ✅ Função para abrir o modal de redes
 function openNetworkModal(cryptoName) {
     let modal = document.createElement("div");
@@ -371,7 +373,6 @@ function openNetworkModal(cryptoName) {
         <button class="close-btn">Fechar</button>
     `;
 
-    // ✅ Salvar redes e endereços no `localStorage`
     networkForm.querySelector(".save-btn").addEventListener("click", function() {
         let networks = document.querySelectorAll(".network-input");
         let addresses = document.querySelectorAll(".address-input");
@@ -392,21 +393,22 @@ function openNetworkModal(cryptoName) {
         let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
         let crypto = selectedCryptos.find(c => c.name === cryptoName);
         if (crypto) {
-            crypto.networks = networkData;
+            crypto.networks = networkData.map(n => n.rede);
+            crypto.addresses = networkData.map(n => n.endereco);
             localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
         }
 
-        modal.remove(); // ✅ Fecha o modal após salvar
+        modal.remove();
     });
 
-    // ✅ Adiciona evento ao botão "Fechar"
     networkForm.querySelector(".close-btn").addEventListener("click", function() {
-        modal.remove(); // ✅ Fecha o modal ao clicar no botão "Fechar"
+        modal.remove();
     });
 
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
+
 
 // ✅ Função para remover criptomoeda do `localStorage`
 function updateLocalStorage(cryptoName) {
@@ -484,4 +486,59 @@ function atualizarTabelaDireita() {
     });
 }
 
+
+
+function abrirSelecaoDeRede(cryptoName, addressCell) {
+    let modal = document.createElement("div");
+    modal.classList.add("modal");
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    let selectedCrypto = selectedCryptos.find(c => c.name === cryptoName);
+    
+    let networks = selectedCrypto?.networks || [];
+    let addresses = selectedCrypto?.addresses || [];
+
+    let networkForm = document.createElement("div");
+    networkForm.innerHTML = `
+        <h3>Selecione uma rede para ${cryptoName}</h3>
+        <div id="network-options"></div>
+        <button class="close-btn">Fechar</button>
+    `;
+
+    let networkOptions = networkForm.querySelector("#network-options");
+
+    if (networks.length === 0 || addresses.length === 0) {
+        networkOptions.innerHTML = "<p>As redes e endereços não foram cadastrados.</p>";
+    } else {
+        networks.forEach((network, index) => {
+            let btn = document.createElement("button");
+            btn.textContent = network;
+            btn.classList.add("network-option");
+            btn.addEventListener("click", function() {
+                addressCell.textContent = addresses[index]; 
+                modal.remove();
+            });
+            networkOptions.appendChild(btn);
+        });
+    }
+
+    networkForm.querySelector(".close-btn").addEventListener("click", function() {
+        modal.remove();
+    });
+
+    modal.appendChild(networkForm);
+    document.body.appendChild(modal);
+}
+
+document.querySelectorAll(".copy-btn").forEach(button => {
+    button.addEventListener("click", function() {
+        let addressCell = this.parentElement.previousElementSibling;
+        if (addressCell.textContent !== "Selecione uma rede") {
+            navigator.clipboard.writeText(addressCell.textContent);
+            alert("Endereço copiado!");
+        } else {
+            alert("Selecione uma rede primeiro!");
+        }
+    });
+});
 
