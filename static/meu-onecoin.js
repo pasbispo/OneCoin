@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function() {
         cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
         cellQuantity.textContent = crypto.quantity;
         cellValue.textContent = crypto.estimatedValue;
-        cellNetworks.innerHTML = `<button class="network-btn1" data-crypto="${crypto.name}">Redes</button>`;
+        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
 
         row.appendChild(cellSymbol);
         row.appendChild(cellQuantity);
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ✅ Adiciona evento ao botão "Redes" para abrir a tabela de redes
-    document.querySelectorAll(".network-btn1").forEach(button => {
+    document.querySelectorAll(".network-btn").forEach(button => {
         button.addEventListener("click", function() {
             let cryptoName = this.getAttribute("data-crypto");
             openNetworkTable(cryptoName);
@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             <td>${crypto.quantity}</td>
             <td>${crypto.estimatedValue}</td>
             <td>
-                <button class="network-btn1" data-crypto="${crypto.name}">Redes</button>
+                <button class="network-btn" data-crypto="${crypto.name}">Redes</button>
                 <button class="delete-btn">Excluir</button>
             </td>
         `;
@@ -432,7 +432,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         });
 
         // ✅ Adiciona evento ao botão "Redes" para abrir o modal
-        row.querySelector(".network-btn1").addEventListener("click", function() {
+        row.querySelector(".network-btn").addEventListener("click", function() {
             let cryptoName = this.getAttribute("data-crypto");
             openNetworkTable(cryptoName);
         });
