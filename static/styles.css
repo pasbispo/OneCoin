@@ -1166,27 +1166,32 @@ th, td {
 
 
 
-
-.network-input, .address-input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.copy-btn {
-    background-color: #007bff;
+.network-btn {
+    background-color: #28a745; /* ✅ Verde */
     color: white;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border: none;
-    cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    cursor: pointer;
 }
 
-.copy-btn:hover {
-    background-color: #0056b3;
+.delete-btn {
+    background-color: #dc3545; /* ✅ Vermelho */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
+
+.network-btn:hover {
+    background-color: #218838;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
 
 
 
