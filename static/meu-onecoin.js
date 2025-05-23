@@ -283,259 +283,14 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    let cryptoTableBody = document.querySelector("#crypto-table tbody");
-
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
-        return;
-    }
-
-    selectedCryptos.forEach(crypto => {
-        let row = document.createElement("tr");
-
-        let cellSymbol = document.createElement("td");
-        let cellQuantity = document.createElement("td");
-        let cellValue = document.createElement("td");
-        let cellNetworks = document.createElement("td");
-
-        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
-        cellQuantity.textContent = crypto.quantity;
-        cellValue.textContent = crypto.estimatedValue;
-        cellNetworks.innerHTML = `<button class="network-btn" data-crypto="${crypto.name}">Redes</button>`;
-
-        row.appendChild(cellSymbol);
-        row.appendChild(cellQuantity);
-        row.appendChild(cellValue);
-        row.appendChild(cellNetworks);
-
-        cryptoTableBody.appendChild(row);
-    });
-
-    // ✅ Adiciona evento ao botão "Redes" para abrir a tabela de redes
-    document.querySelectorAll(".network-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            let cryptoName = this.getAttribute("data-crypto");
-            openNetworkTable(cryptoName);
-        });
-    });
-});
-
-
-
-
-
-
-function openNetworkTable(cryptoName) {
-    let modal = document.createElement("div");
-    modal.classList.add("modal");
-
-    // ✅ Criar formulário dentro do modal para inserir três redes e endereços
-    let networkForm = document.createElement("div");
-    networkForm.innerHTML = `
-        <h3>Redes de ${cryptoName}</h3>
-        <table>
-            <tr><th>Rede</th><th>Endereço</th></tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 1"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 2"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 2"></td>
-            </tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 3"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 3"></td>
-            </tr>
-        </table>
-        <button class="save-btn">Salvar</button>
-        <button class="close-btn">Fechar</button>
-    `;
-
-    // ✅ Adiciona evento ao botão "Salvar"
-    networkForm.querySelector(".save-btn").addEventListener("click", function() {
-        let networks = document.querySelectorAll(".network-input");
-        let addresses = document.querySelectorAll(".address-input");
-
-        let networkData = [];
-        for (let i = 0; i < networks.length; i++) {
-            let network = networks[i].value.trim();
-            let address = addresses[i].value.trim();
-
-            if (!network || !address) {
-                alert("Preencha todas as redes e endereços!");
-                return;
-            }
-
-            networkData.push({ rede: network, endereco: address });
-        }
-
-        console.log(`Redes e Endereços de ${cryptoName}:`, networkData);
-        modal.remove(); // ✅ Fecha o modal após salvar
-    });
-
-    // ✅ Adiciona evento ao botão "Fechar"
-    networkForm.querySelector(".close-btn").addEventListener("click", function() {
-        modal.remove(); // ✅ Fecha o modal ao clicar no botão "Fechar"
-    });
-
-    modal.appendChild(networkForm);
-    document.body.appendChild(modal);
-
-    // ✅ Fechar o modal ao clicar fora
-    modal.addEventListener("click", function(e) {
-        if (e.target === modal) modal.remove();
-    });
-}
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", async function() {
-    let cryptoTableBody = document.querySelector("#crypto-table tbody");
-
-    // ✅ Limpa a tabela antes de preenchê-la
-    cryptoTableBody.innerHTML = ""; 
-
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
-        return;
-    }
-
-    for (let crypto of selectedCryptos) {
-        let price = await getCryptoPrice(crypto.name);
-        crypto.estimatedValue = price ? (crypto.quantity * price).toFixed(2) + " USD" : "Erro na cotação";
-
-        let row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td><img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}</td>
-            <td>${crypto.quantity}</td>
-            <td>${crypto.estimatedValue}</td>
-            <td>
-                <button class="network-btn" data-crypto="${crypto.name}">Redes</button>
-                <button class="delete-btn">Excluir</button>
-            </td>
-        `;
-
-        // ✅ Adiciona evento ao botão "Excluir"
-        row.querySelector(".delete-btn").addEventListener("click", function() {
-            row.remove();
-            updateLocalStorage(crypto.name);
-        });
-
-        // ✅ Adiciona evento ao botão "Redes" para abrir o modal
-        row.querySelector(".network-btn").addEventListener("click", function() {
-            let cryptoName = this.getAttribute("data-crypto");
-            openNetworkTable(cryptoName);
-        });
-
-        cryptoTableBody.appendChild(row);
-    }
-});
-
-// ✅ Função para remover do localStorage ao excluir uma criptomoeda da tabela
-function updateLocalStorage(cryptoName) {
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-    selectedCryptos = selectedCryptos.filter(crypto => crypto.name !== cryptoName);
-    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-}
-
-
-
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let cryptoNetworkBody = document.querySelector("#crypto-network-table tbody");
-
-    // ✅ Limpa a tabela antes de preenchê-la
-    cryptoNetworkBody.innerHTML = ""; 
-
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
-        return;
-    }
-
-    selectedCryptos.forEach(crypto => {
-        let row = document.createElement("tr");
-
-        let cellImage = document.createElement("td");
-        let cellNetworkButton = document.createElement("td");
-        let cellAddress = document.createElement("td");
-        let cellCopyButton = document.createElement("td");
-
-        // ✅ Adiciona imagem da criptomoeda
-        cellImage.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
-
-        // ✅ Adiciona botão "Redes"
-        let networkBtn = document.createElement("button");
-        networkBtn.textContent = "Redes";
-        networkBtn.classList.add("network-btn");
-        networkBtn.setAttribute("data-crypto", crypto.name);
-        cellNetworkButton.appendChild(networkBtn);
-
-        // ✅ Espaço para exibir o endereço da rede selecionada
-        cellAddress.textContent = "Selecione uma rede";
-
-        // ✅ Adiciona botão "Copiar"
-        let copyBtn = document.createElement("button");
-        copyBtn.textContent = "Copiar";
-        copyBtn.classList.add("copy-btn");
-        copyBtn.addEventListener("click", function() {
-            navigator.clipboard.writeText(cellAddress.textContent);
-            alert("Endereço copiado!");
-        });
-        cellCopyButton.appendChild(copyBtn);
-
-        row.appendChild(cellImage);
-        row.appendChild(cellNetworkButton);
-        row.appendChild(cellAddress);
-        row.appendChild(cellCopyButton);
-
-        cryptoNetworkBody.appendChild(row);
-    });
-
-    // ✅ Adiciona eventos para abrir o modal das redes
-    document.querySelectorAll(".network-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            let cryptoName = this.getAttribute("data-crypto");
-            openNetworkTable(cryptoName, this.parentElement.nextElementSibling);
-        });
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
 
 document.getElementById("update-button").addEventListener("click", function() {
-    atualizarTabelaPainel(); // ✅ Chama a função para recarregar a tabela ao clicar no botão "Atualizar"
+    atualizarTabelaPainel(); // ✅ Atualiza os dados na tabela ao clicar em "Atualizar"
 });
 
+// ✅ Função para atualizar a tabela do lado esquerdo (campanha)
 function atualizarTabelaPainel() {
-    let cryptoPanelBody = document.querySelector(".crypto-panel-table");
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
 
     // ✅ Limpa a tabela antes de preenchê-la
     cryptoPanelBody.innerHTML = "";
@@ -595,14 +350,17 @@ function atualizarTabelaPainel() {
     });
 }
 
-
+// ✅ Função para abrir o modal de redes baseado nas seleções do usuário
 function openNetworkTable(cryptoName, addressCell) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
     let selectedCrypto = selectedCryptos.find(c => c.name === cryptoName);
-    let networks = selectedCrypto?.networks || ["Rede 1", "Rede 2", "Rede 3"];
+    
+    // ✅ Obtém redes digitadas pelo usuário na tabela da campanha
+    let networks = selectedCrypto?.networks || [];
+    let addresses = selectedCrypto?.addresses || [];
 
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
@@ -613,17 +371,20 @@ function openNetworkTable(cryptoName, addressCell) {
 
     let networkOptions = networkForm.querySelector("#network-options");
 
-    networks.forEach((network, index) => {
-        let btn = document.createElement("button");
-        btn.textContent = network;
-        btn.classList.add("network-option");
-        btn.addEventListener("click", function() {
-            let addresses = ["0x12345ABC", "0x67890DEF", "0xABCDE987"]; // Simulação de endereços
-            addressCell.textContent = addresses[index]; // ✅ O endereço correto aparece na tabela
-            modal.remove();
+    if (networks.length === 0 || addresses.length === 0) {
+        networkOptions.innerHTML = "<p>As redes e endereços não foram cadastrados.</p>";
+    } else {
+        networks.forEach((network, index) => {
+            let btn = document.createElement("button");
+            btn.textContent = network;
+            btn.classList.add("network-option");
+            btn.addEventListener("click", function() {
+                addressCell.textContent = addresses[index]; // ✅ O endereço correto aparece na tabela
+                modal.remove();
+            });
+            networkOptions.appendChild(btn);
         });
-        networkOptions.appendChild(btn);
-    });
+    }
 
     networkForm.querySelector(".close-btn").addEventListener("click", function() {
         modal.remove();
@@ -633,19 +394,23 @@ function openNetworkTable(cryptoName, addressCell) {
     document.body.appendChild(modal);
 }
 
-
-
+// ✅ Função para finalizar e impedir futuras edições
 document.getElementById("finalize-button").addEventListener("click", function() {
     let confirmFinalize = confirm("Se finalizar, não será possível fazer mudanças. Deseja continuar?");
     if (confirmFinalize) {
         localStorage.setItem("finalized", "true");
         document.getElementById("update-button").disabled = true;
         document.getElementById("finalize-button").disabled = true;
+
+        // ✅ Bloqueia os campos de rede e endereço
+        document.querySelectorAll(".network-input, .address-input").forEach(input => {
+            input.disabled = true;
+        });
+
         alert("Planilha finalizada! Agora não pode mais ser editada.");
     } else {
         alert("Você ainda pode fazer ajustes.");
     }
 });
-
 
 
