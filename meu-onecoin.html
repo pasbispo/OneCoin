@@ -83,25 +83,32 @@
 
     <!-- Lado direito: Painel da campanha -->
     <section class="campaign-panel">
-        <h2 id="panel-title">Nome da Campanha</h2>
+    <h2 id="panel-title">Nome da Campanha</h2>
 
-        <div class="period-container">
-            <p> <span id="panel-duration">0</span></p>
-        </div>
-     
-           <img id="slideshow-image" src="#" alt="Imagem da campanha">
-        <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
-      
-        <h3>Criptomoedas Selecionadas</h3>
-        <table class="crypto-panel-table">
-           
+    <div class="period-container">
+        <p> <span id="panel-duration">0</span></p>
+    </div>
+ 
+    <img id="slideshow-image" src="#" alt="Imagem da campanha">
+    <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
+
+    <h3>Criptomoedas Selecionadas</h3>
+    <table class="crypto-panel-table">
+        <thead>
             <tr>
-                <td><img src="static/img/btc.png" alt="Bitcoin"></td>
-                <td><button>Selecionar Rede</button></td>
-                <td><span id="panel-quantity"></span></td>
-                <td><span id="panel-address"></span></td>
+                <th>Criptomoeda</th>
+                <th>Rede</th>
+                <th>Endereço</th>
+                <th>Copiar</th>
             </tr>
-        </table>
+        </thead>
+        <tbody></tbody> <!-- ✅ Aqui será preenchido dinamicamente -->
+    </table>
+
+    <button id="update-button" class="btn-primary">Atualizar</button>
+    <button id="finalize-button" class="btn-secondary">Finalizar</button>
+</section>
+
 
 
 
