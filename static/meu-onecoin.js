@@ -422,14 +422,14 @@ function updateLocalStorage(cryptoName) {
 
 
 document.getElementById("update-button").addEventListener("click", function() {
-    atualizarTabelaDireita(); // ✅ Atualiza os dados na tabela ao clicar em "Atualizar"
+    transferirDadosTabela(); // ✅ Agora os dados só são lançados após clicar "Atualizar"
 });
 
-function atualizarTabelaDireita() {
-    let cryptoNetworkBody = document.querySelector(".crypto-network-table tbody");
+function transferirDadosTabela() {
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
 
     // ✅ Limpa a tabela antes de preenchê-la
-    cryptoNetworkBody.innerHTML = ""; 
+    cryptoPanelBody.innerHTML = ""; 
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
@@ -474,7 +474,7 @@ function atualizarTabelaDireita() {
         row.appendChild(cellAddress);
         row.appendChild(cellCopyButton);
 
-        cryptoNetworkBody.appendChild(row);
+        cryptoPanelBody.appendChild(row);
     });
 
     // ✅ Adiciona eventos para abrir o modal das redes
@@ -485,6 +485,12 @@ function atualizarTabelaDireita() {
         });
     });
 }
+
+   
+
+
+
+
 
 
 
@@ -529,6 +535,11 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
+
+
+
+
+
 
 document.querySelectorAll(".copy-btn").forEach(button => {
     button.addEventListener("click", function() {
