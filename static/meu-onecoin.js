@@ -529,12 +529,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
 document.getElementById("update-button").addEventListener("click", function() {
-    atualizarTabelaPainel();
+    atualizarTabelaPainel(); // ✅ Chama a função para recarregar a tabela ao clicar no botão "Atualizar"
 });
 
 function atualizarTabelaPainel() {
-    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table");
 
     // ✅ Limpa a tabela antes de preenchê-la
     cryptoPanelBody.innerHTML = "";
@@ -550,60 +551,50 @@ function atualizarTabelaPainel() {
         let row = document.createElement("tr");
 
         let cellImage = document.createElement("td");
-        let cellNetwork = document.createElement("td");
+        let cellNetworkButton = document.createElement("td");
         let cellAddress = document.createElement("td");
         let cellCopyButton = document.createElement("td");
 
         // ✅ Adiciona imagem da criptomoeda
         cellImage.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
 
-        // ✅ Campo para o usuário digitar a rede manualmente
-        let networkInput = document.createElement("input");
-        networkInput.type = "text";
-        networkInput.classList.add("network-input");
-        networkInput.placeholder = "Digite a Rede";
-        cellNetwork.appendChild(networkInput);
+        // ✅ Adiciona botão "Selecionar Rede"
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.setAttribute("data-crypto", crypto.name);
+        cellNetworkButton.appendChild(networkBtn);
 
-        // ✅ Campo para o usuário digitar o endereço manualmente
-        let addressInput = document.createElement("input");
-        addressInput.type = "text";
-        addressInput.classList.add("address-input");
-        addressInput.placeholder = "Digite o Endereço";
-        cellAddress.appendChild(addressInput);
+        // ✅ Espaço para exibir o endereço da rede selecionada
+        cellAddress.textContent = "Selecione uma rede";
 
         // ✅ Adiciona botão "Copiar"
         let copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
         copyBtn.classList.add("copy-btn");
         copyBtn.addEventListener("click", function() {
-            navigator.clipboard.writeText(addressInput.value);
+            navigator.clipboard.writeText(cellAddress.textContent);
             alert("Endereço copiado!");
         });
         cellCopyButton.appendChild(copyBtn);
 
         row.appendChild(cellImage);
-        row.appendChild(cellNetwork);
+        row.appendChild(cellNetworkButton);
         row.appendChild(cellAddress);
         row.appendChild(cellCopyButton);
 
         cryptoPanelBody.appendChild(row);
     });
 
-    // ✅ Salva as redes e endereços no localStorage ao atualizar
-    document.getElementById("update-button").addEventListener("click", function() {
-        let networkInputs = document.querySelectorAll(".network-input");
-        let addressInputs = document.querySelectorAll(".address-input");
-
-        let cryptoUpdates = selectedCryptos.map((crypto, index) => ({
-            ...crypto,
-            network: networkInputs[index].value.trim(),
-            address: addressInputs[index].value.trim()
-        }));
-
-        localStorage.setItem("selectedCryptos", JSON.stringify(cryptoUpdates));
-        alert("Rede e endereço salvos!");
+    // ✅ Adiciona eventos para abrir o modal das redes
+    document.querySelectorAll(".network-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            openNetworkTable(cryptoName, this.parentElement.nextElementSibling);
+        });
     });
 }
+
 
 function openNetworkTable(cryptoName, addressCell) {
     let modal = document.createElement("div");
