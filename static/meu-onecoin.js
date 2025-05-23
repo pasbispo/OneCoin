@@ -416,3 +416,72 @@ function updateLocalStorage(cryptoName) {
 }
 
 
+
+
+
+document.getElementById("update-button").addEventListener("click", function() {
+    atualizarTabelaDireita(); // ✅ Atualiza os dados na tabela ao clicar em "Atualizar"
+});
+
+function atualizarTabelaDireita() {
+    let cryptoNetworkBody = document.querySelector(".crypto-network-table tbody");
+
+    // ✅ Limpa a tabela antes de preenchê-la
+    cryptoNetworkBody.innerHTML = ""; 
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
+        return;
+    }
+
+    selectedCryptos.forEach(crypto => {
+        let row = document.createElement("tr");
+
+        let cellImage = document.createElement("td");
+        let cellNetworkButton = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellCopyButton = document.createElement("td");
+
+        // ✅ Adiciona imagem da criptomoeda
+        cellImage.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
+
+        // ✅ Adiciona botão "Selecionar Rede"
+        let selectNetworkBtn = document.createElement("button");
+        selectNetworkBtn.textContent = "Selecionar Rede";
+        selectNetworkBtn.classList.add("select-network-btn");
+        selectNetworkBtn.setAttribute("data-crypto", crypto.name);
+        cellNetworkButton.appendChild(selectNetworkBtn);
+
+        // ✅ Espaço para exibir o endereço da rede selecionada
+        cellAddress.textContent = "Selecione uma rede";
+
+        // ✅ Adiciona botão "Copiar"
+        let copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", function() {
+            navigator.clipboard.writeText(cellAddress.textContent);
+            alert("Endereço copiado!");
+        });
+        cellCopyButton.appendChild(copyBtn);
+
+        row.appendChild(cellImage);
+        row.appendChild(cellNetworkButton);
+        row.appendChild(cellAddress);
+        row.appendChild(cellCopyButton);
+
+        cryptoNetworkBody.appendChild(row);
+    });
+
+    // ✅ Adiciona eventos para abrir o modal das redes
+    document.querySelectorAll(".select-network-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
+        });
+    });
+}
+
+

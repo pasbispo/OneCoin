@@ -1144,25 +1144,6 @@ th, td {
 
 
 
-.network-btn {
-    background-color: #007bff; /* 🔵 Cor azul padrão */
-    color: white; /* ✅ Texto branco */
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px; /* ✅ Bordas arredondadas */
-    cursor: pointer;
-    transition: background-color 0.3s; /* ✅ Efeito de transição suave */
-}
-
-/* ✅ Quando o mouse passa sobre o botão */
-.network-btn:hover {
-    background-color: #0056b3; /* 🔵 Tom mais escuro ao passar o mouse */
-}
-
-/* ✅ Se quiser uma cor diferente, troque 'background-color' */
-
-.
-
 
 
 
@@ -1190,6 +1171,35 @@ th, td {
 
 .delete-btn:hover {
     background-color: #c82333;
+}
+
+
+
+
+.select-network-btn {
+    background-color: #007bff; /* 🔵 Azul */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.copy-btn {
+    background-color: #28a745; /* ✅ Verde */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.select-network-btn:hover {
+    background-color: #0056b3;
+}
+
+.copy-btn:hover {
+    background-color: #218838;
 }
 
 
