@@ -1176,6 +1176,16 @@ th, td {
 
 
 
+
+
+#campaign-title {
+    text-align: center; /* ✅ Centraliza o texto */
+    font-size: 24px; /* ✅ Aumenta o tamanho do título */
+    font-weight: bold; /* ✅ Deixa o título mais destacado */
+    margin-top: 20px; /* ✅ Adiciona espaço na parte superior */
+}
+
+
 .select-network-btn {
     background-color: #007bff; /* 🔵 Azul */
     color: white;
