@@ -520,3 +520,132 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+document.getElementById("update-button").addEventListener("click", function() {
+    atualizarTabelaPainel(); // ✅ Chama a função para recarregar a tabela ao clicar no botão "Atualizar"
+});
+
+function atualizarTabelaPainel() {
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table");
+
+    // ✅ Limpa a tabela antes de preenchê-la
+    cryptoPanelBody.innerHTML = "";
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
+        return;
+    }
+
+    selectedCryptos.forEach(crypto => {
+        let row = document.createElement("tr");
+
+        let cellImage = document.createElement("td");
+        let cellNetworkButton = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellCopyButton = document.createElement("td");
+
+        // ✅ Adiciona imagem da criptomoeda
+        cellImage.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
+
+        // ✅ Adiciona botão "Selecionar Rede"
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.setAttribute("data-crypto", crypto.name);
+        cellNetworkButton.appendChild(networkBtn);
+
+        // ✅ Espaço para exibir o endereço da rede selecionada
+        cellAddress.textContent = "Selecione uma rede";
+
+        // ✅ Adiciona botão "Copiar"
+        let copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", function() {
+            navigator.clipboard.writeText(cellAddress.textContent);
+            alert("Endereço copiado!");
+        });
+        cellCopyButton.appendChild(copyBtn);
+
+        row.appendChild(cellImage);
+        row.appendChild(cellNetworkButton);
+        row.appendChild(cellAddress);
+        row.appendChild(cellCopyButton);
+
+        cryptoPanelBody.appendChild(row);
+    });
+
+    // ✅ Adiciona eventos para abrir o modal das redes
+    document.querySelectorAll(".network-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let cryptoName = this.getAttribute("data-crypto");
+            openNetworkTable(cryptoName, this.parentElement.nextElementSibling);
+        });
+    });
+}
+
+
+function openNetworkTable(cryptoName, addressCell) {
+    let modal = document.createElement("div");
+    modal.classList.add("modal");
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    let selectedCrypto = selectedCryptos.find(c => c.name === cryptoName);
+    let networks = selectedCrypto?.networks || ["Rede 1", "Rede 2", "Rede 3"];
+
+    let networkForm = document.createElement("div");
+    networkForm.innerHTML = `
+        <h3>Selecione uma rede de ${cryptoName}</h3>
+        <div id="network-options"></div>
+        <button class="close-btn">Fechar</button>
+    `;
+
+    let networkOptions = networkForm.querySelector("#network-options");
+
+    networks.forEach((network, index) => {
+        let btn = document.createElement("button");
+        btn.textContent = network;
+        btn.classList.add("network-option");
+        btn.addEventListener("click", function() {
+            let addresses = ["0x12345ABC", "0x67890DEF", "0xABCDE987"]; // Simulação de endereços
+            addressCell.textContent = addresses[index]; // ✅ O endereço correto aparece na tabela
+            modal.remove();
+        });
+        networkOptions.appendChild(btn);
+    });
+
+    networkForm.querySelector(".close-btn").addEventListener("click", function() {
+        modal.remove();
+    });
+
+    modal.appendChild(networkForm);
+    document.body.appendChild(modal);
+}
+
+
+
+document.getElementById("finalize-button").addEventListener("click", function() {
+    let confirmFinalize = confirm("Se finalizar, não será possível fazer mudanças. Deseja continuar?");
+    if (confirmFinalize) {
+        localStorage.setItem("finalized", "true");
+        document.getElementById("update-button").disabled = true;
+        document.getElementById("finalize-button").disabled = true;
+        alert("Planilha finalizada! Agora não pode mais ser editada.");
+    } else {
+        alert("Você ainda pode fazer ajustes.");
+    }
+});
+
+
+
