@@ -1219,37 +1219,5 @@ th, td {
 
 
 
-.button-container {
-    display: flex; /* ✅ Deixa os botões lado a lado */
-    justify-content: center; /* ✅ Centraliza horizontalmente */
-    gap: 0px; /* ✅ Adiciona um espaço entre os botões */
-    margin-top: 20px; /* ✅ Adiciona espaço acima dos botões */
-}
-
-.btn-primary, .btn-secondary {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.btn-primary {
-    background-color: #007bff; /* ✅ Azul */
-    color: white;
-}
-
-.btn-secondary {
-    background-color: #dc3545; /* ✅ Vermelho */
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.btn-secondary:hover {
-    background-color: #c82333;
-}
 
 
