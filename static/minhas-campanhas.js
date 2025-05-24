@@ -1,63 +1,32 @@
-document.getElementById("finalize-button").addEventListener("click", function() {
-    let confirmFinalize = confirm("Se finalizar, não será possível fazer mudanças. Deseja continuar?");
-    
-    if (confirmFinalize) {
-        let campaignName = document.getElementById("campaign-name").value;
-        let campaignPeriod = document.getElementById("campaign-period").value;
-        let campaignGoal = document.getElementById("campaign-goal").value;
-        let campaignImages = document.getElementById("campaign-images").files;
-        let campaignVideo = document.getElementById("video-file").files[0];
+document.addEventListener("DOMContentLoaded", function() {
+    let searchInput = document.getElementById("search-bar");
+    let cryptoImages = document.querySelectorAll(".crypto-list img"); // ✅ Seleciona todas as imagens de criptomoedas disponíveis
 
-        let cryptoData = [];
-        document.querySelectorAll("#crypto-table tbody tr").forEach(row => {
-            let cryptoName = row.cells[0].textContent;
-            let cryptoQuantity = row.cells[1].textContent;
-            let cryptoValue = row.cells[2].textContent;
-            let cryptoNetworks = row.cells[3].textContent;
+    searchInput.addEventListener("input", function() {
+        let query = searchInput.value.trim().toLowerCase();
 
-            cryptoData.push({
-                name: cryptoName,
-                quantity: cryptoQuantity,
-                estimatedValue: cryptoValue,
-                networks: cryptoNetworks
-            });
+        if (query === "") {
+            // ✅ Se o campo estiver vazio, todas as imagens aparecem novamente
+            cryptoImages.forEach(img => img.style.display = "inline-block");
+            return;
+        }
+
+        cryptoImages.forEach(img => {
+            let cryptoName = img.alt.toLowerCase();
+            if (cryptoName.includes(query)) {
+                img.style.display = "inline-block"; // ✅ Exibe apenas a imagem correspondente
+            } else {
+                img.style.display = "none"; // ✅ Esconde todas as outras imagens
+            }
         });
-
-        let campaign = {
-            name: campaignName,
-            period: campaignPeriod,
-            goal: campaignGoal,
-            images: Array.from(campaignImages).map(img => img.name),
-            video: campaignVideo ? campaignVideo.name : "",
-            cryptos: cryptoData
-        };
-
-        let userCampaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-        userCampaigns.push(campaign);
-        localStorage.setItem("userCampaigns", JSON.stringify(userCampaigns));
-
-        alert("Campanha finalizada! Agora você será direcionado para acompanhar suas campanhas.");
-        window.location.href = "https://pasbispo.github.io/OneCoin/minhas-campanhas.html";
-    } else {
-        alert("Você ainda pode fazer ajustes.");
-    }
+    });
 });
-
-
-
-
 
 
 
 
 document.addEventListener("DOMContentLoaded", function() {
     let campaignsContainer = document.getElementById("campaigns-container");
-
-    if (!campaignsContainer) {
-        console.error("Erro: O elemento 'campaigns-container' não foi encontrado!");
-        return;
-    }
-
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
     if (campaigns.length === 0) {
@@ -75,10 +44,56 @@ document.addEventListener("DOMContentLoaded", function() {
             <p>Objetivo: <textarea class="edit-objective">${campaign.goal}</textarea></p>
             <input type="file" class="edit-image" accept="image/*">
             <input type="file" class="edit-video" accept="video/*">
+            <h3>Criptomoedas Selecionadas</h3>
+            <table class="crypto-panel-table">
+                <thead>
+                    <tr>
+                        <th>Criptomoeda</th>
+                        <th>Rede</th>
+                        <th>Endereço</th>
+                        <th>Copiar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${campaign.cryptos.map(crypto => `
+                        <tr>
+                            <td>${crypto.name}</td>
+                            <td>${crypto.networks}</td>
+                            <td>Endereço</td>
+                            <td><button class="copy-btn">Copiar</button></td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
             <button class="save-campaign" data-index="${index}">Atualizar</button>
             <button class="delete-campaign" data-index="${index}">Excluir</button>
         `;
 
         campaignsContainer.appendChild(campaignDiv);
+    });
+
+    document.querySelectorAll(".save-campaign").forEach(button => {
+        button.addEventListener("click", function() {
+            let index = this.getAttribute("data-index");
+            let updatedObjective = document.querySelectorAll(".edit-objective")[index].value;
+            let updatedImage = document.querySelectorAll(".edit-image")[index].files[0]?.name || campaigns[index].image;
+            let updatedVideo = document.querySelectorAll(".edit-video")[index].files[0]?.name || campaigns[index].video;
+
+            campaigns[index].goal = updatedObjective;
+            campaigns[index].image = updatedImage;
+            campaigns[index].video = updatedVideo;
+
+            localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+            alert("Alterações salvas!");
+        });
+    });
+
+    document.querySelectorAll(".delete-campaign").forEach(button => {
+        button.addEventListener("click", function() {
+            let index = this.getAttribute("data-index");
+            campaigns.splice(index, 1);
+            localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+            location.reload();
+        });
     });
 });
