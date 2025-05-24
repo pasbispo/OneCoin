@@ -42,3 +42,43 @@ document.getElementById("finalize-button").addEventListener("click", function() 
         alert("Você ainda pode fazer ajustes.");
     }
 });
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let campaignsContainer = document.getElementById("campaigns-container");
+
+    if (!campaignsContainer) {
+        console.error("Erro: O elemento 'campaigns-container' não foi encontrado!");
+        return;
+    }
+
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+
+    if (campaigns.length === 0) {
+        campaignsContainer.innerHTML = "<p>Você ainda não criou nenhuma campanha.</p>";
+        return;
+    }
+
+    campaigns.forEach((campaign, index) => {
+        let campaignDiv = document.createElement("div");
+        campaignDiv.classList.add("campaign-box");
+
+        campaignDiv.innerHTML = `
+            <h2>Campanha ${index + 1}: ${campaign.name}</h2>
+            <p>Período: ${campaign.period} dias</p>
+            <p>Objetivo: <textarea class="edit-objective">${campaign.goal}</textarea></p>
+            <input type="file" class="edit-image" accept="image/*">
+            <input type="file" class="edit-video" accept="video/*">
+            <button class="save-campaign" data-index="${index}">Atualizar</button>
+            <button class="delete-campaign" data-index="${index}">Excluir</button>
+        `;
+
+        campaignsContainer.appendChild(campaignDiv);
+    });
+});
