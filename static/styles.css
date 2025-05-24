@@ -1227,3 +1227,16 @@ th, td {
 
 
 
+.button-container {
+    display: flex; /* ✅ Organiza os botões lado a lado */
+    justify-content: center; /* ✅ Centraliza horizontalmente */
+    align-items: center; /* ✅ Alinha verticalmente */
+    gap: 20px; /* ✅ Espaço entre os botões */
+    position: fixed; /* ✅ Mantém o botão fixo na tela */
+    bottom: 50px; /* ✅ Ajusta a distância vertical */
+    left: 50%; /* ✅ Define a posição inicial */
+    transform: translateX(-50%); /* ✅ Move o botão horizontalmente para o centro */
+}
+
+
+
