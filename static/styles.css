@@ -1229,9 +1229,9 @@ th, td {
     display: flex; /* ✅ Organiza os botões lado a lado */
     justify-content: center; /* ✅ Centraliza horizontalmente */
     align-items: center; /* ✅ Garante alinhamento vertical */
-    gap: 100px; /* ✅ Adiciona espaçamento entre os botões */
+    gap: 20px; /* ✅ Adiciona espaçamento entre os botões */
     margin-top: 30px; /* ✅ Adiciona espaço acima dos botões */
-    width: 100%; /* ✅ Define largura total */
+    width: 50%; /* ✅ Define largura total */
 }
 
 
