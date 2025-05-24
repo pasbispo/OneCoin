@@ -1226,7 +1226,7 @@ th, td {
 
 
 .button-container {
-    display: flex; /* ✅ Organiza os botões lado a lado */
+    display: center; /* ✅ Organiza os botões lado a lado */
     justify-content: center; /* ✅ Centraliza horizontalmente */
     align-items: center; /* ✅ Garante alinhamento vertical */
     gap: 20px; /* ✅ Adiciona espaçamento entre os botões */
