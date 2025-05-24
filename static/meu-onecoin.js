@@ -558,10 +558,3 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
-
-<div class="button-container">
-    <button id="update-button" class="btn-primary">Atualizar</button>
-    <button id="finalize-button" class="btn-secondary">Finalizar</button>
-</div>
-
-
