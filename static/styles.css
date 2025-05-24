@@ -1222,7 +1222,7 @@ th, td {
 .button-container {
     display: flex; /* ✅ Deixa os botões lado a lado */
     justify-content: center; /* ✅ Centraliza horizontalmente */
-    gap: 30px; /* ✅ Adiciona um espaço entre os botões */
+    gap: 15px; /* ✅ Adiciona um espaço entre os botões */
     margin-top: 20px; /* ✅ Adiciona espaço acima dos botões */
 }
 
