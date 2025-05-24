@@ -1231,7 +1231,7 @@ th, td {
     align-items: center; /* ✅ Garante alinhamento vertical */
     gap: 20px; /* ✅ Adiciona espaçamento entre os botões */
     margin-top: 30px; /* ✅ Adiciona espaço acima dos botões */
-    width: 30%; /* ✅ Define largura total */
+    width: 20%; /* ✅ Define largura total */
 }
 
 
