@@ -1226,12 +1226,20 @@ th, td {
 
 
 .button-container {
-    display: center; /* ✅ Organiza os botões lado a lado */
+    display: flex; /* ✅ Organiza os botões lado a lado */
     justify-content: center; /* ✅ Centraliza horizontalmente */
     align-items: center; /* ✅ Garante alinhamento vertical */
-    gap: 20px; /* ✅ Adiciona espaçamento entre os botões */
-    margin-top: 30px; /* ✅ Adiciona espaço acima dos botões */
-    width: 30%; /* ✅ Define largura total */
+    gap: 30px; /* ✅ Espaço entre os botões */
+    width: 100%; /* ✅ Define largura total */
+    margin-top: 20px; /* ✅ Espaço acima */
+    text-align: center; /* ✅ Centraliza o texto */
 }
 
+.btn-primary, .btn-secondary {
+    padding: 12px 24px; /* ✅ Ajusta o tamanho do botão */
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
