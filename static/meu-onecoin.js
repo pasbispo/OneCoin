@@ -556,5 +556,17 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
+document.getElementById("finalize-button").addEventListener("click", function() {
+    let confirmFinalize = confirm("Se finalizar, não será possível fazer mudanças. Deseja continuar?");
+    
+    if (confirmFinalize) {
+        localStorage.setItem("finalized", "true");
+        
+        document.getElementById("update-button").disabled = true;
+        document.getElementById("finalize-button").disabled = true;
 
-
+        alert("Planilha finalizada! Agora não pode mais ser editada.");
+    } else {
+        alert("Você ainda pode fazer ajustes.");
+    }
+});
