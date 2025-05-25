@@ -1,3 +1,32 @@
+document.addEventListener("DOMContentLoaded", function() {
+    let finalizeButton = document.getElementById("finalize-button");
+
+    if (finalizeButton) {
+        finalizeButton.addEventListener("click", function() {
+            let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+            
+            if (confirmFinalize) {
+                // 🔒 Bloqueia Nome da Campanha, Período e Tabela de Criptomoedas
+                document.getElementById("campaign-name").setAttribute("disabled", "true");
+                document.getElementById("campaign-period").setAttribute("disabled", "true");
+                document.querySelectorAll("#crypto-table input, #crypto-table textarea").forEach(element => {
+                    element.setAttribute("disabled", "true");
+                });
+
+                // 🔓 Mantém apenas os campos editáveis disponíveis
+                document.getElementById("campaign-images").removeAttribute("disabled");
+                document.getElementById("campaign-goal").removeAttribute("disabled");
+                document.getElementById("video-file").removeAttribute("disabled");
+
+                alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+            } else {
+                alert("Você ainda pode modificar tudo antes de finalizar.");
+            }
+        });
+    } else {
+        console.error("Erro: O botão 'Finalizar' não foi encontrado!");
+    }
+});
 
 
 document.getElementById("update-button").addEventListener("click", function() {
