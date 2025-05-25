@@ -28,11 +28,11 @@ document.getElementById("finalize-button").addEventListener("click", function() 
 
 
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container");
+    let campaignsContainer = document.getElementById("campaigns-container"); // Container onde ficam as campanhas
 
     // 🏆 Clona a estrutura da campanha original
-    let originalCampaign = document.querySelector(".container");
-    let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha
+    let originalCampaign = document.querySelector(".container"); 
+    let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha (esquerda e direita)
 
     // 🔄 Remove IDs duplicados para evitar conflitos
     newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
@@ -49,6 +49,8 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     campaignsContainer.appendChild(divider);
     campaignsContainer.appendChild(label);
     campaignsContainer.appendChild(newCampaign);
+
+    alert("Nova campanha adicionada!");
 });
 
 
