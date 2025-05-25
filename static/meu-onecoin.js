@@ -25,6 +25,35 @@ document.getElementById("finalize-button").addEventListener("click", function() 
 
 
 
+
+
+document.getElementById("new-campaign-button").addEventListener("click", function() {
+    let campaignsContainer = document.getElementById("campaigns-container");
+
+    // 🏆 Clona a estrutura da campanha original
+    let originalCampaign = document.querySelector(".container");
+    let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha
+
+    // 🔄 Remove IDs duplicados para evitar conflitos
+    newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+
+    // 🏆 Adiciona uma linha separadora antes da nova campanha
+    let divider = document.createElement("hr");
+    divider.classList.add("campaign-divider");
+
+    let label = document.createElement("p");
+    label.classList.add("new-campaign-label");
+    label.textContent = "Nova Campanha";
+
+    // 🏆 Adiciona a nova campanha abaixo da linha separadora
+    campaignsContainer.appendChild(divider);
+    campaignsContainer.appendChild(label);
+    campaignsContainer.appendChild(newCampaign);
+});
+
+
+
+
 document.getElementById("update-button").addEventListener("click", function() {
     // 🏆 Atualizar dados da campanha apenas ao clicar no botão
     let campaignName = document.getElementById("campaign-name").value;
