@@ -565,15 +565,23 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 document.getElementById("new-campaign-button").addEventListener("click", function() {
     let campaignsContainer = document.getElementById("campaigns-container");
 
-    let originalCampaign = document.querySelector(".campaign-wrapper"); // Pega a campanha original
-    let newCampaign = originalCampaign.cloneNode(true); // Clona a estrutura
+    let originalCampaign = document.querySelector(".campaign-wrapper"); // Captura a estrutura original
+    let newCampaign = originalCampaign.cloneNode(true); // Clona a campanha original
 
     // Remove IDs duplicados para evitar conflitos
     newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
+    // Adiciona uma classe para diferenciar as campanhas
+    newCampaign.classList.add("new-campaign");
+
+    // Adiciona um evento de exclusão para o novo botão "Excluir"
+    newCampaign.querySelector(".delete-campaign").addEventListener("click", function() {
+        newCampaign.remove();
+    });
+
     campaignsContainer.appendChild(newCampaign);
 
-    // Adiciona uma nova linha separadora entre as campanhas
+    // Adiciona uma linha separadora entre as campanhas
     let divider = document.createElement("hr");
     divider.classList.add("campaign-divider");
     campaignsContainer.appendChild(divider);

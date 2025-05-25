@@ -1271,6 +1271,21 @@ th, td {
     margin-bottom: 15px;
 }
 
+.delete-campaign {
+    display: block;
+    margin: 10px auto;
+    padding: 8px 15px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-campaign:hover {
+    background-color: #b02a37;
+}
+
 
 
 
