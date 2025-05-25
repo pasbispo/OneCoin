@@ -1257,32 +1257,36 @@ th, td {
 
 
 
-.campaign-divider {
-    width: 80%;
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    text-align: center;
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
 }
 
-.new-campaign-label {
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-.delete-campaign {
-    display: block;
-    margin: 10px auto;
-    padding: 8px 15px;
-    background-color: #dc3545;
-    color: white;
+.btn-primary, .btn-secondary {
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
 }
 
-.delete-campaign:hover {
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary:hover {
     background-color: #b02a37;
 }
 

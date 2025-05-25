@@ -557,38 +557,16 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
-
-
-
-
-
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container");
-
-    let originalCampaign = document.querySelector(".campaign-wrapper"); // Captura a estrutura original
-    let newCampaign = originalCampaign.cloneNode(true); // Clona a campanha original
-
-    // Remove IDs duplicados para evitar conflitos
-    newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
-
-    // Adiciona uma classe para diferenciar as campanhas
-    newCampaign.classList.add("new-campaign");
-
-    // Adiciona um evento de exclusão para o novo botão "Excluir"
-    newCampaign.querySelector(".delete-campaign").addEventListener("click", function() {
-        newCampaign.remove();
-    });
-
-    campaignsContainer.appendChild(newCampaign);
-
-    // Adiciona uma linha separadora entre as campanhas
-    let divider = document.createElement("hr");
-    divider.classList.add("campaign-divider");
-    campaignsContainer.appendChild(divider);
-
-    let label = document.createElement("p");
-    label.classList.add("new-campaign-label");
-    label.textContent = "Nova Campanha";
-    campaignsContainer.appendChild(label);
+    alert("Nova Campanha será adicionada!");
+    // A funcionalidade real será implementada no próximo passo
 });
+
+document.getElementById("delete-campaign-button").addEventListener("click", function() {
+    alert("Excluindo campanha...");
+    // A lógica de exclusão será definida depois que estruturarmos as campanhas corretamente
+});
+
+
+
 
