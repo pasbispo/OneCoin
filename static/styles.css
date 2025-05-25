@@ -1230,7 +1230,7 @@ th, td {
     justify-content: center; /* ✅ Centraliza horizontalmente */
     align-items: center; /* ✅ Garante alinhamento vertical */
     gap: 30px; /* ✅ Espaço entre os botões */
-    width: 80%; /* ✅ Define largura total */
+    width: 70%; /* ✅ Define largura total */
     margin-top: 20px; /* ✅ Espaço acima */
     text-align: center; /* ✅ Centraliza o texto */
 }
