@@ -560,49 +560,71 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let campaignsContainer = document.getElementById("campaigns-container");
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-document.getElementById("finalize-button").addEventListener("click", function() {
-    let confirmFinalize = confirm("Se finalizar, não será possível fazer mudanças. Deseja continuar?");
-    
-    if (confirmFinalize) {
-        let campaignName = document.getElementById("campaign-name").value;
-        let campaignPeriod = document.getElementById("campaign-period").value;
-        let campaignGoal = document.getElementById("campaign-goal").value;
-        let campaignImages = document.getElementById("campaign-images").files;
-        let campaignVideo = document.getElementById("video-file").files[0];
+    function renderCampaigns() {
+        campaignsContainer.innerHTML = ""; // Limpa o container antes de adicionar os elementos
 
-        let cryptoData = [];
-        document.querySelectorAll("#crypto-table tbody tr").forEach(row => {
-            let cryptoName = row.cells[0].textContent;
-            let cryptoQuantity = row.cells[1].textContent;
-            let cryptoValue = row.cells[2].textContent;
-            let cryptoNetworks = row.cells[3].textContent;
+        campaigns.forEach((campaign, index) => {
+            let campaignDiv = document.createElement("div");
+            campaignDiv.classList.add("campaign-box");
 
-            cryptoData.push({
-                name: cryptoName,
-                quantity: cryptoQuantity,
-                estimatedValue: cryptoValue,
-                networks: cryptoNetworks
+            campaignDiv.innerHTML = `
+                <h2>Campanha ${index + 1}: ${campaign.name}</h2>
+                <p>Período: ${campaign.period} dias</p>
+                <p>Objetivo: <textarea class="edit-objective">${campaign.goal}</textarea></p>
+                <input type="file" class="edit-image" accept="image/*">
+                <input type="file" class="edit-video" accept="video/*">
+                <button class="save-campaign" data-index="${index}">Atualizar</button>
+                <button class="delete-campaign" data-index="${index}">Excluir</button>
+                <hr class="campaign-divider"> 
+            `;
+
+            campaignsContainer.appendChild(campaignDiv);
+        });
+
+        document.querySelectorAll(".delete-campaign").forEach(button => {
+            button.addEventListener("click", function() {
+                let index = this.getAttribute("data-index");
+                campaigns.splice(index, 1);
+                localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+                renderCampaigns(); // Atualiza a página sem recarregar
             });
         });
 
-        let campaign = {
-            name: campaignName,
-            period: campaignPeriod,
-            goal: campaignGoal,
-            images: Array.from(campaignImages).map(img => img.name),
-            video: campaignVideo ? campaignVideo.name : "",
-            cryptos: cryptoData
+        document.querySelectorAll(".save-campaign").forEach(button => {
+            button.addEventListener("click", function() {
+                let index = this.getAttribute("data-index");
+                let updatedObjective = document.querySelectorAll(".edit-objective")[index].value;
+                let updatedImage = document.querySelectorAll(".edit-image")[index].files[0]?.name || campaigns[index].images;
+                let updatedVideo = document.querySelectorAll(".edit-video")[index].files[0]?.name || campaigns[index].video;
+
+                campaigns[index].goal = updatedObjective;
+                campaigns[index].images = updatedImage;
+                campaigns[index].video = updatedVideo;
+
+                localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+                alert("Alterações salvas!");
+            });
+        });
+    }
+
+    renderCampaigns(); // Chama a função para carregar campanhas existentes
+
+    document.getElementById("new-campaign-button").addEventListener("click", function() {
+        let newCampaign = {
+            name: "Nova Campanha",
+            period: "0",
+            goal: "Objetivo da nova campanha",
+            images: [],
+            video: "",
+            cryptos: []
         };
 
-        let userCampaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-        userCampaigns.push(campaign);
-        localStorage.setItem("userCampaigns", JSON.stringify(userCampaigns));
-
-        alert("Campanha finalizada! Agora você será direcionado para acompanhar suas campanhas.");
-        window.location.href = "https://pasbispo.github.io/OneCoin/minhas-campanhas.html";
-    } else {
-        alert("Você ainda pode fazer ajustes.");
-    }
+        campaigns.push(newCampaign);
+        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+        renderCampaigns(); // Atualiza sem recarregar
+    });
 });
-
