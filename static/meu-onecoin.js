@@ -11,6 +11,7 @@ document.getElementById("finalize-button").addEventListener("click", function() 
         });
 
         document.getElementById("crypto-table").style.pointerEvents = "none"; // 🔒 Bloqueia interações com a tabela
+        document.getElementById("crypto-table").setAttribute("disabled", "true"); // ✅ Impede alterações diretas
 
         // 🔓 Mantém apenas os campos editáveis disponíveis
         document.getElementById("campaign-images").removeAttribute("disabled");
@@ -28,7 +29,7 @@ document.getElementById("finalize-button").addEventListener("click", function() 
 
 
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // Container onde ficam as campanhas
+    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Certifica que o container está correto
 
     // 🏆 Clona a estrutura da campanha original
     let originalCampaign = document.querySelector(".container"); 
@@ -36,6 +37,11 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
     // 🔄 Remove IDs duplicados para evitar conflitos
     newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+
+    // ✅ Remove valores anteriores nos campos clonados
+    newCampaign.querySelector("#campaign-name").value = "";
+    newCampaign.querySelector("#campaign-period").value = "";
+    newCampaign.querySelector("#campaign-goal").value = "";
 
     // 🏆 Adiciona uma linha separadora antes da nova campanha
     let divider = document.createElement("hr");
@@ -52,6 +58,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
     alert("Nova campanha adicionada!");
 });
+
 
 
 
