@@ -1,33 +1,38 @@
 
 
 document.getElementById("update-button").addEventListener("click", function() {
-    let campaignName = document.getElementById("campaign-name");
-    let campaignGoal = document.getElementById("campaign-goal");
-    let campaignPeriod = document.getElementById("campaign-period");
+    // 🏆 Atualizar dados da campanha apenas ao clicar no botão
+    let campaignName = document.getElementById("campaign-name").value;
+    let campaignGoal = document.getElementById("campaign-goal").value;
+    let campaignPeriod = document.getElementById("campaign-period").value;
+    let campaignImages = document.getElementById("campaign-images").files;
+    let campaignVideo = document.getElementById("video-file").files[0];
+
     let panelTitle = document.getElementById("panel-title");
     let panelGoal = document.getElementById("panel-goal");
     let panelDuration = document.getElementById("panel-duration");
-    let imageInput = document.getElementById("campaign-image");
-    let panelImage = document.getElementById("panel-image");
+    let panelImage = document.getElementById("slideshow-image");
+    let videoPlayer = document.getElementById("video-player");
 
-    // Verifica se todos os elementos existem antes de acessar suas propriedades
-    if (campaignName && panelTitle) {
-        panelTitle.textContent = campaignName.value;
+    // 🏆 Atualizando elementos na planilha direita
+    panelTitle.textContent = campaignName;
+    panelGoal.textContent = "Objetivo: " + campaignGoal;
+    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
+
+    // 🏆 Atualizar imagens apenas após o clique no botão
+    if (campaignImages.length > 0) {
+        let imageURL = URL.createObjectURL(campaignImages[0]);
+        panelImage.src = imageURL;
     }
 
-    if (campaignGoal && panelGoal) {
-        panelGoal.textContent = campaignGoal.value;
-    }
-
-    if (campaignPeriod && panelDuration) {
-        panelDuration.textContent = campaignPeriod.value;
-    }
-
-    if (imageInput && panelImage && imageInput.files.length > 0) {
-        let imageUrl = URL.createObjectURL(imageInput.files[0]);
-        panelImage.src = imageUrl;
+    // 🏆 Atualizar vídeo apenas após o clique no botão
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        videoPlayer.src = videoURL;
+        videoPlayer.load();
     }
 });
+
 
 // 🚀 Executa automaticamente ao carregar a página
 document.addEventListener("DOMContentLoaded", function() {
