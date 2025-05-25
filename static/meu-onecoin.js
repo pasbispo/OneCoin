@@ -560,71 +560,61 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
+
+
+document.getElementById("new-campaign-button").addEventListener("click", function() {
     let campaignsContainer = document.getElementById("campaigns-container");
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-    function renderCampaigns() {
-        campaignsContainer.innerHTML = ""; // Limpa o container antes de adicionar os elementos
+    let newCampaignDiv = document.createElement("div");
+    newCampaignDiv.classList.add("campaign-wrapper");
 
-        campaigns.forEach((campaign, index) => {
-            let campaignDiv = document.createElement("div");
-            campaignDiv.classList.add("campaign-box");
+    newCampaignDiv.innerHTML = `
+        <div class="campaign-section">
+            <div class="campaign-input">
+                <h2>Informações da Campanha</h2>
+                <div class="form-group">
+                    <label for="campaign-name">Nome da Campanha:</label>
+                    <input type="text" placeholder="Digite o nome da campanha">
+                </div>
+                <div class="form-group">
+                    <label for="campaign-period">Período (dias):</label>
+                    <input type="number" placeholder="Digite o período">
+                </div>
+                <div class="form-group">
+                    <label for="campaign-images">Imagens da Campanha:</label>
+                    <input type="file" accept="image/*" multiple>
+                </div>
+                <div class="form-group">
+                    <label for="campaign-goal">Objetivo da Campanha:</label>
+                    <textarea placeholder="Descreva o propósito da campanha"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="video-file">Selecione um vídeo:</label>
+                    <input type="file" accept="video/*">
+                </div>
+            </div>
 
-            campaignDiv.innerHTML = `
-                <h2>Campanha ${index + 1}: ${campaign.name}</h2>
-                <p>Período: ${campaign.period} dias</p>
-                <p>Objetivo: <textarea class="edit-objective">${campaign.goal}</textarea></p>
-                <input type="file" class="edit-image" accept="image/*">
-                <input type="file" class="edit-video" accept="video/*">
-                <button class="save-campaign" data-index="${index}">Atualizar</button>
-                <button class="delete-campaign" data-index="${index}">Excluir</button>
-                <hr class="campaign-divider"> 
-            `;
+            <div class="campaign-panel">
+                <h2>Nome da Campanha</h2>
+                <p>Período: <span>0</span> dias</p>
+                <img src="#" alt="Imagem da campanha">
+                <p>Objetivo: [Texto aparece aqui]</p>
+                <h3>Criptomoedas Selecionadas</h3>
+                <table class="crypto-panel-table">
+                    <thead>
+                        <tr>
+                            <th>Criptomoeda</th>
+                            <th>Rede</th>
+                            <th>Endereço</th>
+                            <th>Copiar</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <hr class="campaign-divider">
+    `;
 
-            campaignsContainer.appendChild(campaignDiv);
-        });
-
-        document.querySelectorAll(".delete-campaign").forEach(button => {
-            button.addEventListener("click", function() {
-                let index = this.getAttribute("data-index");
-                campaigns.splice(index, 1);
-                localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-                renderCampaigns(); // Atualiza a página sem recarregar
-            });
-        });
-
-        document.querySelectorAll(".save-campaign").forEach(button => {
-            button.addEventListener("click", function() {
-                let index = this.getAttribute("data-index");
-                let updatedObjective = document.querySelectorAll(".edit-objective")[index].value;
-                let updatedImage = document.querySelectorAll(".edit-image")[index].files[0]?.name || campaigns[index].images;
-                let updatedVideo = document.querySelectorAll(".edit-video")[index].files[0]?.name || campaigns[index].video;
-
-                campaigns[index].goal = updatedObjective;
-                campaigns[index].images = updatedImage;
-                campaigns[index].video = updatedVideo;
-
-                localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-                alert("Alterações salvas!");
-            });
-        });
-    }
-
-    renderCampaigns(); // Chama a função para carregar campanhas existentes
-
-    document.getElementById("new-campaign-button").addEventListener("click", function() {
-        let newCampaign = {
-            name: "Nova Campanha",
-            period: "0",
-            goal: "Objetivo da nova campanha",
-            images: [],
-            video: "",
-            cryptos: []
-        };
-
-        campaigns.push(newCampaign);
-        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-        renderCampaigns(); // Atualiza sem recarregar
-    });
+    campaignsContainer.appendChild(newCampaignDiv);
 });
