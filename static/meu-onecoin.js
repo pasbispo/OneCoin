@@ -565,56 +565,22 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 document.getElementById("new-campaign-button").addEventListener("click", function() {
     let campaignsContainer = document.getElementById("campaigns-container");
 
-    let newCampaignDiv = document.createElement("div");
-    newCampaignDiv.classList.add("campaign-wrapper");
+    let originalCampaign = document.querySelector(".campaign-wrapper"); // Pega a campanha original
+    let newCampaign = originalCampaign.cloneNode(true); // Clona a estrutura
 
-    newCampaignDiv.innerHTML = `
-        <div class="campaign-section">
-            <div class="campaign-input">
-                <h2>Informações da Campanha</h2>
-                <div class="form-group">
-                    <label for="campaign-name">Nome da Campanha:</label>
-                    <input type="text" placeholder="Digite o nome da campanha">
-                </div>
-                <div class="form-group">
-                    <label for="campaign-period">Período (dias):</label>
-                    <input type="number" placeholder="Digite o período">
-                </div>
-                <div class="form-group">
-                    <label for="campaign-images">Imagens da Campanha:</label>
-                    <input type="file" accept="image/*" multiple>
-                </div>
-                <div class="form-group">
-                    <label for="campaign-goal">Objetivo da Campanha:</label>
-                    <textarea placeholder="Descreva o propósito da campanha"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="video-file">Selecione um vídeo:</label>
-                    <input type="file" accept="video/*">
-                </div>
-            </div>
+    // Remove IDs duplicados para evitar conflitos
+    newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-            <div class="campaign-panel">
-                <h2>Nome da Campanha</h2>
-                <p>Período: <span>0</span> dias</p>
-                <img src="#" alt="Imagem da campanha">
-                <p>Objetivo: [Texto aparece aqui]</p>
-                <h3>Criptomoedas Selecionadas</h3>
-                <table class="crypto-panel-table">
-                    <thead>
-                        <tr>
-                            <th>Criptomoeda</th>
-                            <th>Rede</th>
-                            <th>Endereço</th>
-                            <th>Copiar</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-        <hr class="campaign-divider">
-    `;
+    campaignsContainer.appendChild(newCampaign);
 
-    campaignsContainer.appendChild(newCampaignDiv);
+    // Adiciona uma nova linha separadora entre as campanhas
+    let divider = document.createElement("hr");
+    divider.classList.add("campaign-divider");
+    campaignsContainer.appendChild(divider);
+
+    let label = document.createElement("p");
+    label.classList.add("new-campaign-label");
+    label.textContent = "Nova Campanha";
+    campaignsContainer.appendChild(label);
 });
+
