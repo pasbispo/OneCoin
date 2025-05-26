@@ -1,3 +1,110 @@
+document.getElementById("new-campaign-button").addEventListener("click", function() {
+    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Certifica que estamos adicionando no container correto
+    let originalCampaign = document.querySelector(".container"); // ✅ Obtém a estrutura original da campanha
+
+    if (originalCampaign) {
+        let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha (esquerda e direita)
+
+        // 🔄 Remove IDs duplicados para evitar conflitos
+        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+
+        // ✅ Limpa valores anteriores nos campos clonados
+        newCampaign.querySelector("input[type='text']").value = "";
+        newCampaign.querySelector("input[type='number']").value = "";
+        newCampaign.querySelector("textarea").value = "";
+        newCampaign.querySelector("img").src = "#";
+        newCampaign.querySelector("video").src = "";
+
+        // ✅ Adiciona funcionalidade aos botões na nova campanha
+        newCampaign.querySelector(".update-button").addEventListener("click", function() {
+            atualizarCampanha(newCampaign);
+        });
+
+        newCampaign.querySelector(".finalize-button").addEventListener("click", function() {
+            finalizarCampanha(newCampaign);
+        });
+
+        newCampaign.querySelector(".delete-campaign-button").addEventListener("click", function() {
+            newCampaign.remove();
+        });
+
+        // 🏆 Adiciona linha separadora antes da nova campanha
+        let divider = document.createElement("hr");
+        divider.classList.add("campaign-divider");
+
+        let label = document.createElement("p");
+        label.classList.add("new-campaign-label");
+        label.textContent = "Nova Campanha";
+
+        // 🏆 Adiciona a nova campanha abaixo da linha separadora
+        campaignsContainer.appendChild(divider);
+        campaignsContainer.appendChild(label);
+        campaignsContainer.appendChild(newCampaign);
+
+        alert("Nova campanha adicionada!");
+    } else {
+        console.error("Erro: Estrutura de campanha não encontrada!");
+    }
+});
+
+// 🔄 Função para atualizar a campanha corretamente
+function atualizarCampanha(campaign) {
+    let campaignName = campaign.querySelector("input[type='text']").value;
+    let campaignGoal = campaign.querySelector("textarea").value;
+    let campaignPeriod = campaign.querySelector("input[type='number']").value;
+    let campaignImages = campaign.querySelector("input[type='file']").files;
+    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
+
+    let panelTitle = campaign.querySelector(".panel-title");
+    let panelGoal = campaign.querySelector(".panel-goal");
+    let panelDuration = campaign.querySelector(".panel-duration");
+    let panelImage = campaign.querySelector(".slideshow-image");
+    let videoPlayer = campaign.querySelector(".video-player");
+
+    panelTitle.textContent = campaignName;
+    panelGoal.textContent = "Objetivo: " + campaignGoal;
+    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
+
+    if (campaignImages.length > 0) {
+        let imageURL = URL.createObjectURL(campaignImages[0]);
+        panelImage.src = imageURL;
+    }
+
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        videoPlayer.src = videoURL;
+        videoPlayer.load();
+    }
+}
+
+// 🔄 Função para finalizar a campanha corretamente
+function finalizarCampanha(campaign) {
+    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+    
+    if (confirmFinalize) {
+        campaign.querySelector("input[type='text']").setAttribute("disabled", "true");
+        campaign.querySelector("input[type='number']").setAttribute("disabled", "true");
+
+        campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        campaign.querySelector("#crypto-table").style.pointerEvents = "none";
+
+        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 document.getElementById("finalize-button").addEventListener("click", function() {
     let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
