@@ -1,11 +1,6 @@
 
 
 
-document.getElementById("crypto-select").addEventListener("click", function() {
-    console.log("Botão clicado!");
-});
-
-
 
 
 document.getElementById("finalize-button").addEventListener("click", function() {
