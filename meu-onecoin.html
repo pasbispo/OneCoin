@@ -91,17 +91,25 @@
     <p id="panel-goal">Objetivo: [Texto aparece aqui]</p>
 
     <h3>Criptomoedas Selecionadas</h3>
-    <table class="crypto-panel-table">
-        <thead>
-            <tr>
-                <th>Criptomoeda</th>
-                <th>Rede</th>
-                <th>Endereço</th>
-                <th>Copiar</th>
-            </tr>
-        </thead>
-        <tbody></tbody> <!-- ✅ Aqui será preenchido dinamicamente -->
-    </table>
+
+<!-- 🔹 Adicionando o campo de busca -->
+<div class="crypto-search-container">
+    <label for="crypto-search">Buscar Criptomoeda:</label>
+    <input type="text" id="crypto-search" placeholder="Digite o nome da criptomoeda">
+</div>
+
+<table class="crypto-panel-table">
+    <thead>
+        <tr>
+            <th>Criptomoeda</th>
+            <th>Rede</th>
+            <th>Endereço</th>
+            <th>Copiar</th>
+        </tr>
+    </thead>
+    <tbody></tbody> <!-- ✅ Aqui será preenchido dinamicamente -->
+</table>
+
 
     </section>
 
