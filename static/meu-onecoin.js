@@ -1,19 +1,22 @@
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container");
-    let originalCampaign = document.querySelector(".container");
+    let campaignsContainer = document.getElementById("campaigns-container"); // Certifica que estamos adicionando no container correto
+    let originalCampaign = document.querySelector(".container"); // Obtém a estrutura original da campanha
 
     if (originalCampaign) {
         let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha (esquerda e direita)
 
-        // ✅ Remove valores anteriores nos campos clonados
+        // 🔄 Remove IDs duplicados para evitar conflitos
+        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+
+        // ✅ Limpa valores anteriores nos campos clonados para que o usuário preencha
         newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
         newCampaign.querySelector("img").src = "#";
         newCampaign.querySelector("video").src = "";
 
         // ✅ Adiciona funcionalidade aos botões na nova campanha
-        let updateButton = newCampaign.querySelector(".update-button");
-        let finalizeButton = newCampaign.querySelector(".finalize-button");
-        let deleteButton = newCampaign.querySelector(".delete-campaign-button");
+        let updateButton = newCampaign.querySelector(".btn-primary.update-button");
+        let finalizeButton = newCampaign.querySelector(".btn-secondary.finalize-button");
+        let deleteButton = newCampaign.querySelector(".btn-secondary.delete-campaign-button");
 
         if (updateButton) {
             updateButton.addEventListener("click", function() {
@@ -49,6 +52,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
         console.error("Erro: Estrutura de campanha não encontrada!");
     }
 });
+
 
 
 // 🔄 Função para atualizar a campanha corretamente
