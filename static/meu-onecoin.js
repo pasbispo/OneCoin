@@ -1,17 +1,38 @@
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Agora o elemento existe no HTML
-    let originalCampaign = document.querySelector(".container"); // Obtém a estrutura original da campanha
+    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Certifica que estamos adicionando no container correto
+    let originalCampaign = document.querySelector(".container"); // ✅ Obtém a estrutura original da campanha
 
     if (campaignsContainer && originalCampaign) {
         let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha (esquerda e direita)
 
-        // ✅ Remove IDs duplicados para evitar conflitos
+        // 🔄 Remove IDs duplicados para evitar conflitos
         newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // ✅ Limpa valores anteriores nos campos clonados
+        // ✅ Limpa valores anteriores nos campos clonados para que o usuário preencha
         newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
         newCampaign.querySelector("img").src = "#";
         newCampaign.querySelector("video").src = "";
+
+        // 🔄 Adiciona novos botões únicos para cada campanha
+        let updateButton = newCampaign.querySelector(".btn-primary.update-button");
+        let finalizeButton = newCampaign.querySelector(".btn-secondary.finalize-button");
+        let deleteButton = newCampaign.querySelector(".btn-secondary.delete-campaign-button");
+
+        if (updateButton) {
+            updateButton.addEventListener("click", function() {
+                atualizarCampanha(newCampaign);
+            });
+        }
+        if (finalizeButton) {
+            finalizeButton.addEventListener("click", function() {
+                finalizarCampanha(newCampaign);
+            });
+        }
+        if (deleteButton) {
+            deleteButton.addEventListener("click", function() {
+                newCampaign.remove();
+            });
+        }
 
         // 🏆 Adiciona linha separadora antes da nova campanha
         let divider = document.createElement("hr");
