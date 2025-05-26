@@ -2,21 +2,18 @@ document.getElementById("finalize-button").addEventListener("click", function() 
     let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
     if (confirmFinalize) {
-        // 🔒 Bloqueia Nome da Campanha, Período e Tabela de Criptomoedas
-        document.getElementById("campaign-name").setAttribute("disabled", "true");
-        document.getElementById("campaign-period").setAttribute("disabled", "true");
+        let campaignName = document.getElementById("campaign-name");
+        let campaignPeriod = document.getElementById("campaign-period");
+        let cryptoTable = document.getElementById("crypto-table");
+
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
         document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
             element.setAttribute("disabled", "true");
         });
 
-        document.getElementById("crypto-table").style.pointerEvents = "none"; // 🔒 Bloqueia interações com a tabela
-        document.getElementById("crypto-table").setAttribute("disabled", "true"); // ✅ Impede alterações diretas
-
-        // 🔓 Mantém apenas os campos editáveis disponíveis
-        document.getElementById("campaign-images").removeAttribute("disabled");
-        document.getElementById("campaign-goal").removeAttribute("disabled");
-        document.getElementById("video-file").removeAttribute("disabled");
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none"; // 🔒 Bloqueia interações com a tabela
 
         alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
     } else {
@@ -38,37 +35,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Certifica que o container está correto
+    let campaignsContainer = document.getElementById("campaigns-container"); 
+    let originalCampaign = document.querySelector(".container");
 
-    // 🏆 Clona a estrutura da campanha original
-    let originalCampaign = document.querySelector(".container"); 
-    let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha (esquerda e direita)
+    if (originalCampaign) {
+        let newCampaign = originalCampaign.cloneNode(true);
 
-    // 🔄 Remove IDs duplicados para evitar conflitos
-    newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+        // 🔄 Remove IDs duplicados para evitar conflitos
+        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-    // ✅ Remove valores anteriores nos campos clonados
-    newCampaign.querySelector("#campaign-name").value = "";
-    newCampaign.querySelector("#campaign-period").value = "";
-    newCampaign.querySelector("#campaign-goal").value = "";
+        // ✅ Limpa valores anteriores nos campos clonados
+        newCampaign.querySelector("input[type='text']").value = "";
+        newCampaign.querySelector("input[type='number']").value = "";
+        newCampaign.querySelector("textarea").value = "";
+        newCampaign.querySelector("img").src = "#";
+        newCampaign.querySelector("video").src = "";
 
-    // 🏆 Adiciona uma linha separadora antes da nova campanha
-    let divider = document.createElement("hr");
-    divider.classList.add("campaign-divider");
+        // 🏆 Adiciona linha separadora antes da nova campanha
+        let divider = document.createElement("hr");
+        divider.classList.add("campaign-divider");
 
-    let label = document.createElement("p");
-    label.classList.add("new-campaign-label");
-    label.textContent = "Nova Campanha";
+        let label = document.createElement("p");
+        label.classList.add("new-campaign-label");
+        label.textContent = "Nova Campanha";
 
-    // 🏆 Adiciona a nova campanha abaixo da linha separadora
-    campaignsContainer.appendChild(divider);
-    campaignsContainer.appendChild(label);
-    campaignsContainer.appendChild(newCampaign);
+        // 🏆 Adiciona a nova campanha abaixo da linha separadora
+        campaignsContainer.appendChild(divider);
+        campaignsContainer.appendChild(label);
+        campaignsContainer.appendChild(newCampaign);
 
-    alert("Nova campanha adicionada!");
+        alert("Nova campanha adicionada!");
+    } else {
+        console.error("Erro: Estrutura de campanha não encontrada!");
+    }
 });
+
 
 
 
