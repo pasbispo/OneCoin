@@ -50,7 +50,7 @@
 
         <div class="form-group">
             <label for="campaign-goal">Objetivo da Campanha:</label>
-            <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 544 palavras)"></textarea>
+            <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 555 palavras)"></textarea>
         </div>      
 
 <div class="form-group">
@@ -58,17 +58,24 @@
     <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
 </div>
 
+<h3>Criptomoedas Selecionadas</h3>
 
-<table id="crypto-table">
+<!-- 🔹 Adicionando o campo de busca -->
+<div class="crypto-search-container">
+    <label for="crypto-search">Buscar Criptomoeda:</label>
+    <input type="text" id="crypto-search" placeholder="Digite o nome da criptomoeda">
+</div>
+
+<table class="crypto-panel-table">
     <thead>
         <tr>
-            <th>Símbolo</th>
-            <th>Quantidade</th>
-            <th>Valor Estimado</th>
-            <th>Ações</th>
+            <th>Criptomoeda</th>
+            <th>Rede</th>
+            <th>Endereço</th>
+            <th>Copiar</th>
         </tr>
     </thead>
-    <tbody></tbody> <!-- ✅ Agora a tabela pode receber dados dinamicamente -->
+    <tbody></tbody> <!-- ✅ Aqui será preenchido dinamicamente -->
 </table>
 
 
