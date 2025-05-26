@@ -150,41 +150,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); 
-    let originalCampaign = document.querySelector(".container");
 
-    if (originalCampaign) {
-        let newCampaign = originalCampaign.cloneNode(true);
 
-        // 🔄 Remove IDs duplicados para evitar conflitos
-        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // ✅ Limpa valores anteriores nos campos clonados
-        newCampaign.querySelector("input[type='text']").value = "";
-        newCampaign.querySelector("input[type='number']").value = "";
-        newCampaign.querySelector("textarea").value = "";
-        newCampaign.querySelector("img").src = "#";
-        newCampaign.querySelector("video").src = "";
-
-        // 🏆 Adiciona linha separadora antes da nova campanha
-        let divider = document.createElement("hr");
-        divider.classList.add("campaign-divider");
-
-        let label = document.createElement("p");
-        label.classList.add("new-campaign-label");
-        label.textContent = "Nova Campanha";
-
-        // 🏆 Adiciona a nova campanha abaixo da linha separadora
-        campaignsContainer.appendChild(divider);
-        campaignsContainer.appendChild(label);
-        campaignsContainer.appendChild(newCampaign);
-
-        alert("Nova campanha adicionada!");
-    } else {
-        console.error("Erro: Estrutura de campanha não encontrada!");
-    }
-});
 
 
 
