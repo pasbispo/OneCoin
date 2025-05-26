@@ -1,3 +1,13 @@
+
+
+
+document.getElementById("crypto-select").addEventListener("click", function() {
+    console.log("Botão clicado!");
+});
+
+
+
+
 document.getElementById("finalize-button").addEventListener("click", function() {
     let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
