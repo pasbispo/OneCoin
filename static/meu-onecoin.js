@@ -26,6 +26,17 @@ document.getElementById("finalize-button").addEventListener("click", function() 
 
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    let campaignName = document.getElementById("campaign-name");
+
+    if (campaignName) {
+        campaignName.value = "Nova campanha!";
+    } else {
+        console.error("Erro: O elemento 'campaign-name' não foi encontrado!");
+    }
+});
+
+
 
 
 document.getElementById("new-campaign-button").addEventListener("click", function() {
