@@ -1,3 +1,115 @@
+document.getElementById("new-campaign-button").addEventListener("click", function () {
+    let campaignsContainer = document.getElementById("campaigns-container");
+    let originalCampaign = document.querySelector(".container");
+
+    if (campaignsContainer && originalCampaign) {
+        let campaignId = `campaign-${Date.now()}`;
+        let newCampaignWrapper = document.createElement("div");
+        newCampaignWrapper.classList.add("campaign-instance");
+        newCampaignWrapper.dataset.id = campaignId; 
+
+        let newCampaign = originalCampaign.cloneNode(true);
+        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id")); // Remove IDs duplicados
+
+        let buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+
+        // ✅ Botões individuais para cada campanha
+        let updateBtn = document.createElement("button");
+        updateBtn.textContent = "Atualizar";
+        updateBtn.classList.add("btn-primary");
+        updateBtn.addEventListener("click", function () {
+            updateCampaignData(newCampaign);
+        });
+
+        let finalizeBtn = document.createElement("button");
+        finalizeBtn.textContent = "Finalizar";
+        finalizeBtn.classList.add("btn-secondary");
+        finalizeBtn.addEventListener("click", function () {
+            finalizarCampanha(newCampaign);
+        });
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Excluir";
+        deleteBtn.classList.add("btn-secondary");
+        deleteBtn.addEventListener("click", function () {
+            newCampaignWrapper.remove();
+        });
+
+        buttonContainer.appendChild(updateBtn);
+        buttonContainer.appendChild(finalizeBtn);
+        buttonContainer.appendChild(deleteBtn);
+
+        newCampaignWrapper.appendChild(newCampaign);
+        newCampaignWrapper.appendChild(buttonContainer);
+
+        campaignsContainer.appendChild(newCampaignWrapper);
+
+        alert("Nova campanha adicionada!");
+    } else {
+        console.error("Erro: Estrutura da campanha não encontrada!");
+    }
+});
+
+
+
+
+
+
+
+
+function updateCampaignData(campaign) {
+    let campaignName = campaign.querySelector("input[type='text']").value;
+    let campaignGoal = campaign.querySelector("textarea").value;
+    let campaignPeriod = campaign.querySelector("input[type='number']").value;
+    let campaignImages = campaign.querySelector("input[type='file']").files;
+    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
+
+    let panelTitle = campaign.querySelector(".panel-title");
+    let panelGoal = campaign.querySelector(".panel-goal");
+    let panelDuration = campaign.querySelector(".panel-duration");
+    let panelImage = campaign.querySelector(".slideshow-image");
+    let videoPlayer = campaign.querySelector(".video-player");
+
+    panelTitle.textContent = campaignName;
+    panelGoal.textContent = "Objetivo: " + campaignGoal;
+    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
+
+    if (campaignImages.length > 0) {
+        let imageURL = URL.createObjectURL(campaignImages[0]);
+        panelImage.src = imageURL;
+    }
+
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        videoPlayer.src = videoURL;
+        videoPlayer.load();
+    }
+
+    alert(`Campanha "${campaignName}" foi atualizada!`);
+}
+
+
+
+function finalizarCampanha(campaign) {
+    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+    
+    if (confirmFinalize) {
+        campaign.querySelector("input[type='text']").setAttribute("disabled", "true");
+        campaign.querySelector("input[type='number']").setAttribute("disabled", "true");
+
+        campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        campaign.querySelector("#crypto-table").style.pointerEvents = "none";
+
+        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+    }
+}
+
+
+
 
 
 
