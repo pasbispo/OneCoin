@@ -9,7 +9,6 @@
 
 
 
-
 document.getElementById("new-campaign-button").addEventListener("click", function () {
     let campaignsContainer = document.getElementById("campaigns-container");
     let originalCampaign = document.querySelector(".container");
@@ -27,13 +26,6 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
         buttonContainer.classList.add("button-container");
 
         // ✅ Botões individuais para cada campanha
-        let updateBtn = document.createElement("button");
-        updateBtn.textContent = "Atualizar";
-        updateBtn.classList.add("btn-primary");
-        updateBtn.addEventListener("click", function () {
-            updateCampaignData(newCampaignWrapper);
-        });
-
         let finalizeBtn = document.createElement("button");
         finalizeBtn.textContent = "Finalizar";
         finalizeBtn.classList.add("btn-secondary");
@@ -41,20 +33,9 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
             finalizarCampanha(newCampaignWrapper);
         });
 
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.classList.add("btn-secondary");
-        deleteBtn.addEventListener("click", function () {
-            newCampaignWrapper.remove();
-        });
-
-        buttonContainer.appendChild(updateBtn);
         buttonContainer.appendChild(finalizeBtn);
-        buttonContainer.appendChild(deleteBtn);
-
         newCampaignWrapper.appendChild(newCampaign);
         newCampaignWrapper.appendChild(buttonContainer);
-
         campaignsContainer.appendChild(newCampaignWrapper);
 
         alert("Nova campanha adicionada!");
@@ -95,6 +76,8 @@ function updateCampaignData(campaignWrapper) {
 
     alert(`Campanha "${campaignName}" foi atualizada!`);
 }
+
+
 function finalizarCampanha(campaignWrapper) {
     let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
@@ -106,7 +89,7 @@ function finalizarCampanha(campaignWrapper) {
             return;
         }
 
-        // ✅ Bloqueia apenas os campos da campanha atual
+        // ✅ Bloqueia apenas os campos da campanha específica
         let campaignName = campaign.querySelector("input[type='text']");
         let campaignPeriod = campaign.querySelector("input[type='number']");
         let cryptoTable = campaign.querySelector("#crypto-table");
@@ -114,7 +97,7 @@ function finalizarCampanha(campaignWrapper) {
         if (campaignName) campaignName.setAttribute("disabled", "true");
         if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
-        campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+        campaign.querySelectorAll("input, textarea, button").forEach(element => {
             element.setAttribute("disabled", "true");
         });
 
@@ -126,6 +109,19 @@ function finalizarCampanha(campaignWrapper) {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    let firstCampaignWrapper = document.querySelector(".campaign-instance"); // Captura a primeira campanha já existente
+
+    if (firstCampaignWrapper) {
+        let firstFinalizeBtn = firstCampaignWrapper.querySelector(".btn-secondary");
+
+        if (firstFinalizeBtn) {
+            firstFinalizeBtn.addEventListener("click", function () {
+                finalizarCampanha(firstCampaignWrapper);
+            });
+        }
+    }
+});
 
 
 
