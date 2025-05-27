@@ -1,50 +1,14 @@
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Certifica que estamos adicionando no local correto
-    let originalCampaign = document.querySelector(".container"); // ✅ Obtém a estrutura original da campanha
+    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Local onde novas campanhas serão adicionadas
+    let originalCampaign = document.querySelector(".container"); // ✅ Captura toda a campanha atual
 
     if (campaignsContainer && originalCampaign) {
-        let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia toda a campanha (lado esquerdo e direito)
+        let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia tudo exatamente como está (esquerda e direita)
 
-        // 🔄 Remove IDs duplicados para evitar conflitos entre campanhas
+        // 🔄 Remove os IDs duplicados para evitar conflitos
         newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // 🔄 Limpa os valores anteriores nos campos clonados para que o usuário possa preencher
-        newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
-        newCampaign.querySelector("img").src = "#";
-        newCampaign.querySelector("video").src = "";
-
-        // ✅ Ajusta os botões para funcionarem separadamente em cada campanha
-        let updateButton = newCampaign.querySelector(".btn-primary");
-        let finalizeButton = newCampaign.querySelector(".btn-secondary.finalize-button");
-        let deleteButton = newCampaign.querySelector(".btn-secondary.delete-campaign-button");
-
-        if (updateButton) {
-            updateButton.addEventListener("click", function() {
-                atualizarCampanha(newCampaign);
-            });
-        }
-        if (finalizeButton) {
-            finalizeButton.addEventListener("click", function() {
-                finalizarCampanha(newCampaign);
-            });
-        }
-        if (deleteButton) {
-            deleteButton.addEventListener("click", function() {
-                newCampaign.remove();
-            });
-        }
-
-        // 🏆 Adiciona linha separadora antes da nova campanha
-        let divider = document.createElement("hr");
-        divider.classList.add("campaign-divider");
-
-        let label = document.createElement("p");
-        label.classList.add("new-campaign-label");
-        label.textContent = "Nova Campanha";
-
-        // 🏆 Adiciona a nova campanha abaixo da linha separadora
-        campaignsContainer.appendChild(divider);
-        campaignsContainer.appendChild(label);
+        // 🏆 Adiciona a nova campanha abaixo da anterior
         campaignsContainer.appendChild(newCampaign);
 
         alert("Nova campanha adicionada!");
@@ -52,6 +16,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
         console.error("Erro: Estrutura de campanha não encontrada!");
     }
 });
+
 
 
 // 🔄 Função para atualizar a campanha corretamente
