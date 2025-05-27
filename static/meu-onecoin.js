@@ -1,6 +1,6 @@
 document.querySelectorAll(".finalize-button").forEach(button => {
     button.addEventListener("click", function() {
-        let campaign = button.closest(".container"); // 🏆 Obtém a campanha específica
+        let campaign = button.closest(".campaign-wrapper"); // 🏆 Obtém a campanha específica
         let campaignId = campaign.dataset.id || Date.now(); // 🔥 Define um identificador único
         
         let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
@@ -28,8 +28,12 @@ document.querySelectorAll(".finalize-button").forEach(button => {
     });
 });
 
+
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".container").forEach(campaign => {
+    document.querySelectorAll(".campaign-wrapper").forEach(campaign => {
         let campaignId = campaign.dataset.id;
         let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
 
@@ -51,9 +55,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+
+
+
 document.querySelectorAll(".delete-campaign-button").forEach(button => {
     button.addEventListener("click", function() {
-        let campaign = button.closest(".container"); // 🏆 Obtém a campanha específica
+        let campaign = button.closest(".campaign-wrapper"); // 🏆 Obtém a campanha específica
         let campaignId = campaign.dataset.id;
 
         // 🔥 Remover estado finalizado apenas daquela campanha
@@ -65,6 +73,7 @@ document.querySelectorAll(".delete-campaign-button").forEach(button => {
         alert("Campanha excluída!");
     });
 });
+
 
 
 
