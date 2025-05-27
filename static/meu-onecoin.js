@@ -1,112 +1,91 @@
-document.getElementById("new-campaign-button").addEventListener("click", function () {
-    let campaignsContainer = document.getElementById("campaigns-container");
-    let originalCampaign = document.querySelector(".container");
+document.getElementById("new-campaign-button").addEventListener("click", function() {
+    let campaignsContainer = document.getElementById("campaigns-container"); 
+    let originalCampaign = document.querySelector(".campaign-wrapper"); 
 
     if (campaignsContainer && originalCampaign) {
-        let campaignId = `campaign-${Date.now()}`;
-        let newCampaignWrapper = document.createElement("div");
-        newCampaignWrapper.classList.add("campaign-instance");
-        newCampaignWrapper.dataset.id = campaignId; 
+        let campaignId = `campaign-${Date.now()}`; // 🔥 Criar identificador único
 
-        let newCampaign = originalCampaign.cloneNode(true);
-        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id")); // Remove IDs duplicados
+        let newCampaignWrapper = originalCampaign.cloneNode(true); 
+        newCampaignWrapper.dataset.id = campaignId; // 🔥 Aplicar identificador
 
-        let buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("button-container");
+        newCampaignWrapper.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // ✅ Botões individuais para cada campanha
-        let updateBtn = document.createElement("button");
-        updateBtn.textContent = "Atualizar";
-        updateBtn.classList.add("btn-primary");
-        updateBtn.addEventListener("click", function () {
-            updateCampaignData(newCampaign);
-        });
+        newCampaignWrapper.querySelectorAll("input, textarea").forEach(el => el.value = "");
+        newCampaignWrapper.querySelector("img").src = "#";
+        newCampaignWrapper.querySelector("video").src = "";
 
-        let finalizeBtn = document.createElement("button");
-        finalizeBtn.textContent = "Finalizar";
-        finalizeBtn.classList.add("btn-secondary");
-        finalizeBtn.addEventListener("click", function () {
-            finalizarCampanha(newCampaign);
-        });
+        adicionarEventosCampanha(newCampaignWrapper, campaignId); // ✅ Aplicar eventos corretos
 
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.classList.add("btn-secondary");
-        deleteBtn.addEventListener("click", function () {
-            newCampaignWrapper.remove();
-        });
+        let divider = document.createElement("hr");
+        divider.classList.add("campaign-divider");
 
-        buttonContainer.appendChild(updateBtn);
-        buttonContainer.appendChild(finalizeBtn);
-        buttonContainer.appendChild(deleteBtn);
-
-        newCampaignWrapper.appendChild(newCampaign);
-        newCampaignWrapper.appendChild(buttonContainer);
-
+        campaignsContainer.appendChild(divider);
         campaignsContainer.appendChild(newCampaignWrapper);
 
         alert("Nova campanha adicionada!");
     } else {
-        console.error("Erro: Estrutura da campanha não encontrada!");
+        console.error("Erro: Estrutura de campanha não encontrada!");
     }
+});
+
+// 🔥 Aplicar eventos corretamente a cada campanha clonada
+function adicionarEventosCampanha(campaign, campaignId) {
+    let finalizeButton = campaign.querySelector(".finalize-button");
+    let deleteButton = campaign.querySelector(".delete-campaign-button");
+
+    if (finalizeButton) {
+        finalizeButton.addEventListener("click", function () {
+            let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+
+            if (confirmFinalize) {
+                bloquearCamposCampanha(campaign);
+                localStorage.setItem(`campaignFinalized-${campaignId}`, "true");
+                alert(`Campanha ${campaignId} finalizada!`);
+            }
+        });
+    }
+
+    if (deleteButton) {
+        deleteButton.addEventListener("click", function () {
+            localStorage.removeItem(`campaignFinalized-${campaignId}`);
+            campaign.remove();
+            alert(`Campanha ${campaignId} excluída!`);
+        });
+    }
+}
+
+// ✅ Garantir que só a campanha individual seja bloqueada
+function bloquearCamposCampanha(campaign) {
+    let campaignName = campaign.querySelector("#campaign-name");
+    let campaignPeriod = campaign.querySelector("#campaign-period");
+    let cryptoTable = campaign.querySelector("#crypto-table");
+
+    if (campaignName) campaignName.setAttribute("disabled", "true");
+    if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+
+    campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+        element.setAttribute("disabled", "true");
+    });
+
+    if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+}
+
+// 🔥 Manter o estado das campanhas ao recarregar a página
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".campaign-wrapper").forEach(campaign => {
+        let campaignId = campaign.dataset.id;
+        let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
+
+        if (isFinalized === "true") {
+            bloquearCamposCampanha(campaign);
+            console.log(`Campanha ${campaignId} bloqueada após recarregar.`);
+        }
+    });
 });
 
 
 
 
-
-
-
-
-function updateCampaignData(campaign) {
-    let campaignName = campaign.querySelector("input[type='text']").value;
-    let campaignGoal = campaign.querySelector("textarea").value;
-    let campaignPeriod = campaign.querySelector("input[type='number']").value;
-    let campaignImages = campaign.querySelector("input[type='file']").files;
-    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
-
-    let panelTitle = campaign.querySelector(".panel-title");
-    let panelGoal = campaign.querySelector(".panel-goal");
-    let panelDuration = campaign.querySelector(".panel-duration");
-    let panelImage = campaign.querySelector(".slideshow-image");
-    let videoPlayer = campaign.querySelector(".video-player");
-
-    panelTitle.textContent = campaignName;
-    panelGoal.textContent = "Objetivo: " + campaignGoal;
-    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
-
-    if (campaignImages.length > 0) {
-        let imageURL = URL.createObjectURL(campaignImages[0]);
-        panelImage.src = imageURL;
-    }
-
-    if (campaignVideo) {
-        let videoURL = URL.createObjectURL(campaignVideo);
-        videoPlayer.src = videoURL;
-        videoPlayer.load();
-    }
-
-    alert(`Campanha "${campaignName}" foi atualizada!`);
-}
-
-
-
-function finalizarCampanha(campaign) {
-    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
-    
-    if (confirmFinalize) {
-        campaign.querySelector("input[type='text']").setAttribute("disabled", "true");
-        campaign.querySelector("input[type='number']").setAttribute("disabled", "true");
-
-        campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-            element.setAttribute("disabled", "true");
-        });
-
-        campaign.querySelector("#crypto-table").style.pointerEvents = "none";
-
-        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
-    }
-}
 
 
 
@@ -477,24 +456,15 @@ function expandVideo() {
 
 
 function updatePeriod() {
-    let periodInput = document.getElementById("campaign-period").value;
+    let campaignPeriod = document.getElementById("campaign-period");
     let panelDuration = document.getElementById("panel-duration");
 
-    let totalDays = parseInt(periodInput, 10);
-
-    if (!isNaN(totalDays) && totalDays > 0) {
-        panelDuration.textContent = `Período: ${totalDays} dias`;
-
-        let threshold = Math.max(Math.floor(totalDays * 0.2), 3); // 🔥 Garante que não seja zero ou muito baixo
-
-        if (totalDays <= threshold) {
-            panelDuration.style.color = "red";
-        } else {
-            panelDuration.style.color = "green";
-        }
+    if (campaignPeriod && panelDuration) {
+        panelDuration.textContent = `Período: ${campaignPeriod.value} dias`;
+    } else {
+        console.error("Erro: Elementos não encontrados!");
     }
 }
-
 
 
 
@@ -632,6 +602,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+// ✅ Função para abrir o modal de redes
 function openNetworkModal(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
@@ -642,48 +613,44 @@ function openNetworkModal(cryptoName) {
         <table>
             <tr><th>Rede</th><th>Endereço</th></tr>
             <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço"></td>
+                <td><input type="text" class="network-input" placeholder="Digite a Rede 1"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o Endereço 1"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="network-input" placeholder="Digite a Rede 2"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o Endereço 2"></td>
+            </tr>
+            <tr>
+                <td><input type="text" class="network-input" placeholder="Digite a Rede 3"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o Endereço 3"></td>
             </tr>
         </table>
-        <button class="add-network-btn">Adicionar Rede</button>
         <button class="save-btn">Salvar</button>
         <button class="close-btn">Fechar</button>
     `;
 
-    let networks = [];
-    let addresses = [];
+    networkForm.querySelector(".save-btn").addEventListener("click", function() {
+        let networks = document.querySelectorAll(".network-input");
+        let addresses = document.querySelectorAll(".address-input");
 
-    networkForm.querySelector(".add-network-btn").addEventListener("click", function() {
-        let networkInputs = document.querySelectorAll(".network-input");
-        let addressInputs = document.querySelectorAll(".address-input");
+        let networkData = [];
+        for (let i = 0; i < networks.length; i++) {
+            let network = networks[i].value.trim();
+            let address = addresses[i].value.trim();
 
-        let network = networkInputs[networkInputs.length - 1].value.trim();
-        let address = addressInputs[addressInputs.length - 1].value.trim();
+            if (!network || !address) {
+                alert("Preencha todas as redes e endereços!");
+                return;
+            }
 
-        if (!network || !address) {
-            alert("Preencha todos os campos antes de adicionar.");
-            return;
+            networkData.push({ rede: network, endereco: address });
         }
 
-        networks.push(network);
-        addresses.push(address);
-
-        let newRow = document.createElement("tr");
-        newRow.innerHTML = `
-            <td><input type="text" class="network-input" value="${network}" disabled></td>
-            <td><input type="text" class="address-input" value="${address}" disabled></td>
-        `;
-        networkForm.querySelector("table").appendChild(newRow);
-    });
-
-    networkForm.querySelector(".save-btn").addEventListener("click", function() {
         let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
         let crypto = selectedCryptos.find(c => c.name === cryptoName);
-        
         if (crypto) {
-            crypto.networks = networks;
-            crypto.addresses = addresses;
+            crypto.networks = networkData.map(n => n.rede);
+            crypto.addresses = networkData.map(n => n.endereco);
             localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
         }
 
@@ -697,7 +664,6 @@ function openNetworkModal(cryptoName) {
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
-
 
 
 // ✅ Função para remover criptomoeda do `localStorage`
@@ -790,11 +756,9 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
     let selectedCrypto = selectedCryptos.find(c => c.name === cryptoName);
-
-    if (!selectedCrypto || !selectedCrypto.networks || !selectedCrypto.addresses) {
-        alert("Nenhuma rede cadastrada para essa criptomoeda.");
-        return;
-    }
+    
+    let networks = selectedCrypto?.networks || [];
+    let addresses = selectedCrypto?.addresses || [];
 
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
@@ -804,16 +768,21 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
     `;
 
     let networkOptions = networkForm.querySelector("#network-options");
-    selectedCrypto.networks.forEach((network, index) => {
-        let btn = document.createElement("button");
-        btn.textContent = network;
-        btn.classList.add("network-option");
-        btn.addEventListener("click", function() {
-            addressCell.textContent = selectedCrypto.addresses[index]; 
-            modal.remove();
+
+    if (networks.length === 0 || addresses.length === 0) {
+        networkOptions.innerHTML = "<p>As redes e endereços não foram cadastrados.</p>";
+    } else {
+        networks.forEach((network, index) => {
+            let btn = document.createElement("button");
+            btn.textContent = network;
+            btn.classList.add("network-option");
+            btn.addEventListener("click", function() {
+                addressCell.textContent = addresses[index]; 
+                modal.remove();
+            });
+            networkOptions.appendChild(btn);
         });
-        networkOptions.appendChild(btn);
-    });
+    }
 
     networkForm.querySelector(".close-btn").addEventListener("click", function() {
         modal.remove();
@@ -822,7 +791,6 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
-
 
 
 
