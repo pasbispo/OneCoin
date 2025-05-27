@@ -1,12 +1,21 @@
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Local onde novas campanhas serão adicionadas
-    let originalCampaign = document.querySelector(".container"); // ✅ Captura toda a campanha atual
+    let campaignsContainer = document.getElementById("campaigns-container"); // 🏆 Local onde novas campanhas serão adicionadas
+    let originalCampaign = document.querySelector(".container"); // 🏆 Captura toda a campanha atual
 
     if (campaignsContainer && originalCampaign) {
-        let newCampaign = originalCampaign.cloneNode(true); // ✅ Copia tudo exatamente como está (esquerda e direita)
+        let newCampaign = originalCampaign.cloneNode(true); // 🔥 Copia tudo exatamente como está (esquerda e direita)
 
         // 🔄 Remove os IDs duplicados para evitar conflitos
         newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+
+        // 🔄 Limpa valores anteriores nos campos clonados para que o usuário possa preencher
+        newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
+        newCampaign.querySelector("img").src = "#";
+        newCampaign.querySelector("video").src = "";
+
+        // 🔥 Mantém a funcionalidade dos botões na nova campanha
+        let buttonsContainer = document.querySelector(".button-container").cloneNode(true); // 🏆 Clona os botões
+        newCampaign.appendChild(buttonsContainer); // 🏆 Adiciona os botões à nova campanha
 
         // 🏆 Adiciona a nova campanha abaixo da anterior
         campaignsContainer.appendChild(newCampaign);
