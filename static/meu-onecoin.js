@@ -456,15 +456,24 @@ function expandVideo() {
 
 
 function updatePeriod() {
-    let campaignPeriod = document.getElementById("campaign-period");
+    let periodInput = document.getElementById("campaign-period").value;
     let panelDuration = document.getElementById("panel-duration");
 
-    if (campaignPeriod && panelDuration) {
-        panelDuration.textContent = `Período: ${campaignPeriod.value} dias`;
-    } else {
-        console.error("Erro: Elementos não encontrados!");
+    let totalDays = parseInt(periodInput, 10);
+
+    if (!isNaN(totalDays) && totalDays > 0) {
+        panelDuration.textContent = `Período: ${totalDays} dias`;
+
+        let threshold = Math.max(Math.floor(totalDays * 0.2), 3); // 🔥 Garante que não seja zero ou muito baixo
+
+        if (totalDays <= threshold) {
+            panelDuration.style.color = "red";
+        } else {
+            panelDuration.style.color = "green";
+        }
     }
 }
+
 
 
 
@@ -602,7 +611,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-// ✅ Função para abrir o modal de redes
 function openNetworkModal(cryptoName) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
@@ -613,44 +621,48 @@ function openNetworkModal(cryptoName) {
         <table>
             <tr><th>Rede</th><th>Endereço</th></tr>
             <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 1"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 2"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 2"></td>
-            </tr>
-            <tr>
-                <td><input type="text" class="network-input" placeholder="Digite a Rede 3"></td>
-                <td><input type="text" class="address-input" placeholder="Digite o Endereço 3"></td>
+                <td><input type="text" class="network-input" placeholder="Digite a Rede"></td>
+                <td><input type="text" class="address-input" placeholder="Digite o Endereço"></td>
             </tr>
         </table>
+        <button class="add-network-btn">Adicionar Rede</button>
         <button class="save-btn">Salvar</button>
         <button class="close-btn">Fechar</button>
     `;
 
-    networkForm.querySelector(".save-btn").addEventListener("click", function() {
-        let networks = document.querySelectorAll(".network-input");
-        let addresses = document.querySelectorAll(".address-input");
+    let networks = [];
+    let addresses = [];
 
-        let networkData = [];
-        for (let i = 0; i < networks.length; i++) {
-            let network = networks[i].value.trim();
-            let address = addresses[i].value.trim();
+    networkForm.querySelector(".add-network-btn").addEventListener("click", function() {
+        let networkInputs = document.querySelectorAll(".network-input");
+        let addressInputs = document.querySelectorAll(".address-input");
 
-            if (!network || !address) {
-                alert("Preencha todas as redes e endereços!");
-                return;
-            }
+        let network = networkInputs[networkInputs.length - 1].value.trim();
+        let address = addressInputs[addressInputs.length - 1].value.trim();
 
-            networkData.push({ rede: network, endereco: address });
+        if (!network || !address) {
+            alert("Preencha todos os campos antes de adicionar.");
+            return;
         }
 
+        networks.push(network);
+        addresses.push(address);
+
+        let newRow = document.createElement("tr");
+        newRow.innerHTML = `
+            <td><input type="text" class="network-input" value="${network}" disabled></td>
+            <td><input type="text" class="address-input" value="${address}" disabled></td>
+        `;
+        networkForm.querySelector("table").appendChild(newRow);
+    });
+
+    networkForm.querySelector(".save-btn").addEventListener("click", function() {
         let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
         let crypto = selectedCryptos.find(c => c.name === cryptoName);
+        
         if (crypto) {
-            crypto.networks = networkData.map(n => n.rede);
-            crypto.addresses = networkData.map(n => n.endereco);
+            crypto.networks = networks;
+            crypto.addresses = addresses;
             localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
         }
 
@@ -664,6 +676,7 @@ function openNetworkModal(cryptoName) {
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
+
 
 
 // ✅ Função para remover criptomoeda do `localStorage`
@@ -756,9 +769,11 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
     let selectedCrypto = selectedCryptos.find(c => c.name === cryptoName);
-    
-    let networks = selectedCrypto?.networks || [];
-    let addresses = selectedCrypto?.addresses || [];
+
+    if (!selectedCrypto || !selectedCrypto.networks || !selectedCrypto.addresses) {
+        alert("Nenhuma rede cadastrada para essa criptomoeda.");
+        return;
+    }
 
     let networkForm = document.createElement("div");
     networkForm.innerHTML = `
@@ -768,21 +783,16 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
     `;
 
     let networkOptions = networkForm.querySelector("#network-options");
-
-    if (networks.length === 0 || addresses.length === 0) {
-        networkOptions.innerHTML = "<p>As redes e endereços não foram cadastrados.</p>";
-    } else {
-        networks.forEach((network, index) => {
-            let btn = document.createElement("button");
-            btn.textContent = network;
-            btn.classList.add("network-option");
-            btn.addEventListener("click", function() {
-                addressCell.textContent = addresses[index]; 
-                modal.remove();
-            });
-            networkOptions.appendChild(btn);
+    selectedCrypto.networks.forEach((network, index) => {
+        let btn = document.createElement("button");
+        btn.textContent = network;
+        btn.classList.add("network-option");
+        btn.addEventListener("click", function() {
+            addressCell.textContent = selectedCrypto.addresses[index]; 
+            modal.remove();
         });
-    }
+        networkOptions.appendChild(btn);
+    });
 
     networkForm.querySelector(".close-btn").addEventListener("click", function() {
         modal.remove();
@@ -791,6 +801,7 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
+
 
 
 
