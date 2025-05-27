@@ -8,24 +8,23 @@
 
 
 
-
 document.getElementById("new-campaign-button").addEventListener("click", function () {
     let campaignsContainer = document.getElementById("campaigns-container");
     let originalCampaign = document.querySelector(".container");
 
     if (campaignsContainer && originalCampaign) {
-        let campaignId = `campaign-${Date.now()}`; // 🔥 Criar identificador único
+        let campaignId = `campaign-${Date.now()}`;
         let newCampaignWrapper = document.createElement("div");
         newCampaignWrapper.classList.add("campaign-instance");
-        newCampaignWrapper.dataset.id = campaignId; // 🔥 Aplicar identificador
+        newCampaignWrapper.dataset.id = campaignId; 
 
         let newCampaign = originalCampaign.cloneNode(true);
-        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id")); // Remove IDs duplicados
+        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id")); 
 
         let buttonContainer = document.createElement("div");
         buttonContainer.classList.add("button-container");
 
-        // ✅ Botões individuais para cada campanha
+        // ✅ Botões exclusivos para cada campanha
         let finalizeBtn = document.createElement("button");
         finalizeBtn.textContent = "Finalizar";
         finalizeBtn.classList.add("btn-secondary");
