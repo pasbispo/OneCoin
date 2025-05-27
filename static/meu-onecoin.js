@@ -101,19 +101,28 @@ function finalizarCampanha(campaignWrapper) {
     if (confirmFinalize) {
         let campaign = campaignWrapper.querySelector(".container");
 
-        campaign.querySelector("input[type='text']").setAttribute("disabled", "true");
-        campaign.querySelector("input[type='number']").setAttribute("disabled", "true");
+        if (!campaign) {
+            console.error("Erro: Estrutura da campanha não encontrada!");
+            return;
+        }
+
+        // ✅ Bloqueia apenas os campos da campanha atual
+        let campaignName = campaign.querySelector("input[type='text']");
+        let campaignPeriod = campaign.querySelector("input[type='number']");
+        let cryptoTable = campaign.querySelector("#crypto-table");
+
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
         campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
             element.setAttribute("disabled", "true");
         });
 
-        campaign.querySelector("#crypto-table").style.pointerEvents = "none";
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 
         alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
     }
 }
-
 
 
 
