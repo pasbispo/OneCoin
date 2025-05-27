@@ -3,37 +3,44 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     let originalCampaign = document.querySelector(".container"); // 🏆 Captura toda a campanha original
 
     if (campaignsContainer && originalCampaign) {
-        let newCampaign = originalCampaign.cloneNode(true); // 🔥 Clona tudo exatamente como está (esquerda e direita)
+        let newCampaignWrapper = document.createElement("div"); // 🏆 Criando um contêiner para a nova campanha
+        newCampaignWrapper.classList.add("campaign-wrapper"); // 🏆 Classe para manter a estrutura intacta
 
-        // 🔄 Remove os IDs duplicados para evitar conflitos
+        let newCampaign = originalCampaign.cloneNode(true); // 🔥 Clona toda a estrutura da campanha
+
+        // 🔄 Remove IDs duplicados para evitar conflitos
         newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // 🔄 Limpa os valores anteriores nos campos clonados para que o usuário preencha
+        // 🔄 Limpa os valores anteriores para que o usuário possa preencher
         newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
         newCampaign.querySelector("img").src = "#";
         newCampaign.querySelector("video").src = "";
 
-        // 🔥 Adiciona evento ao botão "Excluir" para remover toda a campanha
-        let deleteButton = newCampaign.querySelector(".btn-secondary.delete-campaign-button");
-        if (deleteButton) {
-            deleteButton.addEventListener("click", function() {
-                newCampaign.remove(); // 🔥 Agora toda a campanha e seus botões desaparecem juntos!
-            });
-        }
+        // 🔥 Clona os botões corretamente e os vincula à campanha copiada
+        let buttonsContainer = document.querySelector(".button-container").cloneNode(true);
+        
+        // 🔥 Adiciona evento ao botão "Excluir" para remover apenas aquela campanha
+        buttonsContainer.querySelector("#delete-campaign-button").addEventListener("click", function() {
+            newCampaignWrapper.remove(); // 🔥 Agora só a campanha clonada e seus botões desaparecem!
+        });
 
         // 🏆 Adiciona uma linha separadora antes da nova campanha
         let divider = document.createElement("hr");
         divider.classList.add("campaign-divider");
 
-        // 🏆 Adiciona a nova campanha abaixo da anterior
-        campaignsContainer.appendChild(divider);
-        campaignsContainer.appendChild(newCampaign);
+        // 🏆 Estrutura correta para manter os botões abaixo das planilhas
+        newCampaignWrapper.appendChild(divider);
+        newCampaignWrapper.appendChild(newCampaign);
+        newCampaignWrapper.appendChild(buttonsContainer);
+
+        campaignsContainer.appendChild(newCampaignWrapper);
 
         alert("Nova campanha adicionada!");
     } else {
         console.error("Erro: Estrutura de campanha não encontrada!");
     }
 });
+
 
 
 // 🔄 Função para atualizar a campanha corretamente
