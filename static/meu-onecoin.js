@@ -1,23 +1,22 @@
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // Certifica que estamos adicionando no local correto
-    let originalCampaign = document.querySelector(".container"); // Captura toda a campanha original
+    let campaignsContainer = document.getElementById("campaigns-container"); // ✅ Local onde novas campanhas serão adicionadas
+    let originalCampaign = document.querySelector(".container"); // ✅ Captura toda a campanha original
 
     if (campaignsContainer && originalCampaign) {
-        let newCampaign = originalCampaign.cloneNode(true); // Clona toda a campanha (esquerda e direita)
+        let newCampaign = originalCampaign.cloneNode(true); // ✅ Clona tudo, mantendo a estrutura correta
 
         // 🔄 Remove os IDs duplicados para evitar conflitos
         newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // 🔄 Limpa os valores anteriores nos campos clonados para que o usuário preencha
+        // 🔄 Limpa os valores anteriores nos campos clonados
         newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
         newCampaign.querySelector("img").src = "#";
         newCampaign.querySelector("video").src = "";
 
-        // 🔥 Clona a **container dos botões** e garante que eles estejam no lugar correto
-        let buttonsContainer = document.querySelector(".button-container").cloneNode(true);
-        newCampaign.appendChild(buttonsContainer); // Adiciona os botões corretamente
+        // 🏆 Clona os botões corretamente e adiciona abaixo das planilhas
+        let buttonsContainer = document.querySelector(".button-container").cloneNode(true); 
 
-        // ✅ Adiciona eventos para os botões funcionarem separadamente em cada campanha
+        // 🔥 Adiciona eventos aos botões da nova campanha
         buttonsContainer.querySelector("#update-button").addEventListener("click", function() {
             atualizarCampanha(newCampaign);
         });
@@ -30,8 +29,9 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
             newCampaign.remove();
         });
 
-        // 🏆 Adiciona a nova campanha abaixo da anterior
+        // 🏆 Adiciona a nova campanha abaixo da anterior, garantindo que os botões fiquem no local correto
         campaignsContainer.appendChild(newCampaign);
+        campaignsContainer.appendChild(buttonsContainer);
 
         alert("Nova campanha adicionada!");
     } else {
