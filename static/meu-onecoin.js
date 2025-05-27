@@ -1,26 +1,43 @@
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".campaign-wrapper").forEach((campaign, index) => {
-        let campaignId = campaign.dataset.id || `campaign-${index}`;
-        campaign.dataset.id = campaignId;
+document.getElementById("new-campaign-button").addEventListener("click", function() {
+    let campaignsContainer = document.getElementById("campaigns-container"); // 🏆 Local onde novas campanhas serão adicionadas
+    let originalCampaign = document.querySelector(".campaign-wrapper"); // 🏆 Captura toda a estrutura da campanha
 
-        let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
+    if (campaignsContainer && originalCampaign) {
+        let campaignId = `campaign-${Date.now()}`; // 🔥 Define um identificador único para cada campanha
 
-        if (isFinalized === "true") {
-            bloquearCamposCampanha(campaign);
-        }
+        let newCampaignWrapper = originalCampaign.cloneNode(true); // 🏆 Clona a estrutura da campanha
+        newCampaignWrapper.dataset.id = campaignId; // 🔥 Atribui o identificador único
 
-        // 🔥 Adicionar eventos aos botões após a página carregar
-        adicionarEventosCampanha(campaign);
-    });
+        // 🔄 Remove IDs duplicados para evitar conflitos
+        newCampaignWrapper.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+
+        // 🔄 Limpa os valores anteriores para que o usuário possa preencher
+        newCampaignWrapper.querySelectorAll("input, textarea").forEach(el => el.value = "");
+        newCampaignWrapper.querySelector("img").src = "#";
+        newCampaignWrapper.querySelector("video").src = "";
+
+        // 🔥 Adiciona eventos aos botões da nova campanha
+        adicionarEventosCampanha(newCampaignWrapper, campaignId);
+
+        // 🏆 Adiciona a nova campanha abaixo da anterior
+        let divider = document.createElement("hr");
+        divider.classList.add("campaign-divider");
+
+        campaignsContainer.appendChild(divider);
+        campaignsContainer.appendChild(newCampaignWrapper);
+
+        alert("Nova campanha adicionada!");
+    } else {
+        console.error("Erro: Estrutura de campanha não encontrada!");
+    }
 });
 
-function adicionarEventosCampanha(campaign) {
+function adicionarEventosCampanha(campaign, campaignId) {
     let finalizeButton = campaign.querySelector(".finalize-button");
     let deleteButton = campaign.querySelector(".delete-campaign-button");
 
     if (finalizeButton) {
         finalizeButton.addEventListener("click", function () {
-            let campaignId = campaign.dataset.id;
             let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
 
             if (confirmFinalize) {
@@ -33,7 +50,6 @@ function adicionarEventosCampanha(campaign) {
 
     if (deleteButton) {
         deleteButton.addEventListener("click", function () {
-            let campaignId = campaign.dataset.id;
             localStorage.removeItem(`campaignFinalized-${campaignId}`);
             campaign.remove();
             alert("Campanha excluída!");
