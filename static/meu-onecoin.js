@@ -14,6 +14,104 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
         newCampaignWrapper.querySelector("img").src = "#";
         newCampaignWrapper.querySelector("video").src = "";
 
+        adicionarEventosCampanha(newCampaignWrapper, campaignId); // ✅ Aplicar eventos corretos
+
+        let divider = document.createElement("hr");
+        divider.classList.add("campaign-divider");
+
+        campaignsContainer.appendChild(divider);
+        campaignsContainer.appendChild(newCampaignWrapper);
+
+        alert("Nova campanha adicionada!");
+    } else {
+        console.error("Erro: Estrutura de campanha não encontrada!");
+    }
+});
+
+// 🔥 Aplicar eventos corretamente a cada campanha clonada
+function adicionarEventosCampanha(campaign, campaignId) {
+    let finalizeButton = campaign.querySelector(".finalize-button");
+    let deleteButton = campaign.querySelector(".delete-campaign-button");
+
+    if (finalizeButton) {
+        finalizeButton.addEventListener("click", function () {
+            let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+
+            if (confirmFinalize) {
+                bloquearCamposCampanha(campaign);
+                localStorage.setItem(`campaignFinalized-${campaignId}`, "true");
+                alert(`Campanha ${campaignId} finalizada!`);
+            }
+        });
+    }
+
+    if (deleteButton) {
+        deleteButton.addEventListener("click", function () {
+            localStorage.removeItem(`campaignFinalized-${campaignId}`);
+            campaign.remove();
+            alert(`Campanha ${campaignId} excluída!`);
+        });
+    }
+}
+
+// ✅ Garantir que só a campanha individual seja bloqueada
+function bloquearCamposCampanha(campaign) {
+    let campaignName = campaign.querySelector("#campaign-name");
+    let campaignPeriod = campaign.querySelector("#campaign-period");
+    let cryptoTable = campaign.querySelector("#crypto-table");
+
+    if (campaignName) campaignName.setAttribute("disabled", "true");
+    if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+
+    campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+        element.setAttribute("disabled", "true");
+    });
+
+    if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+}
+
+// 🔥 Manter o estado das campanhas ao recarregar a página
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".campaign-wrapper").forEach(campaign => {
+        let campaignId = campaign.dataset.id;
+        let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
+
+        if (isFinalized === "true") {
+            bloquearCamposCampanha(campaign);
+            console.log(`Campanha ${campaignId} bloqueada após recarregar.`);
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById("new-campaign-button").addEventListener("click", function() {
+    let campaignsContainer = document.getElementById("campaigns-container"); 
+    let originalCampaign = document.querySelector(".campaign-wrapper"); 
+
+    if (campaignsContainer && originalCampaign) {
+        let campaignId = `campaign-${Date.now()}`; // 🔥 Criar identificador único
+
+        let newCampaignWrapper = originalCampaign.cloneNode(true); 
+        newCampaignWrapper.dataset.id = campaignId; // 🔥 Aplicar identificador
+
+        newCampaignWrapper.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
+
+        newCampaignWrapper.querySelectorAll("input, textarea").forEach(el => el.value = "");
+        newCampaignWrapper.querySelector("img").src = "#";
+        newCampaignWrapper.querySelector("video").src = "";
+
         adicionarEventosCampanha(newCampaignWrapper, campaignId); // ✅ Agora cada campanha tem seus eventos próprios
 
         let divider = document.createElement("hr");
