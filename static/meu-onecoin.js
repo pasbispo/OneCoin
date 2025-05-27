@@ -1,68 +1,96 @@
-document.getElementById("new-campaign-button").addEventListener("click", function () {
-    let campaignsContainer = document.getElementById("campaigns-container");
-    let originalCampaign = document.querySelector(".container");
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById("new-campaign-button").addEventListener("click", function() {
+    let campaignsContainer = document.getElementById("campaigns-container"); // 🏆 Local onde novas campanhas serão adicionadas
+    let originalCampaign = document.querySelector(".container"); // 🏆 Captura toda a campanha original
 
     if (campaignsContainer && originalCampaign) {
-        let campaignId = `campaign-${Date.now()}`;
-        let newCampaignWrapper = document.createElement("div");
-        newCampaignWrapper.classList.add("campaign-instance");
-        newCampaignWrapper.dataset.id = campaignId;
+        let newCampaignWrapper = document.createElement("div"); // 🏆 Criando um contêiner para a nova campanha
+        newCampaignWrapper.classList.add("campaign-wrapper"); // 🏆 Classe para manter a estrutura intacta
 
-        let newCampaign = originalCampaign.cloneNode(true);
-        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id")); // Remove IDs duplicados
+        let newCampaign = originalCampaign.cloneNode(true); // 🔥 Clona toda a estrutura da campanha
 
-        let buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("button-container");
+        // 🔄 Remove IDs duplicados para evitar conflitos
+        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // ✅ Botões exclusivos para cada campanha
-        let updateBtn = document.createElement("button");
-        updateBtn.textContent = "Atualizar";
-        updateBtn.classList.add("btn-primary");
-        updateBtn.addEventListener("click", function () {
-            updateCampaignData(newCampaignWrapper); // 🔥 Agora age na campanha específica
+        // 🔄 Limpa os valores anteriores para que o usuário possa preencher
+        newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
+        newCampaign.querySelector("img").src = "#";
+        newCampaign.querySelector("video").src = "";
+
+        // 🔥 Clona os botões corretamente e os vincula à campanha copiada
+        let buttonsContainer = document.querySelector(".button-container").cloneNode(true);
+        
+        // 🔥 Adiciona evento ao botão "Excluir" para remover apenas aquela campanha
+        buttonsContainer.querySelector("#delete-campaign-button").addEventListener("click", function() {
+            newCampaignWrapper.remove(); // 🔥 Agora só a campanha clonada e seus botões desaparecem!
         });
 
-        let finalizeBtn = document.createElement("button");
-        finalizeBtn.textContent = "Finalizar";
-        finalizeBtn.classList.add("btn-secondary");
-        finalizeBtn.addEventListener("click", function () {
-            finalizarCampanha(newCampaignWrapper); // 🔥 Agora age na campanha específica
-        });
+        // 🏆 Adiciona uma linha separadora antes da nova campanha
+        let divider = document.createElement("hr");
+        divider.classList.add("campaign-divider");
 
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.classList.add("btn-secondary");
-        deleteBtn.addEventListener("click", function () {
-            newCampaignWrapper.remove();
-        });
-
-        buttonContainer.appendChild(updateBtn);
-        buttonContainer.appendChild(finalizeBtn);
-        buttonContainer.appendChild(deleteBtn);
-
+        // 🏆 Estrutura correta para manter os botões abaixo das planilhas
+        newCampaignWrapper.appendChild(divider);
         newCampaignWrapper.appendChild(newCampaign);
-        newCampaignWrapper.appendChild(buttonContainer);
+        newCampaignWrapper.appendChild(buttonsContainer);
 
         campaignsContainer.appendChild(newCampaignWrapper);
 
         alert("Nova campanha adicionada!");
     } else {
-        console.error("Erro: Estrutura da campanha não encontrada!");
+        console.error("Erro: Estrutura de campanha não encontrada!");
     }
 });
 
 
 
+// 🔄 Função para atualizar a campanha corretamente
+function atualizarCampanha(campaign) {
+    let campaignName = campaign.querySelector("input[type='text']").value;
+    let campaignGoal = campaign.querySelector("textarea").value;
+    let campaignPeriod = campaign.querySelector("input[type='number']").value;
+    let campaignImages = campaign.querySelector("input[type='file']").files;
+    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
 
+    let panelTitle = campaign.querySelector(".panel-title");
+    let panelGoal = campaign.querySelector(".panel-goal");
+    let panelDuration = campaign.querySelector(".panel-duration");
+    let panelImage = campaign.querySelector(".slideshow-image");
+    let videoPlayer = campaign.querySelector(".video-player");
 
+    panelTitle.textContent = campaignName;
+    panelGoal.textContent = "Objetivo: " + campaignGoal;
+    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
 
+    if (campaignImages.length > 0) {
+        let imageURL = URL.createObjectURL(campaignImages[0]);
+        panelImage.src = imageURL;
+    }
 
-function finalizarCampanha(campaignWrapper) {
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        videoPlayer.src = videoURL;
+        videoPlayer.load();
+    }
+}
+
+// 🔄 Função para finalizar a campanha corretamente
+function finalizarCampanha(campaign) {
     let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
     if (confirmFinalize) {
-        let campaign = campaignWrapper.querySelector(".container");
-
         campaign.querySelector("input[type='text']").setAttribute("disabled", "true");
         campaign.querySelector("input[type='number']").setAttribute("disabled", "true");
 
@@ -75,14 +103,6 @@ function finalizarCampanha(campaignWrapper) {
         alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
     }
 }
-
-
-
-
-
-
-
-
 
 
 
