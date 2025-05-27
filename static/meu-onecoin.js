@@ -1,23 +1,3 @@
-let elemento = document.getElementById("elemento");
-
-if (elemento) {
-    elemento.addEventListener("click", function() {
-        console.log("Evento acionado!");
-    });
-} else {
-    console.error("Erro: O elemento não foi encontrado!");
-}
-document.addEventListener("DOMContentLoaded", function() {
-    let elemento = document.getElementById("elemento");
-
-    if (elemento) {
-        elemento.addEventListener("click", function() {
-            console.log("Evento acionado!");
-        });
-    } else {
-        console.error("Erro: O elemento não foi encontrado!");
-    }
-});
 
 
 
@@ -63,6 +43,41 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     }
 });
 
+
+function updateCampaignData(campaignWrapper) {
+    let campaign = campaignWrapper.querySelector(".container");
+
+    let campaignName = campaign.querySelector("input[type='text']").value;
+    let campaignGoal = campaign.querySelector("textarea").value;
+    let campaignPeriod = campaign.querySelector("input[type='number']").value;
+    let campaignImages = campaign.querySelector("input[type='file']").files;
+    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
+
+    let panelTitle = campaignWrapper.querySelector(".panel-title");
+    let panelGoal = campaignWrapper.querySelector(".panel-goal");
+    let panelDuration = campaignWrapper.querySelector(".panel-duration");
+    let panelImage = campaignWrapper.querySelector(".slideshow-image");
+    let videoPlayer = campaignWrapper.querySelector(".video-player");
+
+    panelTitle.textContent = campaignName;
+    panelGoal.textContent = "Objetivo: " + campaignGoal;
+    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
+
+    if (campaignImages.length > 0) {
+        let imageURL = URL.createObjectURL(campaignImages[0]);
+        panelImage.src = imageURL;
+    }
+
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        videoPlayer.src = videoURL;
+        videoPlayer.load();
+    }
+
+    alert(`Campanha "${campaignName}" foi atualizada!`);
+}
+
+
 function finalizarCampanha(campaignWrapper) {
     let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
@@ -74,7 +89,7 @@ function finalizarCampanha(campaignWrapper) {
             return;
         }
 
-        // ✅ Bloqueia apenas os campos da campanha ativa
+        // ✅ Bloqueia apenas os campos da campanha específica
         let campaignName = campaign.querySelector("input[type='text']");
         let campaignPeriod = campaign.querySelector("input[type='number']");
         let cryptoTable = campaign.querySelector("#crypto-table");
@@ -91,6 +106,7 @@ function finalizarCampanha(campaignWrapper) {
         alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
     }
 }
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
