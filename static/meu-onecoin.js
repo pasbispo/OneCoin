@@ -1,25 +1,21 @@
 document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // 🏆 Local onde novas campanhas serão adicionadas
-    let originalCampaign = document.querySelector(".campaign-wrapper"); // 🏆 Captura toda a estrutura da campanha
+    let campaignsContainer = document.getElementById("campaigns-container"); 
+    let originalCampaign = document.querySelector(".campaign-wrapper"); 
 
     if (campaignsContainer && originalCampaign) {
-        let campaignId = `campaign-${Date.now()}`; // 🔥 Define um identificador único para cada campanha
+        let campaignId = `campaign-${Date.now()}`; // 🔥 Criar identificador único
 
-        let newCampaignWrapper = originalCampaign.cloneNode(true); // 🏆 Clona a estrutura da campanha
-        newCampaignWrapper.dataset.id = campaignId; // 🔥 Atribui o identificador único
+        let newCampaignWrapper = originalCampaign.cloneNode(true); 
+        newCampaignWrapper.dataset.id = campaignId; // 🔥 Aplicar identificador
 
-        // 🔄 Remove IDs duplicados para evitar conflitos
         newCampaignWrapper.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
 
-        // 🔄 Limpa os valores anteriores para que o usuário possa preencher
         newCampaignWrapper.querySelectorAll("input, textarea").forEach(el => el.value = "");
         newCampaignWrapper.querySelector("img").src = "#";
         newCampaignWrapper.querySelector("video").src = "";
 
-        // 🔥 Adiciona eventos aos botões da nova campanha
-        adicionarEventosCampanha(newCampaignWrapper, campaignId);
+        adicionarEventosCampanha(newCampaignWrapper, campaignId); // ✅ Agora cada campanha tem seus eventos próprios
 
-        // 🏆 Adiciona a nova campanha abaixo da anterior
         let divider = document.createElement("hr");
         divider.classList.add("campaign-divider");
 
@@ -32,6 +28,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     }
 });
 
+// 🔥 Aplicar eventos corretamente a cada campanha clonada
 function adicionarEventosCampanha(campaign, campaignId) {
     let finalizeButton = campaign.querySelector(".finalize-button");
     let deleteButton = campaign.querySelector(".delete-campaign-button");
@@ -43,7 +40,7 @@ function adicionarEventosCampanha(campaign, campaignId) {
             if (confirmFinalize) {
                 bloquearCamposCampanha(campaign);
                 localStorage.setItem(`campaignFinalized-${campaignId}`, "true");
-                alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+                alert(`Campanha ${campaignId} finalizada!`);
             }
         });
     }
@@ -52,11 +49,12 @@ function adicionarEventosCampanha(campaign, campaignId) {
         deleteButton.addEventListener("click", function () {
             localStorage.removeItem(`campaignFinalized-${campaignId}`);
             campaign.remove();
-            alert("Campanha excluída!");
+            alert(`Campanha ${campaignId} excluída!`);
         });
     }
 }
 
+// ✅ Garantir que só a campanha individual seja bloqueada
 function bloquearCamposCampanha(campaign) {
     let campaignName = campaign.querySelector("#campaign-name");
     let campaignPeriod = campaign.querySelector("#campaign-period");
@@ -72,18 +70,18 @@ function bloquearCamposCampanha(campaign) {
     if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 }
 
+// 🔥 Garantir que ao recarregar a página, cada campanha mantêm seu estado separadamente
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".campaign-wrapper").forEach(campaign => {
+        let campaignId = campaign.dataset.id;
+        let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
 
-
-
-
-
-
-
-
-
-
-
-
+        if (isFinalized === "true") {
+            bloquearCamposCampanha(campaign);
+            console.log(`Campanha ${campaignId} bloqueada após recarregar.`);
+        }
+    });
+});
 
 
 
