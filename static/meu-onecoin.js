@@ -1,44 +1,54 @@
-document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); // 🏆 Local onde novas campanhas serão adicionadas
-    let originalCampaign = document.querySelector(".container"); // 🏆 Captura toda a campanha original
+document.getElementById("finalize-button").addEventListener("click", function() {
+    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+    
+    if (confirmFinalize) {
+        let campaignName = document.getElementById("campaign-name");
+        let campaignPeriod = document.getElementById("campaign-period");
+        let cryptoTable = document.getElementById("crypto-table");
 
-    if (campaignsContainer && originalCampaign) {
-        let newCampaignWrapper = document.createElement("div"); // 🏆 Criando um contêiner para a nova campanha
-        newCampaignWrapper.classList.add("campaign-wrapper"); // 🏆 Classe para manter a estrutura intacta
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
-        let newCampaign = originalCampaign.cloneNode(true); // 🔥 Clona toda a estrutura da campanha
-
-        // 🔄 Remove IDs duplicados para evitar conflitos
-        newCampaign.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
-
-        // 🔄 Limpa os valores anteriores para que o usuário possa preencher
-        newCampaign.querySelectorAll("input, textarea").forEach(el => el.value = "");
-        newCampaign.querySelector("img").src = "#";
-        newCampaign.querySelector("video").src = "";
-
-        // 🔥 Clona os botões corretamente e os vincula à campanha copiada
-        let buttonsContainer = document.querySelector(".button-container").cloneNode(true);
-        
-        // 🔥 Adiciona evento ao botão "Excluir" para remover apenas aquela campanha
-        buttonsContainer.querySelector("#delete-campaign-button").addEventListener("click", function() {
-            newCampaignWrapper.remove(); // 🔥 Agora só a campanha clonada e seus botões desaparecem!
+        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
         });
 
-        // 🏆 Adiciona uma linha separadora antes da nova campanha
-        let divider = document.createElement("hr");
-        divider.classList.add("campaign-divider");
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 
-        // 🏆 Estrutura correta para manter os botões abaixo das planilhas
-        newCampaignWrapper.appendChild(divider);
-        newCampaignWrapper.appendChild(newCampaign);
-        newCampaignWrapper.appendChild(buttonsContainer);
+        // 🔥 Salvar estado finalizado no localStorage
+        localStorage.setItem("campaignFinalized", "true");
 
-        campaignsContainer.appendChild(newCampaignWrapper);
-
-        alert("Nova campanha adicionada!");
+        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
     } else {
-        console.error("Erro: Estrutura de campanha não encontrada!");
+        alert("Você ainda pode modificar tudo antes de finalizar.");
     }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    let isFinalized = localStorage.getItem("campaignFinalized");
+
+    if (isFinalized === "true") {
+        let campaignName = document.getElementById("campaign-name");
+        let campaignPeriod = document.getElementById("campaign-period");
+        let cryptoTable = document.getElementById("crypto-table");
+
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+
+        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+
+        console.log("Campanha bloqueada após recarregar a página.");
+    }
+});
+
+
+document.getElementById("delete-campaign-button").addEventListener("click", function() {
+    localStorage.removeItem("campaignFinalized"); // 🔥 Limpar estado finalizado
+    location.reload(); // 🔄 Recarregar a página para restaurar a edição
 });
 
 
