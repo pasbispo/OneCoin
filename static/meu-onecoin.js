@@ -1,55 +1,75 @@
-document.getElementById("finalize-button").addEventListener("click", function() {
-    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+
+document.querySelectorAll(".finalize-button").forEach(button => {
+    button.addEventListener("click", function() {
+        let campaign = button.closest(".container"); // 🏆 Obtém a campanha específica
+        let campaignId = campaign.dataset.id || Date.now(); // 🔥 Define um identificador único
+        
+        let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
-    if (confirmFinalize) {
-        let campaignName = document.getElementById("campaign-name");
-        let campaignPeriod = document.getElementById("campaign-period");
-        let cryptoTable = document.getElementById("crypto-table");
+        if (confirmFinalize) {
+            let campaignName = campaign.querySelector("#campaign-name");
+            let campaignPeriod = campaign.querySelector("#campaign-period");
+            let cryptoTable = campaign.querySelector("#crypto-table");
 
-        if (campaignName) campaignName.setAttribute("disabled", "true");
-        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+            if (campaignName) campaignName.setAttribute("disabled", "true");
+            if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
-        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-            element.setAttribute("disabled", "true");
-        });
+            campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+                element.setAttribute("disabled", "true");
+            });
 
-        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+            if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 
-        // 🔥 Salvar estado finalizado no localStorage
-        localStorage.setItem("campaignFinalized", "true");
+            // 🔥 Salvar estado finalizado no localStorage para aquela campanha específica
+            localStorage.setItem(`campaignFinalized-${campaignId}`, "true");
+            campaign.dataset.id = campaignId;
 
-        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
-    } else {
-        alert("Você ainda pode modificar tudo antes de finalizar.");
-    }
+            alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+        }
+    });
 });
+
 
 document.addEventListener("DOMContentLoaded", function() {
-    let isFinalized = localStorage.getItem("campaignFinalized");
+    document.querySelectorAll(".container").forEach(campaign => {
+        let campaignId = campaign.dataset.id;
+        let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
 
-    if (isFinalized === "true") {
-        let campaignName = document.getElementById("campaign-name");
-        let campaignPeriod = document.getElementById("campaign-period");
-        let cryptoTable = document.getElementById("crypto-table");
+        if (isFinalized === "true") {
+            let campaignName = campaign.querySelector("#campaign-name");
+            let campaignPeriod = campaign.querySelector("#campaign-period");
+            let cryptoTable = campaign.querySelector("#crypto-table");
 
-        if (campaignName) campaignName.setAttribute("disabled", "true");
-        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+            if (campaignName) campaignName.setAttribute("disabled", "true");
+            if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
-        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-            element.setAttribute("disabled", "true");
-        });
+            campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+                element.setAttribute("disabled", "true");
+            });
 
-        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+            if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 
-        console.log("Campanha bloqueada após recarregar a página.");
-    }
+            console.log(`Campanha ${campaignId} bloqueada após recarregar a página.`);
+        }
+    });
 });
 
 
-document.getElementById("delete-campaign-button").addEventListener("click", function() {
-    localStorage.removeItem("campaignFinalized"); // 🔥 Limpar estado finalizado
-    location.reload(); // 🔄 Recarregar a página para restaurar a edição
+document.querySelectorAll(".delete-campaign-button").forEach(button => {
+    button.addEventListener("click", function() {
+        let campaign = button.closest(".container"); // 🏆 Obtém a campanha específica
+        let campaignId = campaign.dataset.id;
+
+        // 🔥 Remover estado finalizado apenas daquela campanha
+        localStorage.removeItem(`campaignFinalized-${campaignId}`);
+
+        // 🔥 Remover a campanha visualmente
+        campaign.remove();
+
+        alert("Campanha excluída!");
+    });
 });
+
 
 
 
