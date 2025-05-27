@@ -1,3 +1,61 @@
+document.getElementById("finalize-button").addEventListener("click", function() {
+    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+    
+    if (confirmFinalize) {
+        let campaignName = document.getElementById("campaign-name");
+        let campaignPeriod = document.getElementById("campaign-period");
+        let cryptoTable = document.getElementById("crypto-table");
+
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+
+        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+
+        // 🔥 Salvar estado finalizado no localStorage
+        localStorage.setItem("campaignFinalized", "true");
+
+        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+    } else {
+        alert("Você ainda pode modificar tudo antes de finalizar.");
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    let isFinalized = localStorage.getItem("campaignFinalized");
+
+    if (isFinalized === "true") {
+        let campaignName = document.getElementById("campaign-name");
+        let campaignPeriod = document.getElementById("campaign-period");
+        let cryptoTable = document.getElementById("crypto-table");
+
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+
+        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+
+        console.log("Campanha bloqueada após recarregar a página.");
+    }
+});
+
+
+document.getElementById("delete-campaign-button").addEventListener("click", function() {
+    localStorage.removeItem("campaignFinalized"); // 🔥 Limpar estado finalizado
+    location.reload(); // 🔄 Recarregar a página para restaurar a edição
+});
+
+
+
+
+
+
 document.getElementById("new-campaign-button").addEventListener("click", function() {
     let campaignsContainer = document.getElementById("campaigns-container"); // 🏆 Local onde novas campanhas serão adicionadas
     let originalCampaign = document.querySelector(".container"); // 🏆 Captura toda a campanha original
