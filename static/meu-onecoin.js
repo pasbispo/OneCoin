@@ -46,6 +46,25 @@ document.getElementById("delete-button").addEventListener("click", function () {
 
 
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    let updateBtn = document.getElementById("update-button");
+    let deleteBtn = document.getElementById("delete-button");
+
+    if (updateBtn && deleteBtn) {
+        // ✅ Ao carregar a página, o botão "Excluir" NÃO fica desativado
+        deleteBtn.removeAttribute("disabled");
+
+        updateBtn.addEventListener("click", function () {
+            deleteBtn.removeAttribute("disabled"); // ✅ Mantém ativado após atualização
+        });
+    } else {
+        console.error("Erro: Botões não encontrados.");
+    }
+});
+
+
+
 function excluirDadosCampanha(campaignWrapper) {
     let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados desta campanha?");
     
