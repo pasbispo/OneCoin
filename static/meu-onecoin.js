@@ -1,15 +1,54 @@
 
+document.getElementById("finalize-button").addEventListener("click", function() {
+    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+    
+    if (confirmFinalize) {
+        let campaignName = document.getElementById("campaign-name");
+        let campaignPeriod = document.getElementById("campaign-period");
+        let cryptoTable = document.getElementById("crypto-table");
 
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
+        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
 
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 
+        // 🔥 Salvar estado finalizado no localStorage
+        localStorage.setItem("campaignFinalized", "true");
 
+        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+    } else {
+        alert("Você ainda pode modificar tudo antes de finalizar.");
+    }
+});
+document.addEventListener("DOMContentLoaded", function() {
+    let isFinalized = localStorage.getItem("campaignFinalized");
 
+    if (isFinalized === "true") {
+        let campaignName = document.getElementById("campaign-name");
+        let campaignPeriod = document.getElementById("campaign-period");
+        let cryptoTable = document.getElementById("crypto-table");
 
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
 
+        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
 
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 
+        console.log("Campanha bloqueada após recarregar a página.");
+    }
+});
 
+document.getElementById("delete-campaign-button").addEventListener("click", function() {
+    localStorage.removeItem("campaignFinalized"); // 🔥 Limpar estado finalizado
+    location.reload(); // 🔄 Recarregar a página para restaurar a edição
+});
 
 
 
@@ -64,20 +103,19 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 // 🔄 Função para atualizar a campanha corretamente
-function updateCampaignData() {
-    let campaignName = document.getElementById("campaign-name").value;
-    let campaignGoal = document.getElementById("campaign-goal").value;
-    let campaignPeriod = document.getElementById("campaign-period").value;
-    let campaignImages = document.getElementById("campaign-images").files;
-    let campaignVideo = document.getElementById("video-file").files[0];
+function atualizarCampanha(campaign) {
+    let campaignName = campaign.querySelector("input[type='text']").value;
+    let campaignGoal = campaign.querySelector("textarea").value;
+    let campaignPeriod = campaign.querySelector("input[type='number']").value;
+    let campaignImages = campaign.querySelector("input[type='file']").files;
+    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
 
-    let panelTitle = document.getElementById("panel-title");
-    let panelGoal = document.getElementById("panel-goal");
-    let panelDuration = document.getElementById("panel-duration");
-    let panelImage = document.getElementById("slideshow-image");
-    let videoPlayer = document.getElementById("video-player");
+    let panelTitle = campaign.querySelector(".panel-title");
+    let panelGoal = campaign.querySelector(".panel-goal");
+    let panelDuration = campaign.querySelector(".panel-duration");
+    let panelImage = campaign.querySelector(".slideshow-image");
+    let videoPlayer = campaign.querySelector(".video-player");
 
-    // Atualizando elementos na planilha direita
     panelTitle.textContent = campaignName;
     panelGoal.textContent = "Objetivo: " + campaignGoal;
     panelDuration.textContent = `Período: ${campaignPeriod} dias`;
@@ -92,22 +130,7 @@ function updateCampaignData() {
         videoPlayer.src = videoURL;
         videoPlayer.load();
     }
-
-    // Salvando no localStorage
-    localStorage.setItem("campaign-name", campaignName);
-    localStorage.setItem("campaign-goal", campaignGoal);
-    localStorage.setItem("campaign-period", campaignPeriod);
 }
-
-
-
-document.getElementById("update-button").addEventListener("click", function() {
-    updateCampaignData();
-});
-
-
-
-
 
 // 🔄 Função para finalizar a campanha corretamente
 function finalizarCampanha(campaign) {
