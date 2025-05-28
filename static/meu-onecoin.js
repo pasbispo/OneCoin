@@ -20,16 +20,24 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
 
-        // ✅ Agora desbloqueamos os campos para permitir edição
+        // ✅ Desbloqueia os campos para permitir edição
         let campaignName = campaign.querySelector("input[type='text']");
         let campaignPeriod = campaign.querySelector("input[type='number']");
         let cryptoTable = campaign.querySelector("#crypto-table");
 
-        if (campaignName) campaignName.removeAttribute("disabled");
-        if (campaignPeriod) campaignPeriod.removeAttribute("disabled");
+        if (campaignName) {
+            let newNameField = campaignName.cloneNode(true);
+            campaignName.parentNode.replaceChild(newNameField, campaignName);
+        }
+
+        if (campaignPeriod) {
+            let newPeriodField = campaignPeriod.cloneNode(true);
+            campaignPeriod.parentNode.replaceChild(newPeriodField, campaignPeriod);
+        }
 
         campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-            element.removeAttribute("disabled");
+            let newElement = element.cloneNode(true);
+            element.parentNode.replaceChild(newElement, element);
         });
 
         if (cryptoTable) cryptoTable.style.pointerEvents = "auto";
@@ -37,7 +45,6 @@ document.getElementById("delete-button").addEventListener("click", function () {
         alert("Todos os dados foram excluídos! Agora você pode editar a campanha novamente.");
     }
 });
-
 
 
 
