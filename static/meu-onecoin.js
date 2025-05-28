@@ -1,5 +1,5 @@
 document.getElementById("delete-button").addEventListener("click", function () {
-    let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados desta campanha?");
+    let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados da campanha?");
     
     if (confirmDelete) {
         let campaign = document.querySelector(".container");
@@ -12,31 +12,26 @@ document.getElementById("delete-button").addEventListener("click", function () {
         // 🔄 Restaurar valores para o padrão vazio
         campaign.querySelectorAll("input, textarea").forEach(element => {
             element.value = "";
-            element.removeAttribute("disabled"); // ✅ Remove o bloqueio!
+            element.removeAttribute("disabled"); // ✅ Remove bloqueios nos campos de texto
         });
 
-        campaign.querySelector(".slideshow-image").src = "#";
-        campaign.querySelector(".video-player").src = "";
         campaign.querySelector(".panel-title").textContent = "Nova campanha!";
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
 
         // ✅ Desbloquear a tabela de criptomoedas
-        let cryptoTable = document.querySelector("#crypto-table tbody");
+        let cryptoTable = document.querySelector("#crypto-table");
 
         if (cryptoTable) {
-            cryptoTable.style.pointerEvents = "auto";
+            cryptoTable.style.pointerEvents = "auto"; // ✅ Permite interação novamente
             cryptoTable.querySelectorAll("input, textarea, button").forEach(element => {
-                element.removeAttribute("disabled");
+                element.removeAttribute("disabled"); // ✅ Remove bloqueios dos elementos internos
             });
 
-            // 🔄 Limpar todas as células da tabela e restaurar interatividade
-            cryptoTable.innerHTML = `<tr><td>Criptomoeda</td><td>Rede</td><td>Endereço</td><td>Ações</td></tr>`;
+            alert("Todos os dados da campanha foram excluídos! Agora você pode adicionar criptomoedas novamente.");
         } else {
             console.error("Erro: Tabela de criptomoedas não encontrada!");
         }
-
-        alert("Todos os dados foram excluídos! Agora você pode editar a campanha e a tabela novamente.");
     }
 });
 
