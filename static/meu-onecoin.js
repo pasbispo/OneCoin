@@ -10,37 +10,32 @@ document.getElementById("delete-button").addEventListener("click", function () {
         }
 
         // 🔄 Restaurar valores para o padrão vazio
-        campaign.querySelector("input[type='text']").value = "";
-        campaign.querySelector("textarea").value = "";
-        campaign.querySelector("input[type='number']").value = "";
-        campaign.querySelector("input[type='file']").value = "";
+        campaign.querySelectorAll("input, textarea").forEach(element => {
+            element.value = "";
+            element.removeAttribute("disabled"); // ✅ Remove o bloqueio!
+        });
+
         campaign.querySelector(".slideshow-image").src = "#";
         campaign.querySelector(".video-player").src = "";
         campaign.querySelector(".panel-title").textContent = "Nova campanha!";
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
 
-        // ✅ Desbloqueia os campos para permitir edição
-        let campaignName = campaign.querySelector("input[type='text']");
-        let campaignPeriod = campaign.querySelector("input[type='number']");
+        // ✅ Garantir que a tabela de criptomoedas volte a ser editável
         let cryptoTable = campaign.querySelector("#crypto-table");
-
-        if (campaignName) {
-            let newNameField = campaignName.cloneNode(true);
-            campaignName.parentNode.replaceChild(newNameField, campaignName);
+        if (cryptoTable) {
+            cryptoTable.style.pointerEvents = "auto";
+            cryptoTable.querySelectorAll("input, textarea, button").forEach(element => {
+                element.removeAttribute("disabled");
+            });
         }
 
-        if (campaignPeriod) {
-            let newPeriodField = campaignPeriod.cloneNode(true);
-            campaignPeriod.parentNode.replaceChild(newPeriodField, campaignPeriod);
-        }
+        // 🚀 Atualiza os elementos do DOM para garantir que o navegador reconheça as mudanças
+        let newCampaignName = campaign.querySelector("input[type='text']").cloneNode(true);
+        campaign.querySelector("input[type='text']").parentNode.replaceChild(newCampaignName, campaign.querySelector("input[type='text']"));
 
-        campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-            let newElement = element.cloneNode(true);
-            element.parentNode.replaceChild(newElement, element);
-        });
-
-        if (cryptoTable) cryptoTable.style.pointerEvents = "auto";
+        let newCampaignPeriod = campaign.querySelector("input[type='number']").cloneNode(true);
+        campaign.querySelector("input[type='number']").parentNode.replaceChild(newCampaignPeriod, campaign.querySelector("input[type='number']"));
 
         alert("Todos os dados foram excluídos! Agora você pode editar a campanha novamente.");
     }
