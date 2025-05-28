@@ -20,7 +20,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
 
-        // ✅ Desbloqueia os campos para permitir nova edição
+        // ✅ Agora desbloqueamos os campos para permitir edição
         let campaignName = campaign.querySelector("input[type='text']");
         let campaignPeriod = campaign.querySelector("input[type='number']");
         let cryptoTable = campaign.querySelector("#crypto-table");
@@ -37,6 +37,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
         alert("Todos os dados foram excluídos! Agora você pode editar a campanha novamente.");
     }
 });
+
 
 
 
