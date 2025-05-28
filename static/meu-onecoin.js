@@ -148,19 +148,20 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 // 🔄 Função para atualizar a campanha corretamente
-function atualizarCampanha(campaign) {
-    let campaignName = campaign.querySelector("input[type='text']").value;
-    let campaignGoal = campaign.querySelector("textarea").value;
-    let campaignPeriod = campaign.querySelector("input[type='number']").value;
-    let campaignImages = campaign.querySelector("input[type='file']").files;
-    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
+function updateCampaignData() {
+    let campaignName = document.getElementById("campaign-name").value;
+    let campaignGoal = document.getElementById("campaign-goal").value;
+    let campaignPeriod = document.getElementById("campaign-period").value;
+    let campaignImages = document.getElementById("campaign-images").files;
+    let campaignVideo = document.getElementById("video-file").files[0];
 
-    let panelTitle = campaign.querySelector(".panel-title");
-    let panelGoal = campaign.querySelector(".panel-goal");
-    let panelDuration = campaign.querySelector(".panel-duration");
-    let panelImage = campaign.querySelector(".slideshow-image");
-    let videoPlayer = campaign.querySelector(".video-player");
+    let panelTitle = document.getElementById("panel-title");
+    let panelGoal = document.getElementById("panel-goal");
+    let panelDuration = document.getElementById("panel-duration");
+    let panelImage = document.getElementById("slideshow-image");
+    let videoPlayer = document.getElementById("video-player");
 
+    // Atualizando elementos na planilha direita
     panelTitle.textContent = campaignName;
     panelGoal.textContent = "Objetivo: " + campaignGoal;
     panelDuration.textContent = `Período: ${campaignPeriod} dias`;
@@ -175,7 +176,60 @@ function atualizarCampanha(campaign) {
         videoPlayer.src = videoURL;
         videoPlayer.load();
     }
+
+    // Salvando no localStorage
+    localStorage.setItem("campaign-name", campaignName);
+    localStorage.setItem("campaign-goal", campaignGoal);
+    localStorage.setItem("campaign-period", campaignPeriod);
 }
+
+
+
+document.getElementById("update-button").addEventListener("click", function() {
+    updateCampaignData();
+});
+
+
+function abrirSelecaoDeRede(cryptoName, addressCell) {
+    let modal = document.createElement("div");
+    modal.classList.add("modal");
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    let selectedCrypto = selectedCryptos.find(c => c.name === cryptoName);
+
+    if (!selectedCrypto || !selectedCrypto.networks || !selectedCrypto.addresses) {
+        alert("Nenhuma rede cadastrada para essa criptomoeda.");
+        return;
+    }
+
+    let networkForm = document.createElement("div");
+    networkForm.innerHTML = `
+        <h3>Selecione uma rede para ${cryptoName}</h3>
+        <div id="network-options"></div>
+        <button class="close-btn">Fechar</button>
+    `;
+
+    let networkOptions = networkForm.querySelector("#network-options");
+    selectedCrypto.networks.forEach((network, index) => {
+        let btn = document.createElement("button");
+        btn.textContent = network;
+        btn.classList.add("network-option");
+        btn.addEventListener("click", function() {
+            addressCell.textContent = selectedCrypto.addresses[index]; 
+            modal.remove();
+        });
+        networkOptions.appendChild(btn);
+    });
+
+    networkForm.querySelector(".close-btn").addEventListener("click", function() {
+        modal.remove();
+    });
+
+    modal.appendChild(networkForm);
+    document.body.appendChild(modal);
+}
+
+
 
 // 🔄 Função para finalizar a campanha corretamente
 function finalizarCampanha(campaign) {
@@ -454,35 +508,17 @@ function expandVideo() {
 
 
 
-
-function updatePeriod() {
-    let campaignPeriod = document.getElementById("campaign-period");
-    let panelDuration = document.getElementById("panel-duration");
-
-    if (campaignPeriod && panelDuration) {
-        panelDuration.textContent = `Período: ${campaignPeriod.value} dias`;
-    } else {
-        console.error("Erro: Elementos não encontrados!");
-    }
-}
-
-
-
-
 function updatePeriod() {
     let periodInput = document.getElementById("campaign-period").value;
     let panelDuration = document.getElementById("panel-duration");
 
-    // Converte o período para número
     let totalDays = parseInt(periodInput, 10);
 
     if (!isNaN(totalDays) && totalDays > 0) {
         panelDuration.textContent = `Período: ${totalDays} dias`;
 
-        // Define o limite de 20% do tempo
-        let threshold = Math.floor(totalDays * 0.2);
+        let threshold = Math.max(Math.floor(totalDays * 0.2), 3); // 🔥 Garante que não seja zero ou muito baixo
 
-        // 🟥 Se faltar menos de 20% do tempo, fica vermelho
         if (totalDays <= threshold) {
             panelDuration.style.color = "red";
         } else {
