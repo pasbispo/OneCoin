@@ -9,7 +9,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
             return;
         }
 
-        // ✅ Apenas restaurar os campos de entrada, sem mexer na tabela
+        // ✅ Restaurar os campos de entrada, mas sem remover a tabela
         campaign.querySelectorAll("input, textarea").forEach(element => {
             element.value = "";
             element.removeAttribute("disabled"); // 🔄 Remove bloqueios nos campos de texto
@@ -19,7 +19,19 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
 
-        alert("Dados da campanha excluídos! Agora você pode atualizar as informações.");
+        // ✅ Reativar eventos e interações na tabela sem removê-la
+        let cryptoTableBody = document.querySelector("#crypto-table tbody");
+
+        if (cryptoTableBody) {
+            cryptoTableBody.style.pointerEvents = "auto"; // ✅ Permite interação novamente
+            cryptoTableBody.querySelectorAll("input, textarea, button").forEach(element => {
+                element.removeAttribute("disabled"); // ✅ Remove bloqueios dos elementos internos
+            });
+
+            alert("Dados da campanha excluídos! Agora você pode continuar editando a tabela.");
+        } else {
+            console.error("Erro: Tabela de criptomoedas não encontrada!");
+        }
     }
 });
 
