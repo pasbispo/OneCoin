@@ -743,13 +743,3 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    let cryptoTable = document.querySelector("#crypto-table");
-
-    if (cryptoTable) {
-        console.log("Tabela de criptomoedas encontrada!");
-    } else {
-        console.error("Erro: Tabela de criptomoedas não encontrada!");
-    }
-});
-
