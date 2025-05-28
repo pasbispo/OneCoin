@@ -1,3 +1,28 @@
+document.getElementById("delete-button").addEventListener("click", function () {
+    let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados desta campanha?");
+    
+    if (confirmDelete) {
+        let campaign = document.querySelector(".container");
+
+        if (!campaign) {
+            console.error("Erro: Estrutura da campanha não encontrada!");
+            return;
+        }
+
+        // 🔄 Restaurar valores para o padrão vazio
+        campaign.querySelector("input[type='text']").value = "";
+        campaign.querySelector("textarea").value = "";
+        campaign.querySelector("input[type='number']").value = "";
+        campaign.querySelector("input[type='file']").value = "";
+        campaign.querySelector(".slideshow-image").src = "#";
+        campaign.querySelector(".video-player").src = "";
+        campaign.querySelector(".panel-title").textContent = "Nova campanha!";
+        campaign.querySelector(".panel-goal").textContent = "Objetivo:";
+        campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
+
+        alert("Todos os dados da campanha foram excluídos!");
+    }
+});
 
 
 function excluirDadosCampanha(campaignWrapper) {
@@ -90,19 +115,12 @@ function updateCampaignData(campaignWrapper) {
 
 
 
-
 function finalizarCampanha(campaignWrapper) {
     let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
     
     if (confirmFinalize) {
-        let campaign = campaignWrapper.querySelector(".container");
+        let campaign = campaignWrapper;
 
-        if (!campaign) {
-            console.error("Erro: Estrutura da campanha não encontrada!");
-            return;
-        }
-
-        // 🚫 Bloqueia campos que NÃO devem ser editados
         let campaignName = campaign.querySelector("input[type='text']");
         let campaignPeriod = campaign.querySelector("input[type='number']");
         let cryptoTable = campaign.querySelector("#crypto-table");
@@ -116,7 +134,7 @@ function finalizarCampanha(campaignWrapper) {
 
         if (cryptoTable) cryptoTable.style.pointerEvents = "none";
 
-        // ✅ Mantém os campos de imagem, objetivo e vídeo editáveis
+        // ✅ Apenas imagem, objetivo e vídeo permanecem editáveis
         let campaignImages = campaign.querySelector("#campaign-images");
         let campaignGoal = campaign.querySelector("#campaign-goal");
         let campaignVideo = campaign.querySelector("#video-file");
@@ -128,8 +146,6 @@ function finalizarCampanha(campaignWrapper) {
         alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
     }
 }
-
-
 
 
 
@@ -683,5 +699,14 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
+document.getElementById("finalize-button").addEventListener("click", function () {
+    let campaignWrapper = document.querySelector(".container");
+
+    if (campaignWrapper) {
+        finalizarCampanha(campaignWrapper);
+    } else {
+        console.error("Erro: A campanha ativa não foi encontrada.");
+    }
+});
 
 
