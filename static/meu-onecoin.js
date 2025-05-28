@@ -729,4 +729,13 @@ document.getElementById("finalize-button").addEventListener("click", function ()
     }
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    let elemento = document.getElementById("crypto-table");
+
+    if (elemento) {
+        console.log("Elemento encontrado:", elemento);
+    } else {
+        console.error("Erro: O elemento '#crypto-table' não foi encontrado!");
+    }
+});
 
