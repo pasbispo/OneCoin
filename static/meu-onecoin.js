@@ -20,7 +20,21 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
 
-        alert("Todos os dados da campanha foram excluídos!");
+        // ✅ Desbloquear os campos após excluir
+        let campaignName = campaign.querySelector("input[type='text']");
+        let campaignPeriod = campaign.querySelector("input[type='number']");
+        let cryptoTable = campaign.querySelector("#crypto-table");
+
+        if (campaignName) campaignName.removeAttribute("disabled");
+        if (campaignPeriod) campaignPeriod.removeAttribute("disabled");
+
+        campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.removeAttribute("disabled");
+        });
+
+        if (cryptoTable) cryptoTable.style.pointerEvents = "auto";
+
+        alert("Todos os dados da campanha foram excluídos! Agora você pode editar novamente.");
     }
 });
 
