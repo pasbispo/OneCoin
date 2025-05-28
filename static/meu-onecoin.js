@@ -19,10 +19,10 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
 
-        // ✅ Recriar a tabela de criptomoedas instantaneamente no DOM
+        // ✅ Recriar a tabela de criptomoedas corretamente
         let oldTable = document.querySelector("#crypto-table");
-        let newTable = oldTable.cloneNode(false); // 🚀 Cria um novo elemento sem conteúdo
-
+        let newTable = document.createElement("table");
+        newTable.id = "crypto-table";
         newTable.innerHTML = `
             <thead>
                 <tr>
@@ -40,14 +40,6 @@ document.getElementById("delete-button").addEventListener("click", function () {
         alert("Todos os dados foram excluídos! Agora você pode adicionar criptomoedas novamente.");
     }
 });
-
-
-
-
-
-
-
-
 
 
 
