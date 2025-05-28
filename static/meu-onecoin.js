@@ -17,24 +17,78 @@ document.getElementById("delete-button").addEventListener("click", function () {
 
         campaign.querySelector(".panel-title").textContent = "Nova campanha!";
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
-        campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
+        campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
+
+        // ✅ Recriar a tabela de criptomoedas instantaneamente no DOM
+        let oldTable = document.querySelector("#crypto-table");
+        let newTable = oldTable.cloneNode(false); // 🚀 Cria um novo elemento sem conteúdo
+
+        newTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Símbolo</th>
+                    <th>Quantidade</th>
+                    <th>Valor Estimado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody> <!-- ✅ Mantém a estrutura da tabela -->
+        `;
+
+        oldTable.parentNode.replaceChild(newTable, oldTable); // ✅ Substitui a tabela antiga pela nova
+
+        alert("Todos os dados foram excluídos! Agora você pode adicionar criptomoedas novamente.");
+    }
+});
+
+
+
+
+
+
+
+
+
+
+document.getElementById("delete-button").addEventListener("click", function () {
+    let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados da campanha?");
+    
+    if (confirmDelete) {
+        let campaign = document.querySelector(".container");
+
+        if (!campaign) {
+            console.error("Erro: Estrutura da campanha não encontrada!");
+            return;
+        }
+
+        // 🔄 Restaurar valores para o padrão vazio
+        campaign.querySelectorAll("input, textarea").forEach(element => {
+            element.value = "";
+            element.removeAttribute("disabled"); // ✅ Remove bloqueios nos campos de texto
+        });
+
+        campaign.querySelector(".panel-title").textContent = "Nova campanha!";
+        campaign.querySelector(".panel-goal").textContent = "Objetivo:";
+        campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
 
         // ✅ Desbloquear a tabela de criptomoedas
-        let cryptoTable = document.querySelector("#crypto-table");
+        let cryptoTableBody = document.querySelector("#crypto-table tbody");
 
-        if (cryptoTable) {
-            cryptoTable.style.pointerEvents = "auto"; // ✅ Permite interação novamente
-            cryptoTable.querySelectorAll("input, textarea, button").forEach(element => {
+        if (cryptoTableBody) {
+            cryptoTableBody.style.pointerEvents = "auto"; // ✅ Permite interação novamente
+            cryptoTableBody.querySelectorAll("input, textarea, button").forEach(element => {
                 element.removeAttribute("disabled"); // ✅ Remove bloqueios dos elementos internos
             });
 
-            alert("Todos os dados da campanha foram excluídos! Agora você pode adicionar criptomoedas novamente.");
+            // 🔄 Limpar todas as células da tabela para entrada de novos dados
+            cryptoTableBody.innerHTML = ""; // ✅ Tabela zerada, pronta para novos dados
+
+            alert("Todos os dados foram excluídos! Agora você pode adicionar criptomoedas novamente.");
         } else {
             console.error("Erro: Tabela de criptomoedas não encontrada!");
         }
     }
 });
-
 
 
 
@@ -729,13 +783,15 @@ document.getElementById("finalize-button").addEventListener("click", function ()
     }
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    let elemento = document.getElementById("crypto-table");
 
-    if (elemento) {
-        console.log("Elemento encontrado:", elemento);
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cryptoTable = document.querySelector("#crypto-table");
+
+    if (cryptoTable) {
+        console.log("Tabela de criptomoedas encontrada!");
     } else {
-        console.error("Erro: O elemento '#crypto-table' não foi encontrado!");
+        console.error("Erro: Tabela de criptomoedas não encontrada!");
     }
 });
 
