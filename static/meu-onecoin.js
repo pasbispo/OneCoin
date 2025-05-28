@@ -1,32 +1,3 @@
-  console.error(
-// ✅ Garantir que só a campanha individual seja bloqueada
-function bloquearCamposCampanha(campaign) {
-    let campaignName = campaign.querySelector("#campaign-name");
-    let campaignPeriod = campaign.querySelector("#campaign-period");
-    let cryptoTable = campaign.querySelector("#crypto-table");
-
-    if (campaignName) campaignName.setAttribute("disabled", "true");
-    if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
-
-    campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-        element.setAttribute("disabled", "true");
-    });
-
-    if (cryptoTable) cryptoTable.style.pointerEvents = "none";
-}
-
-// 🔥 Manter o estado das campanhas ao recarregar a página
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".campaign-wrapper").forEach(campaign => {
-        let campaignId = campaign.dataset.id;
-        let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
-
-        if (isFinalized === "true") {
-            bloquearCamposCampanha(campaign);
-            console.log(`Campanha ${campaignId} bloqueada após recarregar.`);
-        }
-    });
-});
 
 
 
