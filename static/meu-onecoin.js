@@ -21,8 +21,9 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
 
-        // ✅ Garantir que a tabela de criptomoedas volte a ser editável
-        let cryptoTable = campaign.querySelector("#crypto-table");
+        // ✅ Desbloquear a tabela de criptomoedas
+        let cryptoTable = document.querySelector("#crypto-table");
+
         if (cryptoTable) {
             cryptoTable.style.pointerEvents = "auto";
             cryptoTable.querySelectorAll("input, textarea, button").forEach(element => {
@@ -30,16 +31,10 @@ document.getElementById("delete-button").addEventListener("click", function () {
             });
         }
 
-        // 🚀 Atualiza os elementos do DOM para garantir que o navegador reconheça as mudanças
-        let newCampaignName = campaign.querySelector("input[type='text']").cloneNode(true);
-        campaign.querySelector("input[type='text']").parentNode.replaceChild(newCampaignName, campaign.querySelector("input[type='text']"));
-
-        let newCampaignPeriod = campaign.querySelector("input[type='number']").cloneNode(true);
-        campaign.querySelector("input[type='number']").parentNode.replaceChild(newCampaignPeriod, campaign.querySelector("input[type='number']"));
-
-        alert("Todos os dados foram excluídos! Agora você pode editar a campanha novamente.");
+        alert("Todos os dados foram excluídos! Agora você pode editar a campanha e a tabela novamente.");
     }
 });
+
 
 
 
