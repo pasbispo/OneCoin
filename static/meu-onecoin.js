@@ -20,6 +20,8 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-title").textContent = "Nova campanha!";
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
+        campaign.querySelector(".crypto-table").textContent = "Tabela";
+
 
         // ✅ Desbloquear a tabela de criptomoedas
         let cryptoTable = document.querySelector("#crypto-table");
