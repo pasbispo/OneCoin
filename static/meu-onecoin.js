@@ -29,11 +29,19 @@ document.getElementById("delete-button").addEventListener("click", function () {
             cryptoTable.querySelectorAll("input, textarea, button").forEach(element => {
                 element.removeAttribute("disabled");
             });
-        }
 
-        alert("Todos os dados foram excluídos! Agora você pode editar a campanha e a tabela novamente.");
+            // ✅ Limpar os dados da tabela
+            cryptoTable.querySelectorAll("td").forEach(cell => {
+                cell.textContent = "";
+            });
+
+            alert("Todos os dados foram excluídos! Agora você pode editar a campanha e a tabela novamente.");
+        } else {
+            console.error("Erro: Tabela de criptomoedas não encontrada!");
+        }
     }
 });
+
 
 
 
