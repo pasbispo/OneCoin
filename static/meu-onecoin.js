@@ -1,89 +1,4 @@
-document.getElementById("new-campaign-button").addEventListener("click", function() {
-    let campaignsContainer = document.getElementById("campaigns-container"); 
-    let originalCampaign = document.querySelector(".campaign-wrapper"); 
-
-    if (campaignsContainer && originalCampaign) {
-        let campaignId = `campaign-${Date.now()}`; // 🔥 Criar identificador único
-
-        let newCampaignWrapper = originalCampaign.cloneNode(true); 
-        newCampaignWrapper.dataset.id = campaignId; // 🔥 Aplicar identificador
-
-        newCampaignWrapper.querySelectorAll("[id]").forEach(el => el.removeAttribute("id"));
-
-        newCampaignWrapper.querySelectorAll("input, textarea").forEach(el => el.value = "");
-        newCampaignWrapper.querySelector("img").src = "#";
-        newCampaignWrapper.querySelector("video").src = "";
-
-        adicionarEventosCampanha(newCampaignWrapper, campaignId); // ✅ Aplicar eventos corretos
-
-        let divider = document.createElement("hr");
-        divider.classList.add("campaign-divider");
-
-        campaignsContainer.appendChild(divider);
-        campaignsContainer.appendChild(newCampaignWrapper);
-
-        alert("Nova campanha adicionada!");
-    } else {
-        console.error("Erro: Estrutura de campanha não encontrada!");
-    }
-});
-
-// 🔥 Aplicar eventos corretamente a cada campanha clonada
-function adicionarEventosCampanha(campaign, campaignId) {
-    let finalizeButton = campaign.querySelector(".finalize-button");
-    let deleteButton = campaign.querySelector(".delete-campaign-button");
-
-    if (finalizeButton) {
-        finalizeButton.addEventListener("click", function () {
-            let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
-
-            if (confirmFinalize) {
-                bloquearCamposCampanha(campaign);
-                localStorage.setItem(`campaignFinalized-${campaignId}`, "true");
-                alert(`Campanha ${campaignId} finalizada!`);
-            }
-        });
-    }
-
-    if (deleteButton) {
-        deleteButton.addEventListener("click", function () {
-            localStorage.removeItem(`campaignFinalized-${campaignId}`);
-            campaign.remove();
-            alert(`Campanha ${campaignId} excluída!`);
-        });
-    }
-}
-
-// ✅ Garantir que só a campanha individual seja bloqueada
-function bloquearCamposCampanha(campaign) {
-    let campaignName = campaign.querySelector("#campaign-name");
-    let campaignPeriod = campaign.querySelector("#campaign-period");
-    let cryptoTable = campaign.querySelector("#crypto-table");
-
-    if (campaignName) campaignName.setAttribute("disabled", "true");
-    if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
-
-    campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-        element.setAttribute("disabled", "true");
-    });
-
-    if (cryptoTable) cryptoTable.style.pointerEvents = "none";
-}
-
-// 🔥 Manter o estado das campanhas ao recarregar a página
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".campaign-wrapper").forEach(campaign => {
-        let campaignId = campaign.dataset.id;
-        let isFinalized = localStorage.getItem(`campaignFinalized-${campaignId}`);
-
-        if (isFinalized === "true") {
-            bloquearCamposCampanha(campaign);
-            console.log(`Campanha ${campaignId} bloqueada após recarregar.`);
-        }
-    });
-});
-
-
+ 
 
 
 
@@ -190,44 +105,6 @@ document.getElementById("update-button").addEventListener("click", function() {
 });
 
 
-function abrirSelecaoDeRede(cryptoName, addressCell) {
-    let modal = document.createElement("div");
-    modal.classList.add("modal");
-
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-    let selectedCrypto = selectedCryptos.find(c => c.name === cryptoName);
-
-    if (!selectedCrypto || !selectedCrypto.networks || !selectedCrypto.addresses) {
-        alert("Nenhuma rede cadastrada para essa criptomoeda.");
-        return;
-    }
-
-    let networkForm = document.createElement("div");
-    networkForm.innerHTML = `
-        <h3>Selecione uma rede para ${cryptoName}</h3>
-        <div id="network-options"></div>
-        <button class="close-btn">Fechar</button>
-    `;
-
-    let networkOptions = networkForm.querySelector("#network-options");
-    selectedCrypto.networks.forEach((network, index) => {
-        let btn = document.createElement("button");
-        btn.textContent = network;
-        btn.classList.add("network-option");
-        btn.addEventListener("click", function() {
-            addressCell.textContent = selectedCrypto.addresses[index]; 
-            modal.remove();
-        });
-        networkOptions.appendChild(btn);
-    });
-
-    networkForm.querySelector(".close-btn").addEventListener("click", function() {
-        modal.remove();
-    });
-
-    modal.appendChild(networkForm);
-    document.body.appendChild(modal);
-}
 
 
 
@@ -508,17 +385,35 @@ function expandVideo() {
 
 
 
+
+function updatePeriod() {
+    let campaignPeriod = document.getElementById("campaign-period");
+    let panelDuration = document.getElementById("panel-duration");
+
+    if (campaignPeriod && panelDuration) {
+        panelDuration.textContent = `Período: ${campaignPeriod.value} dias`;
+    } else {
+        console.error("Erro: Elementos não encontrados!");
+    }
+}
+
+
+
+
 function updatePeriod() {
     let periodInput = document.getElementById("campaign-period").value;
     let panelDuration = document.getElementById("panel-duration");
 
+    // Converte o período para número
     let totalDays = parseInt(periodInput, 10);
 
     if (!isNaN(totalDays) && totalDays > 0) {
         panelDuration.textContent = `Período: ${totalDays} dias`;
 
-        let threshold = Math.max(Math.floor(totalDays * 0.2), 3); // 🔥 Garante que não seja zero ou muito baixo
+        // Define o limite de 20% do tempo
+        let threshold = Math.floor(totalDays * 0.2);
 
+        // 🟥 Se faltar menos de 20% do tempo, fica vermelho
         if (totalDays <= threshold) {
             panelDuration.style.color = "red";
         } else {
