@@ -20,7 +20,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
 
-        // ✅ Desbloqueia os campos imediatamente
+        // ✅ Desbloqueia os campos para permitir nova edição
         let campaignName = campaign.querySelector("input[type='text']");
         let campaignPeriod = campaign.querySelector("input[type='number']");
         let cryptoTable = campaign.querySelector("#crypto-table");
@@ -34,12 +34,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
 
         if (cryptoTable) cryptoTable.style.pointerEvents = "auto";
 
-        // 🏆 Solução extra: Forçar o navegador a reconhecer as mudanças!
-        setTimeout(() => {
-            campaignName.focus(); // Faz o campo de nome ganhar foco para ativar a edição
-        }, 100);
-
-        alert("Todos os dados da campanha foram excluídos! Agora você pode editar novamente.");
+        alert("Todos os dados foram excluídos! Agora você pode editar a campanha novamente.");
     }
 });
 
