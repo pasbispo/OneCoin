@@ -74,21 +74,6 @@ function excluirDadosCampanha(campaignWrapper) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    let updateBtn = document.getElementById("update-button");
-    let deleteBtn = document.getElementById("delete-button");
-
-    if (updateBtn && deleteBtn) {
-        deleteBtn.setAttribute("disabled", "true"); // 🛑 Começa desativado
-
-        updateBtn.addEventListener("click", function () {
-            deleteBtn.removeAttribute("disabled"); // ✅ Ativado após atualização
-        });
-    } else {
-        console.error("Erro: Botões não encontrados.");
-    }
-});
-
 
 
 function updateCampaignData(campaignWrapper) {
