@@ -50,48 +50,6 @@ document.getElementById("delete-button").addEventListener("click", function () {
 
 
 
-document.getElementById("delete-button").addEventListener("click", function () {
-    let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados da campanha?");
-    
-    if (confirmDelete) {
-        let campaign = document.querySelector(".container");
-
-        if (!campaign) {
-            console.error("Erro: Estrutura da campanha não encontrada!");
-            return;
-        }
-
-        // 🔄 Restaurar valores para o padrão vazio
-        campaign.querySelectorAll("input, textarea").forEach(element => {
-            element.value = "";
-            element.removeAttribute("disabled"); // ✅ Remove bloqueios nos campos de texto
-        });
-
-        campaign.querySelector(".panel-title").textContent = "Nova campanha!";
-        campaign.querySelector(".panel-goal").textContent = "Objetivo:";
-        campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
-
-        // ✅ Desbloquear a tabela de criptomoedas
-        let cryptoTableBody = document.querySelector("#crypto-table tbody");
-
-        if (cryptoTableBody) {
-            cryptoTableBody.style.pointerEvents = "auto"; // ✅ Permite interação novamente
-            cryptoTableBody.querySelectorAll("input, textarea, button").forEach(element => {
-                element.removeAttribute("disabled"); // ✅ Remove bloqueios dos elementos internos
-            });
-
-            // 🔄 Limpar todas as células da tabela para entrada de novos dados
-            cryptoTableBody.innerHTML = ""; // ✅ Tabela zerada, pronta para novos dados
-
-            alert("Todos os dados foram excluídos! Agora você pode adicionar criptomoedas novamente.");
-        } else {
-            console.error("Erro: Tabela de criptomoedas não encontrada!");
-        }
-    }
-});
-
-
-
 
 
 
