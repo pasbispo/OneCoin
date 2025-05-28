@@ -20,7 +20,6 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-title").textContent = "Nova campanha!";
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
-        campaign.querySelector(".crypto-table").src = "";
 
         // ✅ Desbloquear a tabela de criptomoedas
         let cryptoTable = document.querySelector("#crypto-table");
@@ -36,7 +35,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
                 cell.textContent = "";
             });
 
-            alert("Todos os dados foram excluídos! Agora você pode editar a campanha e a tabela novamente.");
+            
         } else {
             console.error("Erro: Tabela de criptomoedas não encontrada!");
         }
