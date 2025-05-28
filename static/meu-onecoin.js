@@ -45,6 +45,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
 
 
 
+
 function excluirDadosCampanha(campaignWrapper) {
     let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados desta campanha?");
     
