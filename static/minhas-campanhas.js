@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
         let campaignBox = document.createElement("div");
         campaignBox.classList.add("campaign-box");
 
-        // 🔴 Criar botão "X" no canto superior direito da caixa (novo nome)
         let closeButton = document.createElement("button");
         closeButton.textContent = "✖";
-        closeButton.classList.add("campaign-remove-btn"); // ✅ Novo nome para evitar conflito
-        closeButton.addEventListener("click", function () {
+        closeButton.classList.add("campaign-remove-btn");
+        closeButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // ✅ Impede que o clique no "X" redirecione para outra página
             excluirCampanha(index);
         });
 
@@ -28,17 +28,14 @@ document.addEventListener("DOMContentLoaded", function () {
         coinImage.src = "static/img/simbolo.png";
         coinImage.alt = "Imagem da moeda";
 
+        // ✅ Redirecionar ao clicar na campanha (exceto no "X")
+        campaignBox.addEventListener("click", function () {
+            window.location.href = campaign.url;
+        });
+
         campaignBox.appendChild(closeButton);
         campaignBox.appendChild(campaignTitle);
         campaignBox.appendChild(coinImage);
         campaignContainer.appendChild(campaignBox);
     });
 });
-
-// 🔥 Função para excluir apenas a campanha clicada
-function excluirCampanha(index) {
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-    campaigns.splice(index, 1); // Remove a campanha selecionada
-    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-    location.reload(); // 🔄 Atualiza a página para refletir a exclusão
-}
