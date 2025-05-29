@@ -9,30 +9,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
     campaignContainer.innerHTML = ""; // 🔄 Limpa antes de adicionar os itens
 
+
     campaigns.forEach((campaign, index) => {
-        let campaignBox = document.createElement("div");
-        campaignBox.classList.add("campaign-box");
+    let campaignWrapper = document.createElement("div"); // ✅ Container para campanha + botão
+    campaignWrapper.classList.add("campaign-wrapper");
 
-        let campaignTitle = document.createElement("h3");
-        campaignTitle.textContent = campaign.nome;
+    let campaignBox = document.createElement("div");
+    campaignBox.classList.add("campaign-box");
 
-        let coinImage = document.createElement("img");
-        coinImage.src = "static/img/simbolo.png";
-        coinImage.alt = "Imagem da moeda";
+    let campaignTitle = document.createElement("h3");
+    campaignTitle.textContent = campaign.nome;
 
-        // ✅ Adiciona evento de clique para redirecionar
-        campaignBox.addEventListener("click", function () {
-            window.location.href = campaign.url;
-        });
+    let coinImage = document.createElement("img");
+    coinImage.src = "static/img/simbolo.png";
+    coinImage.alt = "Imagem da moeda";
 
-        // 🔴 Criar botão "Excluir" dentro do campaignBox
-        let deleteButton = document.createElement("button");
-        deleteButton.textContent = "Excluir";
-        deleteButton.classList.add("campaign-delete-btn");
-        deleteButton.addEventListener("click", function (event) {
-            event.stopPropagation(); // ✅ Impede que o clique afete o redirecionamento
-            excluirCampanha(index);
-        });
+    campaignBox.appendChild(campaignTitle);
+    campaignBox.appendChild(coinImage);
+
+    let deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "&#10006;"; // ✅ Ícone "X"
+    deleteButton.classList.add("campaign-delete-btn");
+    deleteButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        excluirCampanha(index);
+    });
+
+    campaignWrapper.appendChild(campaignBox); // ✅ Campanha dentro do wrapper
+    campaignWrapper.appendChild(deleteButton); // ✅ Botão fora da campanha
+    campaignContainer.appendChild(campaignWrapper); // ✅ Adiciona ao container principal
+});
+
+
+
+
+
+
+
 
         campaignBox.appendChild(campaignTitle);
         campaignBox.appendChild(coinImage);
