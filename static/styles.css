@@ -1331,6 +1331,8 @@ th, td {
     margin-top: auto; /* ✅ Empurra o botão para o final */
     text-align: center;
     transition: 0.3s;
+    position: absolute;
+    bottom: 10px; /* Mantém o botão no final da caixa */
 }
 
 
@@ -1338,6 +1340,7 @@ th, td {
 .campaign-delete-btn:hover {
     background-color: darkred;
 }
+
 
 
   
