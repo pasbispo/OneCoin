@@ -1273,6 +1273,59 @@ th, td {
 
 
 
+
+
+
+
+
+
+
+
+#campaign-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* ✅ 4 campanhas por linha */
+    gap: 20px;
+    justify-items: center;
+    padding: 20px;
+}
+
+.campaign-box {
+    width: 250px;
+    height: 200px;
+    background-color: #f8f9fa; /* 🎨 Cor moderna */
+    text-align: center;
+    border: 2px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.campaign-box:hover {
+    background-color: #e0e0e0;
+}
+
+.campaign-box img {
+    width: 20px; /* 🔄 Diminui a largura da imagem */
+    height: 20px; /* 🔄 Diminui a altura para manter proporcional */
+    object-fit: contain; /* ✅ Garante que a imagem não fique cortada */
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    #campaign-container {
+        grid-template-columns: repeat(2, 1fr); /* 📱 Ajuste para celulares */
+    }
+}
+
+
+
+
+
 .campaign-header {
     display: flex;
     justify-content: space-between; /* ✅ Mantém o título centralizado e o logo à direita */
@@ -1293,7 +1346,3 @@ th, td {
     height: auto;
     cursor: pointer;
 }
-
-
-
-
