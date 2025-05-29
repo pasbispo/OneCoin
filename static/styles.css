@@ -1328,7 +1328,6 @@ th, td {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: block; /* ✅ Garante que fique abaixo da campanha */
     margin-top: auto; /* ✅ Empurra o botão para o final */
     text-align: center;
     transition: 0.3s;
