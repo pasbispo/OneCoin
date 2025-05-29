@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = campaign.url;
         });
 
-        // 🔴 Criar botão "Excluir" abaixo do retângulo
+        // 🔴 Criar botão "Excluir" dentro do campaignBox
         let deleteButton = document.createElement("button");
         deleteButton.textContent = "Excluir";
         deleteButton.classList.add("campaign-delete-btn");
@@ -36,8 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         campaignBox.appendChild(campaignTitle);
         campaignBox.appendChild(coinImage);
-        campaignContainer.appendChild(campaignBox);
-        campaignContainer.appendChild(deleteButton); // ✅ Adiciona o botão abaixo da campanha
+        campaignBox.appendChild(deleteButton); // ✅ Adiciona o botão dentro do campaignBox
+        campaignContainer.appendChild(campaignBox); // ✅ Adiciona campaignBox ao campaignContainer
     });
 });
 
