@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let campaignContainer = document.getElementById("userCampaignsBox"); // 🔄 Novo nome sem conflito
+    let campaignContainer = document.getElementById("userCampaignsBox");
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
     if (campaigns.length === 0) {
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     campaignContainer.innerHTML = ""; // 🔄 Limpa antes de adicionar os itens
 
-    campaigns.forEach(campaign => {
+    campaigns.forEach((campaign, index) => {
         let campaignBox = document.createElement("div");
         campaignBox.classList.add("campaign-box");
 
@@ -20,12 +20,25 @@ document.addEventListener("DOMContentLoaded", function () {
         coinImage.src = "static/img/simbolo.png";
         coinImage.alt = "Imagem da moeda";
 
-        campaignBox.addEventListener("click", function () {
-            window.location.href = campaign.url;
+        // 🔴 Criar botão "X" para excluir campanha
+        let closeButton = document.createElement("button");
+        closeButton.textContent = "✖";
+        closeButton.classList.add("delete-btn");
+        closeButton.addEventListener("click", function () {
+            excluirCampanha(index);
         });
 
+        campaignBox.appendChild(closeButton);
         campaignBox.appendChild(campaignTitle);
         campaignBox.appendChild(coinImage);
         campaignContainer.appendChild(campaignBox);
     });
 });
+
+// 🔥 Função para excluir campanha
+function excluirCampanha(index) {
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+    campaigns.splice(index, 1); // Remove a campanha da lista
+    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    location.reload(); // 🔄 Atualiza a página para refletir a exclusão
+}

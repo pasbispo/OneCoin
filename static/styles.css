@@ -1310,3 +1310,25 @@ th, td {
     object-fit: contain;
     margin-top: 5px;
 }
+
+
+
+
+
+.delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
