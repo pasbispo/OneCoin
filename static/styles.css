@@ -1320,7 +1320,7 @@ th, td {
 
 .campaign-delete-btn {
     width: 100px;
-    margin-top: 50px auto;
+    margin: 10px auto;
     padding: 6px 12px;
     font-size: 14px;
     background-color: red;
@@ -1328,13 +1328,10 @@ th, td {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: auto; /* ✅ Empurra o botão para o final */
+    display: block; /* ✅ Mantém ele fora do retângulo */
     text-align: center;
     transition: 0.3s;
-    position: absolute;
-    bottom: 5px; /* Mantém o botão no final da caixa */
 }
-
 
 
 .campaign-delete-btn:hover {
