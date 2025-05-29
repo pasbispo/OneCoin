@@ -1319,10 +1319,11 @@ th, td {
 
 
 .campaign-delete-btn {
-    width: 100px;
+    width: 50px;  /* ✅ Reduz largura */
+    height: 20px; /* ✅ Reduz altura */
     margin: 10px auto;
-    padding: 6px 12px;
-    font-size: 14px;
+    padding: 6px 12px; /* ✅ Ajusta espaçamento interno */
+    font-size: 12px; /* ✅ Diminui tamanho do texto */
     background-color: red;
     color: white;
     border: none;
@@ -1336,13 +1337,6 @@ th, td {
 
 .campaign-delete-btn:hover {
     background-color: darkred;
-}
-
-.campaign-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* Empurra o botão para o final */
-    align-items: center;
 }
 
 
