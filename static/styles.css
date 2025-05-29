@@ -1208,8 +1208,8 @@ th, td {
 }
 
 .campaign-box img {
-    width: 60px; /* 🔄 Diminui a largura da imagem */
-    height: 60px; /* 🔄 Diminui a altura para manter proporcional */
+    width: 20px; /* 🔄 Diminui a largura da imagem */
+    height: 20px; /* 🔄 Diminui a altura para manter proporcional */
     object-fit: contain; /* ✅ Garante que a imagem não fique cortada */
     margin-top: 10px;
 }
