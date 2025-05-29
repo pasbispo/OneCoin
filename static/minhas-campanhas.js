@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let campaignContainer = document.getElementById("campaign-container");
+    let campaignContainer = document.getElementById("userCampaignsBox"); // 🔄 Novo nome sem conflito
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
     if (campaigns.length === 0) {
@@ -13,16 +13,13 @@ document.addEventListener("DOMContentLoaded", function () {
         let campaignBox = document.createElement("div");
         campaignBox.classList.add("campaign-box");
 
-        // ✅ Adiciona título da campanha
         let campaignTitle = document.createElement("h3");
         campaignTitle.textContent = campaign.nome;
 
-        // ✅ Adiciona imagem da moeda
         let coinImage = document.createElement("img");
-        coinImage.src = "static/img/simbolo.png"; // 🔄 Ajuste conforme a moeda escolhida
+        coinImage.src = "static/img/simbolo.png";
         coinImage.alt = "Imagem da moeda";
 
-        // 🔗 Redireciona ao clicar na caixa
         campaignBox.addEventListener("click", function () {
             window.location.href = campaign.url;
         });

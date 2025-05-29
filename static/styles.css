@@ -1280,9 +1280,16 @@ th, td {
 
 
 
+#userCampaignsBox {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-items: center;
+    padding: 20px;
+}
 
 .campaign-box {
-    width: 180px; /* 🔄 Diminui o tamanho das caixas */
+    width: 180px;
     height: 140px;
     background-color: #f8f9fa;
     text-align: center;
@@ -1298,23 +1305,8 @@ th, td {
 }
 
 .campaign-box img {
-    width: 50px; /* 🔄 Reduz imagem da moeda */
+    width: 50px;
     height: 50px;
     object-fit: contain;
     margin-top: 5px;
 }
-
-#campaign-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* ✅ Mantém 4 campanhas por linha */
-    gap: 15px;
-    justify-items: center;
-    padding: 20px;
-}
-
-@media (max-width: 768px) {
-    #campaign-container {
-        grid-template-columns: repeat(2, 1fr); /* 📱 Ajusta para celulares */
-    }
-}
-
