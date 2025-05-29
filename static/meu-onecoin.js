@@ -1,3 +1,58 @@
+function salvarCampanha() {
+    let campaignName = document.getElementById("campaign-name").value.trim();
+    
+    if (!campaignName) {
+        alert("Digite um nome para a campanha!");
+        return;
+    }
+
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+    
+    campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
+    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+
+    alert("Campanha salva! Você pode acessá-la em 'Minhas Campanhas'.");
+}
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignList = document.getElementById("campaign-list");
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+
+    if (campaigns.length === 0) {
+        campaignList.innerHTML = "<p>Você ainda não criou nenhuma campanha.</p>";
+        return;
+    }
+
+    campaigns.forEach(campaign => {
+        let link = document.createElement("a");
+        link.href = campaign.url;
+        link.textContent = campaign.nome;
+        campaignList.appendChild(link);
+        campaignList.appendChild(document.createElement("br"));
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.getElementById("delete-button").addEventListener("click", function () {
     let confirmDelete = confirm("Tem certeza de que deseja excluir os dados da campanha?");
     
@@ -9,7 +64,7 @@ document.getElementById("delete-button").addEventListener("click", function () {
             return;
         }
 
-        // ✅ Restaurar os campos de entrada, mas sem remover a tabela
+        // ✅ Restaurar os campos de entrada, sem limpar a tabela
         campaign.querySelectorAll("input, textarea").forEach(element => {
             element.value = "";
             element.removeAttribute("disabled"); // 🔄 Remove bloqueios nos campos de texto
@@ -19,19 +74,27 @@ document.getElementById("delete-button").addEventListener("click", function () {
         campaign.querySelector(".panel-goal").textContent = "Objetivo:";
         campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
 
-        // ✅ Reativar eventos e interações na tabela sem removê-la
-        let cryptoTableBody = document.querySelector("#crypto-table tbody");
-
-        if (cryptoTableBody) {
-            cryptoTableBody.style.pointerEvents = "auto"; // ✅ Permite interação novamente
-            cryptoTableBody.querySelectorAll("input, textarea, button").forEach(element => {
-                element.removeAttribute("disabled"); // ✅ Remove bloqueios dos elementos internos
+        // ✅ Restaurar eventos dos botões dentro da tabela de criptomoedas
+        document.querySelectorAll(".select-network-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                let cryptoName = this.getAttribute("data-crypto");
+                abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
             });
+        });
 
-            alert("Dados da campanha excluídos! Agora você pode continuar editando a tabela.");
-        } else {
-            console.error("Erro: Tabela de criptomoedas não encontrada!");
-        }
+        document.querySelectorAll(".copy-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                let addressCell = this.parentElement.previousElementSibling;
+                if (addressCell.textContent !== "Selecione uma rede") {
+                    navigator.clipboard.writeText(addressCell.textContent);
+                    alert("Endereço copiado!");
+                } else {
+                    alert("Selecione uma rede primeiro!");
+                }
+            });
+        });
+
+        alert("Dados da campanha excluídos! Agora você pode continuar editando a tabela.");
     }
 });
 
