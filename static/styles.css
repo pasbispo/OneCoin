@@ -1341,6 +1341,12 @@ th, td {
     background-color: darkred;
 }
 
+.campaign-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Empurra o botão para o final */
+    align-items: center;
+}
 
 
   
