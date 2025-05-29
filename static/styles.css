@@ -1319,7 +1319,7 @@ th, td {
 
 
 .campaign-delete-btn {
-    width: 50px;  /* ✅ Reduz largura */
+    width: 40px;  /* ✅ Reduz largura */
     height: 20px; /* ✅ Reduz altura */
     margin: 10px auto;
     padding: 6px 11px; /* ✅ Ajusta espaçamento interno */
