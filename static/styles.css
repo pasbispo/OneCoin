@@ -1288,7 +1288,20 @@ th, td {
     padding: 20px;
 }
 
+
+
+.campaign-box img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-top: 5px;
+}
+
+
+
+
 .campaign-box {
+    position: relative; /* ✅ Permite posicionar elementos dentro do retângulo */
     width: 180px;
     height: 140px;
     background-color: #f8f9fa;
@@ -1304,17 +1317,7 @@ th, td {
     align-items: center;
 }
 
-.campaign-box img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    margin-top: 5px;
-}
-
-
-
-
-
+/* 🔴 Estilizando o botão "X" para ficar dentro do retângulo */
 .delete-btn {
     position: absolute;
     top: 5px;
@@ -1323,9 +1326,9 @@ th, td {
     color: white;
     border: none;
     padding: 5px 8px;
-    cursor: pointer;
     font-size: 14px;
     border-radius: 50%;
+    cursor: pointer;
     transition: 0.3s;
 }
 
