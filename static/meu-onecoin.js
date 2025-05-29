@@ -1,4 +1,4 @@
-function salvarCampanha() {
+document.getElementById("finalize-button").addEventListener("click", function () {
     let campaignName = document.getElementById("campaign-name").value.trim();
     
     if (!campaignName) {
@@ -7,18 +7,21 @@ function salvarCampanha() {
     }
 
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-    
-    campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
-    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
 
-    alert("Campanha salva! Você pode acessá-la em 'Minhas Campanhas'.");
-}
+    // Evita salvar a mesma campanha várias vezes
+    if (!campaigns.find(c => c.nome === campaignName)) {
+        campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
+        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    }
+
+    alert("Campanha finalizada! Agora ela pode ser acessada em 'Minhas Campanhas'.");
+});
 document.addEventListener("DOMContentLoaded", function () {
     let campaignList = document.getElementById("campaign-list");
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
     if (campaigns.length === 0) {
-        campaignList.innerHTML = "<p>Você ainda não criou nenhuma campanha.</p>";
+        campaignList.innerHTML = "<p>Você ainda não tem campanhas finalizadas.</p>";
         return;
     }
 
@@ -30,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         campaignList.appendChild(document.createElement("br"));
     });
 });
-
-
 document.addEventListener("DOMContentLoaded", function () {
     let params = new URLSearchParams(window.location.search);
     let campaignName = params.get("campanha");
