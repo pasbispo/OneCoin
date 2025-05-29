@@ -1317,21 +1317,23 @@ th, td {
     align-items: center;
 }
 
-.campaign-remove-btn {
-    position: absolute;
-    bottom: 5px; /* ✅ Move para a parte inferior */
-    right: 5px; /* ✅ Posiciona no lado direito */
+
+.campaign-delete-btn {
+    width: 100px;
+    margin: 10px auto;
+    padding: 6px 12px;
+    font-size: 14px;
     background-color: red;
     color: white;
     border: none;
-    padding: 3px 6px; /* ✅ Reduz tamanho */
-    font-size: 12px; /* ✅ Deixa menor */
-    border-radius: 50%;
+    border-radius: 5px;
     cursor: pointer;
+    display: block; /* ✅ Garante que fique abaixo da campanha */
+    text-align: center;
     transition: 0.3s;
 }
 
-.campaign-remove-btn:hover {
+.campaign-delete-btn:hover {
     background-color: darkred;
 }
-
+  

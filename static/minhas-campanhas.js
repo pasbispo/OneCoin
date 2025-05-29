@@ -13,14 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let campaignBox = document.createElement("div");
         campaignBox.classList.add("campaign-box");
 
-        let closeButton = document.createElement("button");
-        closeButton.textContent = "✖";
-        closeButton.classList.add("campaign-remove-btn");
-        closeButton.addEventListener("click", function (event) {
-            event.stopPropagation(); // ✅ Impede que o clique no "X" redirecione para outra página
-            excluirCampanha(index);
-        });
-
         let campaignTitle = document.createElement("h3");
         campaignTitle.textContent = campaign.nome;
 
@@ -28,14 +20,31 @@ document.addEventListener("DOMContentLoaded", function () {
         coinImage.src = "static/img/simbolo.png";
         coinImage.alt = "Imagem da moeda";
 
-        // ✅ Redirecionar ao clicar na campanha (exceto no "X")
+        // ✅ Adiciona evento de clique para redirecionar
         campaignBox.addEventListener("click", function () {
             window.location.href = campaign.url;
         });
 
-        campaignBox.appendChild(closeButton);
+        // 🔴 Criar botão "Excluir" abaixo do retângulo
+        let deleteButton = document.createElement("button");
+        deleteButton.textContent = "Excluir";
+        deleteButton.classList.add("campaign-delete-btn");
+        deleteButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // ✅ Impede que o clique afete o redirecionamento
+            excluirCampanha(index);
+        });
+
         campaignBox.appendChild(campaignTitle);
         campaignBox.appendChild(coinImage);
         campaignContainer.appendChild(campaignBox);
+        campaignContainer.appendChild(deleteButton); // ✅ Adiciona o botão abaixo da campanha
     });
 });
+
+// 🔥 Função para excluir campanha
+function excluirCampanha(index) {
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+    campaigns.splice(index, 1); // ✅ Remove a campanha da lista
+    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    location.reload(); // 🔄 Atualiza a página para refletir a exclusão
+}
