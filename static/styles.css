@@ -1320,7 +1320,7 @@ th, td {
 
 .campaign-delete-btn {
     width: 100px;
-    margin: 10px auto;
+    margin-top: 10px auto;
     padding: 6px 12px;
     font-size: 14px;
     background-color: red;
@@ -1332,6 +1332,8 @@ th, td {
     text-align: center;
     transition: 0.3s;
 }
+
+
 
 .campaign-delete-btn:hover {
     background-color: darkred;
