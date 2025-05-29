@@ -16,6 +16,8 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
     alert("Campanha finalizada! Agora ela pode ser acessada em 'Minhas Campanhas'.");
 });
+
+
 document.addEventListener("DOMContentLoaded", function () {
     let campaignList = document.getElementById("campaign-list");
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
@@ -25,6 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    campaignList.innerHTML = ""; // 🔄 Limpa a lista antes de adicionar os itens
+
     campaigns.forEach(campaign => {
         let link = document.createElement("a");
         link.href = campaign.url;
@@ -33,6 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
         campaignList.appendChild(document.createElement("br"));
     });
 });
+
+
 document.addEventListener("DOMContentLoaded", function () {
     let params = new URLSearchParams(window.location.search);
     let campaignName = params.get("campanha");
@@ -43,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("panel-title").textContent = "Nova campanha!";
     }
 });
+
+
 
 
 
