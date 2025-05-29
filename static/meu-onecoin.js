@@ -19,26 +19,6 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    let campaignList = document.getElementById("menu-my");
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-
-    if (campaigns.length > 0) {
-        let dropdown = document.createElement("div");
-        dropdown.classList.add("dropdown-menu");
-
-        campaigns.forEach(campaign => {
-            let link = document.createElement("a");
-            link.href = campaign.url;
-            link.textContent = campaign.nome;
-            dropdown.appendChild(link);
-        });
-
-        campaignList.appendChild(dropdown);
-    }
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
     let params = new URLSearchParams(window.location.search);
     let campaignName = params.get("campanha");
 
@@ -48,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("panel-title").textContent = "Nova campanha!";
     }
 });
+
 
 
 
