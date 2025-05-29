@@ -105,22 +105,6 @@ document.getElementById("delete-button").addEventListener("click", function () {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    let updateBtn = document.getElementById("update-button");
-    let deleteBtn = document.getElementById("delete-button");
-
-    if (updateBtn && deleteBtn) {
-        // ✅ Ao carregar a página, o botão "Excluir" NÃO fica desativado
-        deleteBtn.removeAttribute("disabled");
-
-        updateBtn.addEventListener("click", function () {
-            deleteBtn.removeAttribute("disabled"); // ✅ Mantém ativado após atualização
-        });
-    } else {
-        console.error("Erro: Botões não encontrados.");
-    }
-});
-
 
 
 function excluirDadosCampanha(campaignWrapper) {
@@ -183,11 +167,7 @@ function updateCampaignData(campaignWrapper) {
         videoPlayer.load();
     }
 
-    // ✅ Ativar o botão "Excluir" depois de atualizar
-    let deleteBtn = campaignWrapper.querySelector(".btn-secondary");
-    if (deleteBtn) {
-        deleteBtn.removeAttribute("disabled");
-    }
+   
 
     alert(`Campanha "${campaignName}" foi atualizada!`);
 }
