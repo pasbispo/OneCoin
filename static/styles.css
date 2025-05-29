@@ -1332,7 +1332,7 @@ th, td {
     text-align: center;
     transition: 0.3s;
     position: absolute;
-    bottom: 10px; /* Mantém o botão no final da caixa */
+    bottom: 50px; /* Mantém o botão no final da caixa */
 }
 
 
