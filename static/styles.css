@@ -1273,7 +1273,6 @@ th, td {
 
 
 
-
 .campaign-header {
     display: flex;
     justify-content: space-between; /* ✅ Mantém o título centralizado e o logo à direita */
@@ -1284,8 +1283,9 @@ th, td {
 .campaign-title {
     flex-grow: 1; /* ✅ Garante que o título fique no centro */
     text-align: center; /* ✅ Centraliza o texto */
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
+    color: #333;
 }
 
 .campaign-logo {
@@ -1293,7 +1293,6 @@ th, td {
     height: auto;
     cursor: pointer;
 }
-
 
 
 
