@@ -1311,30 +1311,43 @@ th, td {
 
 
 
+
+
 #campaign-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
 }
 
 .campaign-box {
-    width: 200px;
+    width: 250px;
+    height: 180px;
+    background-color: #f0f0f0; /* 🎨 Cor suave */
     text-align: center;
     border: 2px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 15px;
+    border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .campaign-box:hover {
-    background-color: #f5f5f5;
+    background-color: #e0e0e0;
 }
 
 .campaign-box img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     margin-top: 10px;
 }
 
+@media (max-width: 768px) {
+    .campaign-box {
+        width: 100%; /* 📱 Ajuste para celulares */
+    }
+}
