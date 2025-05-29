@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // ✅ Adiciona evento de clique para redirecionar
         campaignBox.addEventListener("click", function () {
-            window.location.href = campaign.url;
+            window.open(campaign.url, "_blank"); // ✅ Abre em nova aba
         });
 
         // 🔴 Criar botão "Excluir" dentro do campaignBox
