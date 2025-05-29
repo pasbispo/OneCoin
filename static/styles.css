@@ -1317,3 +1317,22 @@ th, td {
     align-items: center;
 }
 
+
+.campaign-remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 8px;
+    font-size: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.campaign-remove-btn:hover {
+    background-color: darkred;
+}
+

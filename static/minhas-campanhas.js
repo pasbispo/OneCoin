@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let campaignBox = document.createElement("div");
         campaignBox.classList.add("campaign-box");
 
-        // 🔴 Criar botão "X" no canto superior direito da caixa
+        // 🔴 Criar botão "X" no canto superior direito da caixa (novo nome)
         let closeButton = document.createElement("button");
         closeButton.textContent = "✖";
-        closeButton.classList.add("delete-btn");
+        closeButton.classList.add("campaign-remove-btn"); // ✅ Novo nome para evitar conflito
         closeButton.addEventListener("click", function () {
             excluirCampanha(index);
         });
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         coinImage.src = "static/img/simbolo.png";
         coinImage.alt = "Imagem da moeda";
 
-        campaignBox.appendChild(closeButton); // 🔴 Adiciona o botão "X"
+        campaignBox.appendChild(closeButton);
         campaignBox.appendChild(campaignTitle);
         campaignBox.appendChild(coinImage);
         campaignContainer.appendChild(campaignBox);
