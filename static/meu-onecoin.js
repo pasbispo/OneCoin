@@ -1,6 +1,6 @@
 document.getElementById("finalize-button").addEventListener("click", function () {
     let campaignName = document.getElementById("campaign-name").value.trim();
-    
+
     if (!campaignName) {
         alert("Digite um nome para a campanha!");
         return;
@@ -8,7 +8,7 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-    // Evita salvar a mesma campanha várias vezes
+    // Evita duplicatas
     if (!campaigns.find(c => c.nome === campaignName)) {
         campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
         localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
@@ -19,23 +19,22 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    let campaignList = document.getElementById("campaign-list");
+    let campaignList = document.getElementById("menu-my");
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-    if (campaigns.length === 0) {
-        campaignList.innerHTML = "<p>Você ainda não tem campanhas finalizadas.</p>";
-        return;
+    if (campaigns.length > 0) {
+        let dropdown = document.createElement("div");
+        dropdown.classList.add("dropdown-menu");
+
+        campaigns.forEach(campaign => {
+            let link = document.createElement("a");
+            link.href = campaign.url;
+            link.textContent = campaign.nome;
+            dropdown.appendChild(link);
+        });
+
+        campaignList.appendChild(dropdown);
     }
-
-    campaignList.innerHTML = ""; // 🔄 Limpa a lista antes de adicionar os itens
-
-    campaigns.forEach(campaign => {
-        let link = document.createElement("a");
-        link.href = campaign.url;
-        link.textContent = campaign.nome;
-        campaignList.appendChild(link);
-        campaignList.appendChild(document.createElement("br"));
-    });
 });
 
 
@@ -49,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("panel-title").textContent = "Nova campanha!";
     }
 });
+
 
 
 
