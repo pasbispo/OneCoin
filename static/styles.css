@@ -1322,7 +1322,7 @@ th, td {
     width: 50px;  /* ✅ Reduz largura */
     height: 20px; /* ✅ Reduz altura */
     margin: 10px auto;
-    padding: 6px 12px; /* ✅ Ajusta espaçamento interno */
+    padding: 6px 11px; /* ✅ Ajusta espaçamento interno */
     font-size: 12px; /* ✅ Diminui tamanho do texto */
     background-color: red;
     color: white;
