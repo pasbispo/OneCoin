@@ -1179,18 +1179,18 @@ th, td {
 
 
 
-
 #campaign-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* ✅ 4 campanhas por linha */
     gap: 20px;
-    justify-content: center;
+    justify-items: center;
+    padding: 20px;
 }
 
 .campaign-box {
     width: 250px;
-    height: 180px;
-    background-color: #f0f0f0; /* 🎨 Cor suave */
+    height: 200px;
+    background-color: #f8f9fa; /* 🎨 Cor moderna */
     text-align: center;
     border: 2px solid #ccc;
     padding: 15px;
@@ -1214,7 +1214,7 @@ th, td {
 }
 
 @media (max-width: 768px) {
-    .campaign-box {
-        width: 100%; /* 📱 Ajuste para celulares */
+    #campaign-container {
+        grid-template-columns: repeat(2, 1fr); /* 📱 Ajuste para celulares */
     }
 }

@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", function () {
     let campaignContainer = document.getElementById("campaign-container");
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
@@ -34,4 +32,3 @@ document.addEventListener("DOMContentLoaded", function () {
         campaignContainer.appendChild(campaignBox);
     });
 });
-
