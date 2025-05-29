@@ -1329,7 +1329,7 @@ th, td {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: block; /* ✅ Mantém ele fora do retângulo */
+    
     text-align: center;
     transition: 0.3s;
 }
