@@ -1369,19 +1369,16 @@ th, td {
 
 
 
-
 .header-container {
     display: flex;
-    justify-content: center; /* ✅ Centraliza o título */
+    justify-content: space-between; /* ✅ Mantém o título centralizado e o logo à direita */
     align-items: center;
-    gap: 20px; /* ✅ Espaço entre título e logo */
     padding: 20px;
-    width: 100%;
-    justify-content: space-between; /* ✅ Título à esquerda, logo à direita */
-
+    width: 90%; /* ✅ Evita que os elementos ultrapassem os limites da página */
+    margin: auto; /* ✅ Centraliza o cabeçalho na página */
 }
 
-.page-title-one {
+.page-title {
     text-align: center;
     flex-grow: 1; /* ✅ Garante que o título ocupe espaço centralizado */
     font-size: 24px;
@@ -1389,7 +1386,7 @@ th, td {
 }
 
 .onecoin-logo {
-    width: 120px;
+    width: 100px; /* ✅ Reduzi um pouco para evitar ultrapassar limites */
     height: auto;
-    
+    margin-right: 10px; /* ✅ Ajusta a posição do logo */
 }
