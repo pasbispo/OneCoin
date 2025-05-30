@@ -50,7 +50,7 @@ document.getElementById("finalize-button").addEventListener("click", function ()
         });
 
         // ✅ Redireciona para "Minhas Campanhas"
-        window.location.href = "minhas-campanhas.html";
+       window.location.href = `meu-onecoin.html?campanha=${encodeURIComponent(campaign.nome)}`;
     }
 });
 
