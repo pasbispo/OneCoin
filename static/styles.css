@@ -1344,6 +1344,7 @@ th, td {
  
 .campaign-header {
     display: flex;
+    background-color: transparent; /* ✅ Remove qualquer cor de fundo escura */
     justify-content: space-between; /* ✅ Título à esquerda, logo à direita */
     align-items: center;
     padding: 20px;
@@ -1354,11 +1355,11 @@ th, td {
     margin-left: auto; /* ✅ Empurra o logo para a extrema direita */
 }
 
+
 #campaign-logo {
-    width: 120px;
-    height: auto;
+    width: 160px; /* ✅ Aumenta o tamanho do logo */
+    height: auto; /* ✅ Mantém a proporção */
     cursor: pointer;
 }
-
 
  
