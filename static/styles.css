@@ -1370,4 +1370,6 @@ th, td {
     font-weight: bold;
     margin-top: 20px;
     color: black; /* ✅ Alterando a cor */
+    flex-grow: 1; /* ✅ Garante que o título ocupe espaço */
+    text-align: left; /* ✅ Mantém alinhado à esquerda */
 }
