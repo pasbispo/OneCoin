@@ -1368,27 +1368,30 @@ th, td {
 
 
 
-
 .header-container {
     display: flex;
-    justify-content: space-between; /* ✅ Mantém o título centralizado e o logo à direita 
-*/
-    background-color: transparent; /* ✅ Remove qualquer cor de fundo escura */
+    justify-content: space-between; /* ✅ Mantém o título à esquerda e o logo à direita */
     align-items: center;
     padding: 20px;
-    width: 90%; /* ✅ Evita que os elementos ultrapassem os limites da página */
-    margin: auto; /* ✅ Centraliza o cabeçalho na página */
+    width: 90%; /* ✅ Evita ultrapassar os limites da página */
+    margin: auto; /* ✅ Centraliza o cabeçalho */
 }
 
-.page-title {
-    text-align: center;
+.page-title-one {
     flex-grow: 1; /* ✅ Garante que o título ocupe espaço centralizado */
+    text-align: center;
     font-size: 24px;
     font-weight: bold;
 }
 
-.onecoin-logo {
-    width: 100px; /* ✅ Reduzi um pouco para evitar ultrapassar limites */
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* ✅ Mantém o logo na posição correta */
+}
+
+#campaign-logo {
+    width: 120px; /* ✅ Ajuste conforme necessário */
     height: auto;
-    margin-right: 10px; /* ✅ Ajusta a posição do logo */
+    margin-right: 10px; /* ✅ Mantém o logo dentro dos limites */
 }
