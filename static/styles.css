@@ -1368,8 +1368,8 @@ th, td {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 40px;
     color: black; /* ✅ Alterando a cor */
-    flex-grow: 5; /* ✅ Garante que o título ocupe espaço */
+    flex-grow: 0; /* ✅ Garante que o título ocupe espaço */
     text-align: left; /* ✅ Mantém alinhado à esquerda */
 }
