@@ -1147,7 +1147,33 @@ th, td {
 
 
 
-.network-btn {
+
+
+
+
+
+
+
+
+
+#campaign-title {
+    text-align: center; /* ✅ Centraliza o texto */
+    font-size: 24px; /* ✅ Aumenta o tamanho do título */
+    font-weight: bold; /* ✅ Deixa o título mais destacado */
+    margin-top: 20px; /* ✅ Adiciona espaço na parte superior */
+}
+
+
+.select-network-btn {
+    background-color: #007bff; /* 🔵 Azul */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.copy-btn {
     background-color: #28a745; /* ✅ Verde */
     color: white;
     padding: 6px 12px;
@@ -1156,21 +1182,43 @@ th, td {
     cursor: pointer;
 }
 
-.delete-btn {
-    background-color: #dc3545; /* ✅ Vermelho */
-    color: white;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.select-network-btn:hover {
+    background-color: #0056b3;
 }
 
-.network-btn:hover {
+.copy-btn:hover {
     background-color: #218838;
 }
 
-.delete-btn:hover {
-    background-color: #c82333;
+
+
+
+#campaign-title {
+    text-align: center; /* ✅ Centraliza o texto */
+    font-size: 24px; /* ✅ Aumenta o tamanho do título */
+    font-weight: bold; /* ✅ Deixa o título mais destacado */
+    margin-top: 20px; /* ✅ Adiciona espaço na parte superior */
+}
+
+
+
+
+.button-container {
+    display: flex; /* ✅ Organiza os botões lado a lado */
+    justify-content: center; /* ✅ Centraliza horizontalmente */
+    align-items: center; /* ✅ Garante alinhamento vertical */
+    gap: 30px; /* ✅ Espaço entre os botões */
+    width: 83%; /* ✅ Define largura total */
+    margin-top: 20px; /* ✅ Espaço acima */
+    text-align: center; /* ✅ Centraliza o texto */
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 24px; /* ✅ Ajusta o tamanho do botão */
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 
@@ -1178,3 +1226,96 @@ th, td {
 
 
 
+.campaign-divider {
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.new-campaign-label {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#userCampaignsBox {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    justify-items: center;
+    padding: 20px;
+}
+
+
+
+.campaign-box img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-top: 5px;
+}
+
+
+
+
+.campaign-box {
+    position: relative; /* ✅ Permite posicionar elementos dentro do retângulo */
+    width: 180px;
+    height: 140px;
+    background-color: #f8f9fa;
+    text-align: center;
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.campaign-delete-btn {
+    width: 40px;  /* ✅ Reduz largura */
+    height: 20px; /* ✅ Reduz altura */
+    margin: 10px auto;
+    padding: 6px 11px; /* ✅ Ajusta espaçamento interno */
+    font-size: 12px; /* ✅ Diminui tamanho do texto */
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    text-align: center;
+    transition: 0.3s;
+}
+
+
+.campaign-delete-btn:hover {
+    background-color: darkred;
+}
+
+
+  
