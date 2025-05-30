@@ -1363,11 +1363,10 @@ th, td {
     height: auto; /* ✅ Mantém a proporção */
     cursor: pointer;
 }
-
 #campaign-title {
+    color: black; /* ✅ Altera a cor do texto para preto */
     text-align: center;
     font-size: 24px;
     font-weight: bold;
     margin-top: 20px;
-    color: black; /* ✅ Substitua por outra cor, se desejar */
 }
