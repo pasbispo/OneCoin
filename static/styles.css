@@ -1370,18 +1370,24 @@ th, td {
 
 
 
-
 .header-container {
     display: flex;
-    justify-content: space-between; /* ✅ Mantém o título à esquerda e o logo à direita */
+    justify-content: center; /* ✅ Centraliza o título */
     align-items: center;
+    gap: 20px; /* ✅ Espaço entre título e logo */
     padding: 20px;
     width: 100%;
 }
 
-.onecoin-logo {
-    margin-left: auto; /* ✅ Empurra o logo para a extrema direita */
-    width: 120px; /* ✅ Ajuste o tamanho conforme necessário */
-    height: auto;
+.page-title {
+    text-align: center;
+    flex-grow: 1; /* ✅ Garante que o título ocupe espaço centralizado */
+    font-size: 24px;
+    font-weight: bold;
 }
 
+.onecoin-logo {
+    width: 120px;
+    height: auto;
+    margin-left: auto; /* ✅ Garante que o logo fique na extrema direita */
+}
