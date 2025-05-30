@@ -1342,8 +1342,6 @@ th, td {
 
 
  
-
-
 .campaign-header {
     display: flex;
     justify-content: space-between; /* ✅ Título à esquerda, logo à direita */
@@ -1352,13 +1350,15 @@ th, td {
     width: 100%;
 }
 
-.logo-container {
+.campaign-logo-container {
     margin-left: auto; /* ✅ Empurra o logo para a extrema direita */
 }
 
-#site-logo {
+#campaign-logo {
     width: 120px;
     height: auto;
     cursor: pointer;
 }
+
+
  
