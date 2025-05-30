@@ -1156,6 +1156,10 @@ th, td {
     background-color: #218838;
 }
 
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
 
 
 
@@ -1306,7 +1310,26 @@ th, td {
 }
 
 
+.campaign-delete-btn {
+    width: 40px;  /* ✅ Reduz largura */
+    height: 20px; /* ✅ Reduz altura */
+    margin: 10px auto;
+    padding: 6px 11px; /* ✅ Ajusta espaçamento interno */
+    font-size: 12px; /* ✅ Diminui tamanho do texto */
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    text-align: center;
+    transition: 0.3s;
+}
 
+
+.campaign-delete-btn:hover {
+    background-color: darkred;
+}
 
 
 

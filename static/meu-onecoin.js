@@ -34,40 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-        document.querySelectorAll(".copy-btn").forEach(button => {
-            button.addEventListener("click", function() {
-                let addressCell = this.parentElement.previousElementSibling;
-                if (addressCell.textContent !== "Selecione uma rede") {
-                    navigator.clipboard.writeText(addressCell.textContent);
-                    alert("Endereço copiado!");
-                } else {
-                    alert("Selecione uma rede primeiro!");
-                }
-            });
-        });
-
-        alert("Dados da campanha excluídos! Agora você pode continuar editando a tabela.");
-    }
-});
+       
 
 
 
 
 
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    let updateBtn = document.getElementById("update-button");
-
-    if (updateBtn) {
-        updateBtn.addEventListener("click", function () {
-            console.log("Botão de atualização clicado!");
-        });
-    } else {
-        console.error("Erro: Botão de atualização não encontrado.");
-    }
-});
 
 
 
