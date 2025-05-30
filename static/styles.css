@@ -1112,39 +1112,31 @@ th, td {
 
 
 
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border: 2px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-    z-index: 1000;
-}
-
-.save-btn, .close-btn {
-    margin-top: 10px;
-    padding: 8px 12px;
-    cursor: pointer;
+.network-btn {
+    background-color: #28a745; /* ✅ Verde */
+    color: white;
+    padding: 6px 12px;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.save-btn {
-    background-color: #28a745;
+.delete-btn {
+    background-color: #dc3545; /* ✅ Vermelho */
     color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.close-btn {
-    background-color: #dc3545;
-    color: white;
+.network-btn:hover {
+    background-color: #218838;
 }
 
-
-
-
-
+.delete-btn:hover {
+    background-color: #c82333;
+}
 
 
 
