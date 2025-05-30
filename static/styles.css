@@ -1371,7 +1371,9 @@ th, td {
 
 .header-container {
     display: flex;
-    justify-content: space-between; /* ✅ Mantém o título centralizado e o logo à direita */
+    justify-content: space-between; /* ✅ Mantém o título centralizado e o logo à direita 
+*/
+    background-color: transparent; /* ✅ Remove qualquer cor de fundo escura */
     align-items: center;
     padding: 20px;
     width: 90%; /* ✅ Evita que os elementos ultrapassem os limites da página */
