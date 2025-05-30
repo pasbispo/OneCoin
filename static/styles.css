@@ -1364,7 +1364,7 @@ th, td {
     cursor: pointer;
 }
 #campaign-title {
-    color: black; /* ✅ Altera a cor do texto para preto */
+    color: #007bff; /* ✅ Altera a cor do texto para preto */
     text-align: center;
     font-size: 24px;
     font-weight: bold;
