@@ -141,6 +141,15 @@ header {
     gap: 100px; /* Mantém um espaçamento uniforme entre os itens */
 }
 
+#site-logo {
+    font-size: 50px; /* Define tamanho maior para o logo */
+    font-weight: bold;
+    text-decoration: none; /* Remove sublinhado */
+    display: block;
+    text-align: center; /* Centraliza o logo */
+    margin: 20px auto; /* Garante espaçamento adequado */
+}
+
 
 .site-title {
     text-align: center;
