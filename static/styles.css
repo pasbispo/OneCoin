@@ -1370,6 +1370,7 @@ th, td {
 
 .header-container {
     display: flex;
+    background-color: transparent; /* ✅ Remove a faixa preta */
     justify-content: space-between; /* ✅ Mantém o título à esquerda e o logo à direita */
     align-items: center;
     padding: 20px;
