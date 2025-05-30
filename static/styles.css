@@ -1362,3 +1362,26 @@ th, td {
     flex-grow: 0; /* ✅ Garante que o título ocupe espaço */
     text-align: left; /* ✅ Mantém alinhado à esquerda */
 }
+
+
+
+
+
+
+
+
+
+.header-container {
+    display: flex;
+    justify-content: space-between; /* ✅ Mantém o título à esquerda e o logo à direita */
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.onecoin-logo {
+    margin-left: auto; /* ✅ Empurra o logo para a extrema direita */
+    width: 120px; /* ✅ Ajuste o tamanho conforme necessário */
+    height: auto;
+}
+
