@@ -1,3 +1,43 @@
+
+document.getElementById("finalize-button").addEventListener("click", function () {
+    let campaignWrapper = document.querySelector(".container");
+
+    if (campaignWrapper) {
+        finalizarCampanha(campaignWrapper);
+
+        // ✅ Salva o estado de bloqueio no localStorage
+        localStorage.setItem("campaignFinalizada", "true");
+    } else {
+        console.error("Erro: A campanha ativa não foi encontrada.");
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignWrapper = document.querySelector(".container");
+
+    if (localStorage.getItem("campaignFinalizada") === "true" && campaignWrapper) {
+        // ✅ Bloqueia os campos automaticamente ao carregar a página
+        let campaignName = campaignWrapper.querySelector("input[type='text']");
+        let campaignPeriod = campaignWrapper.querySelector("input[type='number']");
+        let cryptoTable = campaignWrapper.querySelector("#crypto-table");
+
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+
+        campaignWrapper.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+
+        console.log("A campanha está finalizada e os campos permanecem bloqueados.");
+    }
+});
+
+
+
+
 document.getElementById("finalize-button").addEventListener("click", function () {
     let campaignName = document.getElementById("campaign-name").value.trim();
 
@@ -28,24 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("panel-title").textContent = "Nova campanha!";
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -670,19 +692,6 @@ document.querySelectorAll(".copy-btn").forEach(button => {
     });
 });
 
-
-
-
-
-document.getElementById("finalize-button").addEventListener("click", function () {
-    let campaignWrapper = document.querySelector(".container");
-
-    if (campaignWrapper) {
-        finalizarCampanha(campaignWrapper);
-    } else {
-        console.error("Erro: A campanha ativa não foi encontrada.");
-    }
-});
 
 
 
