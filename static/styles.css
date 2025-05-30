@@ -1377,6 +1377,8 @@ th, td {
     gap: 20px; /* ✅ Espaço entre título e logo */
     padding: 20px;
     width: 100%;
+    justify-content: space-between; /* ✅ Título à esquerda, logo à direita */
+
 }
 
 .page-title-one {
@@ -1389,5 +1391,5 @@ th, td {
 .onecoin-logo {
     width: 120px;
     height: auto;
-    margin-left: auto; /* ✅ Garante que o logo fique na extrema direita */
+    
 }
