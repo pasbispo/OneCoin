@@ -1,3 +1,68 @@
+document.getElementById("finalize-button").addEventListener("click", function () {
+    let campaignWrapper = document.querySelector(".container");
+
+    if (campaignWrapper) {
+        let campaignName = document.getElementById("campaign-name").value.trim();
+        let campaignPeriod = document.getElementById("campaign-period").value.trim();
+        let campaignGoal = document.getElementById("campaign-goal").value.trim();
+        let campaignImages = document.getElementById("campaign-images").files;
+        let campaignVideo = document.getElementById("video-file").files[0];
+
+        if (!campaignName) {
+            alert("Digite um nome para a campanha!");
+            return;
+        }
+
+        let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+
+        // Adiciona nova campanha no localStorage
+        let newCampaign = {
+            nome: campaignName,
+            periodo: campaignPeriod,
+            objetivo: campaignGoal,
+            imagens: campaignImages.length > 0 ? URL.createObjectURL(campaignImages[0]) : "",
+            video: campaignVideo ? URL.createObjectURL(campaignVideo) : ""
+        };
+
+        campaigns.push(newCampaign);
+        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+
+        // ✅ Bloqueia os campos
+        document.getElementById("campaign-name").setAttribute("disabled", "true");
+        document.getElementById("campaign-period").setAttribute("disabled", "true");
+
+        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        // ✅ Redireciona para "Minhas Campanhas"
+        window.location.href = "minhas-campanhas.html";
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+    let campaignList = document.getElementById("campaigns-list");
+
+    if (campaigns.length === 0) {
+        campaignList.innerHTML = "<p>Você ainda não criou campanhas.</p>";
+        return;
+    }
+
+    campaigns.forEach(campaign => {
+        let campaignCard = document.createElement("div");
+        campaignCard.classList.add("campaign-card");
+        campaignCard.innerHTML = `
+            <h3>${campaign.nome}</h3>
+            <p><strong>Período:</strong> ${campaign.periodo} dias</p>
+            <p><strong>Objetivo:</strong> ${campaign.objetivo}</p>
+            <img src="${campaign.imagens}" alt="Imagem da Campanha" width="150">
+            <video src="${campaign.video}" width="200" controls></video>
+        `;
+        campaignList.appendChild(campaignCard);
+    });
+});
 
 
 
@@ -659,39 +724,5 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 });
 
 
-document.getElementById("finalize-button").addEventListener("click", function () {
-    let campaignWrapper = document.querySelector(".container");
 
-    if (campaignWrapper) {
-        finalizarCampanha(campaignWrapper);
-
-        // ✅ Salva o estado de bloqueio no localStorage
-        localStorage.setItem("campaignFinalizada", "true");
-    } else {
-        console.error("Erro: A campanha ativa não foi encontrada.");
-    }
-});
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    let campaignWrapper = document.querySelector(".container");
-
-    if (localStorage.getItem("campaignFinalizada") === "true" && campaignWrapper) {
-        // ✅ Bloqueia os campos automaticamente ao carregar a página
-        let campaignName = campaignWrapper.querySelector("input[type='text']");
-        let campaignPeriod = campaignWrapper.querySelector("input[type='number']");
-        let cryptoTable = campaignWrapper.querySelector("#crypto-table");
-
-        if (campaignName) campaignName.setAttribute("disabled", "true");
-        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
-
-        campaignWrapper.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-            element.setAttribute("disabled", "true");
-        });
-
-        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
-
-        console.log("A campanha está finalizada e os campos permanecem bloqueados.");
-    }
-});
 
