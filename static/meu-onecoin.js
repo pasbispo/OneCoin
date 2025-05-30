@@ -50,79 +50,84 @@ document.getElementById("finalize-button").addEventListener("click", function ()
         });
 
         // ✅ Redireciona para "Minhas Campanhas"
-       window.location.href = `meu-onecoin.html?campanha=${encodeURIComponent(campaign.nome)}`;
+        window.location.href = "minhas-campanhas.html";
     }
 });
 
 
 document.addEventListener("DOMContentLoaded", function () {
     let params = new URLSearchParams(window.location.search);
-    let campaignName = params.get("campanha");
+    let campaignData = params.get("data");
 
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-    let campaign = campaigns.find(c => c.nome === campaignName);
+    if (!campaignData) {
+        console.error("Erro: Nenhuma campanha foi encontrada na URL.");
+        return;
+    }
 
-    if (campaign) {
-        document.getElementById("panel-title").textContent = campaign.nome;
-        document.getElementById("panel-duration").textContent = `Período: ${campaign.periodo} dias`;
-        document.getElementById("panel-goal").textContent = "Objetivo: " + campaign.objetivo;
+    let campaign = JSON.parse(decodeURIComponent(campaignData));
+
+    document.getElementById("panel-title").textContent = campaign.nome;
+    document.getElementById("panel-duration").textContent = `Período: ${campaign.periodo} dias`;
+    document.getElementById("panel-goal").textContent = "Objetivo: " + campaign.objetivo;
+    
+    if (campaign.imagens) {
         document.getElementById("slideshow-image").src = campaign.imagens;
+    }
+
+    if (campaign.video) {
         document.getElementById("video-player").src = campaign.video;
         document.getElementById("video-player").load();
-
-        let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-        cryptoPanelBody.innerHTML = "";
-
-        campaign.criptomoedas.forEach(crypto => {
-            let row = document.createElement("tr");
-
-            let cellSymbol = document.createElement("td");
-            let cellQuantity = document.createElement("td");
-            let cellValue = document.createElement("td");
-            let cellNetwork = document.createElement("td");
-            let cellAddress = document.createElement("td");
-            let cellCopyButton = document.createElement("td");
-
-            cellSymbol.textContent = crypto.simbolo;
-            cellQuantity.textContent = crypto.quantidade;
-            cellValue.textContent = crypto.valor;
-            cellNetwork.textContent = crypto.rede;
-            cellAddress.textContent = crypto.endereco;
-
-            let copyBtn = document.createElement("button");
-            copyBtn.textContent = "Copiar";
-            copyBtn.classList.add("copy-btn");
-            copyBtn.addEventListener("click", function () {
-                navigator.clipboard.writeText(cellAddress.textContent);
-                alert("Endereço copiado!");
-            });
-            cellCopyButton.appendChild(copyBtn);
-
-            row.appendChild(cellSymbol);
-            row.appendChild(cellQuantity);
-            row.appendChild(cellValue);
-            row.appendChild(cellNetwork);
-            row.appendChild(cellAddress);
-            row.appendChild(cellCopyButton);
-
-            cryptoPanelBody.appendChild(row);
-        });
-
-        // ✅ Bloqueia os campos para edição
-        document.getElementById("campaign-name").setAttribute("disabled", "true");
-        document.getElementById("campaign-period").setAttribute("disabled", "true");
-
-        document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
-            element.setAttribute("disabled", "true");
-        });
-
-        console.log("Campanha carregada com sucesso e todos os dados foram recuperados corretamente!");
-    } else {
-        console.error("Erro: Campanha não encontrada!");
     }
+
+    // ✅ Exibir criptomoedas na tabela
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+    cryptoPanelBody.innerHTML = "";
+
+    campaign.criptomoedas.forEach(crypto => {
+        let row = document.createElement("tr");
+
+        let cellSymbol = document.createElement("td");
+        let cellQuantity = document.createElement("td");
+        let cellValue = document.createElement("td");
+        let cellNetwork = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellCopyButton = document.createElement("td");
+
+        cellSymbol.textContent = crypto.simbolo;
+        cellQuantity.textContent = crypto.quantidade;
+        cellValue.textContent = crypto.valor;
+        cellNetwork.textContent = crypto.rede;
+        cellAddress.textContent = crypto.endereco;
+
+        let copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", function () {
+            navigator.clipboard.writeText(cellAddress.textContent);
+            alert("Endereço copiado!");
+        });
+        cellCopyButton.appendChild(copyBtn);
+
+        row.appendChild(cellSymbol);
+        row.appendChild(cellQuantity);
+        row.appendChild(cellValue);
+        row.appendChild(cellNetwork);
+        row.appendChild(cellAddress);
+        row.appendChild(cellCopyButton);
+
+        cryptoPanelBody.appendChild(row);
+    });
+
+    // ✅ Bloquear edição dos campos após carregar a campanha
+    document.getElementById("campaign-name").setAttribute("disabled", "true");
+    document.getElementById("campaign-period").setAttribute("disabled", "true");
+
+    document.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+        element.setAttribute("disabled", "true");
+    });
+
+    console.log("Campanha carregada com sucesso com todos os dados recuperados!");
 });
-
-
 
 
 

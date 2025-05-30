@@ -22,9 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
         coinImage.alt = "Imagem da moeda";
 
         // ✅ Adiciona evento de clique para redirecionar
-        campaignBox.addEventListener("click", function () {
-            window.open(campaign.url, "_blank"); // ✅ Abre em nova aba
-        });
+       campaignBox.addEventListener("click", function () {
+    let campaignData = encodeURIComponent(JSON.stringify(campaign));
+    window.location.href = `meu-onecoin.html?data=${campaignData}`;
+});
+
 
         // 🔴 Criar botão "Excluir" dentro do campaignBox
         let deleteButton = document.createElement("button");
