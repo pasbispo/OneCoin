@@ -1,3 +1,240 @@
+document.getElementById("finalize-button").addEventListener("click", function () {
+    let campaignName = document.getElementById("campaign-name").value.trim();
+
+    if (!campaignName) {
+        alert("Digite um nome para a campanha!");
+        return;
+    }
+
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+
+    // Evita duplicatas
+    if (!campaigns.find(c => c.nome === campaignName)) {
+        campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
+        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    }
+
+    alert("Campanha finalizada! Agora ela pode ser acessada em 'Minhas Campanhas'.");
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let params = new URLSearchParams(window.location.search);
+    let campaignName = params.get("campanha");
+
+    if (campaignName) {
+        document.getElementById("panel-title").textContent = campaignName;
+    } else {
+        document.getElementById("panel-title").textContent = "Nova campanha!";
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById("delete-button").addEventListener("click", function () {
+    let confirmDelete = confirm("Tem certeza de que deseja excluir os dados da campanha?");
+    
+    if (confirmDelete) {
+        let campaign = document.querySelector(".container");
+
+        if (!campaign) {
+            console.error("Erro: Estrutura da campanha não encontrada!");
+            return;
+        }
+
+        // ✅ Restaurar os campos de entrada, sem limpar a tabela
+        campaign.querySelectorAll("input, textarea").forEach(element => {
+            element.value = "";
+            element.removeAttribute("disabled"); // 🔄 Remove bloqueios nos campos de texto
+        });
+
+        campaign.querySelector(".panel-title").textContent = "Nova campanha!";
+        campaign.querySelector(".panel-goal").textContent = "Objetivo:";
+        campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
+
+        // ✅ Restaurar eventos dos botões dentro da tabela de criptomoedas
+        document.querySelectorAll(".select-network-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                let cryptoName = this.getAttribute("data-crypto");
+                abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
+            });
+        });
+
+        document.querySelectorAll(".copy-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                let addressCell = this.parentElement.previousElementSibling;
+                if (addressCell.textContent !== "Selecione uma rede") {
+                    navigator.clipboard.writeText(addressCell.textContent);
+                    alert("Endereço copiado!");
+                } else {
+                    alert("Selecione uma rede primeiro!");
+                }
+            });
+        });
+
+        alert("Dados da campanha excluídos! Agora você pode continuar editando a tabela.");
+    }
+});
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let updateBtn = document.getElementById("update-button");
+    let deleteBtn = document.getElementById("delete-button");
+
+    if (updateBtn && deleteBtn) {
+        // ✅ Ao carregar a página, o botão "Excluir" NÃO fica desativado
+        deleteBtn.removeAttribute("disabled");
+
+        updateBtn.addEventListener("click", function () {
+            deleteBtn.removeAttribute("disabled"); // ✅ Mantém ativado após atualização
+        });
+    } else {
+        console.error("Erro: Botões não encontrados.");
+    }
+});
+
+
+
+function excluirDadosCampanha(campaignWrapper) {
+    let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados desta campanha?");
+    
+    if (confirmDelete) {
+        let campaign = campaignWrapper.querySelector(".container");
+
+        if (!campaign) {
+            console.error("Erro: Estrutura da campanha não encontrada!");
+            return;
+        }
+
+        // 🔄 Restaurar valores para o padrão vazio
+        campaign.querySelector("input[type='text']").value = "";
+        campaign.querySelector("textarea").value = "";
+        campaign.querySelector("input[type='number']").value = "";
+        campaign.querySelector("input[type='file']").value = "";
+        campaign.querySelector(".slideshow-image").src = "#";
+        campaign.querySelector(".video-player").src = "";
+        campaign.querySelector(".panel-title").textContent = "Nova campanha!";
+        campaign.querySelector(".panel-goal").textContent = "Objetivo:";
+        campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
+
+        alert("Todos os dados da campanha foram excluídos!");
+    }
+}
+
+
+
+
+
+function updateCampaignData(campaignWrapper) {
+    let campaign = campaignWrapper.querySelector(".container");
+
+    let campaignName = campaign.querySelector("input[type='text']").value;
+    let campaignGoal = campaign.querySelector("textarea").value;
+    let campaignPeriod = campaign.querySelector("input[type='number']").value;
+    let campaignImages = campaign.querySelector("input[type='file']").files;
+    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
+
+    let panelTitle = campaignWrapper.querySelector(".panel-title");
+    let panelGoal = campaignWrapper.querySelector(".panel-goal");
+    let panelDuration = campaignWrapper.querySelector(".panel-duration");
+    let panelImage = campaignWrapper.querySelector(".slideshow-image");
+    let videoPlayer = campaignWrapper.querySelector(".video-player");
+
+    panelTitle.textContent = campaignName;
+    panelGoal.textContent = "Objetivo: " + campaignGoal;
+    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
+
+    if (campaignImages.length > 0) {
+        let imageURL = URL.createObjectURL(campaignImages[0]);
+        panelImage.src = imageURL;
+    }
+
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        videoPlayer.src = videoURL;
+        videoPlayer.load();
+    }
+
+    // ✅ Ativar o botão "Excluir" depois de atualizar
+    let deleteBtn = campaignWrapper.querySelector(".btn-secondary");
+    if (deleteBtn) {
+        deleteBtn.removeAttribute("disabled");
+    }
+
+    alert(`Campanha "${campaignName}" foi atualizada!`);
+}
+
+
+
+
+
+
+
+function finalizarCampanha(campaignWrapper) {
+    let confirmFinalize = confirm("Após finalizar, você só poderá modificar imagens, objetivo e vídeo. Deseja continuar?");
+    
+    if (confirmFinalize) {
+        let campaign = campaignWrapper;
+
+        let campaignName = campaign.querySelector("input[type='text']");
+        let campaignPeriod = campaign.querySelector("input[type='number']");
+        let cryptoTable = campaign.querySelector("#crypto-table");
+
+        if (campaignName) campaignName.setAttribute("disabled", "true");
+        if (campaignPeriod) campaignPeriod.setAttribute("disabled", "true");
+
+        campaign.querySelectorAll("#crypto-table input, #crypto-table textarea, #crypto-table button").forEach(element => {
+            element.setAttribute("disabled", "true");
+        });
+
+        if (cryptoTable) cryptoTable.style.pointerEvents = "none";
+
+        // ✅ Apenas imagem, objetivo e vídeo permanecem editáveis
+        let campaignImages = campaign.querySelector("#campaign-images");
+        let campaignGoal = campaign.querySelector("#campaign-goal");
+        let campaignVideo = campaign.querySelector("#video-file");
+
+        if (campaignImages) campaignImages.removeAttribute("disabled");
+        if (campaignGoal) campaignGoal.removeAttribute("disabled");
+        if (campaignVideo) campaignVideo.removeAttribute("disabled");
+
+        alert("Campanha finalizada! Agora você só pode editar imagens, objetivo e vídeo.");
+    }
+}
+
+
+
+
+
+
 
 
 document.getElementById("update-button").addEventListener("click", function() {
@@ -303,7 +540,14 @@ document.addEventListener("DOMContentLoaded", function() {
         networkBtn.classList.add("network-btn");
         networkBtn.setAttribute("data-crypto", crypto.name);
 
-       
+        // ✅ Botão "Excluir" (vermelho)
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Excluir";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", function() {
+            row.remove();
+            updateLocalStorage(crypto.name);
+        });
 
         cellActions.appendChild(networkBtn);
         cellActions.appendChild(deleteBtn);
@@ -388,6 +632,14 @@ function openNetworkModal(cryptoName) {
 
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
+}
+
+
+// ✅ Função para remover criptomoeda do `localStorage`
+function updateLocalStorage(cryptoName) {
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    selectedCryptos = selectedCryptos.filter(crypto => crypto.name !== cryptoName);
+    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
 }
 
 
