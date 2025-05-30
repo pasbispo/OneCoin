@@ -1352,9 +1352,7 @@ th, td {
     width: 100%;
 }
 
-.campaign-logo-container {
-    margin-left: auto; /* ✅ Empurra o logo para a extrema direita */
-}
+
 
 
 
@@ -1368,7 +1366,7 @@ th, td {
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 20px;
     color: black; /* ✅ Alterando a cor */
     flex-grow: 0; /* ✅ Garante que o título ocupe espaço */
     text-align: left; /* ✅ Mantém alinhado à esquerda */
