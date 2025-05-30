@@ -34,54 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-document.getElementById("delete-button").addEventListener("click", function () {
-    let confirmDelete = confirm("Tem certeza de que deseja excluir os dados da campanha?");
-    
-    if (confirmDelete) {
-        let campaign = document.querySelector(".container");
-
-        if (!campaign) {
-            console.error("Erro: Estrutura da campanha não encontrada!");
-            return;
-        }
-
-        // ✅ Restaurar os campos de entrada, sem limpar a tabela
-        campaign.querySelectorAll("input, textarea").forEach(element => {
-            element.value = "";
-            element.removeAttribute("disabled"); // 🔄 Remove bloqueios nos campos de texto
-        });
-
-        campaign.querySelector(".panel-title").textContent = "Nova campanha!";
-        campaign.querySelector(".panel-goal").textContent = "Objetivo:";
-        campaign.querySelector(".panel-duration").textContent = "Período: Digite o período";
-
-        // ✅ Restaurar eventos dos botões dentro da tabela de criptomoedas
-        document.querySelectorAll(".select-network-btn").forEach(button => {
-            button.addEventListener("click", function() {
-                let cryptoName = this.getAttribute("data-crypto");
-                abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
-            });
-        });
-
         document.querySelectorAll(".copy-btn").forEach(button => {
             button.addEventListener("click", function() {
                 let addressCell = this.parentElement.previousElementSibling;
@@ -107,47 +59,20 @@ document.getElementById("delete-button").addEventListener("click", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     let updateBtn = document.getElementById("update-button");
-    let deleteBtn = document.getElementById("delete-button");
 
-    if (updateBtn && deleteBtn) {
-        // ✅ Ao carregar a página, o botão "Excluir" NÃO fica desativado
-        deleteBtn.removeAttribute("disabled");
-
+    if (updateBtn) {
         updateBtn.addEventListener("click", function () {
-            deleteBtn.removeAttribute("disabled"); // ✅ Mantém ativado após atualização
+            console.log("Botão de atualização clicado!");
         });
     } else {
-        console.error("Erro: Botões não encontrados.");
+        console.error("Erro: Botão de atualização não encontrado.");
     }
 });
 
 
 
-function excluirDadosCampanha(campaignWrapper) {
-    let confirmDelete = confirm("Tem certeza de que deseja excluir todos os dados desta campanha?");
-    
-    if (confirmDelete) {
-        let campaign = campaignWrapper.querySelector(".container");
 
-        if (!campaign) {
-            console.error("Erro: Estrutura da campanha não encontrada!");
-            return;
-        }
 
-        // 🔄 Restaurar valores para o padrão vazio
-        campaign.querySelector("input[type='text']").value = "";
-        campaign.querySelector("textarea").value = "";
-        campaign.querySelector("input[type='number']").value = "";
-        campaign.querySelector("input[type='file']").value = "";
-        campaign.querySelector(".slideshow-image").src = "#";
-        campaign.querySelector(".video-player").src = "";
-        campaign.querySelector(".panel-title").textContent = "Nova campanha!";
-        campaign.querySelector(".panel-goal").textContent = "Objetivo:";
-        campaign.querySelector(".panel-duration").textContent = "Período: 0 dias";
-
-        alert("Todos os dados da campanha foram excluídos!");
-    }
-}
 
 
 
@@ -183,11 +108,7 @@ function updateCampaignData(campaignWrapper) {
         videoPlayer.load();
     }
 
-    // ✅ Ativar o botão "Excluir" depois de atualizar
-    let deleteBtn = campaignWrapper.querySelector(".btn-secondary");
-    if (deleteBtn) {
-        deleteBtn.removeAttribute("disabled");
-    }
+    
 
     alert(`Campanha "${campaignName}" foi atualizada!`);
 }
