@@ -992,13 +992,14 @@ button:hover {
 }
 
 
-
 header {
     display: flex;
-    justify-content: space-between; /* ✅ Mantém o título centralizado e o logo à direita */
+    justify-content: space-between;
     align-items: center;
     padding: 20px;
+    width: 100%; /* ✅ Garante que ocupe toda a largura */
 }
+
 
 #page-title {
     flex-grow: 1; /* ✅ Garante que o título fique no centro */
@@ -1008,11 +1009,11 @@ header {
 }
 
 #site-logo {
+    margin-left: auto; /* ✅ Empurra o logo para o lado direito */
     width: 120px;
     height: auto;
     cursor: pointer;
 }
-
 
 
 
@@ -1109,6 +1110,64 @@ th, td {
 
 
 
+
+
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border: 2px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.save-btn, .close-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border: none;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.close-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+
+.network-btn {
+    background-color: #28a745; /* ✅ Verde */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #dc3545; /* ✅ Vermelho */
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.network-btn:hover {
+    background-color: #218838;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
 
 
 
@@ -1282,4 +1341,24 @@ th, td {
 }
 
 
-  
+ 
+
+
+.campaign-header {
+    display: flex;
+    justify-content: space-between; /* ✅ Título à esquerda, logo à direita */
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.logo-container {
+    margin-left: auto; /* ✅ Empurra o logo para a extrema direita */
+}
+
+#site-logo {
+    width: 120px;
+    height: auto;
+    cursor: pointer;
+}
+ 
