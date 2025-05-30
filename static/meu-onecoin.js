@@ -520,14 +520,7 @@ document.addEventListener("DOMContentLoaded", function() {
         networkBtn.classList.add("network-btn");
         networkBtn.setAttribute("data-crypto", crypto.name);
 
-        // ✅ Botão "Excluir" (vermelho)
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", function() {
-            row.remove();
-            updateLocalStorage(crypto.name);
-        });
+       
 
         cellActions.appendChild(networkBtn);
         cellActions.appendChild(deleteBtn);
@@ -612,14 +605,6 @@ function openNetworkModal(cryptoName) {
 
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
-}
-
-
-// ✅ Função para remover criptomoeda do `localStorage`
-function updateLocalStorage(cryptoName) {
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-    selectedCryptos = selectedCryptos.filter(crypto => crypto.name !== cryptoName);
-    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
 }
 
 
