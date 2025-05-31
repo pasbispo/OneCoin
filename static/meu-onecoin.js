@@ -47,7 +47,6 @@ document.getElementById("update-button").addEventListener("click", function () {
 });
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
