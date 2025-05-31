@@ -43,7 +43,6 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 });
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
     let params = new URLSearchParams(window.location.search);
     let campaignData = params.get("data");
@@ -102,6 +101,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Campanha carregada com sucesso e todas as criptomoedas foram recuperadas!");
 });
+
+
+
 
 
 
