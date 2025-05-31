@@ -77,46 +77,54 @@ ${campaignData.periodo} dias`;
         document.getElementById("video-player").load();
 
         let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-        cryptoPanelBody.innerHTML = "";
+cryptoPanelBody.innerHTML = "";
 
-        campaignData.criptomoedas.forEach(crypto => {
-            let row = document.createElement("tr");
+campaignData.criptomoedas.forEach(crypto => {
+    let row = document.createElement("tr");
 
-            let cellImage = document.createElement("td");
-            let cellSymbol = document.createElement("td");
-            let cellNetwork = document.createElement("td");
-            let cellAddress = document.createElement("td");
-            let cellCopyButton = document.createElement("td");
+    let cellImage = document.createElement("td");
+    let cellSymbol = document.createElement("td");
+    let cellNetwork = document.createElement("td");
+    let cellAddress = document.createElement("td");
+    let cellCopyButton = document.createElement("td");
 
-            cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
-            cellSymbol.textContent = crypto.simbolo;
-            cellNetwork.textContent = crypto.rede;
-            cellAddress.textContent = crypto.endereco;
+    // ✅ Adiciona a imagem corretamente
+    cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
 
-            let copyBtn = document.createElement("button");
-            copyBtn.textContent = "Copiar";
-            copyBtn.classList.add("copy-btn");
-            copyBtn.addEventListener("click", function () {
-                navigator.clipboard.writeText(cellAddress.textContent);
-                alert("Endereço copiado!");
-            });
-            cellCopyButton.appendChild(copyBtn);
+    cellSymbol.textContent = crypto.simbolo;
+    cellNetwork.textContent = crypto.rede;
+    cellAddress.textContent = crypto.endereco;
 
-            row.appendChild(cellImage);
-            row.appendChild(cellSymbol);
-            row.appendChild(cellNetwork);
-            row.appendChild(cellAddress);
-            row.appendChild(cellCopyButton);
+    // ✅ Adiciona botão "Selecionar Rede"
+    let selectNetworkBtn = document.createElement("button");
+    selectNetworkBtn.textContent = "Selecionar Rede";
+    selectNetworkBtn.classList.add("select-network-btn");
+    selectNetworkBtn.setAttribute("data-crypto", crypto.simbolo);
+    selectNetworkBtn.addEventListener("click", function () {
+        abrirSelecaoDeRede(crypto.simbolo, cellAddress);
+    });
 
-            cryptoPanelBody.appendChild(row);
-        });
+    // ✅ Adiciona botão "Copiar"
+    let copyBtn = document.createElement("button");
+    copyBtn.textContent = "Copiar";
+    copyBtn.classList.add("copy-btn");
+    copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(cellAddress.textContent);
+        alert("Endereço copiado!");
+    });
 
-        // ✅ Bloqueia edição dos campos, mas permite nova campanha
-        bloquearCampos();
-    } else {
-        console.log("Nenhuma campanha ativa encontrada! Você pode iniciar uma nova.");
-    }
+    cellCopyButton.appendChild(copyBtn);
+    cellNetwork.appendChild(selectNetworkBtn);
+
+    row.appendChild(cellImage);
+    row.appendChild(cellSymbol);
+    row.appendChild(cellNetwork);
+    row.appendChild(cellAddress);
+    row.appendChild(cellCopyButton);
+
+    cryptoPanelBody.appendChild(row);
 });
+
 
 function bloquearCampos() {
     // ✅ Bloqueia os campos da campanha salva
