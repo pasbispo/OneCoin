@@ -208,6 +208,7 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
     alert("Campanha salva! Quando você abrir novamente, os dados estarão como foram deixados.");
 });
+
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("savedCampaign"));
 
@@ -271,23 +272,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.getElementById("finalize-button").addEventListener("click", function () {
-    let campaignName = document.getElementById("campaign-name").value.trim();
+    let campaignData = {
+        nome: document.getElementById("campaign-name").value.trim(),
+        periodo: document.getElementById("campaign-period").value.trim(),
+        objetivo: document.getElementById("campaign-goal").value.trim(),
+        imagens: document.getElementById("slideshow-image").src,
+        video: document.getElementById("video-player").src,
+        criptomoedas: []
+    };
 
-    if (!campaignName) {
-        alert("Digite um nome para a campanha!");
-        return;
-    }
+    let cryptoTableRows = document.querySelectorAll(".crypto-panel-table tbody tr");
+    cryptoTableRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+        campaignData.criptomoedas.push({
+            simbolo: cells[0]?.textContent.trim(),
+            rede: cells[1]?.textContent.trim(),
+            endereco: cells[2]?.textContent.trim()
+        });
+    });
 
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+    localStorage.setItem("savedCampaign", JSON.stringify(campaignData));
 
-    // Evita duplicatas
-    if (!campaigns.find(c => c.nome === campaignName)) {
-        campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
-        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-    }
-
-    alert("Campanha finalizada! Agora ela pode ser acessada em 'Minhas Campanhas'.");
+    alert("Campanha salva! Quando você abrir novamente, os dados estarão como foram deixados.");
 });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
