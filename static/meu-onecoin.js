@@ -3,9 +3,6 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     window.location.reload(); // ✅ Atualiza a página para iniciar uma nova campanha
 });
 
-if (campaignData.imagens && campaignData.imagens !== "#") {
-    document.getElementById("slideshow-image").src = campaignData.imagens;
-}
 
 
 document.getElementById("update-button").addEventListener("click", function () {
@@ -57,74 +54,62 @@ document.getElementById("update-button").addEventListener("click", function () {
 });
 
 
+
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
-    if (!campaignData) {
-        console.error("Nenhuma campanha ativa encontrada!");
-        return;
-    }
-
-    document.getElementById("campaign-name").value = campaignData.nome;
-    document.getElementById("campaign-period").value = campaignData.periodo;
-    document.getElementById("panel-title").textContent = campaignData.nome;
-    document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
-    document.getElementById("panel-goal").textContent = campaignData.objetivo;
-${campaignData.periodo} dias`;
+    if (campaignData) {
+        // ✅ Carregar campanha existente
+        document.getElementById("campaign-name").value = campaignData.nome;
+        document.getElementById("campaign-period").value = campaignData.periodo;
+        document.getElementById("panel-title").textContent = campaignData.nome;
+        document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
         document.getElementById("panel-goal").textContent = "Objetivo: " + campaignData.objetivo;
         document.getElementById("slideshow-image").src = campaignData.imagens;
         document.getElementById("video-player").src = campaignData.video;
         document.getElementById("video-player").load();
 
         let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-cryptoPanelBody.innerHTML = "";
+        cryptoPanelBody.innerHTML = "";
 
-campaignData.criptomoedas.forEach(crypto => {
-    let row = document.createElement("tr");
+        campaignData.criptomoedas.forEach(crypto => {
+            let row = document.createElement("tr");
 
-    let cellImage = document.createElement("td");
-    let cellSymbol = document.createElement("td");
-    let cellNetwork = document.createElement("td");
-    let cellAddress = document.createElement("td");
-    let cellCopyButton = document.createElement("td");
+            let cellImage = document.createElement("td");
+            let cellSymbol = document.createElement("td");
+            let cellNetwork = document.createElement("td");
+            let cellAddress = document.createElement("td");
+            let cellCopyButton = document.createElement("td");
 
-    // ✅ Adiciona a imagem corretamente
-    cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
+            cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
+            cellSymbol.textContent = crypto.simbolo;
+            cellNetwork.textContent = crypto.rede;
+            cellAddress.textContent = crypto.endereco;
 
-    cellSymbol.textContent = crypto.simbolo;
-    cellNetwork.textContent = crypto.rede;
-    cellAddress.textContent = crypto.endereco;
+            let copyBtn = document.createElement("button");
+            copyBtn.textContent = "Copiar";
+            copyBtn.classList.add("copy-btn");
+            copyBtn.addEventListener("click", function () {
+                navigator.clipboard.writeText(cellAddress.textContent);
+                alert("Endereço copiado!");
+            });
+            cellCopyButton.appendChild(copyBtn);
 
-    // ✅ Adiciona botão "Selecionar Rede"
-    let selectNetworkBtn = document.createElement("button");
-    selectNetworkBtn.textContent = "Selecionar Rede";
-    selectNetworkBtn.classList.add("select-network-btn");
-    selectNetworkBtn.setAttribute("data-crypto", crypto.simbolo);
-    selectNetworkBtn.addEventListener("click", function () {
-        abrirSelecaoDeRede(crypto.simbolo, cellAddress);
-    });
+            row.appendChild(cellImage);
+            row.appendChild(cellSymbol);
+            row.appendChild(cellNetwork);
+            row.appendChild(cellAddress);
+            row.appendChild(cellCopyButton);
 
-    // ✅ Adiciona botão "Copiar"
-    let copyBtn = document.createElement("button");
-    copyBtn.textContent = "Copiar";
-    copyBtn.classList.add("copy-btn");
-    copyBtn.addEventListener("click", function () {
-        navigator.clipboard.writeText(cellAddress.textContent);
-        alert("Endereço copiado!");
-    });
+            cryptoPanelBody.appendChild(row);
+        });
 
-    cellCopyButton.appendChild(copyBtn);
-    cellNetwork.appendChild(selectNetworkBtn);
-
-    row.appendChild(cellImage);
-    row.appendChild(cellSymbol);
-    row.appendChild(cellNetwork);
-    row.appendChild(cellAddress);
-    row.appendChild(cellCopyButton);
-
-    cryptoPanelBody.appendChild(row);
+        // ✅ Bloqueia edição dos campos, mas permite nova campanha
+        bloquearCampos();
+    } else {
+        console.log("Nenhuma campanha ativa encontrada! Você pode iniciar uma nova.");
+    }
 });
-
 
 function bloquearCampos() {
     // ✅ Bloqueia os campos da campanha salva
@@ -135,14 +120,6 @@ function bloquearCampos() {
         element.setAttribute("disabled", "true");
     });
 }
-
-
-
-
-
-
-
-
 
 
 
