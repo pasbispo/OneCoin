@@ -3,6 +3,9 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     window.location.reload(); // ✅ Atualiza a página para iniciar uma nova campanha
 });
 
+if (campaignData.imagens && campaignData.imagens !== "#") {
+    document.getElementById("slideshow-image").src = campaignData.imagens;
+}
 
 
 document.getElementById("update-button").addEventListener("click", function () {
@@ -57,12 +60,17 @@ document.getElementById("update-button").addEventListener("click", function () {
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
-    if (campaignData) {
-        // ✅ Carregar campanha existente
-        document.getElementById("campaign-name").value = campaignData.nome;
-        document.getElementById("campaign-period").value = campaignData.periodo;
-        document.getElementById("panel-title").textContent = campaignData.nome;
-        document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
+    if (!campaignData) {
+        console.error("Nenhuma campanha ativa encontrada!");
+        return;
+    }
+
+    document.getElementById("campaign-name").value = campaignData.nome;
+    document.getElementById("campaign-period").value = campaignData.periodo;
+    document.getElementById("panel-title").textContent = campaignData.nome;
+    document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
+    document.getElementById("panel-goal").textContent = campaignData.objetivo;
+${campaignData.periodo} dias`;
         document.getElementById("panel-goal").textContent = "Objetivo: " + campaignData.objetivo;
         document.getElementById("slideshow-image").src = campaignData.imagens;
         document.getElementById("video-player").src = campaignData.video;
