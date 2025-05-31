@@ -1,3 +1,97 @@
+document.getElementById("update-button").addEventListener("click", function () {
+    let campaignName = document.getElementById("campaign-name").value.trim();
+    let campaignPeriod = document.getElementById("campaign-period").value.trim();
+    let campaignGoal = document.getElementById("campaign-goal").value.trim();
+    let campaignImages = document.getElementById("campaign-images").files[0];
+    let campaignVideo = document.getElementById("video-file").files[0];
+
+    if (!campaignName || !campaignPeriod) {
+        alert("Preencha todas as informações antes de atualizar!");
+        return;
+    }
+
+    // ✅ Atualizar a planilha da direita com os dados do lado esquerdo
+    document.getElementById("panel-title").textContent = campaignName;
+    document.getElementById("panel-duration").textContent = `Período: ${campaignPeriod} dias`;
+    document.getElementById("panel-goal").textContent = campaignGoal || "Nenhum objetivo definido.";
+
+    // ✅ Se houver imagem, mostrar na direita
+    if (campaignImages) {
+        let imageURL = URL.createObjectURL(campaignImages);
+        document.getElementById("slideshow-image").src = imageURL;
+    }
+
+    // ✅ Se houver vídeo, mostrar na direita
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        document.getElementById("video-player").src = videoURL;
+        document.getElementById("video-player").load();
+    }
+
+    alert("Campanha atualizada! Agora os dados aparecerão na planilha da direita.");
+});
+let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+cryptoPanelBody.innerHTML = "";
+
+let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+selectedCryptos.forEach(crypto => {
+    let row = document.createElement("tr");
+
+    let cellSymbol = document.createElement("td");
+    let cellNetwork = document.createElement("td");
+    let cellAddress = document.createElement("td");
+    let cellCopyButton = document.createElement("td");
+
+    cellSymbol.textContent = crypto.simbolo || "Criptomoeda desconhecida";
+    cellNetwork.textContent = crypto.rede || "Selecione uma rede";
+    cellAddress.textContent = crypto.endereco || "Selecione uma rede";
+
+    // ✅ Adicionar botão "Selecionar Rede"
+    let selectNetworkBtn = document.createElement("button");
+    selectNetworkBtn.textContent = "Selecionar Rede";
+    selectNetworkBtn.classList.add("select-network-btn");
+    selectNetworkBtn.setAttribute("data-crypto", crypto.simbolo);
+    selectNetworkBtn.addEventListener("click", function () {
+        abrirSelecaoDeRede(crypto.simbolo, cellAddress);
+    });
+
+    // ✅ Adicionar botão "Copiar"
+    let copyBtn = document.createElement("button");
+    copyBtn.textContent = "Copiar";
+    copyBtn.classList.add("copy-btn");
+    copyBtn.addEventListener("click", function () {
+        if (cellAddress.textContent !== "Selecione uma rede") {
+            navigator.clipboard.writeText(cellAddress.textContent);
+            alert("Endereço copiado!");
+        } else {
+            alert("Selecione uma rede antes de copiar!");
+        }
+    });
+
+    cellCopyButton.appendChild(copyBtn);
+    cellNetwork.appendChild(selectNetworkBtn);
+
+    row.appendChild(cellSymbol);
+    row.appendChild(cellNetwork);
+    row.appendChild(cellAddress);
+    row.appendChild(cellCopyButton);
+
+    cryptoPanelBody.appendChild(row);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.getElementById("new-campaign-button").addEventListener("click", function () {
     localStorage.removeItem("activeCampaign"); // ✅ Apaga os dados da campanha anterior
     window.location.reload(); // ✅ Atualiza a página para iniciar uma nova campanha
