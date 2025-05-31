@@ -194,8 +194,7 @@ document.getElementById("finalize-button").addEventListener("click", function ()
         criptomoedas: []
     };
 
-    let cryptoTableRows = document.querySelectorAll(".crypto-panel-table tbody tr");
-    cryptoTableRows.forEach(row => {
+    document.querySelectorAll(".crypto-panel-table tbody tr").forEach(row => {
         let cells = row.querySelectorAll("td");
         campaignData.criptomoedas.push({
             simbolo: cells[0]?.textContent.trim(),
@@ -205,10 +204,8 @@ document.getElementById("finalize-button").addEventListener("click", function ()
     });
 
     localStorage.setItem("savedCampaign", JSON.stringify(campaignData));
-
-    alert("Campanha salva! Quando você abrir novamente, os dados estarão como foram deixados.");
+    alert("Campanha salva! Seus dados serão restaurados quando você voltar.");
 });
-
 
 
 
