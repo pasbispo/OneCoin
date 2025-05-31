@@ -184,6 +184,81 @@ selectedCryptos.forEach(crypto => {
 
 
 
+document.getElementById("finalize-button").addEventListener("click", function () {
+    let campaignData = {
+        nome: document.getElementById("campaign-name").value.trim(),
+        periodo: document.getElementById("campaign-period").value.trim(),
+        objetivo: document.getElementById("campaign-goal").value.trim(),
+        imagens: document.getElementById("slideshow-image").src,
+        video: document.getElementById("video-player").src,
+        criptomoedas: []
+    };
+
+    let cryptoTableRows = document.querySelectorAll(".crypto-panel-table tbody tr");
+    cryptoTableRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+        campaignData.criptomoedas.push({
+            simbolo: cells[0]?.textContent.trim(),
+            rede: cells[1]?.textContent.trim(),
+            endereco: cells[2]?.textContent.trim()
+        });
+    });
+
+    localStorage.setItem("savedCampaign", JSON.stringify(campaignData));
+
+    alert("Campanha salva! Quando você abrir novamente, os dados estarão como foram deixados.");
+});
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignData = JSON.parse(localStorage.getItem("savedCampaign"));
+
+    if (!campaignData) {
+        console.log("Nenhuma campanha salva encontrada!");
+        return;
+    }
+
+    document.getElementById("campaign-name").value = campaignData.nome;
+    document.getElementById("campaign-period").value = campaignData.periodo;
+    document.getElementById("panel-title").textContent = campaignData.nome;
+    document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
+    document.getElementById("panel-goal").textContent = campaignData.objetivo;
+    document.getElementById("slideshow-image").src = campaignData.imagens;
+    document.getElementById("video-player").src = campaignData.video;
+    document.getElementById("video-player").load();
+
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+    cryptoPanelBody.innerHTML = "";
+
+    campaignData.criptomoedas.forEach(crypto => {
+        let row = document.createElement("tr");
+
+        let cellSymbol = document.createElement("td");
+        let cellNetwork = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellCopyButton = document.createElement("td");
+
+        cellSymbol.textContent = crypto.simbolo;
+        cellNetwork.textContent = crypto.rede;
+        cellAddress.textContent = crypto.endereco;
+
+        let copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", function () {
+            navigator.clipboard.writeText(cellAddress.textContent);
+            alert("Endereço copiado!");
+        });
+        cellCopyButton.appendChild(copyBtn);
+
+        row.appendChild(cellSymbol);
+        row.appendChild(cellNetwork);
+        row.appendChild(cellAddress);
+        row.appendChild(cellCopyButton);
+
+        cryptoPanelBody.appendChild(row);
+    });
+
+    console.log("Campanha carregada com sucesso e todos os dados foram recuperados!");
+});
 
 
 
