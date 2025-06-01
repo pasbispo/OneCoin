@@ -449,6 +449,9 @@ document.getElementById("update-button").addEventListener("click", function() {
 
 
 
+
+
+
 document.getElementById("campaign-goal").addEventListener("input", function() {
     let maxLength = 544;  // ✅ Define o limite
     let currentLength = this.value.length;
