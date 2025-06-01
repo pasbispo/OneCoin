@@ -259,16 +259,24 @@ selectedCryptos.forEach(crypto => {
 });
 
 
- document.getElementById("update-button").addEventListener("click", function() {
-    let campaignPeriod = document.getElementById("campaign-period").value;
+ document.getElementById("update-button").addEventListener("click", function () {
+    let campaignName = document.getElementById("campaign-name");
+    let campaignPeriod = document.getElementById("campaign-period");
+    let cryptoTableInputs = document.querySelectorAll("#crypto-table input, #crypto-table button");
 
-    if (campaignPeriod) {
-        localStorage.setItem("campaign-period", campaignPeriod); // ✅ Salva no localStorage corretamente
-        document.getElementById("panel-duration").textContent = `Período: ${campaignPeriod} dias`;
-    } else {
-        console.error("Erro: O período da campanha não foi definido corretamente.");
-    }
+    // ✅ Bloqueia os campos do lado esquerdo
+    campaignName.setAttribute("disabled", "true");
+    campaignPeriod.setAttribute("disabled", "true");
+
+    cryptoTableInputs.forEach(element => {
+        element.setAttribute("disabled", "true"); // ✅ Bloqueia a tabela de criptomoedas
+    });
+
+    alert("Campanha bloqueada! Agora você só pode editar imagens, objetivo e vídeo.");
 });
+
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     let updateButton = document.getElementById("update-button");
