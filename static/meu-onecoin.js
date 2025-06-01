@@ -1,84 +1,9 @@
-function bloquearCampos() {
-    document.getElementById("campaign-name").setAttribute("disabled", "true");
-    document.getElementById("campaign-period").setAttribute("disabled", "true");
-
-    document.querySelectorAll("#crypto-table input, #crypto-table button:not(.select-network-btn)").forEach(element => {
-        element.setAttribute("disabled", "true");
-    });
-
-    alert("Os campos foram bloqueados! Agora só é possível modificar imagens, objetivo e vídeo.");
-}
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    let campaignData = JSON.parse(localStorage.getItem("savedCampaign"));
 
-    if (!campaignData) {
-        console.log("Nenhuma campanha salva encontrada!");
-        return;
-    }
 
-    document.getElementById("panel-title").textContent = campaignData.nome || "Nome não encontrado";
-    document.getElementById("panel-duration").textContent = campaignData.periodo || "0 dias";
-    document.getElementById("panel-goal").textContent = campaignData.objetivo || "Nenhum objetivo definido.";
 
-    if (campaignData.imagens && campaignData.imagens !== "") {
-        document.getElementById("slideshow-image").src = campaignData.imagens;
-    }
 
-    if (campaignData.video && campaignData.video !== "") {
-        document.getElementById("video-player").src = campaignData.video;
-        document.getElementById("video-player").load();
-    }
-
-    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-    cryptoPanelBody.innerHTML = "";
-
-    campaignData.criptomoedas.forEach(crypto => {
-        let row = document.createElement("tr");
-
-        let cellSymbol = document.createElement("td");
-        let cellNetwork = document.createElement("td");
-        let cellAddress = document.createElement("td");
-        let cellCopyButton = document.createElement("td");
-
-        cellSymbol.textContent = crypto.simbolo || "Criptomoeda desconhecida";
-        cellNetwork.textContent = crypto.rede || "Selecionar Rede";
-        cellAddress.textContent = crypto.endereco || "Selecione uma rede";
-
-        let selectNetworkBtn = document.createElement("button");
-        selectNetworkBtn.textContent = "Selecionar Rede";
-        selectNetworkBtn.classList.add("select-network-btn");
-        selectNetworkBtn.setAttribute("data-crypto", crypto.simbolo);
-        selectNetworkBtn.addEventListener("click", function () {
-            abrirSelecaoDeRede(crypto.simbolo, cellAddress);
-        });
-
-        let copyBtn = document.createElement("button");
-        copyBtn.textContent = "Copiar";
-        copyBtn.classList.add("copy-btn");
-        copyBtn.addEventListener("click", function () {
-            if (cellAddress.textContent !== "Selecione uma rede") {
-                navigator.clipboard.writeText(cellAddress.textContent);
-                alert("Endereço copiado!");
-            } else {
-                alert("Selecione uma rede antes de copiar!");
-            }
-        });
-
-        cellCopyButton.appendChild(copyBtn);
-        cellNetwork.appendChild(selectNetworkBtn);
-
-        row.appendChild(cellSymbol);
-        row.appendChild(cellNetwork);
-        row.appendChild(cellAddress);
-        row.appendChild(cellCopyButton);
-
-        cryptoPanelBody.appendChild(row);
-    });
-
-    bloquearCampos();
-});
 
 
 
@@ -93,8 +18,6 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     localStorage.removeItem("activeCampaign"); // ✅ Apaga os dados da campanha anterior
     window.location.reload(); // ✅ Atualiza a página para iniciar uma nova campanha
 });
-
-
 
 
 
@@ -149,42 +72,27 @@ selectedCryptos.forEach(crypto => {
 });
 
 
+ document.getElementById("update-button").addEventListener("click", function() {
+    let campaignPeriod = document.getElementById("campaign-period").value;
 
+    if (campaignPeriod) {
+        localStorage.setItem("campaign-period", campaignPeriod); // ✅ Salva no localStorage corretamente
+        document.getElementById("panel-duration").textContent = `Período: ${campaignPeriod} dias`;
+    } else {
+        console.error("Erro: O período da campanha não foi definido corretamente.");
+    }
+});
 
+document.addEventListener("DOMContentLoaded", function() {
+    let updateButton = document.getElementById("update-button");
 
-
-
-
-
-
-
-
-
-
-
-document.getElementById("finalize-button").addEventListener("click", function () {
-    let campaignData = {
-        nome: document.getElementById("campaign-name").value.trim(),
-        periodo: document.getElementById("campaign-period").value.trim(),
-        objetivo: document.getElementById("campaign-goal").value.trim(),
-        imagens: document.getElementById("slideshow-image").src,
-        video: document.getElementById("video-player").src,
-        criptomoedas: []
-    };
-
-    let cryptoTableRows = document.querySelectorAll(".crypto-panel-table tbody tr");
-    cryptoTableRows.forEach(row => {
-        let cells = row.querySelectorAll("td");
-        campaignData.criptomoedas.push({
-            simbolo: cells[0]?.textContent.trim(),
-            rede: cells[1]?.textContent.trim(),
-            endereco: cells[2]?.textContent.trim()
+    if (updateButton) {  // ✅ Garante que o elemento existe antes de adicionar o evento
+        updateButton.addEventListener("click", function() {
+            console.log("Botão clicado!");
         });
-    });
-
-    localStorage.setItem("savedCampaign", JSON.stringify(campaignData));
-
-    alert("Campanha salva! Quando você abrir novamente, os dados estarão como foram deixados.");
+    } else {
+        console.error("Erro: O elemento 'update-button' não foi encontrado!");
+    }
 });
 
 
@@ -197,24 +105,15 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
 
 
-document.getElementById("finalize-button").addEventListener("click", function () {
-    let campaignName = document.getElementById("campaign-name").value.trim();
 
-    if (!campaignName) {
-        alert("Digite um nome para a campanha!");
-        return;
-    }
 
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-    // Evita duplicatas
-    if (!campaigns.find(c => c.nome === campaignName)) {
-        campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
-        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-    }
 
-    alert("Campanha finalizada! Agora ela pode ser acessada em 'Minhas Campanhas'.");
-});
+
+
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -351,24 +250,6 @@ document.getElementById("update-button").addEventListener("click", function() {
         localStorage.setItem("cryptoImage", cryptoImage);
     } else {
         console.error("Erro: Dados da criptomoeda não foram definidos corretamente.");
-    }
-});
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    let updateButton = document.getElementById("update-button");
-
-    if (updateButton) {  // ✅ Garante que o elemento existe antes de adicionar o evento
-        updateButton.addEventListener("click", function() {
-            console.log("Botão clicado!");
-        });
-    } else {
-        console.error("Erro: O elemento 'update-button' não foi encontrado!");
     }
 });
 
