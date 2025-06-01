@@ -332,40 +332,6 @@ function finalizarCampanha(campaignWrapper) {
 
 
 
-document.getElementById("update-button").addEventListener("click", function() {
-    // 🏆 Atualizar dados da campanha apenas ao clicar no botão
-    let campaignName = document.getElementById("campaign-name").value;
-    let campaignGoal = document.getElementById("campaign-goal").value;
-    let campaignPeriod = document.getElementById("campaign-period").value;
-    let campaignImages = document.getElementById("campaign-images").files;
-    let campaignVideo = document.getElementById("video-file").files[0];
-
-    let panelTitle = document.getElementById("panel-title");
-    let panelGoal = document.getElementById("panel-goal");
-    let panelDuration = document.getElementById("panel-duration");
-    let panelImage = document.getElementById("slideshow-image");
-    let videoPlayer = document.getElementById("video-player");
-
-    // 🏆 Atualizando elementos na planilha direita
-    panelTitle.textContent = campaignName;
-    panelGoal.textContent = "Objetivo: " + campaignGoal;
-    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
-
-    // 🏆 Atualizar imagens apenas após o clique no botão
-    if (campaignImages.length > 0) {
-        let imageURL = URL.createObjectURL(campaignImages[0]);
-        panelImage.src = imageURL;
-    }
-
-    // 🏆 Atualizar vídeo apenas após o clique no botão
-    if (campaignVideo) {
-        let videoURL = URL.createObjectURL(campaignVideo);
-        videoPlayer.src = videoURL;
-        videoPlayer.load();
-    }
-});
-
-
 // 🚀 Executa automaticamente ao carregar a página
 document.addEventListener("DOMContentLoaded", function() {
     let cryptoName = localStorage.getItem("selectedCrypto");
