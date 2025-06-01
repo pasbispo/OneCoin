@@ -1,6 +1,7 @@
 
 
 
+
 document.getElementById("new-campaign-button").addEventListener("click", function () {
     localStorage.removeItem("activeCampaign"); // ✅ Apaga os dados da campanha anterior
     window.location.reload(); // ✅ Atualiza a página para iniciar uma nova campanha
@@ -57,11 +58,6 @@ selectedCryptos.forEach(crypto => {
 
     cryptoPanelBody.appendChild(row);
 });
-
-
-
-
-
 
 
  document.getElementById("update-button").addEventListener("click", function() {
