@@ -652,3 +652,42 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
+
+document.getElementById("update-button").addEventListener("click", function () {
+    let campaignName = document.getElementById("campaign-name").value.trim();
+    let campaignPeriod = document.getElementById("campaign-period").value.trim();
+    let campaignGoal = document.getElementById("campaign-goal").value.trim();
+
+    if (!campaignName || !campaignPeriod) {
+        alert("Preencha todas as informações antes de atualizar!");
+        return;
+    }
+
+    let campaignData = {
+        nome: campaignName,
+        periodo: campaignPeriod,
+        objetivo: campaignGoal,
+        imagens: document.getElementById("slideshow-image").src || "",
+        video: document.getElementById("video-player").src || "",
+        criptomoedas: JSON.parse(localStorage.getItem("selectedCryptos")) || []
+    };
+
+    localStorage.setItem("savedCampaign", JSON.stringify(campaignData));
+
+    document.getElementById("panel-title").textContent = campaignName;
+
+    alert("Campanha atualizada! O nome foi salvo corretamente.");
+});
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignData = JSON.parse(localStorage.getItem("savedCampaign"));
+
+    if (!campaignData) {
+        console.log("Nenhuma campanha salva encontrada!");
+        return;
+    }
+
+    document.getElementById("campaign-name").value = campaignData.nome || "Nome não encontrado";
+    document.getElementById("panel-title").textContent = campaignData.nome || "Nova campanha!";
+});
+
+
