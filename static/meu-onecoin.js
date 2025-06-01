@@ -207,6 +207,12 @@ document.getElementById("update-button").addEventListener("click", function() {
 
 
 
+
+
+
+
+
+
 document.getElementById("new-campaign-button").addEventListener("click", function () {
     localStorage.removeItem("activeCampaign"); // ✅ Apaga os dados da campanha anterior
     window.location.reload(); // ✅ Atualiza a página para iniciar uma nova campanha
@@ -290,25 +296,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     let params = new URLSearchParams(window.location.search);
     let campaignName = params.get("campanha");
@@ -321,41 +308,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
-function updateCampaignData(campaignWrapper) {
-    let campaign = campaignWrapper.querySelector(".container");
-
-    let campaignName = campaign.querySelector("input[type='text']").value;
-    let campaignGoal = campaign.querySelector("textarea").value;
-    let campaignPeriod = campaign.querySelector("input[type='number']").value;
-    let campaignImages = campaign.querySelector("input[type='file']").files;
-    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
-
-    let panelTitle = campaignWrapper.querySelector(".panel-title");
-    let panelGoal = campaignWrapper.querySelector(".panel-goal");
-    let panelDuration = campaignWrapper.querySelector(".panel-duration");
-    let panelImage = campaignWrapper.querySelector(".slideshow-image");
-    let videoPlayer = campaignWrapper.querySelector(".video-player");
-
-    panelTitle.textContent = campaignName;
-    panelGoal.textContent = "Objetivo: " + campaignGoal;
-    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
-
-    if (campaignImages.length > 0) {
-        let imageURL = URL.createObjectURL(campaignImages[0]);
-        panelImage.src = imageURL;
-    }
-
-    if (campaignVideo) {
-        let videoURL = URL.createObjectURL(campaignVideo);
-        videoPlayer.src = videoURL;
-        videoPlayer.load();
-    }
-
-    
-
-    alert(`Campanha "${campaignName}" foi atualizada!`);
-}
 
 
 
