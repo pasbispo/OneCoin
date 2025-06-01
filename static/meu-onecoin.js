@@ -652,7 +652,6 @@ document.querySelectorAll(".copy-btn").forEach(button => {
 
 
 
-
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignName = document.getElementById("campaign-name").value.trim();
     let campaignPeriod = document.getElementById("campaign-period").value.trim();
@@ -689,5 +688,3 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("campaign-name").value = campaignData.nome || "Nome não encontrado";
     document.getElementById("panel-title").textContent = campaignData.nome || "Nova campanha!";
 });
-
-
