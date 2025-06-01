@@ -97,38 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    let params = new URLSearchParams(window.location.search);
-    let campaignName = params.get("campanha");
-
-    if (campaignName) {
-        document.getElementById("panel-title").textContent = campaignName;
-    } else {
-        document.getElementById("panel-title").textContent = "Nova campanha!";
-    }
-});
-
-
-
 function updateCampaignData(campaignWrapper) {
     let campaign = campaignWrapper.querySelector(".container");
 
