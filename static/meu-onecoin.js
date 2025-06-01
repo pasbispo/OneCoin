@@ -1,16 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignName = document.getElementById("campaign-name").value.trim();
     let campaignPeriod = document.getElementById("campaign-period").value.trim();
@@ -308,6 +296,41 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
+function updateCampaignData(campaignWrapper) {
+    let campaign = campaignWrapper.querySelector(".container");
+
+    let campaignName = campaign.querySelector("input[type='text']").value;
+    let campaignGoal = campaign.querySelector("textarea").value;
+    let campaignPeriod = campaign.querySelector("input[type='number']").value;
+    let campaignImages = campaign.querySelector("input[type='file']").files;
+    let campaignVideo = campaign.querySelector("input[type='file']").files[0];
+
+    let panelTitle = campaignWrapper.querySelector(".panel-title");
+    let panelGoal = campaignWrapper.querySelector(".panel-goal");
+    let panelDuration = campaignWrapper.querySelector(".panel-duration");
+    let panelImage = campaignWrapper.querySelector(".slideshow-image");
+    let videoPlayer = campaignWrapper.querySelector(".video-player");
+
+    panelTitle.textContent = campaignName;
+    panelGoal.textContent = "Objetivo: " + campaignGoal;
+    panelDuration.textContent = `Período: ${campaignPeriod} dias`;
+
+    if (campaignImages.length > 0) {
+        let imageURL = URL.createObjectURL(campaignImages[0]);
+        panelImage.src = imageURL;
+    }
+
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        videoPlayer.src = videoURL;
+        videoPlayer.load();
+    }
+
+    
+
+    alert(`Campanha "${campaignName}" foi atualizada!`);
+}
 
 
 
@@ -698,9 +721,17 @@ function openNetworkModal(cryptoName) {
 // ✅ Função para remover criptomoeda do `localStorage`
 function updateLocalStorage(cryptoName) {
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-    selectedCryptos = selectedCryptos.filter(crypto => crypto.name !== cryptoName);
+    
+    selectedCryptos = selectedCryptos.map(crypto => {
+        if (crypto.name === cryptoName) {
+            return { ...crypto, updated: Date.now() }; // ✅ Mantém os dados e só marca atualização
+        }
+        return crypto;
+    });
+
     localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
 }
+
 
 
 
