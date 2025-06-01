@@ -1,4 +1,4 @@
-// Definição global para permitir acesso em todas as funções
+
 let selectedCrypto = null; // Inicialmente nenhuma criptomoeda está selecionada
 let chosenCryptos = new Set(); // Conjunto para armazenar criptomoedas já escolhidas
 
