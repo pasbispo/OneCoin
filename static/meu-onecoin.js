@@ -75,36 +75,99 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 document.getElementById("update-button").addEventListener("click", function () {
-    let campaignName = document.getElementById("campaign-name").value.trim();
-    let campaignPeriod = document.getElementById("campaign-period").value.trim();
-    let campaignGoal = document.getElementById("campaign-goal").value.trim();
-    let campaignImages = document.getElementById("campaign-images").files[0];
-    let campaignVideo = document.getElementById("video-file").files[0];
+    let campaignImages = document.getElementById("campaign-images").files;
+    let imageURLs = [];
 
-    if (!campaignName || !campaignPeriod) {
-        alert("Preencha todas as informações antes de atualizar!");
-        return;
+    if (campaignImages.length > 0) {
+        for (let i = 0; i < campaignImages.length; i++) {
+            imageURLs.push(URL.createObjectURL(campaignImages[i]));
+        }
     }
 
-    // ✅ Atualizar a planilha da direita com os dados do lado esquerdo
-    document.getElementById("panel-title").textContent = campaignName;
-    document.getElementById("panel-duration").textContent = `Período: ${campaignPeriod} dias`;
-    document.getElementById("panel-goal").textContent = campaignGoal || "Nenhum objetivo definido.";
+    let campaignData = {
+        nome: document.getElementById("campaign-name").value.trim(),
+        periodo: document.getElementById("campaign-period").value.trim(),
+        objetivo: document.getElementById("campaign-goal").value.trim(),
+        imagens: imageURLs, // ✅ Agora salva todas as imagens
+        video: document.getElementById("video-player").src,
+        criptomoedas: []
+    };
 
-    // ✅ Se houver imagem, mostrar na direita
-    if (campaignImages) {
-        let imageURL = URL.createObjectURL(campaignImages);
-        document.getElementById("slideshow-image").src = imageURL;
+    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+    alert("Campanha atualizada e imagens salvas corretamente!");
+});
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
+
+    if (campaignData && campaignData.imagens.length > 0) {
+        let slideshowImage = document.getElementById("slideshow-image");
+        let imagesArray = campaignData.imagens;
+        let imageIndex = 0;
+
+        slideshowImage.src = imagesArray[imageIndex];
+
+        setInterval(() => {
+            imageIndex = (imageIndex + 1) % imagesArray.length;
+            slideshowImage.src = imagesArray[imageIndex];
+        }, 3000); // ✅ Agora alterna entre todas as imagens corretamente
     }
+});
+document.getElementById("update-button").addEventListener("click", function () {
+    let cryptoTableInputs = document.querySelectorAll("#crypto-table input, #crypto-table button");
 
-    // ✅ Se houver vídeo, mostrar na direita
-    if (campaignVideo) {
-        let videoURL = URL.createObjectURL(campaignVideo);
-        document.getElementById("video-player").src = videoURL;
-        document.getElementById("video-player").load();
+    cryptoTableInputs.forEach(element => {
+        element.setAttribute("disabled", "true"); // ✅ Mantém bloqueado
+    });
+
+    alert("Tabela bloqueada! Agora você só pode modificar imagens, objetivo e vídeo.");
+});
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
+
+    if (campaignData) {
+        let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+        cryptoPanelBody.innerHTML = "";
+
+        campaignData.criptomoedas.forEach(crypto => {
+            let row = document.createElement("tr");
+
+            let cellImage = document.createElement("td");
+            let cellSymbol = document.createElement("td");
+            let cellNetworkButton = document.createElement("td");
+            let cellAddress = document.createElement("td");
+            let cellCopyButton = document.createElement("td");
+
+            // ✅ Garante que a imagem da criptomoeda aparece corretamente
+            cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
+
+            cellSymbol.textContent = crypto.simbolo;
+            cellAddress.textContent = crypto.endereco || "Selecione uma rede";
+
+            let selectNetworkBtn = document.createElement("button");
+            selectNetworkBtn.textContent = "Selecionar Rede";
+            selectNetworkBtn.classList.add("select-network-btn");
+            selectNetworkBtn.setAttribute("data-crypto", crypto.simbolo);
+            cellNetworkButton.appendChild(selectNetworkBtn);
+
+            let copyBtn = document.createElement("button");
+            copyBtn.textContent = "Copiar";
+            copyBtn.classList.add("copy-btn");
+            copyBtn.addEventListener("click", function () {
+                navigator.clipboard.writeText(cellAddress.textContent);
+                alert("Endereço copiado!");
+            });
+
+            cellCopyButton.appendChild(copyBtn);
+
+            row.appendChild(cellImage);
+            row.appendChild(cellSymbol);
+            row.appendChild(cellNetworkButton);
+            row.appendChild(cellAddress);
+            row.appendChild(cellCopyButton);
+
+            cryptoPanelBody.appendChild(row);
+        });
     }
-
-    alert("Campanha atualizada! Agora os dados aparecerão na planilha da direita.");
 });
 
 
