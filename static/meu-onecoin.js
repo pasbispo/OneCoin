@@ -183,25 +183,38 @@ document.getElementById("finalize-button").addEventListener("click", function ()
         nome: document.getElementById("campaign-name").value.trim(),
         periodo: document.getElementById("campaign-period").value.trim(),
         objetivo: document.getElementById("campaign-goal").value.trim(),
-        imagens: document.getElementById("slideshow-image").src,
-        video: document.getElementById("video-player").src,
-        criptomoedas: []
+        criptomoedas: [] // Adicione criptomoedas se necessário
     };
 
-    let cryptoTableRows = document.querySelectorAll(".crypto-panel-table tbody tr");
-    cryptoTableRows.forEach(row => {
-        let cells = row.querySelectorAll("td");
-        campaignData.criptomoedas.push({
-            simbolo: cells[0]?.textContent.trim(),
-            rede: cells[1]?.textContent.trim(),
-            endereco: cells[2]?.textContent.trim()
-        });
-    });
-
-    localStorage.setItem("savedCampaign", JSON.stringify(campaignData));
-
-    alert("Campanha salva! Quando você abrir novamente, os dados estarão como foram deixados.");
+    fetch("http://localhost:3000/salvar-campanha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(campaignData)
+    })
+    .then(response => response.json())
+    .then(data => alert(data.mensagem))
+    .catch(error => console.error("Erro ao salvar:", error));
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("http://localhost:3000/campanhas")
+    .then(response => response.json())
+    .then(campanhas => {
+        if (campanhas.length > 0) {
+            let ultimaCampanha = campanhas[campanhas.length - 1]; // Pega a mais recente
+
+            document.getElementById("campaign-name").value = ultimaCampanha.nome;
+            document.getElementById("campaign-period").value = ultimaCampanha.periodo;
+            document.getElementById("panel-title").textContent = ultimaCampanha.nome;
+            document.getElementById("panel-duration").textContent = `Período: ${ultimaCampanha.periodo} dias`;
+            document.getElementById("panel-goal").textContent = "Objetivo: " + ultimaCampanha.objetivo;
+        }
+    })
+    .catch(error => console.error("Erro ao carregar campanhas:", error));
+});
+
+
 
 
 document.getElementById("finalize-button").addEventListener("click", function () {
@@ -364,12 +377,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     let params = new URLSearchParams(window.location.search);
     let campaignName = params.get("campanha");
 
     if (campaignName) {
-        document.getElementById("panel-title").textContent = campaignName;
+        document.getElementById("panel-title").textContent = decodeURIComponent(campaignName); // ✅ Decodifica e exibe corretamente
     } else {
         document.getElementById("panel-title").textContent = "Nova campanha!";
     }
