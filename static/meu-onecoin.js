@@ -75,6 +75,43 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 document.getElementById("update-button").addEventListener("click", function () {
+    let campaignName = document.getElementById("campaign-name").value.trim();
+    let campaignPeriod = document.getElementById("campaign-period").value.trim();
+    let campaignGoal = document.getElementById("campaign-goal").value.trim();
+    let campaignImages = document.getElementById("campaign-images").files[0];
+    let campaignVideo = document.getElementById("video-file").files[0];
+
+    if (!campaignName || !campaignPeriod) {
+        alert("Preencha todas as informações antes de atualizar!");
+        return;
+    }
+
+    // ✅ Atualizar a planilha da direita com os dados do lado esquerdo
+    document.getElementById("panel-title").textContent = campaignName;
+    document.getElementById("panel-duration").textContent = `Período: ${campaignPeriod} dias`;
+    document.getElementById("panel-goal").textContent = campaignGoal || "Nenhum objetivo definido.";
+
+    // ✅ Se houver imagem, mostrar na direita
+    if (campaignImages) {
+        let imageURL = URL.createObjectURL(campaignImages);
+        document.getElementById("slideshow-image").src = imageURL;
+    }
+
+    // ✅ Se houver vídeo, mostrar na direita
+    if (campaignVideo) {
+        let videoURL = URL.createObjectURL(campaignVideo);
+        document.getElementById("video-player").src = videoURL;
+        document.getElementById("video-player").load();
+    }
+
+    alert("Campanha atualizada! Agora os dados aparecerão na planilha da direita.");
+});
+
+
+
+
+
+document.getElementById("update-button").addEventListener("click", function () {
     let campaignImages = document.getElementById("campaign-images").files;
     let imageURLs = [];
 
@@ -169,6 +206,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
