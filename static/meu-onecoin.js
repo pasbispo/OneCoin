@@ -175,11 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-
-
-
-
 function abrirSelecaoDeRede(cryptoName, addressCell) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
