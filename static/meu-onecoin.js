@@ -109,9 +109,6 @@ document.getElementById("finalize-button").addEventListener("click", function ()
     alert("Campanha finalizada! Agora ela pode ser acessada em 'Minhas Campanhas'.");
 });
 
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
    
@@ -215,7 +212,6 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
-
 
 document.querySelectorAll(".copy-btn").forEach(button => {
     button.addEventListener("click", function() {
