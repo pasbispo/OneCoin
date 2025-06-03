@@ -827,8 +827,27 @@ button:hover {
     border-right: 2px solid #ccc; /* ✅ Linha vertical dividindo a tela */
 }
 
+.crypto-table,
+.crypto-panel-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
 
+.crypto-table th,
+.crypto-table td,
+.crypto-panel-table th,
+.crypto-panel-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
 
+.crypto-table img,
+.crypto-panel-table img {
+    width: 40px;
+    height: 40px;
+}
 
 .btn-primary {
     display: block;
@@ -889,6 +908,18 @@ button:hover {
 
 
 
+#panel-goal {
+    text-align: justify; /* ✅ Alinha o texto justificado */
+    max-width: 80%; /* ✅ Define uma largura adequada para legibilidade */
+    margin: 0 auto; /* ✅ Centraliza dentro do painel */
+    font-size: 16px;
+    line-height: 1.5; /* ✅ Melhora o espaçamento entre linhas */
+    overflow-wrap: break-word; /* ✅ Impede que o texto ultrapasse o painel */
+}
+
+.crypto-panel-table td {
+    text-align: justify; /* ✅ Deixa o texto justificado dentro das células da tabela */
+}
 
 
 
@@ -934,6 +965,11 @@ button:hover {
     padding-bottom: 10px;
 }
 
+.crypto-panel-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
 
 
 header {
@@ -1354,6 +1390,12 @@ th, td {
     visibility: hidden; /* ✅ Evita que elementos sejam apagados completamente */
 }
 
+.crypto-panel-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow: visible; /* ✅ Garante que a tabela exiba os dados corretamente */
+}
 
 button {
     padding: 10px;
