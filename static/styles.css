@@ -829,14 +829,6 @@ button:hover {
 
 
 
-.crypto-table th,
-.crypto-table td,
-.crypto-panel-table th,
-.crypto-panel-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-}
 
 .crypto-table img,
 .crypto-panel-table img {
