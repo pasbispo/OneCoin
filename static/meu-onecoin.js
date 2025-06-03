@@ -292,6 +292,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cryptoTableBody = document.querySelector(".crypto-panel-table tbody");
+
+    fetch("http://localhost:3000/campanhas-finalizadas")
+    .then(response => response.json())
+    .then(campanhas => {
+        if (campanhas.length === 0) {
+            cryptoTableBody.innerHTML = `<tr><td colspan="4">Nenhuma criptomoeda cadastrada.</td></tr>`;
+            return;
+        }
+
+        let ultimaCampanha = campanhas[campanhas.length - 1];
+
+        cryptoTableBody.innerHTML = ""; // ✅ Limpa antes de preencher
+
+        ultimaCampanha.criptomoedas.forEach(crypto => {
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td><img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}</td>
+                <td><button class="select-network-btn" data-crypto="${crypto.name}">Selecionar Rede</button></td>
+                <td>${crypto.selectedAddress || "Selecione uma rede"}</td>
+                <td><button class="copy-btn">Copiar</button></td>
+            `;
+            cryptoTableBody.appendChild(row);
+        });
+
+        document.querySelectorAll(".select-network-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                let cryptoName = this.getAttribute("data-crypto");
+                abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
+            });
+        });
+    })
+    .catch(error => console.error("Erro ao carregar campanhas:", error));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.getElementById("finalize-button").addEventListener("click", function () {
     let campaignName = document.getElementById("campaign-name").value.trim();
 
