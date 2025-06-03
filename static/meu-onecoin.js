@@ -110,7 +110,8 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
 document.addEventListener("DOMContentLoaded", function () {
     let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-   
+    cryptoPanelBody.innerHTML = ""; // ✅ Limpa a tabela antes de preenchê-la
+
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     if (selectedCryptos.length === 0) {
@@ -231,42 +232,3 @@ let campaignData = {
     criptomoedas: [],
     finalizada: true // ✅ Agora a campanha fica marcada como finalizada
 };
-
-
-
-document.getElementById("finalize-button").addEventListener("click", function () {
-    let campaignData = {
-        nome: document.getElementById("campaign-name").value.trim(),
-        periodo: document.getElementById("campaign-period").value.trim(),
-        objetivo: document.getElementById("campaign-goal").value.trim(),
-        criptomoedas: [],
-        finalizada: true // ✅ Agora a campanha fica marcada como finalizada
-    };
-
-    fetch("http://localhost:3000/finalizar-campanha", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(campaignData)
-    })
-    .then(response => response.json())
-    .then(data => alert(data.mensagem))
-    .catch(error => console.error("Erro ao finalizar campanha:", error));
-});
-
-// ✅ **Recuperar campanhas finalizadas**
-document.addEventListener("DOMContentLoaded", function () {
-    fetch("http://localhost:3000/campanhas-finalizadas")
-    .then(response => response.json())
-    .then(campanhas => {
-        let ultimaCampanha = campanhas[campanhas.length - 1];
-        if (ultimaCampanha) {
-            document.getElementById("campaign-name").value = ultimaCampanha.nome;
-            document.getElementById("campaign-period").value = ultimaCampanha.periodo;
-            document.getElementById("panel-title").textContent = ultimaCampanha.nome;
-            document.getElementById("panel-duration").textContent = `Período: ${ultimaCampanha.periodo} dias`;
-            document.getElementById("panel-goal").textContent = "Objetivo: " + ultimaCampanha.objetivo;
-        }
-    })
-    .catch(error => console.error("Erro ao carregar campanhas:", error));
-});
-
