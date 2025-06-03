@@ -109,22 +109,41 @@ document.getElementById("update-button").addEventListener("click", function () {
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
     alert("Campanha atualizada e imagens salvas corretamente!");
 });
+
 document.addEventListener("DOMContentLoaded", function () {
-    let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
+    let cryptoTableBody = document.querySelector(".crypto-panel-table tbody");
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
-    if (campaignData && campaignData.imagens.length > 0) {
-        let slideshowImage = document.getElementById("slideshow-image");
-        let imagesArray = campaignData.imagens;
-        let imageIndex = 0;
+    // ✅ Se a tabela estiver vazia, exibe uma mensagem padrão.
+    if (selectedCryptos.length === 0) {
+        cryptoTableBody.innerHTML = `<tr><td colspan="4">Nenhuma criptomoeda cadastrada.</td></tr>`;
+        return;
+    } 
 
-        slideshowImage.src = imagesArray[imageIndex];
+    // ✅ Remove qualquer tabela anterior e preenche com os dados corretos
+    cryptoTableBody.innerHTML = "";
 
-        setInterval(() => {
-            imageIndex = (imageIndex + 1) % imagesArray.length;
-            slideshowImage.src = imagesArray[imageIndex];
-        }, 3000); // ✅ Agora alterna entre todas as imagens corretamente
-    }
+    selectedCryptos.forEach(crypto => {
+        let row = document.createElement("tr");
+        row.innerHTML = `
+            <td><img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}</td>
+            <td><button class="select-network-btn" data-crypto="${crypto.name}">Selecionar Rede</button></td>
+            <td>${crypto.selectedAddress || "Selecione uma rede"}</td>
+            <td><button class="copy-btn">Copiar</button></td>
+        `;
+        cryptoTableBody.appendChild(row);
+    });
+
+    // ✅ Adiciona evento para selecionar rede corretamente
+    document.querySelectorAll(".select-network-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            let cryptoName = this.getAttribute("data-crypto");
+            abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
+        });
+    });
 });
+
+
 document.getElementById("update-button").addEventListener("click", function () {
     let cryptoTableInputs = document.querySelectorAll("#crypto-table input, #crypto-table button");
 
