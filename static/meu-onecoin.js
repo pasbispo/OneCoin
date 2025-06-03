@@ -114,12 +114,11 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
 document.addEventListener("DOMContentLoaded", function () {
     let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-    cryptoPanelBody.innerHTML = ""; // ✅ Evita duplicação ao recarregar
-
+   
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda encontrada.");
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
         return;
     }
 
@@ -142,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cellNetworkButton.appendChild(selectNetworkBtn);
 
         // ✅ Espaço para exibir o endereço da rede selecionada
-        cellAddress.textContent = crypto.selectedAddress || "Selecione uma rede";
+        cellAddress.textContent = "Selecione uma rede";
 
         // ✅ Botão "Copiar Endereço"
         let copyBtn = document.createElement("button");
@@ -166,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cryptoPanelBody.appendChild(row);
     });
 
-    // ✅ Adiciona evento para abrir o modal de seleção de redes
+    // ✅ Adiciona eventos para abrir o modal de redes
     document.querySelectorAll(".select-network-btn").forEach(button => {
         button.addEventListener("click", function () {
             let cryptoName = this.getAttribute("data-crypto");
