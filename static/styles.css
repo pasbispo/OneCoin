@@ -830,12 +830,6 @@ button:hover {
 
 
 
-.crypto-table img,
-.crypto-panel-table img {
-    width: 40px;
-    height: 40px;
-}
-
 .btn-primary {
     display: block;
     margin: 20px auto;
