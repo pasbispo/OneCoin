@@ -134,6 +134,7 @@ document.getElementById("update-button").addEventListener("click", function () {
 
     alert("Tabela bloqueada! Agora você só pode modificar imagens, objetivo e vídeo.");
 });
+
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
@@ -398,8 +399,7 @@ document.getElementById("update-button").addEventListener("click", function() {
 });
 
 
-let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-cryptoPanelBody.innerHTML = "";
+
 
 let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
