@@ -889,18 +889,6 @@ button:hover {
 
 
 
-#panel-goal {
-    text-align: justify; /* ✅ Alinha o texto justificado */
-    max-width: 80%; /* ✅ Define uma largura adequada para legibilidade */
-    margin: 0 auto; /* ✅ Centraliza dentro do painel */
-    font-size: 16px;
-    line-height: 1.5; /* ✅ Melhora o espaçamento entre linhas */
-    overflow-wrap: break-word; /* ✅ Impede que o texto ultrapasse o painel */
-}
-
-.crypto-panel-table td {
-    text-align: justify; /* ✅ Deixa o texto justificado dentro das células da tabela */
-}
 
 
 
