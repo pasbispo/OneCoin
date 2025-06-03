@@ -64,30 +64,29 @@ document.getElementById("finalize-button").addEventListener("click", function ()
     };
 
     fetch("http://localhost:3000/finalizar-campanha", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id: campanhaId }) // ✅ Enviando o ID correto
-})
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(campaignData)
+    })
     .then(response => response.json())
     .then(data => alert(data.mensagem))
     .catch(error => console.error("Erro ao salvar:", error));
 });
 
 document.addEventListener("DOMContentLoaded", function () {
- fetch("http://localhost:3000/campanhas-finalizadas")
+ fetch("http://localhost:3000/campanhas")
 .then(response => response.json())
 .then(campanhas => {
-    let ultimaCampanha = campanhas[campanhas.length - 1]; // ✅ Certifique-se de que há campanhas no array
+    let ultimaCampanha = campanhas.find(c => c.finalizada === true); // ✅ Agora filtra apenas campanhas finalizadas
     if (ultimaCampanha) {
         document.getElementById("campaign-name").value = ultimaCampanha.nome;
         document.getElementById("campaign-period").value = ultimaCampanha.periodo;
         document.getElementById("panel-title").textContent = ultimaCampanha.nome;
         document.getElementById("panel-duration").textContent = `Período: ${ultimaCampanha.periodo} dias`;
-        document.getElementById("panel-goal").textContent = ultimaCampanha.objetivo; // ✅ Evita repetição do objetivo
+        document.getElementById("panel-goal").textContent = "Objetivo: " + ultimaCampanha.objetivo;
     }
 })
 .catch(error => console.error("Erro ao carregar campanhas:", error));
-
 
 
 document.getElementById("finalize-button").addEventListener("click", function () {
