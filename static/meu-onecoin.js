@@ -109,41 +109,22 @@ document.getElementById("update-button").addEventListener("click", function () {
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
     alert("Campanha atualizada e imagens salvas corretamente!");
 });
-
 document.addEventListener("DOMContentLoaded", function () {
-    let cryptoTableBody = document.querySelector(".crypto-panel-table tbody");
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
-    // ✅ Se a tabela estiver vazia, exibe uma mensagem padrão.
-    if (selectedCryptos.length === 0) {
-        cryptoTableBody.innerHTML = `<tr><td colspan="4">Nenhuma criptomoeda cadastrada.</td></tr>`;
-        return;
-    } 
+    if (campaignData && campaignData.imagens.length > 0) {
+        let slideshowImage = document.getElementById("slideshow-image");
+        let imagesArray = campaignData.imagens;
+        let imageIndex = 0;
 
-    // ✅ Remove qualquer tabela anterior e preenche com os dados corretos
-    cryptoTableBody.innerHTML = "";
+        slideshowImage.src = imagesArray[imageIndex];
 
-    selectedCryptos.forEach(crypto => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
-            <td><img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}</td>
-            <td><button class="select-network-btn" data-crypto="${crypto.name}">Selecionar Rede</button></td>
-            <td>${crypto.selectedAddress || "Selecione uma rede"}</td>
-            <td><button class="copy-btn">Copiar</button></td>
-        `;
-        cryptoTableBody.appendChild(row);
-    });
-
-    // ✅ Adiciona evento para selecionar rede corretamente
-    document.querySelectorAll(".select-network-btn").forEach(button => {
-        button.addEventListener("click", function () {
-            let cryptoName = this.getAttribute("data-crypto");
-            abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
-        });
-    });
+        setInterval(() => {
+            imageIndex = (imageIndex + 1) % imagesArray.length;
+            slideshowImage.src = imagesArray[imageIndex];
+        }, 3000); // ✅ Agora alterna entre todas as imagens corretamente
+    }
 });
-
-
 document.getElementById("update-button").addEventListener("click", function () {
     let cryptoTableInputs = document.querySelectorAll("#crypto-table input, #crypto-table button");
 
