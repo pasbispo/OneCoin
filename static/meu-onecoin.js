@@ -399,6 +399,8 @@ document.getElementById("update-button").addEventListener("click", function() {
 });
 
 
+let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+cryptoPanelBody.innerHTML = "";
 
 
 let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
