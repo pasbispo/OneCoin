@@ -218,8 +218,6 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
 }
 
 
-
-
 document.querySelectorAll(".copy-btn").forEach(button => {
     button.addEventListener("click", function() {
         let addressCell = this.parentElement.previousElementSibling;
