@@ -827,12 +827,7 @@ button:hover {
     border-right: 2px solid #ccc; /* ✅ Linha vertical dividindo a tela */
 }
 
-.crypto-table,
-.crypto-panel-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
+
 
 .crypto-table th,
 .crypto-table td,
