@@ -1390,12 +1390,6 @@ th, td {
     visibility: hidden; /* ✅ Evita que elementos sejam apagados completamente */
 }
 
-.crypto-panel-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    overflow: visible; /* ✅ Garante que a tabela exiba os dados corretamente */
-}
 
 button {
     padding: 10px;
