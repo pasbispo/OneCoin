@@ -114,17 +114,13 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
 document.addEventListener("DOMContentLoaded", function () {
     let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-    let emptyMessage = document.getElementById("empty-message");
+    cryptoPanelBody.innerHTML = ""; // ✅ Evita duplicação ao recarregar
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     if (selectedCryptos.length === 0) {
-        emptyMessage.style.display = "block"; // ✅ Exibe a mensagem "Nenhuma criptomoeda encontrada"
-        cryptoPanelBody.style.display = "none"; // ✅ Esconde a tabela vazia
+        console.warn("Nenhuma criptomoeda encontrada.");
         return;
-    } else {
-        emptyMessage.style.display = "none"; // ✅ Esconde a mensagem
-        cryptoPanelBody.style.display = "table-row-group"; // ✅ Garante que a tabela real seja mostrada
     }
 
     selectedCryptos.forEach(crypto => {
@@ -145,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         selectNetworkBtn.setAttribute("data-crypto", crypto.name);
         cellNetworkButton.appendChild(selectNetworkBtn);
 
-        // ✅ Preenche corretamente o endereço da rede escolhida
+        // ✅ Espaço para exibir o endereço da rede selecionada
         cellAddress.textContent = crypto.selectedAddress || "Selecione uma rede";
 
         // ✅ Botão "Copiar Endereço"
@@ -170,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cryptoPanelBody.appendChild(row);
     });
 
-    // ✅ Adiciona evento para abrir seleção de redes corretamente
+    // ✅ Adiciona evento para abrir o modal de seleção de redes
     document.querySelectorAll(".select-network-btn").forEach(button => {
         button.addEventListener("click", function () {
             let cryptoName = this.getAttribute("data-crypto");
@@ -178,7 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
 
 
 
