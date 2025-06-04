@@ -490,7 +490,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (campaignName) {
         document.getElementById("panel-title").textContent = decodeURIComponent(campaignName);
     } else {
-        document.getElementById("panel-title").textContent = "Nova campanha!";
+        document.getElementById("crypto-panel-table").textContent = "Nova campanha!";
     }
 
     // ✅ Garante que a tabela de criptomoedas seja carregada
