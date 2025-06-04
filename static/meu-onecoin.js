@@ -953,6 +953,8 @@ function transferirDadosTabela() {
 }
 
  
+
+
 function abrirSelecaoDeRede(cryptoName, addressCell) {
     let modal = document.createElement("div");
     modal.classList.add("modal");
@@ -994,6 +996,9 @@ function abrirSelecaoDeRede(cryptoName, addressCell) {
     modal.appendChild(networkForm);
     document.body.appendChild(modal);
 }
+
+
+
 
 
 
