@@ -136,7 +136,6 @@ document.getElementById("update-button").addEventListener("click", function () {
     alert("Tabela bloqueada! Agora você só pode modificar imagens, objetivo e vídeo.");
 });
 
-
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
@@ -187,6 +186,60 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        cryptoPanelBody.innerHTML = `<tr class="empty-table"><td colspan="4">Nenhuma criptomoeda cadastrada.</td></tr>`;
+        return;
+    }
+
+    cryptoPanelBody.innerHTML = ""; // ✅ Limpa a tabela antes de preenchê-la
+
+    selectedCryptos.forEach(crypto => {
+        let row = document.createElement("tr");
+
+        let cellSymbol = document.createElement("td");
+        let cellNetwork = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellCopyButton = document.createElement("td");
+
+        cellSymbol.textContent = crypto.simbolo || "Criptomoeda desconhecida";
+        cellNetwork.textContent = crypto.rede || "Selecione uma rede";
+        cellAddress.textContent = crypto.endereco || "Selecione uma rede";
+
+        let selectNetworkBtn = document.createElement("button");
+        selectNetworkBtn.textContent = "Selecionar Rede";
+        selectNetworkBtn.classList.add("select-network-btn");
+        selectNetworkBtn.setAttribute("data-crypto", crypto.simbolo);
+        selectNetworkBtn.addEventListener("click", function () {
+            abrirSelecaoDeRede(crypto.simbolo, cellAddress);
+        });
+
+        let copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", function () {
+            if (cellAddress.textContent !== "Selecione uma rede") {
+                navigator.clipboard.writeText(cellAddress.textContent);
+                alert("Endereço copiado!");
+            } else {
+                alert("Selecione uma rede antes de copiar!");
+            }
+        });
+
+        cellCopyButton.appendChild(copyBtn);
+        cellNetwork.appendChild(selectNetworkBtn);
+
+        row.appendChild(cellSymbol);
+        row.appendChild(cellNetwork);
+        row.appendChild(cellAddress);
+        row.appendChild(cellCopyButton);
+
+        cryptoPanelBody.appendChild(row);
+    });
+});
 
 // ✅ Evita que o botão "Atualizar" salve a tabela vazia
 document.getElementById("update-button").addEventListener("click", function () {
