@@ -9,7 +9,6 @@ document.getElementById("update-button").addEventListener("click", function () {
         criptomoedas: []
     };
 
-    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
     let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
 
     cryptoTableRows.forEach(row => {
@@ -29,6 +28,7 @@ document.getElementById("update-button").addEventListener("click", function () {
     carregarTabelaCriptomoedas(); // ✅ Atualiza a tabela no painel direito
 });
 
+// ✅ Recupera os dados na inicialização
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
@@ -42,10 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("video-player").src = campaignData.video;
         document.getElementById("video-player").load();
 
-        carregarTabelaCriptomoedas(); // ✅ Carregar dados da tabela na inicialização
+        carregarTabelaCriptomoedas(); // ✅ Carregar tabela junto com os dados
         bloquearCampos();
     }
 });
+
 
 // ✅ Função para carregar e exibir criptomoedas na tabela do painel direito
 function carregarTabelaCriptomoedas() {
