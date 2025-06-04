@@ -481,6 +481,13 @@ button:hover {
 
 
 
+
+
+.crypto-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Mantém os elementos separados */
+
 }
 
 #next-button {
@@ -1187,6 +1194,13 @@ th, td {
 
 
 
+#campaign-title {
+    text-align: center; /* ✅ Centraliza o texto */
+    font-size: 24px; /* ✅ Aumenta o tamanho do título */
+    font-weight: bold; /* ✅ Deixa o título mais destacado */
+    margin-top: 20px; /* ✅ Adiciona espaço na parte superior */
+}
+
 
 
 
@@ -1384,31 +1398,3 @@ th, td {
     border-radius: 5px;
 }
 
-
-
-.hidden {
-    visibility: hidden; /* ✅ Evita que elementos sejam apagados completamente */
-}
-
-.crypto-panel-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    overflow: visible; /* ✅ Garante que a tabela exiba os dados corretamente */
-}
-
-button {
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.btn-primary {
-    background-color: #008CBA;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #005f73;
-}
