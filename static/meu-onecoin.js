@@ -189,58 +189,66 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
 
-    if (campaignData) {
-        // ✅ Carregar campanha existente
-        document.getElementById("campaign-name").value = campaignData.nome;
-        document.getElementById("campaign-period").value = campaignData.periodo;
-        document.getElementById("panel-title").textContent = campaignData.nome;
-        document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
-        document.getElementById("panel-goal").textContent = "Objetivo: " + campaignData.objetivo;
-        document.getElementById("slideshow-image").src = campaignData.imagens;
-        document.getElementById("video-player").src = campaignData.video;
-        document.getElementById("video-player").load();
+    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+    
+    if (!campaignData) {
+        console.warn("Nenhuma campanha ativa encontrada!");
+        cryptoPanelBody.innerHTML = `<tr><td colspan="4">Nenhuma criptomoeda cadastrada.</td></tr>`;
+        return;
+    }
 
-        let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-        cryptoPanelBody.innerHTML = "";
+    // ✅ Carregar campanha existente
+    document.getElementById("campaign-name").value = campaignData.nome;
+    document.getElementById("campaign-period").value = campaignData.periodo;
+    document.getElementById("panel-title").textContent = campaignData.nome;
+    document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
+    document.getElementById("panel-goal").textContent = "Objetivo: " + campaignData.objetivo;
+    document.getElementById("slideshow-image").src = campaignData.imagens;
+    document.getElementById("video-player").src = campaignData.video;
+    document.getElementById("video-player").load();
 
-        campaignData.criptomoedas.forEach(crypto => {
-            let row = document.createElement("tr");
+    // ✅ Remove apenas se houver dados válidos
+    cryptoPanelBody.innerHTML = ""; 
 
-            let cellImage = document.createElement("td");
-            let cellSymbol = document.createElement("td");
-            let cellNetwork = document.createElement("td");
-            let cellAddress = document.createElement("td");
-            let cellCopyButton = document.createElement("td");
+    campaignData.criptomoedas.forEach(crypto => {
+        let row = document.createElement("tr");
 
-            cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
-            cellSymbol.textContent = crypto.simbolo;
-            cellNetwork.textContent = crypto.rede;
-            cellAddress.textContent = crypto.endereco;
+        let cellImage = document.createElement("td");
+        let cellSymbol = document.createElement("td");
+        let cellNetwork = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellCopyButton = document.createElement("td");
 
-            let copyBtn = document.createElement("button");
-            copyBtn.textContent = "Copiar";
-            copyBtn.classList.add("copy-btn");
-            copyBtn.addEventListener("click", function () {
+        cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
+        cellSymbol.textContent = crypto.simbolo;
+        cellNetwork.textContent = crypto.rede || "Selecione uma rede";
+        cellAddress.textContent = crypto.endereco || "Selecione uma rede";
+
+        let copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", function () {
+            if (cellAddress.textContent !== "Selecione uma rede") {
                 navigator.clipboard.writeText(cellAddress.textContent);
                 alert("Endereço copiado!");
-            });
-            cellCopyButton.appendChild(copyBtn);
-
-            row.appendChild(cellImage);
-            row.appendChild(cellSymbol);
-            row.appendChild(cellNetwork);
-            row.appendChild(cellAddress);
-            row.appendChild(cellCopyButton);
-
-            cryptoPanelBody.appendChild(row);
+            } else {
+                alert("Selecione uma rede antes de copiar!");
+            }
         });
+        cellCopyButton.appendChild(copyBtn);
 
-        // ✅ Bloqueia edição dos campos, mas permite nova campanha
-        bloquearCampos();
-    } else {
-        console.log("Nenhuma campanha ativa encontrada! Você pode iniciar uma nova.");
-    }
+        row.appendChild(cellImage);
+        row.appendChild(cellSymbol);
+        row.appendChild(cellNetwork);
+        row.appendChild(cellAddress);
+        row.appendChild(cellCopyButton);
+
+        cryptoPanelBody.appendChild(row);
+    });
+
+    bloquearCampos(); // ✅ Bloqueia campos após carregamento correto
 });
+
 
 function bloquearCampos() {
     // ✅ Bloqueia os campos da campanha salva
