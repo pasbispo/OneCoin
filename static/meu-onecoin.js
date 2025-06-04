@@ -483,17 +483,20 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
     let params = new URLSearchParams(window.location.search);
     let campaignName = params.get("campanha");
 
     if (campaignName) {
-        document.getElementById("panel-title").textContent = decodeURIComponent(campaignName); // ✅ Decodifica e exibe corretamente
+        document.getElementById("panel-title").textContent = decodeURIComponent(campaignName);
     } else {
         document.getElementById("panel-title").textContent = "Nova campanha!";
     }
+
+    // ✅ Garante que a tabela de criptomoedas seja carregada
+    carregarTabelaCriptomoedas();
 });
+
 
 
 
