@@ -918,22 +918,20 @@ function updateLocalStorage(cryptoName) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    transferirDadosTabela(); // ✅ Agora os dados são carregados automaticamente ao iniciar a página
-});
-
-document.getElementById("update-button").addEventListener("click", function () {
-    transferirDadosTabela();
+document.getElementById("update-button").addEventListener("click", function() {
+    transferirDadosTabela(); // ✅ Agora os dados só são lançados após clicar "Atualizar"
 });
 
 function transferirDadosTabela() {
     let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-    cryptoPanelBody.innerHTML = ""; // ✅ Limpa a tabela antes de preenchê-la
+
+    // ✅ Limpa a tabela antes de preenchê-la
+    cryptoPanelBody.innerHTML = ""; 
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     if (selectedCryptos.length === 0) {
-        cryptoPanelBody.innerHTML = `<tr><td colspan="4">Nenhuma criptomoeda cadastrada.</td></tr>`;
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
         return;
     }
 
@@ -945,26 +943,26 @@ function transferirDadosTabela() {
         let cellAddress = document.createElement("td");
         let cellCopyButton = document.createElement("td");
 
+        // ✅ Adiciona imagem da criptomoeda
         cellImage.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40">`;
 
+        // ✅ Adiciona botão "Selecionar Rede"
         let selectNetworkBtn = document.createElement("button");
         selectNetworkBtn.textContent = "Selecionar Rede";
         selectNetworkBtn.classList.add("select-network-btn");
         selectNetworkBtn.setAttribute("data-crypto", crypto.name);
         cellNetworkButton.appendChild(selectNetworkBtn);
 
-        cellAddress.textContent = crypto.selectedAddress || "Selecione uma rede";
+        // ✅ Espaço para exibir o endereço da rede selecionada
+        cellAddress.textContent = "Selecione uma rede";
 
+        // ✅ Adiciona botão "Copiar"
         let copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
         copyBtn.classList.add("copy-btn");
-        copyBtn.addEventListener("click", function () {
-            if (cellAddress.textContent !== "Selecione uma rede") {
-                navigator.clipboard.writeText(cellAddress.textContent);
-                alert("Endereço copiado!");
-            } else {
-                alert("Selecione uma rede primeiro!");
-            }
+        copyBtn.addEventListener("click", function() {
+            navigator.clipboard.writeText(cellAddress.textContent);
+            alert("Endereço copiado!");
         });
         cellCopyButton.appendChild(copyBtn);
 
@@ -976,14 +974,14 @@ function transferirDadosTabela() {
         cryptoPanelBody.appendChild(row);
     });
 
+    // ✅ Adiciona eventos para abrir o modal das redes
     document.querySelectorAll(".select-network-btn").forEach(button => {
-        button.addEventListener("click", function () {
+        button.addEventListener("click", function() {
             let cryptoName = this.getAttribute("data-crypto");
             abrirSelecaoDeRede(cryptoName, this.parentElement.nextElementSibling);
         });
     });
 }
-
 
  
 function abrirSelecaoDeRede(cryptoName, addressCell) {
