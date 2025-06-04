@@ -137,6 +137,56 @@ document.getElementById("update-button").addEventListener("click", function () {
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
+
+    if (campaignData) {
+        let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+        cryptoPanelBody.innerHTML = "";
+
+        campaignData.criptomoedas.forEach(crypto => {
+            let row = document.createElement("tr");
+
+            let cellImage = document.createElement("td");
+            let cellSymbol = document.createElement("td");
+            let cellNetworkButton = document.createElement("td");
+            let cellAddress = document.createElement("td");
+            let cellCopyButton = document.createElement("td");
+
+            // ✅ Garante que a imagem da criptomoeda aparece corretamente
+            cellImage.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40">`;
+
+            cellSymbol.textContent = crypto.simbolo;
+            cellAddress.textContent = crypto.endereco || "Selecione uma rede";
+
+            let selectNetworkBtn = document.createElement("button");
+            selectNetworkBtn.textContent = "Selecionar Rede";
+            selectNetworkBtn.classList.add("select-network-btn");
+            selectNetworkBtn.setAttribute("data-crypto", crypto.simbolo);
+            cellNetworkButton.appendChild(selectNetworkBtn);
+
+            let copyBtn = document.createElement("button");
+            copyBtn.textContent = "Copiar";
+            copyBtn.classList.add("copy-btn");
+            copyBtn.addEventListener("click", function () {
+                navigator.clipboard.writeText(cellAddress.textContent);
+                alert("Endereço copiado!");
+            });
+
+            cellCopyButton.appendChild(copyBtn);
+
+            row.appendChild(cellImage);
+            row.appendChild(cellSymbol);
+            row.appendChild(cellNetworkButton);
+            row.appendChild(cellAddress);
+            row.appendChild(cellCopyButton);
+
+            cryptoPanelBody.appendChild(row);
+        });
+    }
+});
+
+
 
 // ✅ Evita que o botão "Atualizar" salve a tabela vazia
 document.getElementById("update-button").addEventListener("click", function () {
