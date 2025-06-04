@@ -887,6 +887,8 @@ function updateLocalStorage(cryptoName) {
 
 
 
+
+
 document.getElementById("update-button").addEventListener("click", function() {
     transferirDadosTabela(); // ✅ Agora os dados só são lançados após clicar "Atualizar"
 });
@@ -952,7 +954,12 @@ function transferirDadosTabela() {
     });
 }
 
- 
+   
+
+
+
+
+
 
 
 function abrirSelecaoDeRede(cryptoName, addressCell) {
