@@ -108,23 +108,22 @@ document.getElementById("update-button").addEventListener("click", function () {
         campaignImages.push(URL.createObjectURL(campaignImagesInput.files[i]));
     }
 
-    // ✅ Salva todas as imagens no localStorage para exibição futura
+    // ✅ Salva todas as imagens no localStorage
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
     campaignData.imagens = campaignImages;
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
     console.log("✅ Imagens da campanha salvas:", campaignImages);
 
-    // ✅ Exibir todas as imagens dinamicamente
+    // ✅ Exibe todas as imagens centralizadas
     let campaignImagesContainer = document.getElementById("campaign-images-container");
     campaignImagesContainer.innerHTML = ""; // Limpa antes de preencher
 
-    campaignImages.forEach((imageSrc, index) => {
+    campaignImages.forEach(imageSrc => {
         let imgElement = document.createElement("img");
         imgElement.src = imageSrc;
-        imgElement.alt = `Imagem ${index + 1} da campanha`;
+        imgElement.alt = "Imagem da campanha";
         imgElement.classList.add("campaign-image");
-        imgElement.style.display = index === 0 ? "block" : "none"; // Exibe apenas a primeira inicialmente
         campaignImagesContainer.appendChild(imgElement);
     });
 

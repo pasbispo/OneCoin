@@ -1398,3 +1398,24 @@ th, td {
     border-radius: 5px;
 }
 
+
+
+
+
+
+
+
+.centered-images {
+    display: flex;
+    justify-content: center; /* ✅ Centraliza horizontalmente */
+    align-items: center; /* ✅ Centraliza verticalmente */
+    flex-wrap: wrap; /* ✅ Permite múltiplas imagens */
+    gap: 10px; /* ✅ Espaço entre as imagens */
+    width: 100%;
+}
+
+.campaign-image {
+    max-width: 300px; /* ✅ Tamanho máximo das imagens */
+    height: auto;
+    border-radius: 10px;
+}
