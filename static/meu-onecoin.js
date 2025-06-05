@@ -769,10 +769,9 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
-
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     let cryptoTableBody = document.querySelector("#crypto-table tbody");
-    cryptoTableBody.innerHTML = ""; 
+    cryptoTableBody.innerHTML = ""; // ✅ Limpa a tabela antes de preenchê-la
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
@@ -790,8 +789,8 @@ document.addEventListener("DOMContentLoaded", function() {
         let cellActions = document.createElement("td");
 
         cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}`;
-        cellQuantity.textContent = crypto.quantity;
-        cellValue.textContent = crypto.estimatedValue;
+        cellQuantity.textContent = crypto.quantity ? crypto.quantity : "0"; // ✅ Previne valores indefinidos
+        cellValue.textContent = crypto.estimatedValue ? `${crypto.estimatedValue} USD` : "0 USD"; // ✅ Evita 'NaN'
 
         let networkBtn = document.createElement("button");
         networkBtn.textContent = "Redes";
@@ -801,7 +800,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Excluir";
         deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", function() {
+        deleteBtn.addEventListener("click", function () {
             row.remove();
             updateLocalStorage(crypto.name);
         });
@@ -818,13 +817,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.querySelectorAll(".network-btn").forEach(button => {
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
             let cryptoName = this.getAttribute("data-crypto");
             openNetworkModal(cryptoName);
         });
     });
 });
-
 
 
 
