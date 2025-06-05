@@ -1,44 +1,3 @@
-
-
-document.getElementById("update-button").addEventListener("click", function () {
-    let campaignData = {
-        nome: document.getElementById("campaign-name").value.trim(),
-        periodo: document.getElementById("campaign-period").value.trim(),
-        objetivo: document.getElementById("campaign-goal").value.trim(),
-        imagens: document.getElementById("slideshow-image").src,
-        video: document.getElementById("video-player").src,
-        criptomoedas: []
-    };
-
-    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
-
-    cryptoTableRows.forEach(row => {
-        let cells = row.querySelectorAll("td");
-        campaignData.criptomoedas.push({
-            simbolo: cells[0]?.textContent.trim(),
-            quantidade: cells[1]?.textContent.trim(),
-            valorEstimado: cells[2]?.textContent.trim(),
-            imagem: cells[0]?.querySelector("img")?.src,
-            rede: cells[3]?.textContent.trim() || "Nenhuma rede selecionada",
-            endereco: cells[4]?.textContent.trim() || "Selecione uma rede"
-        });
-    });
-
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-
-    if (!campaigns.find(c => c.nome === campaignData.nome)) {
-        campaigns.push({ nome: campaignData.nome, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignData.nome)}` });
-        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-    }
-
-    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
-    alert("Campanha salva! Redirecionando para 'Minhas Campanhas'...");
-
-    // ✅ Redireciona automaticamente para "Minhas Campanhas"
-    window.location.href = "minhas-campanhas.html";
-});
-
-
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignData = {
         nome: document.getElementById("campaign-name").value.trim(),
@@ -67,15 +26,21 @@ document.getElementById("update-button").addEventListener("click", function () {
 
     console.log("✅ Campanha salva:", campaignData);
 
+    // ✅ Bloquear edições após a atualização
+    document.getElementById("campaign-name").setAttribute("readonly", true);
+    document.getElementById("campaign-period").setAttribute("readonly", true);
+    document.getElementById("campaign-goal").setAttribute("readonly", true);
+
     alert("Campanha salva! Redirecionando para 'Minhas Campanhas'...");
 
-    // ✅ Redireciona apenas se a campanha foi salva corretamente
-    if (localStorage.getItem("activeCampaign")) {
+    // ✅ Aguarda um pequeno tempo antes de redirecionar
+    setTimeout(function () {
         window.location.href = "minhas-campanhas.html";
-    } else {
-        console.error("❌ Erro ao salvar campanha! Verifique o código.");
-    }
+    }, 1000);
 });
+
+
+
 
 
 
