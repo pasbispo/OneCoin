@@ -263,3 +263,21 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error("Erro: O elemento 'update-button' não foi encontrado!");
     }
 });
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let cryptoSearch = document.getElementById("crypto-search");
+
+    if (!cryptoSearch) {
+        console.warn("Aviso: Elemento com ID 'crypto-search' não encontrado. A pesquisa será ignorada.");
+        return;
+    }
+
+    cryptoSearch.addEventListener("input", function () {
+        console.log("Pesquisa de criptomoeda iniciada:", cryptoSearch.value);
+    });
+});
+</script>
+</body>
+</html>
