@@ -298,6 +298,133 @@ document.getElementById("update-button").addEventListener("click", function () {
     console.log("✅ Tabela de criptomoedas atualizada!");
 });
 
+document.getElementById("update-button").addEventListener("click", function () {
+    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
+    let cryptoPanelTableBody = document.querySelector(".crypto-panel-table tbody");
+    cryptoPanelTableBody.innerHTML = ""; 
+
+    cryptoTableRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+        let cryptoData = {
+            simbolo: cells[0]?.textContent.trim(),
+            quantidade: cells[1]?.textContent.trim(),
+            valorEstimado: cells[2]?.textContent.trim(),
+            imagem: cells[0]?.querySelector("img")?.src,
+            redes: [],
+            endereco: ""
+        };
+
+        let rowPanel = document.createElement("tr");
+
+        let cellSymbol = document.createElement("td");
+        let cellNetwork = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellActions = document.createElement("td");
+
+        cellSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
+
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.addEventListener("click", function () {
+            openNetworkSelection(cryptoData);
+        });
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Excluir";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", function () {
+            row.remove(); // ✅ Remove a criptomoeda da tabela
+        });
+
+        cellActions.appendChild(networkBtn);
+        cellActions.appendChild(deleteBtn);
+
+        rowPanel.appendChild(cellSymbol);
+        rowPanel.appendChild(cellNetwork);
+        rowPanel.appendChild(cellAddress);
+        rowPanel.appendChild(cellActions);
+
+        cryptoPanelTableBody.appendChild(rowPanel);
+    });
+});
+
+document.getElementById("update-button").addEventListener("click", function () {
+    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
+    let cryptoPanelTableBody = document.querySelector(".crypto-panel-table tbody");
+    cryptoPanelTableBody.innerHTML = ""; 
+
+    cryptoTableRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+        let cryptoData = {
+            simbolo: cells[0]?.textContent.trim(),
+            quantidade: cells[1]?.textContent.trim(),
+            valorEstimado: cells[2]?.textContent.trim(),
+            imagem: cells[0]?.querySelector("img")?.src,
+            redes: [],
+            endereco: ""
+        };
+
+        let rowPanel = document.createElement("tr");
+
+        let cellSymbol = document.createElement("td");
+        let cellNetwork = document.createElement("td");
+        let cellAddress = document.createElement("td");
+        let cellActions = document.createElement("td");
+
+        cellSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
+
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.addEventListener("click", function () {
+            openNetworkSelection(cryptoData);
+        });
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Excluir";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", function () {
+            row.remove(); // ✅ Remove a criptomoeda da tabela
+        });
+
+        cellActions.appendChild(networkBtn);
+        cellActions.appendChild(deleteBtn);
+
+        rowPanel.appendChild(cellSymbol);
+        rowPanel.appendChild(cellNetwork);
+        rowPanel.appendChild(cellAddress);
+        rowPanel.appendChild(cellActions);
+
+        cryptoPanelTableBody.appendChild(rowPanel);
+    });
+});
+
+function openNetworkSelection(cryptoData) {
+    document.getElementById("network-modal").style.display = "block";
+    document.getElementById("crypto-name").textContent = cryptoData.simbolo;
+
+    document.getElementById("save-network").onclick = function () {
+        cryptoData.redes = [
+            { nome: document.getElementById("network1").value, endereco: document.getElementById("address1").value },
+            { nome: document.getElementById("network2").value, endereco: document.getElementById("address2").value },
+            { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
+        ];
+
+        console.log("✅ Redes salvas:", cryptoData.redes);
+        document.getElementById("network-modal").style.display = "none";
+    };
+
+    document.getElementById("close-network").onclick = function () {
+        document.getElementById("network-modal").style.display = "none";
+    };
+}
+
+
+
+
+
+
 
 
 
