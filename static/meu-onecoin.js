@@ -198,15 +198,8 @@ document.addEventListener("DOMContentLoaded", function () {
         let offsetY = event.clientY - videoContainer.getBoundingClientRect().top;
 
         function moveAt(e) {
-            let newX = e.clientX - offsetX;
-            let newY = e.clientY - offsetY;
-
-            // ✅ Mantém o vídeo dentro da área da planilha
-            let maxX = window.innerWidth - videoContainer.offsetWidth;
-            let maxY = window.innerHeight - videoContainer.offsetHeight;
-
-            videoContainer.style.left = Math.min(Math.max(newX, 0), maxX) + "px";
-            videoContainer.style.top = Math.min(Math.max(newY, 0), maxY) + "px";
+            videoContainer.style.left = `${e.clientX - offsetX}px`;
+            videoContainer.style.top = `${e.clientY - offsetY}px`;
         }
 
         function stopMove() {

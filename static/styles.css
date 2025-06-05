@@ -1411,20 +1411,18 @@ th, td {
 
 
 
-
 #video-container {
     position: absolute; /* ✅ Permite movimentação */
-    bottom: 10px;
-    right: 10px;
+    bottom: 20px;
+    right: 20px;
     width: 180px;
-    cursor: grab; /* ✅ Indica que o usuário pode mover */
+    cursor: grab; /* ✅ Indica que pode ser arrastado */
     z-index: 1000; /* ✅ Mantém o vídeo sobre outros elementos */
 }
 
 #video-container:active {
     cursor: grabbing;
 }
-
 #video-player {
     width: 100%;
     height: auto;
