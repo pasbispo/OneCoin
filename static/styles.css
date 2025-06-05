@@ -1412,15 +1412,16 @@ th, td {
 
 
 
-#video-container {
-    position: absolute; /* ✅ Permite movimentação */
-    bottom: 10px;
-    right: 10px;
-    width: 180px;
-    cursor: grab; /* ✅ Indica que o usuário pode mover */
-    z-index: 1000; /* ✅ Mantém o vídeo sobre outros elementos */
-}
 
+.video-container {
+    cursor: grab; /* ✅ Indica que o vídeo pode ser arrastado */
+    position: absolute; /* ✅ Permite movimentação livre */
+    bottom: 10px; /* ✅ Ajusta a posição vertical */
+    right: 10px; /* ✅ Ajusta a posição horizontal */
+    width: 180px; /* ✅ Define um tamanho inicial */
+    transition: all 0.3s ease; /* ✅ Transição suave ao mudar de posição */
+    margin-top: 30px; /* ✅ Garante que fique abaixo da tabela */
+}
 #video-container:active {
     cursor: grabbing;
 }
@@ -1428,7 +1429,13 @@ th, td {
 #video-player {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 10px; /* ✅ Bordas arredondadas */
+}
+
+
+.expanded-video {
+    width: 500px; /* ✅ Expande para tamanho maior */
+    height: auto;
 }
 
 
