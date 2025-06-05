@@ -193,12 +193,20 @@ document.addEventListener("DOMContentLoaded", function () {
     let videoContainer = document.getElementById("video-container");
 
     videoContainer.addEventListener("mousedown", function (event) {
+        event.preventDefault(); // ✅ Evita bugs ao clicar
         let offsetX = event.clientX - videoContainer.getBoundingClientRect().left;
         let offsetY = event.clientY - videoContainer.getBoundingClientRect().top;
 
         function moveAt(e) {
-            videoContainer.style.left = `${e.clientX - offsetX}px`;
-            videoContainer.style.top = `${e.clientY - offsetY}px`;
+            let newX = e.clientX - offsetX;
+            let newY = e.clientY - offsetY;
+
+            // ✅ Mantém o vídeo dentro da área da planilha
+            let maxX = window.innerWidth - videoContainer.offsetWidth;
+            let maxY = window.innerHeight - videoContainer.offsetHeight;
+
+            videoContainer.style.left = Math.min(Math.max(newX, 0), maxX) + "px";
+            videoContainer.style.top = Math.min(Math.max(newY, 0), maxY) + "px";
         }
 
         function stopMove() {
@@ -210,6 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("mouseup", stopMove);
     });
 });
+
 
 
 
