@@ -1,41 +1,31 @@
-
-
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignData = {
         nome: document.getElementById("campaign-name").value.trim(),
         periodo: document.getElementById("campaign-period").value.trim(),
         objetivo: document.getElementById("campaign-goal").value.trim(),
         imagens: document.getElementById("slideshow-image").src,
-        video: document.getElementById("video-player").src,
-        criptomoedas: []
+        video: document.getElementById("video-player").src
     };
 
-    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
-
-    cryptoTableRows.forEach(row => {
-        let cells = row.querySelectorAll("td");
-        campaignData.criptomoedas.push({
-            simbolo: cells[0]?.textContent.trim(),
-            quantidade: cells[1]?.textContent.trim(),
-            valorEstimado: cells[2]?.textContent.trim(),
-            imagem: cells[0]?.querySelector("img")?.src,
-            rede: cells[3]?.textContent.trim() || "Nenhuma rede selecionada",
-            endereco: cells[4]?.textContent.trim() || "Selecione uma rede"
-        });
-    });
+    if (!campaignData.nome) {
+        alert("Digite um nome para a campanha antes de atualizar!");
+        return;
+    }
 
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
+    // ✅ Evita duplicatas antes de salvar
     if (!campaigns.find(c => c.nome === campaignData.nome)) {
         campaigns.push({ nome: campaignData.nome, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignData.nome)}` });
         localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
     }
 
-    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+    console.log("✅ Campanha salva:", campaignData);
     alert("Campanha salva! Redirecionando para 'Minhas Campanhas'...");
-
-    // ✅ Redireciona automaticamente para "Minhas Campanhas"
-    window.location.href = "minhas-campanhas.html";
+    
+    setTimeout(function () {
+        window.location.href = "minhas-campanhas.html";
+    }, 1000);
 });
 
 
