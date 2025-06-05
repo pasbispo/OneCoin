@@ -770,65 +770,36 @@ document.addEventListener("DOMContentLoaded", updatePeriodAutomatically);
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    let cryptoTableBody = document.querySelector("#crypto-table tbody");
+document.getElementById("update-button").addEventListener("click", function () {
+    let campaignData = {
+        nome: document.getElementById("campaign-name").value.trim(),
+        periodo: document.getElementById("campaign-period").value.trim(),
+        objetivo: document.getElementById("campaign-goal").value.trim(),
+        imagens: document.getElementById("slideshow-image").src,
+        video: document.getElementById("video-player").src,
+        criptomoedas: JSON.parse(localStorage.getItem("selectedCryptos")) || []
+    };
 
-    // ✅ Limpa a tabela antes de preenchê-la
-    cryptoTableBody.innerHTML = ""; 
+    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+    localStorage.setItem("isFinalized", "true"); // ✅ Sinalizador para evitar modificações futuras
 
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    alert("Campanha salva! Redirecionando para 'Minhas Campanhas'...");
+    window.location.href = "minhas-campanhas.html";
+});
 
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
-        return;
+// ✅ No carregamento, impede modificações na tabela se a campanha já foi finalizada
+document.addEventListener("DOMContentLoaded", function () {
+    let isFinalized = localStorage.getItem("isFinalized");
+    
+    if (isFinalized === "true") {
+        console.log("✅ Campanha já foi finalizada, preservando tabela.");
+        return; // ✅ Impede que outra lógica sobrescreva a tabela de criptomoedas
     }
 
-    selectedCryptos.forEach(crypto => {
-        let row = document.createElement("tr");
-
-        let cellSymbol = document.createElement("td");
-        let cellQuantity = document.createElement("td");
-        let cellValue = document.createElement("td");
-        let cellActions = document.createElement("td");
-
-        cellSymbol.innerHTML = `<img src="${crypto.image}" alt="${crypto.name}" width="40"> ${crypto.name}`;
-        cellQuantity.textContent = crypto.quantity;
-        cellValue.textContent = crypto.estimatedValue;
-
-        // ✅ Botão "Redes" (verde)
-        let networkBtn = document.createElement("button");
-        networkBtn.textContent = "Redes";
-        networkBtn.classList.add("network-btn");
-        networkBtn.setAttribute("data-crypto", crypto.name);
-
-        // ✅ Botão "Excluir" (vermelho)
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", function() {
-            row.remove();
-            updateLocalStorage(crypto.name);
-        });
-
-        cellActions.appendChild(networkBtn);
-        cellActions.appendChild(deleteBtn);
-
-        row.appendChild(cellSymbol);
-        row.appendChild(cellQuantity);
-        row.appendChild(cellValue);
-        row.appendChild(cellActions);
-
-        cryptoTableBody.appendChild(row);
-    });
-
-    // ✅ Adiciona evento ao botão "Redes"
-    document.querySelectorAll(".network-btn").forEach(button => {
-        button.addEventListener("click", function() {
-            let cryptoName = this.getAttribute("data-crypto");
-            openNetworkModal(cryptoName);
-        });
-    });
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    carregarTabelaCriptomoedas(selectedCryptos);
 });
+
 
 
 
