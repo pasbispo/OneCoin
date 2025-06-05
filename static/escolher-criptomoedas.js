@@ -142,24 +142,40 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    let continueButton = document.getElementById("continue-button");
+document.getElementById("continue-button").addEventListener("click", function () {
+    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
 
-    if (!continueButton) {
-        console.error("Erro: Botão Continuar não encontrado!");
+    if (cryptoTableRows.length === 0) {
+        alert("Adicione pelo menos uma criptomoeda antes de continuar!");
         return;
     }
 
-    continueButton.addEventListener("click", function() {
-        let confirmation = confirm("Você confirma que todos os dados estão corretos?");
-        
-        if (confirmation) {
-            window.location.href = "meu-onecoin.html"; // ✅ Direciona para a página correta
-        } else {
-            window.location.href = "cadastro.html"; // ✅ Retorna para cadastro da campanha
-        }
+    let selectedCryptos = [];
+
+    cryptoTableRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+
+        if (cells.length < 3) return;
+
+        let cryptoData = {
+            simbolo: cells[0]?.textContent.trim(),
+            quantidade: cells[1]?.textContent.trim(),
+            valorEstimado: cells[2]?.textContent.trim(),
+            imagem: cells[0]?.querySelector("img")?.src
+        };
+
+        selectedCryptos.push(cryptoData);
     });
+
+    // ✅ Salva as criptomoedas no localStorage
+    localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
+
+    console.log("✅ Criptomoedas salvas:", selectedCryptos);
+
+    // ✅ Redireciona para a página de campanha
+    window.location.href = "meu-onecoin.html";
 });
+
 
 
 

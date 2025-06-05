@@ -444,3 +444,63 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
     console.log("✅ Nova campanha iniciada!");
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cryptoTableBody = document.querySelector("#crypto-table tbody");
+    cryptoTableBody.innerHTML = ""; 
+
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    if (selectedCryptos.length === 0) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
+        return;
+    }
+
+    selectedCryptos.forEach(crypto => {
+        let row = document.createElement("tr");
+
+        let cellSymbol = document.createElement("td");
+        let cellQuantity = document.createElement("td");
+        let cellValue = document.createElement("td");
+        let cellActions = document.createElement("td");
+
+        cellSymbol.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40"> ${crypto.simbolo}`;
+        cellQuantity.textContent = crypto.quantidade ? crypto.quantidade : "0";
+        cellValue.textContent = crypto.valorEstimado ? `${crypto.valorEstimado} USD` : "0 USD";
+
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.setAttribute("data-crypto", crypto.simbolo);
+        networkBtn.addEventListener("click", function () {
+            let userNetwork = prompt(`Digite a rede para ${crypto.simbolo}:`);
+            if (userNetwork) {
+                cellActions.textContent = userNetwork;
+            }
+        });
+
+        cellActions.appendChild(networkBtn);
+        row.appendChild(cellSymbol);
+        row.appendChild(cellQuantity);
+        row.appendChild(cellValue);
+        row.appendChild(cellActions);
+
+        cryptoTableBody.appendChild(row);
+    });
+
+    console.log("✅ Tabela de criptomoedas carregada!");
+});
+
