@@ -1434,25 +1434,18 @@ th, td {
 
 
 .video-container {
-    position: absolute; /* ✅ Permite mover livremente o vídeo */
-    bottom: 100px; /* ✅ Ajusta a posição vertical */
-    right: 20px; /* ✅ Ajusta a posição horizontal */
-    width: 200px; /* ✅ Define um tamanho inicial */
-    transition: all 0.3s ease; /* ✅ Transição suave ao mudar de posição */
-    display: flex; /* ✅ Mantém o vídeo alinhado */
-    margin-top: 20px; /* ✅ Espaço entre a tabela e o vídeo */
+    display: flex;
+    justify-content: center; /* ✅ Centraliza na horizontal */
+    align-items: center; /* ✅ Mantém alinhado verticalmente */
+    width: 100%;
+    margin-top: 30px; /* ✅ Garante que fique abaixo da tabela */
 }
 
 #video-player {
-    width: 100%;
+    width: 250px; /* ✅ Define um tamanho adequado */
     height: auto;
-    border-radius: 10px; /* ✅ Bordas arredondadas */
+    border-radius: 8px;
 }
 
-
-.expanded-video {
-    width: 500px; /* ✅ Expande para tamanho maior */
-    height: auto;
-}
 
 
