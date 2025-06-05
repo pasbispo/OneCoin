@@ -400,10 +400,6 @@ document.getElementById("update-button").addEventListener("click", function() {
 });
 
 
-let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
-cryptoPanelBody.innerHTML = "";
-
-let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
 selectedCryptos.forEach(crypto => {
     let row = document.createElement("tr");
@@ -483,20 +479,17 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+
 document.addEventListener("DOMContentLoaded", function() {
     let params = new URLSearchParams(window.location.search);
     let campaignName = params.get("campanha");
 
     if (campaignName) {
-        document.getElementById("crypto-panel-table").textContent = decodeURIComponent(campaignName);
+        document.getElementById("panel-title").textContent = decodeURIComponent(campaignName); // ✅ Decodifica e exibe corretamente
     } else {
-        document.getElementById("crypto-panel-table").textContent = "Nova campanha!";
+        document.getElementById("panel-title").textContent = "Nova campanha!";
     }
-
-    // ✅ Garante que a tabela de criptomoedas seja carregada
-    carregarTabelaCriptomoedas();
 });
-
 
 
 
