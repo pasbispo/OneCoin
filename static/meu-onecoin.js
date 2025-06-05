@@ -1,3 +1,5 @@
+
+
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignData = {
         nome: document.getElementById("campaign-name").value.trim(),
@@ -22,23 +24,19 @@ document.getElementById("update-button").addEventListener("click", function () {
         });
     });
 
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+
+    if (!campaigns.find(c => c.nome === campaignData.nome)) {
+        campaigns.push({ nome: campaignData.nome, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignData.nome)}` });
+        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    }
+
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
-
-    console.log("✅ Campanha salva:", campaignData);
-
-    // ✅ Bloquear edições após a atualização
-    document.getElementById("campaign-name").setAttribute("readonly", true);
-    document.getElementById("campaign-period").setAttribute("readonly", true);
-    document.getElementById("campaign-goal").setAttribute("readonly", true);
-
     alert("Campanha salva! Redirecionando para 'Minhas Campanhas'...");
 
-    // ✅ Aguarda um pequeno tempo antes de redirecionar
-    setTimeout(function () {
-        window.location.href = "minhas-campanhas.html";
-    }, 1000);
+    // ✅ Redireciona automaticamente para "Minhas Campanhas"
+    window.location.href = "minhas-campanhas.html";
 });
-
 
 
 
@@ -272,6 +270,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+document.getElementById("update-button").addEventListener("click", function () {
+    let campaignName = document.getElementById("campaign-name").value.trim();
+
+    if (!campaignName) {
+        alert("Digite um nome para a campanha!");
+        return;
+    }
+
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+
+    // ✅ Evita duplicatas antes de salvar
+    if (!campaigns.find(c => c.nome === campaignName)) {
+        campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
+        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    }
+
+    alert("Campanha finalizada! Redirecionando para 'Minhas Campanhas'...");
+
+    // ✅ NÃO altera as tabelas de criptomoedas
+    window.location.href = "minhas-campanhas.html"; // ✅ Apenas direciona para "Minhas Campanhas"
+});
 
 
 document.getElementById("update-button").addEventListener("click", function() {
