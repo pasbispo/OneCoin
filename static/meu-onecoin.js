@@ -11,43 +11,33 @@ document.getElementById("update-button").addEventListener("click", function () {
     };
 
     let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
+
     cryptoTableRows.forEach(row => {
         let cells = row.querySelectorAll("td");
         campaignData.criptomoedas.push({
             simbolo: cells[0]?.textContent.trim(),
             quantidade: cells[1]?.textContent.trim(),
             valorEstimado: cells[2]?.textContent.trim(),
-            imagem: cells[0]?.querySelector("img").src
+            imagem: cells[0]?.querySelector("img")?.src,
+            rede: cells[3]?.textContent.trim() || "Nenhuma rede selecionada",
+            endereco: cells[4]?.textContent.trim() || "Selecione uma rede"
         });
     });
 
-    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
-    alert("Campanha salva! Agora ela estará intacta ao acessar a página novamente.");
-});
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-document.addEventListener("DOMContentLoaded", function () {
-    let campaignData = JSON.parse(localStorage.getItem("activeCampaign"));
-
-    if (campaignData) {
-        document.getElementById("campaign-name").value = campaignData.nome;
-        document.getElementById("campaign-period").value = campaignData.periodo;
-        document.getElementById("panel-title").textContent = campaignData.nome;
-        document.getElementById("panel-duration").textContent = `Período: ${campaignData.periodo} dias`;
-        document.getElementById("panel-goal").textContent = "Objetivo: " + campaignData.objetivo;
-        document.getElementById("slideshow-image").src = campaignData.imagens;
-        document.getElementById("video-player").src = campaignData.video;
-        document.getElementById("video-player").load();
-
-        bloquearCampos(); // ✅ Bloqueia os campos que não devem ser editados
+    if (!campaigns.find(c => c.nome === campaignData.nome)) {
+        campaigns.push({ nome: campaignData.nome, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignData.nome)}` });
+        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
     }
+
+    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+    alert("Campanha salva! Redirecionando para 'Minhas Campanhas'...");
+
+    // ✅ Redireciona automaticamente para "Minhas Campanhas"
+    window.location.href = "minhas-campanhas.html";
 });
 
-
-document.getElementById("new-campaign-button").addEventListener("click", function () {
-    localStorage.removeItem("activeCampaign"); // ✅ Apaga campanha anterior
-    localStorage.removeItem("selectedCryptos"); // ✅ Remove criptomoedas salvas
-    window.location.reload(); // ✅ Recarrega a página para iniciar nova campanha
-});
 
 
 
