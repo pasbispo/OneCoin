@@ -180,17 +180,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    let searchInput = document.getElementById("crypto-search");
 
-    if (searchInput) {
-        searchInput.placeholder = "Digite o nome da criptomoeda...";
-    } else {
-        console.error("Erro: Elemento com ID 'crypto-search' não encontrado.");
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cryptoSearch = document.getElementById("crypto-search");
+
+    if (!cryptoSearch) {
+        console.warn("Aviso: Elemento com ID 'crypto-search' não encontrado. A pesquisa será ignorada.");
+        return; // ✅ Previne erro sem afetar o restante do código
     }
+
+    cryptoSearch.addEventListener("input", function () {
+        console.log("Pesquisa de criptomoeda iniciada:", cryptoSearch.value);
+    });
 });
-
-
 
 
 
