@@ -186,6 +186,9 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
+
+
+
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignVideoInput = document.getElementById("video-file");
 
@@ -194,19 +197,24 @@ document.getElementById("update-button").addEventListener("click", function () {
         return;
     }
 
-    let campaignVideo = URL.createObjectURL(campaignVideoInput.files[0]);
+    let campaignVideoURL = URL.createObjectURL(campaignVideoInput.files[0]);
 
-    // ✅ Exibe o vídeo no painel direito
-    document.getElementById("video-player").src = campaignVideo;
-    document.getElementById("video-player").style.display = "block"; // Torna o vídeo visível
+    // ✅ Exibir o vídeo corretamente no canto inferior direito
+    let videoPlayer = document.getElementById("video-player");
+    videoPlayer.src = campaignVideoURL;
+    videoPlayer.style.display = "block"; // ✅ Torna o vídeo visível
 
-    // ✅ Salva no localStorage para exibição futura
+    // ✅ Salvar vídeo no localStorage
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
-    campaignData.video = campaignVideo;
+    campaignData.video = campaignVideoURL;
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
-    console.log("✅ Vídeo atualizado:", campaignVideo);
+    console.log("✅ Vídeo atualizado:", campaignVideoURL);
 });
+
+
+
+
 
 
 
