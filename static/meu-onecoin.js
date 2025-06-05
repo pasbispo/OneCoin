@@ -326,14 +326,18 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-    // Evita duplicatas
+    // ✅ Evita duplicatas antes de salvar
     if (!campaigns.find(c => c.nome === campaignName)) {
         campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
         localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
     }
 
-    alert("Campanha finalizada! Agora ela pode ser acessada em 'Minhas Campanhas'.");
+    alert("Campanha finalizada! Redirecionando para 'Minhas Campanhas'...");
+
+    // ✅ NÃO altera as tabelas de criptomoedas
+    window.location.href = "minhas-campanhas.html"; // ✅ Apenas direciona para "Minhas Campanhas"
 });
+
 
 document.getElementById("update-button").addEventListener("click", function() {
     // 🏆 Atualizar dados da campanha apenas ao clicar no botão
