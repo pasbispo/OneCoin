@@ -76,6 +76,7 @@
 
 
 
+
 <!-- Botão Continuar abaixo da tabela -->
 <div class="continue-container">
     <button id="continue-button">Continuar</button>
@@ -90,17 +91,6 @@
    <div class="search-crypto">
     <input type="text" id="search-bar" placeholder="Digite o nome da criptomoeda..." oninput="filterCryptos()">
     
-
-<div class="form-group">
-    <label for="crypto-search">Pesquisar Criptomoeda:</label>
-    <input type="text" id="crypto-search" placeholder="Digite para buscar criptomoeda">
-</div>
-
-
-
-
-
-
 
    
 </div>
@@ -131,20 +121,6 @@
 
 
 
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    let cryptoSearch = document.getElementById("crypto-search");
-
-    if (!cryptoSearch) {
-        console.warn("Aviso: Elemento com ID 'crypto-search' não encontrado. A pesquisa será ignorada.");
-        return;
-    }
-
-    cryptoSearch.addEventListener("input", function () {
-        console.log("Pesquisa de criptomoeda iniciada:", cryptoSearch.value);
-    });
-});
 
 
 
