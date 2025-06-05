@@ -265,17 +265,18 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
-    let cryptoSearch = document.getElementById("crypto-search");
+    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
 
-    if (!cryptoSearch) {
-        console.warn("Aviso: Elemento com ID 'crypto-search' não encontrado. A pesquisa será ignorada.");
-        return;
-    }
+    cryptoTableRows.forEach(row => {
+        let quantityCell = row.querySelector("td:nth-child(2)"); // ✅ Busca a segunda coluna (Quantidade)
 
-    cryptoSearch.addEventListener("input", function () {
-        console.log("Pesquisa de criptomoeda iniciada:", cryptoSearch.value);
+        if (!quantityCell) {
+            console.warn("Aviso: Campo de quantidade não encontrado! Verifique se a tabela está correta.");
+            return; // ✅ Previne erro sem afetar o restante do código
+        }
+
+        console.log("Quantidade encontrada:", quantityCell.textContent);
     });
 });
 
