@@ -95,6 +95,7 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
+
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignImagesInput = document.getElementById("campaign-images");
 
@@ -119,30 +120,35 @@ document.getElementById("update-button").addEventListener("click", function () {
     let campaignImagesContainer = document.getElementById("campaign-images-container");
     campaignImagesContainer.innerHTML = ""; // Limpa antes de preencher
 
-    campaignImages.forEach(imageSrc => {
+    campaignImages.forEach((imageSrc, index) => {
         let imgElement = document.createElement("img");
         imgElement.src = imageSrc;
-        imgElement.alt = "Imagem da campanha";
+        imgElement.alt = `Imagem ${index + 1} da campanha`;
         imgElement.classList.add("campaign-image");
+        imgElement.style.display = index === 0 ? "block" : "none"; // ✅ Exibe a primeira imagem inicialmente
         campaignImagesContainer.appendChild(imgElement);
     });
 
-    // ✅ Inicia o slideshow automático
-    startSlideshow();
+    // ✅ Inicia o slideshow automático se houver mais de uma imagem
+    if (campaignImages.length > 1) {
+        startSlideshow();
+    }
 });
+
 function startSlideshow() {
     let images = document.querySelectorAll(".campaign-image");
     let currentIndex = 0;
 
-    if (images.length < 2) return; // Se houver só uma imagem, não precisa de slideshow
+    if (images.length < 2) return; // ✅ Se houver só uma imagem, não ativa o slideshow
 
     setInterval(() => {
-        images.forEach(img => img.style.display = "none");
-        images[currentIndex].style.display = "block";
-
-        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].style.display = "none"; // ✅ Oculta a imagem atual
+        currentIndex = (currentIndex + 1) % images.length; // ✅ Passa para a próxima imagem
+        images[currentIndex].style.display = "block"; // ✅ Mostra a nova imagem
     }, 3000); // ✅ Troca a imagem a cada 3 segundos
 }
+
+
 
 
 
