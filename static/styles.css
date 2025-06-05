@@ -1419,3 +1419,12 @@ th, td {
     height: auto;
     border-radius: 10px;
 }
+.horizontal-lineh {
+    width: 100%;
+    height: 3px; /* ✅ Espessura da linha */
+    background-color: #ccc; /* ✅ Cor cinza */
+    margin: 20px auto; /* ✅ Mantém distância das imagens */
+    display: block; /* ✅ Garante que a linha fique visível */
+    position: relative; /* ✅ Previne sobreposição por outros elementos */
+    z-index: 2; /* ✅ Faz a linha aparecer acima das imagens */
+}
