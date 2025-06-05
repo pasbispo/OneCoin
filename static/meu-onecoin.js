@@ -189,27 +189,26 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
-document.getElementById("update-button").addEventListener("click", function () {
-    let campaignVideoInput = document.getElementById("video-file");
+document.addEventListener("DOMContentLoaded", function () {
+    let videoContainer = document.getElementById("video-container");
 
-    if (campaignVideoInput.files.length === 0) {
-        alert("Por favor, selecione um vídeo para a campanha!");
-        return;
-    }
+    videoContainer.addEventListener("mousedown", function (event) {
+        let offsetX = event.clientX - videoContainer.getBoundingClientRect().left;
+        let offsetY = event.clientY - videoContainer.getBoundingClientRect().top;
 
-    let campaignVideoURL = URL.createObjectURL(campaignVideoInput.files[0]);
+        function moveAt(e) {
+            videoContainer.style.left = `${e.clientX - offsetX}px`;
+            videoContainer.style.top = `${e.clientY - offsetY}px`;
+        }
 
-    // ✅ Exibir o vídeo corretamente no canto inferior direito
-    let videoPlayer = document.getElementById("video-player");
-    videoPlayer.src = campaignVideoURL;
-    videoPlayer.style.display = "block"; // ✅ Torna o vídeo visível
+        function stopMove() {
+            document.removeEventListener("mousemove", moveAt);
+            document.removeEventListener("mouseup", stopMove);
+        }
 
-    // ✅ Salvar vídeo no localStorage
-    let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
-    campaignData.video = campaignVideoURL;
-    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
-
-    console.log("✅ Vídeo atualizado:", campaignVideoURL);
+        document.addEventListener("mousemove", moveAt);
+        document.addEventListener("mouseup", stopMove);
+    });
 });
 
 
