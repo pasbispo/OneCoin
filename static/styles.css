@@ -1414,7 +1414,7 @@ th, td {
 
 
 .video-container {
-    cursor: grab; /* ✅ Indica que o vídeo pode ser arrastado */
+    
     bottom: 100px; /* ✅ Ajusta a posição vertical */
     right: 20px; /* ✅ Ajusta a posição horizontal */
     width: 200px; /* ✅ Define um tamanho inicial */
