@@ -1415,15 +1415,11 @@ th, td {
 
 .video-container {
     cursor: grab; /* ✅ Indica que o vídeo pode ser arrastado */
-    position: absolute; /* ✅ Permite movimentação livre */
-    bottom: 10px; /* ✅ Ajusta a posição vertical */
-    right: 10px; /* ✅ Ajusta a posição horizontal */
-    width: 180px; /* ✅ Define um tamanho inicial */
+    bottom: 100px; /* ✅ Ajusta a posição vertical */
+    right: 20px; /* ✅ Ajusta a posição horizontal */
+    width: 200px; /* ✅ Define um tamanho inicial */
     transition: all 0.3s ease; /* ✅ Transição suave ao mudar de posição */
     margin-top: 30px; /* ✅ Garante que fique abaixo da tabela */
-}
-#video-container:active {
-    cursor: grabbing;
 }
 
 #video-player {
