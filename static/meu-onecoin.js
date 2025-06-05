@@ -39,6 +39,43 @@ document.getElementById("update-button").addEventListener("click", function () {
 });
 
 
+document.getElementById("update-button").addEventListener("click", function () {
+    let campaignData = {
+        nome: document.getElementById("campaign-name").value.trim(),
+        periodo: document.getElementById("campaign-period").value.trim(),
+        objetivo: document.getElementById("campaign-goal").value.trim(),
+        imagens: document.getElementById("slideshow-image").src,
+        video: document.getElementById("video-player").src,
+        criptomoedas: []
+    };
+
+    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
+
+    cryptoTableRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+        campaignData.criptomoedas.push({
+            simbolo: cells[0]?.textContent.trim(),
+            quantidade: cells[1]?.textContent.trim(),
+            valorEstimado: cells[2]?.textContent.trim(),
+            imagem: cells[0]?.querySelector("img")?.src,
+            rede: cells[3]?.textContent.trim() || "Nenhuma rede selecionada",
+            endereco: cells[4]?.textContent.trim() || "Selecione uma rede"
+        });
+    });
+
+    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+
+    console.log("✅ Campanha salva:", campaignData);
+
+    alert("Campanha salva! Redirecionando para 'Minhas Campanhas'...");
+
+    // ✅ Redireciona apenas se a campanha foi salva corretamente
+    if (localStorage.getItem("activeCampaign")) {
+        window.location.href = "minhas-campanhas.html";
+    } else {
+        console.error("❌ Erro ao salvar campanha! Verifique o código.");
+    }
+});
 
 
 
