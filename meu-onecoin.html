@@ -27,6 +27,7 @@
 <body>
 
 
+
 <div class="container">
     <!-- Lado esquerdo: Dados da campanha -->
     <section class="campaign-input">
@@ -42,16 +43,9 @@
             <input type="number" id="campaign-period" placeholder="Digite o período" oninput="updatePeriod()">
         </div>
 
-
-
-
-
-<div id="campaign-images-container">
-    
+<div class="form-group">
     <label for="campaign-images">Imagens da Campanha:</label>
-
     <input type="file" id="campaign-images" accept="image/*" multiple onchange="startSlideshow()">
-
 </div>
 
 
@@ -98,7 +92,10 @@
         <p> <span id="panel-duration">0</span></p>
     </div>
  
-    <img id="slideshow-image" src="#" alt="Imagem da campanha">
+    <div id="campaign-images-container">
+       <!-- Aqui serão adicionadas as imagens dinamicamente -->
+    </div>
+
     <p id="panel-goal">[Texto aparece aqui]</p>
 
     <h3>Criptomoedas Selecionadas</h3>
