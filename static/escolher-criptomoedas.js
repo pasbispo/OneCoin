@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
     let cryptoSearch = document.getElementById("crypto-search");
 
@@ -278,6 +278,4 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Pesquisa de criptomoeda iniciada:", cryptoSearch.value);
     });
 });
-</script>
-</body>
-</html>
+
