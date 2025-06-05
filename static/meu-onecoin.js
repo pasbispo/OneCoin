@@ -108,16 +108,42 @@ document.getElementById("update-button").addEventListener("click", function () {
         campaignImages.push(URL.createObjectURL(campaignImagesInput.files[i]));
     }
 
-    // ✅ Exibe a primeira imagem no lado direito
-    document.getElementById("slideshow-image").src = campaignImages[0];
-
-    // ✅ Salva no localStorage para exibição futura
+    // ✅ Salva todas as imagens no localStorage para exibição futura
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
     campaignData.imagens = campaignImages;
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
-    console.log("✅ Imagens atualizadas:", campaignImages);
+    console.log("✅ Imagens da campanha salvas:", campaignImages);
+
+    // ✅ Exibir todas as imagens dinamicamente
+    let campaignImagesContainer = document.getElementById("campaign-images-container");
+    campaignImagesContainer.innerHTML = ""; // Limpa antes de preencher
+
+    campaignImages.forEach((imageSrc, index) => {
+        let imgElement = document.createElement("img");
+        imgElement.src = imageSrc;
+        imgElement.alt = `Imagem ${index + 1} da campanha`;
+        imgElement.classList.add("campaign-image");
+        imgElement.style.display = index === 0 ? "block" : "none"; // Exibe apenas a primeira inicialmente
+        campaignImagesContainer.appendChild(imgElement);
+    });
+
+    // ✅ Inicia o slideshow automático
+    startSlideshow();
 });
+function startSlideshow() {
+    let images = document.querySelectorAll(".campaign-image");
+    let currentIndex = 0;
+
+    if (images.length < 2) return; // Se houver só uma imagem, não precisa de slideshow
+
+    setInterval(() => {
+        images.forEach(img => img.style.display = "none");
+        images[currentIndex].style.display = "block";
+
+        currentIndex = (currentIndex + 1) % images.length;
+    }, 3000); // ✅ Troca a imagem a cada 3 segundos
+}
 
 
 
