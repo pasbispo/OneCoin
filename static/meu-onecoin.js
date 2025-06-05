@@ -270,26 +270,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-document.getElementById("update-button").addEventListener("click", function () {
-    let campaignName = document.getElementById("campaign-name").value.trim();
-
-    if (!campaignName) {
-        alert("Digite um nome para a campanha!");
-        return;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignsContainer = document.getElementById("userCampaignsBox");
+    campaignsContainer.innerHTML = ""; // Limpa o carregamento inicial
 
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-    // ✅ Evita duplicatas antes de salvar
-    if (!campaigns.find(c => c.nome === campaignName)) {
-        campaigns.push({ nome: campaignName, url: `meu-onecoin.html?campanha=${encodeURIComponent(campaignName)}` });
-        localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    if (campaigns.length === 0) {
+        campaignsContainer.innerHTML = "<p>Você ainda não tem campanhas finalizadas.</p>";
+        return;
     }
 
-    alert("Campanha finalizada! Redirecionando para 'Minhas Campanhas'...");
+    campaigns.forEach(campaign => {
+        let campaignLink = document.createElement("a");
+        campaignLink.href = campaign.url;
+        campaignLink.textContent = campaign.nome;
+        campaignLink.classList.add("campaign-item");
 
-    // ✅ NÃO altera as tabelas de criptomoedas
-    window.location.href = "minhas-campanhas.html"; // ✅ Apenas direciona para "Minhas Campanhas"
+        campaignsContainer.appendChild(campaignLink);
+    });
+
+    console.log("✅ Campanhas carregadas com sucesso!");
 });
 
 
