@@ -1428,3 +1428,38 @@ th, td {
     position: relative; /* ✅ Previne sobreposição por outros elementos */
     z-index: 2; /* ✅ Faz a linha aparecer acima das imagens */
 }
+
+
+
+
+
+.video-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 180px; /* ✅ Tamanho inicial do vídeo */
+    transition: width 0.3s ease, height 0.3s ease; /* ✅ Animação suave */
+}
+
+.small-video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.expanded-video {
+    width: 500px; /* ✅ Expande para tamanho maior */
+    height: auto;
+}
+
+#expand-video-button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
