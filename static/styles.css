@@ -1434,7 +1434,7 @@ th, td {
 
 
 .video-container {
-    position: absolute; /* ✅ Permite mover livremente o vídeo */
+    
     bottom: 100px; /* ✅ Ajusta a posição vertical */
     right: 20px; /* ✅ Ajusta a posição horizontal */
     width: 200px; /* ✅ Define um tamanho inicial */
