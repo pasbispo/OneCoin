@@ -1434,31 +1434,21 @@ th, td {
 
 
 #video-container {
-    position: absolute; /* ✅ Permite movimentação livre */
+    position: absolute; /* ✅ Permite movimentação */
     bottom: 10px;
     right: 10px;
     width: 180px;
-    cursor: grab; /* ✅ Indica que o vídeo pode ser arrastado */
+    cursor: grab; /* ✅ Indica que o usuário pode mover */
+    z-index: 1000; /* ✅ Mantém o vídeo sobre outros elementos */
 }
 
 #video-container:active {
     cursor: grabbing;
 }
 
-
-.expanded-video {
-    width: 500px; /* ✅ Expande para tamanho maior */
+#video-player {
+    width: 100%;
     height: auto;
+    border-radius: 8px;
 }
 
-#expand-video-button {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-}
