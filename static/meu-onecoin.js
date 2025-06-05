@@ -488,7 +488,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let campaignName = params.get("campanha");
 
     if (campaignName) {
-        document.getElementById("panel-title").textContent = decodeURIComponent(campaignName);
+        document.getElementById("crypto-panel-table").textContent = decodeURIComponent(campaignName);
     } else {
         document.getElementById("crypto-panel-table").textContent = "Nova campanha!";
     }
