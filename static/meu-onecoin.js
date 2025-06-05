@@ -323,6 +323,7 @@ document.getElementById("finalize-button").addEventListener("click", function ()
 });
 
 document.getElementById("update-button").addEventListener("click", function() {
+    // 🏆 Atualizar dados da campanha apenas ao clicar no botão
     let campaignName = document.getElementById("campaign-name").value;
     let campaignGoal = document.getElementById("campaign-goal").value;
     let campaignPeriod = document.getElementById("campaign-period").value;
@@ -334,72 +335,31 @@ document.getElementById("update-button").addEventListener("click", function() {
     let panelDuration = document.getElementById("panel-duration");
     let panelImage = document.getElementById("slideshow-image");
     let videoPlayer = document.getElementById("video-player");
-    let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
 
-    // 🏆 Atualizando elementos principais da campanha
+    // 🏆 Atualizando elementos na planilha direita
     panelTitle.textContent = campaignName;
     panelGoal.textContent = "Objetivo: " + campaignGoal;
     panelDuration.textContent = `Período: ${campaignPeriod} dias`;
 
-    // 🏆 Atualizar imagens e vídeo
+    // 🏆 Atualizar imagens apenas após o clique no botão
     if (campaignImages.length > 0) {
         let imageURL = URL.createObjectURL(campaignImages[0]);
         panelImage.src = imageURL;
     }
+
+    // 🏆 Atualizar vídeo apenas após o clique no botão
     if (campaignVideo) {
         let videoURL = URL.createObjectURL(campaignVideo);
         videoPlayer.src = videoURL;
         videoPlayer.load();
     }
-
-    // 🏆 Atualizar TABELA DE CRIPTOMOEDAS
-    cryptoPanelBody.innerHTML = ""; // ✅ Limpa a tabela antes de preenchê-la
-
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-    if (selectedCryptos.length === 0) {
-        cryptoPanelBody.innerHTML = `<tr><td colspan="4">Nenhuma criptomoeda cadastrada.</td></tr>`;
-        return;
-    }
-
-    selectedCryptos.forEach(crypto => {
-        let row = document.createElement("tr");
-
-        let cellImage = document.createElement("td");
-        let cellSymbol = document.createElement("td");
-        let cellNetworkButton = document.createElement("td");
-        let cellAddress = document.createElement("td");
-        let cellCopyButton = document.createElement("td");
-
-        cellImage.innerHTML = `<img src="${crypto.image || 'static/img/default-crypto.png'}" alt="${crypto.name}" width="40">`;
-        cellSymbol.textContent = crypto.name || "Criptomoeda desconhecida";
-        cellNetworkButton.innerHTML = `<button class="select-network-btn" data-crypto="${crypto.name}">Selecionar Rede</button>`;
-        cellAddress.textContent = crypto.selectedAddress || "Selecione uma rede";
-
-        let copyBtn = document.createElement("button");
-        copyBtn.textContent = "Copiar";
-        copyBtn.classList.add("copy-btn");
-        copyBtn.addEventListener("click", function () {
-            if (cellAddress.textContent !== "Selecione uma rede") {
-                navigator.clipboard.writeText(cellAddress.textContent);
-                alert("Endereço copiado!");
-            } else {
-                alert("Selecione uma rede primeiro!");
-            }
-        });
-
-        cellCopyButton.appendChild(copyBtn);
-        row.appendChild(cellImage);
-        row.appendChild(cellSymbol);
-        row.appendChild(cellNetworkButton);
-        row.appendChild(cellAddress);
-        row.appendChild(cellCopyButton);
-        cryptoPanelBody.appendChild(row);
-    });
-
-    alert("Campanha e tabela de criptomoedas atualizadas!");
 });
 
 
+let cryptoPanelBody = document.querySelector(".crypto-panel-table tbody");
+cryptoPanelBody.innerHTML = "";
+
+let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
 selectedCryptos.forEach(crypto => {
     let row = document.createElement("tr");
