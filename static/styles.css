@@ -1433,22 +1433,24 @@ th, td {
 
 
 
-#video-container {
-    position: absolute; /* ✅ Permite movimentação */
-    bottom: 10px;
-    right: 10px;
-    width: 180px;
-    cursor: grab; /* ✅ Indica que o usuário pode mover */
-    z-index: 1000; /* ✅ Mantém o vídeo sobre outros elementos */
-}
-
-#video-container:active {
-    cursor: grabbing;
+.video-container {
+    position: absolute; /* ✅ Permite mover livremente o vídeo */
+    bottom: 20px; /* ✅ Ajusta a posição vertical */
+    right: 20px; /* ✅ Ajusta a posição horizontal */
+    width: 200px; /* ✅ Define um tamanho inicial */
+    transition: all 0.3s ease; /* ✅ Transição suave ao mudar de posição */
 }
 
 #video-player {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 10px; /* ✅ Bordas arredondadas */
 }
+
+
+.expanded-video {
+    width: 500px; /* ✅ Expande para tamanho maior */
+    height: auto;
+}
+
 

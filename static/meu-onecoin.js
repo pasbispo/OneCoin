@@ -189,36 +189,28 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    let videoContainer = document.getElementById("video-container");
+document.getElementById("update-button").addEventListener("click", function () {
+    let campaignVideoInput = document.getElementById("video-file");
 
-    videoContainer.addEventListener("mousedown", function (event) {
-        event.preventDefault(); // ✅ Evita bugs ao clicar
-        let offsetX = event.clientX - videoContainer.getBoundingClientRect().left;
-        let offsetY = event.clientY - videoContainer.getBoundingClientRect().top;
+    if (campaignVideoInput.files.length === 0) {
+        alert("Por favor, selecione um vídeo para a campanha!");
+        return;
+    }
 
-        function moveAt(e) {
-            let newX = e.clientX - offsetX;
-            let newY = e.clientY - offsetY;
+    let campaignVideoURL = URL.createObjectURL(campaignVideoInput.files[0]);
 
-            // ✅ Mantém o vídeo dentro da área da planilha
-            let maxX = window.innerWidth - videoContainer.offsetWidth;
-            let maxY = window.innerHeight - videoContainer.offsetHeight;
+    // ✅ Exibir o vídeo corretamente no canto inferior direito
+    let videoPlayer = document.getElementById("video-player");
+    videoPlayer.src = campaignVideoURL;
+    videoPlayer.style.display = "block"; // ✅ Torna o vídeo visível
 
-            videoContainer.style.left = Math.min(Math.max(newX, 0), maxX) + "px";
-            videoContainer.style.top = Math.min(Math.max(newY, 0), maxY) + "px";
-        }
+    // ✅ Salvar vídeo no localStorage
+    let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
+    campaignData.video = campaignVideoURL;
+    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
-        function stopMove() {
-            document.removeEventListener("mousemove", moveAt);
-            document.removeEventListener("mouseup", stopMove);
-        }
-
-        document.addEventListener("mousemove", moveAt);
-        document.addEventListener("mouseup", stopMove);
-    });
+    console.log("✅ Vídeo atualizado:", campaignVideoURL);
 });
-
 
 
 
