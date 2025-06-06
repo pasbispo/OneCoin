@@ -361,13 +361,6 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
-
-
-
-
-
-
-
 document.getElementById("update-button").addEventListener("click", function () {
     let campaignName = document.getElementById("campaign-name").value.trim();
     let campaignPeriod = parseInt(document.getElementById("campaign-period").value.trim());
