@@ -284,12 +284,12 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
     document.getElementById("crypto-name").textContent = cryptoData.simbolo;
 
     // ✅ Preenche automaticamente os campos se já houver redes salvas
-    document.getElementById("network1").value = cryptoData.redes[0]?.nome || "";
-    document.getElementById("address1").value = cryptoData.redes[0]?.endereco || "";
-    document.getElementById("network2").value = cryptoData.redes[1]?.nome || "";
-    document.getElementById("address2").value = cryptoData.redes[1]?.endereco || "";
-    document.getElementById("network3").value = cryptoData.redes[2]?.nome || "";
-    document.getElementById("address3").value = cryptoData.redes[2]?.endereco || "";
+    document.getElementById("network1").value = cryptoData.redes?.[0]?.nome || "";
+    document.getElementById("address1").value = cryptoData.redes?.[0]?.endereco || "";
+    document.getElementById("network2").value = cryptoData.redes?.[1]?.nome || "";
+    document.getElementById("address2").value = cryptoData.redes?.[1]?.endereco || "";
+    document.getElementById("network3").value = cryptoData.redes?.[2]?.nome || "";
+    document.getElementById("address3").value = cryptoData.redes?.[2]?.endereco || "";
 
     document.getElementById("save-network").onclick = function () {
         cryptoData.redes = [
@@ -298,7 +298,7 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
             { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
         ];
 
-        // ✅ Exibe corretamente os três botões das redes na tabela da direita
+        // ✅ Exibe os três botões das redes na tabela da direita
         cellPanelAddress.innerHTML = `
             ${cryptoData.redes.map(r => `<button class="network-option" onclick="selectAddress('${r.endereco}')">${r.nome}</button>`).join(" ")}
         `;
