@@ -197,24 +197,19 @@ document.getElementById("update-button").addEventListener("click", function () {
         return;
     }
 
-    let campaignVideoURL = URL.createObjectURL(campaignVideoInput.files[0]);
+    let campaignVideo = URL.createObjectURL(campaignVideoInput.files[0]);
 
-    // ✅ Exibir o vídeo corretamente no canto inferior direito
-    let videoPlayer = document.getElementById("video-player");
-    videoPlayer.src = campaignVideoURL;
-    videoPlayer.style.display = "block"; // ✅ Torna o vídeo visível
+    // ✅ Exibe o vídeo no painel direito
+    document.getElementById("video-player").src = campaignVideo;
+    document.getElementById("video-player").style.display = "block"; // Torna o vídeo visível
 
-    // ✅ Salvar vídeo no localStorage
+    // ✅ Salva no localStorage para exibição futura
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
-    campaignData.video = campaignVideoURL;
+    campaignData.video = campaignVideo;
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
-    console.log("✅ Vídeo atualizado:", campaignVideoURL);
+    console.log("✅ Vídeo atualizado:", campaignVideo);
 });
-
-
-
-
 
 
 
@@ -298,56 +293,6 @@ document.getElementById("update-button").addEventListener("click", function () {
     console.log("✅ Tabela de criptomoedas atualizada!");
 });
 
-document.getElementById("update-button").addEventListener("click", function () {
-    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
-    let cryptoPanelTableBody = document.querySelector(".crypto-panel-table tbody");
-    cryptoPanelTableBody.innerHTML = ""; 
-
-    cryptoTableRows.forEach(row => {
-        let cells = row.querySelectorAll("td");
-        let cryptoData = {
-            simbolo: cells[0]?.textContent.trim(),
-            quantidade: cells[1]?.textContent.trim(),
-            valorEstimado: cells[2]?.textContent.trim(),
-            imagem: cells[0]?.querySelector("img")?.src,
-            redes: [],
-            endereco: ""
-        };
-
-        let rowPanel = document.createElement("tr");
-
-        let cellSymbol = document.createElement("td");
-        let cellNetwork = document.createElement("td");
-        let cellAddress = document.createElement("td");
-        let cellActions = document.createElement("td");
-
-        cellSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
-
-        let networkBtn = document.createElement("button");
-        networkBtn.textContent = "Selecionar Rede";
-        networkBtn.classList.add("network-btn");
-        networkBtn.addEventListener("click", function () {
-            openNetworkSelection(cryptoData);
-        });
-
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", function () {
-            row.remove(); // ✅ Remove a criptomoeda da tabela
-        });
-
-        cellActions.appendChild(networkBtn);
-        cellActions.appendChild(deleteBtn);
-
-        rowPanel.appendChild(cellSymbol);
-        rowPanel.appendChild(cellNetwork);
-        rowPanel.appendChild(cellAddress);
-        rowPanel.appendChild(cellActions);
-
-        cryptoPanelTableBody.appendChild(rowPanel);
-    });
-});
 
 
 
