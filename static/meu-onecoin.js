@@ -108,26 +108,25 @@ document.getElementById("update-button").addEventListener("click", function () {
         campaignImages.push(URL.createObjectURL(campaignImagesInput.files[i]));
     }
 
-    // ✅ Salva todas as imagens no localStorage
+    // ✅ Salva todas as imagens no localStorage para exibição futura
     let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
     campaignData.imagens = campaignImages;
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
     console.log("✅ Imagens da campanha salvas:", campaignImages);
 
-    // ✅ Exibe todas as imagens centralizadas
+    // ✅ Exibir todas as imagens dinamicamente
     let campaignImagesContainer = document.getElementById("campaign-images-container");
     campaignImagesContainer.innerHTML = ""; // Limpa antes de preencher
 
-    campaignImages.forEach(imageSrc => {
+    campaignImages.forEach((imageSrc, index) => {
         let imgElement = document.createElement("img");
         imgElement.src = imageSrc;
-        imgElement.alt = "Imagem da campanha";
+        imgElement.alt = `Imagem ${index + 1} da campanha`;
         imgElement.classList.add("campaign-image");
+        imgElement.style.display = index === 0 ? "block" : "none"; // Exibe apenas a primeira inicialmente
         campaignImagesContainer.appendChild(imgElement);
     });
-
-
 
     // ✅ Inicia o slideshow automático
     startSlideshow();
