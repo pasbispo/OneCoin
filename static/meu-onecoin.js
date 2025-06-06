@@ -283,7 +283,7 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
     modal.classList.add("active"); // ✅ Faz a aba aparecer
     document.getElementById("crypto-name").textContent = cryptoData.simbolo;
 
-    // ✅ Inicializa corretamente os campos da aba
+    // ✅ Se já houver redes salvas, preenche automaticamente os campos
     document.getElementById("network1").value = cryptoData.redes?.[0]?.nome || "";
     document.getElementById("address1").value = cryptoData.redes?.[0]?.endereco || "";
     document.getElementById("network2").value = cryptoData.redes?.[1]?.nome || "";
@@ -298,12 +298,12 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
             { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
         ];
 
-        // ✅ Exibe os botões das redes na tabela da direita
+        // ✅ Exibe corretamente os três botões das redes na tabela da direita
         cellPanelAddress.innerHTML = `
             ${cryptoData.redes.map(r => `<button class="network-option" onclick="selectAddress('${r.endereco}')">${r.nome}</button>`).join(" ")}
         `;
 
-        // ✅ Atualiza os dados no localStorage para futuras consultas
+        // ✅ Atualiza os dados no localStorage
         let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
         campaignData.criptomoedas.forEach(c => {
             if (c.simbolo === cryptoData.simbolo) {
