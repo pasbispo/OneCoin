@@ -408,13 +408,7 @@ document.getElementById("update-button").addEventListener("click", function () {
 
         cellPanelSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
         
-        let networkBtn = document.createElement("button");
-networkBtn.textContent = "Selecionar Rede";
-networkBtn.classList.add("network-btn");
-networkBtn.addEventListener("click", function () {
-    openNetworkSelection(cryptoData, cellPanelAddress); // ✅ Agora chama corretamente a aba
-});
-
+        
 
         let copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
@@ -541,13 +535,16 @@ document.addEventListener("DOMContentLoaded", function () {
         cellQuantity.textContent = crypto.quantidade ? crypto.quantidade : "0";
         cellValue.textContent = crypto.valorEstimado ? `${crypto.valorEstimado} USD` : "0 USD";
 
-       let networkBtn = document.createElement("button");
-networkBtn.textContent = "Selecionar Rede";
-networkBtn.classList.add("network-btn");
-networkBtn.addEventListener("click", function () {
-    openNetworkSelection(cryptoData, cellPanelAddress); // ✅ Agora chama corretamente a aba
-});
-
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.setAttribute("data-crypto", crypto.simbolo);
+        networkBtn.addEventListener("click", function () {
+            let userNetwork = prompt(`Digite a rede para ${crypto.simbolo}:`);
+            if (userNetwork) {
+                cellActions.textContent = userNetwork;
+            }
+        });
 
         cellActions.appendChild(networkBtn);
         row.appendChild(cellSymbol);
