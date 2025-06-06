@@ -225,72 +225,90 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
-let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
-campaignData.criptomoedas = [];
+document.getElementById("update-button").addEventListener("click", function () {
+    let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
+    let cryptoPanelTableBody = document.querySelector(".crypto-panel-table tbody");
+    
+    cryptoPanelTableBody.innerHTML = ""; // ✅ Limpa antes de preencher
 
-cryptoTableRows.forEach(row => {
-    let cells = row.querySelectorAll("td");
+    if (cryptoTableRows.length === 0) {
+        alert("Adicione criptomoedas antes de atualizar!");
+        return;
+    }
 
-    let cryptoData = {
-        simbolo: cells[0]?.textContent.trim(),
-        quantidade: cells[1]?.textContent.trim(),
-        valorEstimado: cells[2]?.textContent.trim(),
-        imagem: cells[0]?.querySelector("img")?.src,
-        redes: [], // ✅ Agora o usuário pode adicionar manualmente
-        endereco: ""
-    };
+    let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
+    campaignData.criptomoedas = [];
 
-    let rowPanel = document.createElement("tr");
+    cryptoTableRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
 
-    let cellSymbol = document.createElement("td");
-    let cellNetwork = document.createElement("td");
-    let cellAddress = document.createElement("td");
-    let cellActions = document.createElement("td");
+        let cryptoData = {
+            simbolo: cells[0]?.textContent.trim(),
+            quantidade: cells[1]?.textContent.trim(),
+            valorEstimado: cells[2]?.textContent.trim(),
+            imagem: cells[0]?.querySelector("img")?.src,
+            redes: [],
+        };
 
-    cellSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
+        campaignData.criptomoedas.push(cryptoData);
 
-    let networkBtn = document.createElement("button");
-    networkBtn.textContent = "Selecionar Rede";
-    networkBtn.classList.add("network-btn");
-    networkBtn.addEventListener("click", function () {
-        let network1 = prompt(`Digite o nome da primeira rede para ${cryptoData.simbolo}:`);
-        let address1 = prompt(`Digite o endereço da primeira rede:`);
+        // ✅ Criando nova linha na tabela do lado direito
+        let rowPanel = document.createElement("tr");
 
-        let network2 = prompt(`Digite o nome da segunda rede para ${cryptoData.simbolo}:`);
-        let address2 = prompt(`Digite o endereço da segunda rede:`);
+        let cellPanelSymbol = document.createElement("td");
+        let cellPanelNetwork = document.createElement("td");
+        let cellPanelAddress = document.createElement("td");
+        let cellPanelCopy = document.createElement("td");
 
-        let network3 = prompt(`Digite o nome da terceira rede para ${cryptoData.simbolo}:`);
-        let address3 = prompt(`Digite o endereço da terceira rede:`);
+        cellPanelSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
+        
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.addEventListener("click", function () {
+            let network1 = prompt(`Digite o nome da primeira rede para ${cryptoData.simbolo}:`);
+            let address1 = prompt(`Digite o endereço da primeira rede:`);
 
-        if (network1 && address1 && network2 && address2 && network3 && address3) {
-            cryptoData.redes = [
-                { nome: network1, endereco: address1 },
-                { nome: network2, endereco: address2 },
-                { nome: network3, endereco: address3 }
-            ];
+            let network2 = prompt(`Digite o nome da segunda rede para ${cryptoData.simbolo}:`);
+            let address2 = prompt(`Digite o endereço da segunda rede:`);
 
-            cellAddress.innerHTML = `
-                <p>${cryptoData.redes.map(r => `<strong>${r.nome}:</strong> ${r.endereco}`).join("<br>")}</p>
-            `;
-        }
+            let network3 = prompt(`Digite o nome da terceira rede para ${cryptoData.simbolo}:`);
+            let address3 = prompt(`Digite o endereço da terceira rede:`);
+
+            if (network1 && address1 && network2 && address2 && network3 && address3) {
+                cryptoData.redes = [
+                    { nome: network1, endereco: address1 },
+                    { nome: network2, endereco: address2 },
+                    { nome: network3, endereco: address3 }
+                ];
+
+                cellPanelAddress.innerHTML = `
+                    <p>${cryptoData.redes.map(r => `<strong>${r.nome}:</strong> ${r.endereco}`).join("<br>")}</p>
+                `;
+            }
+        });
+
+        let copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", function () {
+            navigator.clipboard.writeText(cellPanelAddress.textContent);
+            alert("Endereço copiado!");
+        });
+
+        cellPanelNetwork.appendChild(networkBtn);
+        cellPanelCopy.appendChild(copyBtn);
+        rowPanel.appendChild(cellPanelSymbol);
+        rowPanel.appendChild(cellPanelNetwork);
+        rowPanel.appendChild(cellPanelAddress);
+        rowPanel.appendChild(cellPanelCopy);
+
+        cryptoPanelTableBody.appendChild(rowPanel);
     });
 
-    let deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Excluir";
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.addEventListener("click", function () {
-        row.remove(); // ✅ Remove a criptomoeda da tabela
-    });
+    localStorage.setItem("activeCampaign", JSON.stringify(campaignData)); // ✅ Salva as alterações no localStorage
 
-    cellNetwork.appendChild(networkBtn);
-    cellActions.appendChild(deleteBtn);
-
-    rowPanel.appendChild(cellSymbol);
-    rowPanel.appendChild(cellNetwork);
-    rowPanel.appendChild(cellAddress);
-    rowPanel.appendChild(cellActions);
-
-    cryptoPanelTableBody.appendChild(rowPanel);
+    console.log("✅ Tabela de criptomoedas atualizada!");
 });
 
 
