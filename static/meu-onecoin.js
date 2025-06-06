@@ -228,14 +228,19 @@ document.getElementById("update-button").addEventListener("click", function () {
     cryptoTableRows.forEach(row => {
         let cells = row.querySelectorAll("td");
 
-        let cryptoData = {
-            simbolo: cells[0]?.textContent.trim(),
-            quantidade: cells[1]?.textContent.trim(),
-            valorEstimado: cells[2]?.textContent.trim(),
-            imagem: cells[0]?.querySelector("img")?.src,
-            redes: [], // ✅ Agora o usuário escreve manualmente as redes
-            endereco: ""
-        };
+       let cryptoData = {
+    simbolo: cells[0]?.textContent.trim(),
+    quantidade: cells[1]?.textContent.trim(),
+    valorEstimado: cells[2]?.textContent.trim(),
+    imagem: cells[0]?.querySelector("img")?.src,
+    redes: [
+        { nome: "", endereco: "" }, // ✅ Placeholder para Rede 1
+        { nome: "", endereco: "" }, // ✅ Placeholder para Rede 2
+        { nome: "", endereco: "" }  // ✅ Placeholder para Rede 3
+    ],
+    endereco: ""
+};
+
 
         campaignData.criptomoedas.push(cryptoData);
 
@@ -284,12 +289,12 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
     document.getElementById("crypto-name").textContent = cryptoData.simbolo;
 
     // ✅ Preenche automaticamente os campos se já houver redes salvas
-    document.getElementById("network1").value = cryptoData.redes?.[0]?.nome || "";
-    document.getElementById("address1").value = cryptoData.redes?.[0]?.endereco || "";
-    document.getElementById("network2").value = cryptoData.redes?.[1]?.nome || "";
-    document.getElementById("address2").value = cryptoData.redes?.[1]?.endereco || "";
-    document.getElementById("network3").value = cryptoData.redes?.[2]?.nome || "";
-    document.getElementById("address3").value = cryptoData.redes?.[2]?.endereco || "";
+    document.getElementById("network1").value = cryptoData.redes[0]?.nome || "";
+    document.getElementById("address1").value = cryptoData.redes[0]?.endereco || "";
+    document.getElementById("network2").value = cryptoData.redes[1]?.nome || "";
+    document.getElementById("address2").value = cryptoData.redes[1]?.endereco || "";
+    document.getElementById("network3").value = cryptoData.redes[2]?.nome || "";
+    document.getElementById("address3").value = cryptoData.redes[2]?.endereco || "";
 
     document.getElementById("save-network").onclick = function () {
         cryptoData.redes = [
@@ -320,10 +325,8 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
     };
 }
 
-// ✅ Quando o usuário seleciona uma rede, exibe o endereço correto
-function selectAddress(endereco) {
-    document.querySelector("#selected-address").textContent = endereco;
-}
+
+
 
 
 
