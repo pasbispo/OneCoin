@@ -1082,6 +1082,35 @@ th, td {
 
 
 
+.network-btn {
+  background-color: #007BFF; /* Azul forte */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  margin-right: 8px;
+}
+
+.network-btn:hover {
+  background-color: #0056b3; /* Azul mais escuro no hover */
+}
+
+.network-btn:active {
+  background-color: #00408d; /* Pressionado */
+}
+
+.network-btn:focus {
+  outline: 2px solid #80bdff;
+  outline-offset: 2px;
+}
+
+
+
+
+
 
 
 
