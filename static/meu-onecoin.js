@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let networkBtn = document.createElement("button");
         networkBtn.textContent = "Minhas Redes";
-        networkBtn.classList.add("network-btn");
+        networkBtn.classList.add("network-btnR");
         networkBtn.addEventListener("click", () => {
             openNetworkModal(crypto);
         });
@@ -395,7 +395,7 @@ document.getElementById("update-button").addEventListener("click", function () {
         
         let networkBtn = document.createElement("button");
         networkBtn.textContent = "Selecionar Rede";
-        networkBtn.classList.add("network-btn");
+        networkBtn.classList.add("network-btnR");
         networkBtn.addEventListener("click", function () {
             let userNetwork = prompt(`Digite a rede para ${cryptoData.simbolo}:`);
             if (userNetwork) {
