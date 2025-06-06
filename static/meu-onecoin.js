@@ -247,13 +247,31 @@ document.getElementById("update-button").addEventListener("click", function () {
             quantidade: cells[1]?.textContent.trim(),
             valorEstimado: cells[2]?.textContent.trim(),
             imagem: cells[0]?.querySelector("img")?.src,
-            redes: ["Rede 1", "Rede 2", "Rede 3"], // ✅ Placeholder para redes selecionadas pelo usuário
-            endereco: ""
+            redes: [],
         };
 
         campaignData.criptomoedas.push(cryptoData);
+    });
 
-        // ✅ Criando nova linha na tabela do lado direito
+    // ✅ Salva no localStorage
+    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+
+    console.log("✅ Dados das criptomoedas salvos no localStorage!");
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let cryptoPanelTableBody = document.querySelector(".crypto-panel-table tbody");
+
+    cryptoPanelTableBody.innerHTML = ""; // ✅ Limpa antes de preencher
+
+    let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
+    
+    if (!campaignData.criptomoedas || campaignData.criptomoedas.length === 0) {
+        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
+        return;
+    }
+
+    campaignData.criptomoedas.forEach(crypto => {
         let rowPanel = document.createElement("tr");
 
         let cellPanelSymbol = document.createElement("td");
@@ -261,19 +279,14 @@ document.getElementById("update-button").addEventListener("click", function () {
         let cellPanelAddress = document.createElement("td");
         let cellPanelCopy = document.createElement("td");
 
-        cellPanelSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
-        
+        cellPanelSymbol.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40"> ${crypto.simbolo}`;
+
         let networkBtn = document.createElement("button");
         networkBtn.textContent = "Selecionar Rede";
         networkBtn.classList.add("network-btn");
         networkBtn.addEventListener("click", function () {
-            let userNetwork = prompt(`Digite a rede para ${cryptoData.simbolo}:`);
-            if (userNetwork) {
-                cryptoData.endereco = userNetwork;
-                cellPanelAddress.textContent = userNetwork;
-            }
+            openNetworkSelection(crypto);
         });
-
 
         let copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
@@ -293,11 +306,36 @@ document.getElementById("update-button").addEventListener("click", function () {
         cryptoPanelTableBody.appendChild(rowPanel);
     });
 
-    // ✅ Salva no localStorage
-    localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
-
-    console.log("✅ Tabela de criptomoedas atualizada!");
+    console.log("✅ Tabela de criptomoedas carregada corretamente!");
 });
+
+function openNetworkSelection(cryptoData) {
+    let modal = document.getElementById("network-modal");
+    modal.classList.add("active"); // ✅ Faz a aba aparecer
+    document.getElementById("crypto-name").textContent = cryptoData.simbolo;
+
+    document.getElementById("save-network").onclick = function () {
+        cryptoData.redes = [
+            { nome: document.getElementById("network1").value, endereco: document.getElementById("address1").value },
+            { nome: document.getElementById("network2").value, endereco: document.getElementById("address2").value },
+            { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
+        ];
+
+        cellPanelAddress.innerHTML = `
+            <p>${cryptoData.redes.map(r => `<strong>${r.nome}:</strong> ${r.endereco}`).join("<br>")}</p>
+        `;
+
+        // ✅ Atualiza os dados no localStorage
+        localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+
+        modal.classList.remove("active"); // ✅ Fecha a aba
+    };
+
+    document.getElementById("close-network").onclick = function () {
+        modal.classList.remove("active"); // ✅ Fecha sem salvar
+    };
+}
+
 
 document.getElementById("update-button").addEventListener("click", function () {
     let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
