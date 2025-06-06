@@ -214,18 +214,11 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
     let cryptoTableBody = document.querySelector("#crypto-table tbody");
-
-    cryptoTableBody.innerHTML = ""; // ✅ Limpa antes de preencher
+    cryptoTableBody.innerHTML = "";
 
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    if (selectedCryptos.length === 0) {
-        console.warn("Nenhuma criptomoeda encontrada no localStorage.");
-        return;
-    }
 
     selectedCryptos.forEach(crypto => {
         let row = document.createElement("tr");
@@ -235,25 +228,22 @@ document.addEventListener("DOMContentLoaded", function () {
         let cellValue = document.createElement("td");
         let cellActions = document.createElement("td");
 
-        // ✅ Preenchendo células com dados da outra tabela
         cellSymbol.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40"> ${crypto.simbolo}`;
-        cellQuantity.textContent = crypto.quantidade ? crypto.quantidade : "0";
+        cellQuantity.textContent = crypto.quantidade || "0";
         cellValue.textContent = crypto.valorEstimado ? `${crypto.valorEstimado} USD` : "0 USD";
 
-        // ✅ Criando botão "Minhas Redes"
         let networkBtn = document.createElement("button");
         networkBtn.textContent = "Minhas Redes";
         networkBtn.classList.add("network-btn");
-        networkBtn.addEventListener("click", function () {
-            openNetworkSelection(crypto);
+        networkBtn.addEventListener("click", () => {
+            openNetworkModal(crypto);
         });
 
-        // ✅ Criando botão "Excluir"
         let deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Excluir";
         deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", function () {
-            selectedCryptos = selectedCryptos.filter(item => item.simbolo !== crypto.simbolo);
+        deleteBtn.addEventListener("click", () => {
+            selectedCryptos = selectedCryptos.filter(c => c.simbolo !== crypto.simbolo);
             localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
             row.remove();
         });
@@ -271,33 +261,42 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ Tabela da esquerda carregada corretamente!");
 });
 
-function openNetworkSelection(cryptoData) {
-    let modal = document.getElementById("network-modal");
-    modal.classList.add("active"); // ✅ Faz a aba aparecer
-    document.getElementById("crypto-name").textContent = cryptoData.simbolo;
+function openNetworkModal(crypto) {
+    const modal = document.getElementById("network-modal");
+    modal.classList.add("active");
+    document.getElementById("crypto-name").textContent = crypto.simbolo;
 
-    // ✅ Preenche os campos corretamente ao abrir a aba
-    document.getElementById("network1").value = cryptoData.redes?.[0]?.nome || "";
-    document.getElementById("address1").value = cryptoData.redes?.[0]?.endereco || "";
-    document.getElementById("network2").value = cryptoData.redes?.[1]?.nome || "";
-    document.getElementById("address2").value = cryptoData.redes?.[1]?.endereco || "";
-    document.getElementById("network3").value = cryptoData.redes?.[2]?.nome || "";
-    document.getElementById("address3").value = cryptoData.redes?.[2]?.endereco || "";
+    document.getElementById("network1").value = crypto.redes?.[0]?.nome || "";
+    document.getElementById("address1").value = crypto.redes?.[0]?.endereco || "";
+    document.getElementById("network2").value = crypto.redes?.[1]?.nome || "";
+    document.getElementById("address2").value = crypto.redes?.[1]?.endereco || "";
+    document.getElementById("network3").value = crypto.redes?.[2]?.nome || "";
+    document.getElementById("address3").value = crypto.redes?.[2]?.endereco || "";
 
-    document.getElementById("save-network").onclick = function () {
-        cryptoData.redes = [
-            { nome: document.getElementById("network1").value, endereco: document.getElementById("address1").value },
-            { nome: document.getElementById("network2").value, endereco: document.getElementById("address2").value },
-            { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
+    document.getElementById("save-network").onclick = () => {
+        crypto.redes = [
+            {
+                nome: document.getElementById("network1").value,
+                endereco: document.getElementById("address1").value,
+            },
+            {
+                nome: document.getElementById("network2").value,
+                endereco: document.getElementById("address2").value,
+            },
+            {
+                nome: document.getElementById("network3").value,
+                endereco: document.getElementById("address3").value,
+            },
         ];
 
-        localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-
-        modal.classList.remove("active"); // ✅ Fecha a aba
+        let updated = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+        updated = updated.map(c => (c.simbolo === crypto.simbolo ? crypto : c));
+        localStorage.setItem("selectedCryptos", JSON.stringify(updated));
+        modal.classList.remove("active");
     };
 
-    document.getElementById("close-network").onclick = function () {
-        modal.classList.remove("active"); // ✅ Fecha sem salvar
+    document.getElementById("close-network").onclick = () => {
+        modal.classList.remove("active");
     };
 }
 
