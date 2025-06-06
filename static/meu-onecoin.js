@@ -247,7 +247,8 @@ document.getElementById("update-button").addEventListener("click", function () {
             quantidade: cells[1]?.textContent.trim(),
             valorEstimado: cells[2]?.textContent.trim(),
             imagem: cells[0]?.querySelector("img")?.src,
-            redes: [],
+            redes: ["Rede 1", "Rede 2", "Rede 3"], // ✅ Placeholder para redes selecionadas pelo usuário
+            endereco: ""
         };
 
         campaignData.criptomoedas.push(cryptoData);
@@ -266,27 +267,13 @@ document.getElementById("update-button").addEventListener("click", function () {
         networkBtn.textContent = "Selecionar Rede";
         networkBtn.classList.add("network-btn");
         networkBtn.addEventListener("click", function () {
-            let network1 = prompt(`Digite o nome da primeira rede para ${cryptoData.simbolo}:`);
-            let address1 = prompt(`Digite o endereço da primeira rede:`);
-
-            let network2 = prompt(`Digite o nome da segunda rede para ${cryptoData.simbolo}:`);
-            let address2 = prompt(`Digite o endereço da segunda rede:`);
-
-            let network3 = prompt(`Digite o nome da terceira rede para ${cryptoData.simbolo}:`);
-            let address3 = prompt(`Digite o endereço da terceira rede:`);
-
-            if (network1 && address1 && network2 && address2 && network3 && address3) {
-                cryptoData.redes = [
-                    { nome: network1, endereco: address1 },
-                    { nome: network2, endereco: address2 },
-                    { nome: network3, endereco: address3 }
-                ];
-
-                cellPanelAddress.innerHTML = `
-                    <p>${cryptoData.redes.map(r => `<strong>${r.nome}:</strong> ${r.endereco}`).join("<br>")}</p>
-                `;
+            let userNetwork = prompt(`Digite a rede para ${cryptoData.simbolo}:`);
+            if (userNetwork) {
+                cryptoData.endereco = userNetwork;
+                cellPanelAddress.textContent = userNetwork;
             }
         });
+
 
         let copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
@@ -305,12 +292,6 @@ document.getElementById("update-button").addEventListener("click", function () {
 
         cryptoPanelTableBody.appendChild(rowPanel);
     });
-
-    localStorage.setItem("activeCampaign", JSON.stringify(campaignData)); // ✅ Salva as alterações no localStorage
-
-    console.log("✅ Tabela de criptomoedas atualizada!");
-});
-
 
     // ✅ Salva no localStorage
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
