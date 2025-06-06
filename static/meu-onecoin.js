@@ -211,7 +211,6 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
-
 document.getElementById("update-button").addEventListener("click", function () {
     let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
     let cryptoPanelTableBody = document.querySelector(".crypto-panel-table tbody");
@@ -234,7 +233,7 @@ document.getElementById("update-button").addEventListener("click", function () {
             quantidade: cells[1]?.textContent.trim(),
             valorEstimado: cells[2]?.textContent.trim(),
             imagem: cells[0]?.querySelector("img")?.src,
-            redes: ["Rede 1", "Rede 2", "Rede 3"], // ✅ Placeholder para redes selecionadas pelo usuário
+            redes: [], // ✅ Agora o usuário escreve manualmente as redes
             endereco: ""
         };
 
@@ -254,11 +253,7 @@ document.getElementById("update-button").addEventListener("click", function () {
         networkBtn.textContent = "Selecionar Rede";
         networkBtn.classList.add("network-btn");
         networkBtn.addEventListener("click", function () {
-            let userNetwork = prompt(`Digite a rede para ${cryptoData.simbolo}:`);
-            if (userNetwork) {
-                cryptoData.endereco = userNetwork;
-                cellPanelAddress.textContent = userNetwork;
-            }
+            openNetworkSelection(cryptoData, cellPanelAddress);
         });
 
         let copyBtn = document.createElement("button");
@@ -281,9 +276,32 @@ document.getElementById("update-button").addEventListener("click", function () {
 
     // ✅ Salva no localStorage
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
-
-    console.log("✅ Tabela de criptomoedas atualizada!");
 });
+
+function openNetworkSelection(cryptoData, cellPanelAddress) {
+    let modal = document.getElementById("network-modal");
+    modal.classList.add("active"); // ✅ Faz a aba aparecer
+    document.getElementById("crypto-name").textContent = cryptoData.simbolo;
+
+    document.getElementById("save-network").onclick = function () {
+        cryptoData.redes = [
+            { nome: document.getElementById("network1").value, endereco: document.getElementById("address1").value },
+            { nome: document.getElementById("network2").value, endereco: document.getElementById("address2").value },
+            { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
+        ];
+
+        cellPanelAddress.innerHTML = `
+            <p>${cryptoData.redes.map(r => `<strong>${r.nome}:</strong> ${r.endereco}`).join("<br>")}</p>
+        `;
+
+        modal.classList.remove("active"); // ✅ Fecha a aba
+    };
+
+    document.getElementById("close-network").onclick = function () {
+        modal.classList.remove("active"); // ✅ Fecha sem salvar
+    };
+}
+
 
 
 
