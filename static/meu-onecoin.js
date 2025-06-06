@@ -210,10 +210,11 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
+
 document.getElementById("update-button").addEventListener("click", function () {
     let cryptoTableRows = document.querySelectorAll("#crypto-table tbody tr");
     let cryptoPanelTableBody = document.querySelector(".crypto-panel-table tbody");
-
+    
     cryptoPanelTableBody.innerHTML = ""; // ✅ Limpa antes de preencher
 
     if (cryptoTableRows.length === 0) {
@@ -232,15 +233,13 @@ document.getElementById("update-button").addEventListener("click", function () {
             quantidade: cells[1]?.textContent.trim(),
             valorEstimado: cells[2]?.textContent.trim(),
             imagem: cells[0]?.querySelector("img")?.src,
-            redes: [
-                { nome: "", endereco: "" }, // ✅ Placeholder para Rede 1
-                { nome: "", endereco: "" }, // ✅ Placeholder para Rede 2
-                { nome: "", endereco: "" }  // ✅ Placeholder para Rede 3
-            ]
+            redes: [], // ✅ Agora o usuário escreve manualmente as redes
+            endereco: ""
         };
 
         campaignData.criptomoedas.push(cryptoData);
 
+        // ✅ Criando nova linha na tabela do lado direito
         let rowPanel = document.createElement("tr");
 
         let cellPanelSymbol = document.createElement("td");
@@ -249,7 +248,7 @@ document.getElementById("update-button").addEventListener("click", function () {
         let cellPanelCopy = document.createElement("td");
 
         cellPanelSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
-
+        
         let networkBtn = document.createElement("button");
         networkBtn.textContent = "Selecionar Rede";
         networkBtn.classList.add("network-btn");
@@ -275,6 +274,7 @@ document.getElementById("update-button").addEventListener("click", function () {
         cryptoPanelTableBody.appendChild(rowPanel);
     });
 
+    // ✅ Salva no localStorage
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 });
 
@@ -284,12 +284,12 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
     document.getElementById("crypto-name").textContent = cryptoData.simbolo;
 
     // ✅ Se já houver redes salvas, preenche automaticamente os campos
-    document.getElementById("network1").value = cryptoData.redes?.[0]?.nome || "";
-    document.getElementById("address1").value = cryptoData.redes?.[0]?.endereco || "";
-    document.getElementById("network2").value = cryptoData.redes?.[1]?.nome || "";
-    document.getElementById("address2").value = cryptoData.redes?.[1]?.endereco || "";
-    document.getElementById("network3").value = cryptoData.redes?.[2]?.nome || "";
-    document.getElementById("address3").value = cryptoData.redes?.[2]?.endereco || "";
+    document.getElementById("network1").value = cryptoData.redes[0]?.nome || "";
+    document.getElementById("address1").value = cryptoData.redes[0]?.endereco || "";
+    document.getElementById("network2").value = cryptoData.redes[1]?.nome || "";
+    document.getElementById("address2").value = cryptoData.redes[1]?.endereco || "";
+    document.getElementById("network3").value = cryptoData.redes[2]?.nome || "";
+    document.getElementById("address3").value = cryptoData.redes[2]?.endereco || "";
 
     document.getElementById("save-network").onclick = function () {
         cryptoData.redes = [
@@ -298,12 +298,12 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
             { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
         ];
 
-        // ✅ Exibe corretamente os três botões das redes na tabela da direita
+        // ✅ Exibe os três botões das redes na tabela da direita
         cellPanelAddress.innerHTML = `
             ${cryptoData.redes.map(r => `<button class="network-option" onclick="selectAddress('${r.endereco}')">${r.nome}</button>`).join(" ")}
         `;
 
-        // ✅ Atualiza os dados no localStorage
+        // ✅ Atualiza os dados no localStorage para futuras consultas
         let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
         campaignData.criptomoedas.forEach(c => {
             if (c.simbolo === cryptoData.simbolo) {
@@ -324,6 +324,11 @@ function openNetworkSelection(cryptoData, cellPanelAddress) {
 function selectAddress(endereco) {
     document.querySelector("#selected-address").textContent = endereco;
 }
+
+
+
+
+
 
 
 
@@ -408,7 +413,16 @@ document.getElementById("update-button").addEventListener("click", function () {
 
         cellPanelSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
         
-        
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Selecionar Rede";
+        networkBtn.classList.add("network-btn");
+        networkBtn.addEventListener("click", function () {
+            let userNetwork = prompt(`Digite a rede para ${cryptoData.simbolo}:`);
+            if (userNetwork) {
+                cryptoData.endereco = userNetwork;
+                cellPanelAddress.textContent = userNetwork;
+            }
+        });
 
         let copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
