@@ -435,6 +435,52 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
+function openNetworkSelection(cryptoData, cellPanelAddress) {
+    let modal = document.getElementById("network-modal");
+    modal.classList.add("active"); // ✅ Faz a aba aparecer
+    document.getElementById("crypto-name").textContent = cryptoData.simbolo;
+
+    // ✅ Preenche os campos corretamente ao abrir a aba
+    document.getElementById("network1").value = cryptoData.redes?.[0]?.nome || "";
+    document.getElementById("address1").value = cryptoData.redes?.[0]?.endereco || "";
+    document.getElementById("network2").value = cryptoData.redes?.[1]?.nome || "";
+    document.getElementById("address2").value = cryptoData.redes?.[1]?.endereco || "";
+    document.getElementById("network3").value = cryptoData.redes?.[2]?.nome || "";
+    document.getElementById("address3").value = cryptoData.redes?.[2]?.endereco || "";
+
+    document.getElementById("save-network").onclick = function () {
+        cryptoData.redes = [
+            { nome: document.getElementById("network1").value, endereco: document.getElementById("address1").value },
+            { nome: document.getElementById("network2").value, endereco: document.getElementById("address2").value },
+            { nome: document.getElementById("network3").value, endereco: document.getElementById("address3").value }
+        ];
+
+        // ✅ Exibe corretamente os três botões das redes na tabela da direita
+        cellPanelAddress.innerHTML = `
+            ${cryptoData.redes.map(r => `<button class="network-option" onclick="selectAddress('${r.endereco}')">${r.nome}</button>`).join(" ")}
+        `;
+
+        // ✅ Atualiza os dados no localStorage
+        let campaignData = JSON.parse(localStorage.getItem("activeCampaign")) || {};
+        campaignData.criptomoedas.forEach(c => {
+            if (c.simbolo === cryptoData.simbolo) {
+                c.redes = cryptoData.redes;
+            }
+        });
+        localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
+
+        modal.classList.remove("active"); // ✅ Fecha a aba
+    };
+
+    document.getElementById("close-network").onclick = function () {
+        modal.classList.remove("active"); // ✅ Fecha sem salvar
+    };
+}
+
+// ✅ Quando o usuário seleciona uma rede, exibe o endereço correto
+function selectAddress(endereco) {
+    document.querySelector("#selected-address").textContent = endereco;
+}
 
 
 
@@ -535,15 +581,13 @@ document.addEventListener("DOMContentLoaded", function () {
         cellValue.textContent = crypto.valorEstimado ? `${crypto.valorEstimado} USD` : "0 USD";
 
         let networkBtn = document.createElement("button");
-        networkBtn.textContent = "Selecionar Rede";
-        networkBtn.classList.add("network-btn");
-        networkBtn.setAttribute("data-crypto", crypto.simbolo);
-        networkBtn.addEventListener("click", function () {
-            let userNetwork = prompt(`Digite a rede para ${crypto.simbolo}:`);
-            if (userNetwork) {
-                cellActions.textContent = userNetwork;
-            }
-        });
+networkBtn.textContent = "Selecionar Rede";
+networkBtn.classList.add("network-btn");
+networkBtn.setAttribute("data-crypto", crypto.simbolo);
+networkBtn.addEventListener("click", function () {
+    openNetworkSelection(crypto, cellActions); // ✅ Agora chama corretamente a aba de redes
+});
+
 
         cellActions.appendChild(networkBtn);
         row.appendChild(cellSymbol);
