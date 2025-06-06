@@ -126,6 +126,8 @@ document.getElementById("update-button").addEventListener("click", function () {
         imgElement.classList.add("campaign-image");
         campaignImagesContainer.appendChild(imgElement);
     });
+});
+
 
     // ✅ Inicia o slideshow automático
     startSlideshow();
