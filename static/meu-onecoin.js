@@ -394,7 +394,7 @@ document.getElementById("update-button").addEventListener("click", function () {
         cellPanelSymbol.innerHTML = `<img src="${cryptoData.imagem}" alt="${cryptoData.simbolo}" width="40"> ${cryptoData.simbolo}`;
         
         let networkBtn = document.createElement("button");
-        networkBtn.textContent = "Minhas Rede";
+        networkBtn.textContent = "Minhas Redes";
         networkBtn.classList.add("network-btn");
         networkBtn.addEventListener("click", function () {
             let userNetwork = prompt(`Digite a rede para ${cryptoData.simbolo}:`);
