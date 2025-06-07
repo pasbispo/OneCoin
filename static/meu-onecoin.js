@@ -383,9 +383,7 @@ document.getElementById("update-button").addEventListener("click", () => {
         cellImage.appendChild(img);
         row.appendChild(cellImage);
 
-        cellImage.appendChild(symbolText);
-
-        
+               
         // 2. Célula do botão "Rede" + opções de redes
         const cellNetwork = document.createElement("td");
         const networkBtn = document.createElement("button");
