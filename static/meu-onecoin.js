@@ -603,48 +603,57 @@ const rightTableData = rightTableRows.map(row => {
 });
 
 
-if (data) {
-    const campanha = JSON.parse(decodeURIComponent(data));
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = urlParams.get("data");
 
-    // Preenche os campos
-    document.getElementById("campaign-name").value = campanha.nome;
-    document.getElementById("campaign-period").value = campanha.periodo;
-    document.getElementById("campaign-goal").value = campanha.objetivo;
+    if (data) {
+        const campanha = JSON.parse(decodeURIComponent(data));
 
-    // Mostra imagens
-    const container = document.getElementById("campaign-images-container");
-    campanha.imagens.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.style.width = "100px";
-        img.style.margin = "5px";
-        container.appendChild(img);
-    });
+        // Preenche os campos
+        document.getElementById("campaign-name").value = campanha.nome;
+        document.getElementById("campaign-period").value = campanha.periodo;
+        document.getElementById("campaign-goal").value = campanha.objetivo;
 
-    // Mostra vídeo
-    if (campanha.video) {
-        const video = document.getElementById("video-player");
-        video.src = campanha.video;
-        video.style.display = "block";
+        // Mostra imagens
+        const container = document.getElementById("campaign-images-container");
+        campanha.imagens.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.style.width = "100px";
+            img.style.margin = "5px";
+            container.appendChild(img);
+        });
+
+        // Mostra vídeo
+        if (campanha.video) {
+            const video = document.getElementById("video-player");
+            video.src = campanha.video;
+            video.style.display = "block";
+        }
+
+        // Recria a tabela da ESQUERDA
+        if (campanha.selectedCryptos) {
+            localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
+        }
+
+        
+       // Recria a tabela da DIREITA
+       if (campanha.rightTableData) {
+           preencherTabelaDireitaSalva(campanha.rightTableData);
+       }
+
+
+
+
+        // BLOQUEIA CAMPOS SE FOR FINALIZADA
+        if (campanha.bloqueado) {
+            document.getElementById("campaign-name").disabled = true;
+            document.getElementById("campaign-period").disabled = true;            
+            document.getElementById("crypto-table").classList.add("disabled-table");
+        }
     }
-
-    // Recria a tabela da ESQUERDA
-    if (campanha.selectedCryptos) {
-        localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
-    }
-
-    // ✅ RECRIA A TABELA DA DIREITA
-    if (campanha.rightTableData) {
-        preencherTabelaDireitaSalva(campanha.rightTableData);
-    }
-
-    // BLOQUEIA CAMPOS SE FOR FINALIZADA
-    if (campanha.bloqueado) {
-        document.getElementById("campaign-name").disabled = true;
-        document.getElementById("campaign-period").disabled = true;
-        document.getElementById("crypto-table").classList.add("disabled-table");
-    }
-}
+});
 
 function preencherTabelaDireitaSalva(dados) {
     const tbody = document.querySelector(".crypto-panel-table tbody");
