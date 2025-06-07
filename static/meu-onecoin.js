@@ -538,4 +538,128 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 
+document.getElementById("end-campaign-button").addEventListener("click", function () {
+    // Coletar os dados da campanha
+    const nomeCampanha = document.getElementById("campaign-name").value;
+    const periodo = document.getElementById("campaign-period").value;
+    const objetivo = document.getElementById("campaign-goal").value;
+    const imagens = Array.from(document.getElementById("campaign-images").files).map(file => URL.createObjectURL(file));
+    const video = document.getElementById("video-file").files[0] ? URL.createObjectURL(document.getElementById("video-file").files[0]) : null;
+    const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    // Validação rápida
+    if (!nomeCampanha.trim()) {
+        alert("Por favor, insira o nome da campanha antes de finalizar.");
+        return;
+    }
+
+    // Criar objeto da campanha
+    const campanha = {
+        nome: nomeCampanha,
+        periodo: periodo,
+        objetivo: objetivo,
+        imagens: imagens,
+        video: video,
+        criptos: criptos,
+        bloqueado: true // 🔒 Marcamos que essa campanha está travada
+    };
+
+    // Salvar no localStorage (banco de campanhas do usuário)
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+    campaigns.push(campanha);
+    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+
+    // Redirecionar para Minhas Campanhas
+    window.location.href = "minhas-campanhas.html";
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = urlParams.get("data");
+
+    if (data) {
+        const campanha = JSON.parse(decodeURIComponent(data));
+
+        // Preencher campos com os dados salvos
+        document.getElementById("campaign-name").value = campanha.nome;
+        document.getElementById("campaign-period").value = campanha.periodo;
+        document.getElementById("campaign-goal").value = campanha.objetivo;
+
+        // Imagens
+        const container = document.getElementById("campaign-images-container");
+        campanha.imagens.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.style.width = "100px";
+            img.style.margin = "5px";
+            container.appendChild(img);
+        });
+
+        // Vídeo
+        if (campanha.video) {
+            document.getElementById("video-player").src = campanha.video;
+        }
+
+        // Criptomoedas (lado direito)
+        preencherTabelaDireita(campanha.criptos);
+
+        // 🔒 Bloqueia campos se for uma campanha salva
+        if (campanha.bloqueado) {
+            document.getElementById("campaign-name").setAttribute("disabled", true);
+            document.getElementById("campaign-period").setAttribute("disabled", true);
+            document.getElementById("campaign-goal").setAttribute("disabled", true);
+            document.getElementById("campaign-images").setAttribute("disabled", true);
+            document.getElementById("video-file").setAttribute("disabled", true);
+            document.querySelector("#crypto-table").classList.add("disabled-table");
+        }
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = urlParams.get("data");
+
+    if (data) {
+        const campanha = JSON.parse(decodeURIComponent(data));
+
+        // Preencher campos com os dados salvos
+        document.getElementById("campaign-name").value = campanha.nome;
+        document.getElementById("campaign-period").value = campanha.periodo;
+        document.getElementById("campaign-goal").value = campanha.objetivo;
+
+        // Imagens
+        const container = document.getElementById("campaign-images-container");
+        campanha.imagens.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.style.width = "100px";
+            img.style.margin = "5px";
+            container.appendChild(img);
+        });
+
+        // Vídeo
+        if (campanha.video) {
+            document.getElementById("video-player").src = campanha.video;
+        }
+
+        // Criptomoedas (lado direito)
+        preencherTabelaDireita(campanha.criptos);
+
+        // 🔒 Bloqueia campos se for uma campanha salva
+        if (campanha.bloqueado) {
+            document.getElementById("campaign-name").setAttribute("disabled", true);
+            document.getElementById("campaign-period").setAttribute("disabled", true);
+            document.getElementById("campaign-goal").setAttribute("disabled", true);
+            document.getElementById("campaign-images").setAttribute("disabled", true);
+            document.getElementById("video-file").setAttribute("disabled", true);
+            document.querySelector("#crypto-table").classList.add("disabled-table");
+        }
+    }
+});
+
+
+
+
+
+
 

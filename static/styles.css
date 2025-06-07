@@ -1429,3 +1429,13 @@ th, td {
     padding: 8px;            /* Espaçamento interno */
     padding: 10px;
 }
+
+
+
+
+
+
+.disabled-table {
+    pointer-events: none;
+    opacity: 0.6;
+}
