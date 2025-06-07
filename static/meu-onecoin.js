@@ -559,11 +559,24 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     // Captura a tabela DIREITA
-    const rightTableData = selectedCryptos.map(cripto => ({
-        simbolo: cripto.simbolo,
-        imagem: cripto.imagem,
-        redes: cripto.redes || []
+ // Captura a tabela DIREITA corretamente (incluindo endereço atual visível)
+const rightTableRows = Array.from(document.querySelector(".crypto-panel-table tbody").children);
+const rightTableData = rightTableRows.map(row => {
+    const imgEl = row.querySelector("img");
+    const simbolo = imgEl?.alt || "";
+    const imagem = imgEl?.src || "";
+
+    // Captura os botões de rede
+    const redeButtons = Array.from(row.querySelectorAll(".network-option"));
+    const redes = redeButtons.map(btn => ({
+        nome: btn.textContent,
+        endereco: btn.getAttribute("data-endereco")
     }));
+
+    return { simbolo, imagem, redes };
+});
+
+
     const campaignData = {
         nome,
         periodo,
