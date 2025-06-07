@@ -559,16 +559,12 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     // Captura a tabela DIREITA
-    const rightTableRows = Array.from(document.querySelector(".crypto-panel-table tbody").children);
-    const rightTableData = rightTableRows.map(row => {
-        const img = row.querySelector("img")?.src || "";
-        const simbolo = row.querySelector("img")?.alt || "";
-        const redes = Array.from(row.querySelectorAll(".network-option")).map(btn => ({
-            nome: btn.textContent,
-            endereco: btn.getAttribute("data-endereco")
-        }));
-        return { simbolo, imagem: img, redes };
-    });
+// Captura os dados da TABELA DIREITA com base em selectedCryptos (como no botão "Atualizar")
+   const rightTableData = selectedCryptos.map(cripto => ({
+      simbolo: cripto.simbolo,
+      imagem: cripto.imagem,
+      redes: cripto.redes || []
+   }));
 
     const campaignData = {
         nome,
@@ -630,8 +626,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // BLOQUEIA CAMPOS SE FOR FINALIZADA
         if (campanha.bloqueado) {
             document.getElementById("campaign-name").disabled = true;
-            document.getElementById("campaign-period").disabled = true;
-            
+            document.getElementById("campaign-period").disabled = true;            
             document.getElementById("crypto-table").classList.add("disabled-table");
         }
     }
