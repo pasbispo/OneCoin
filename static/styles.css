@@ -1409,3 +1409,19 @@ th, td {
 }
 
 
+
+
+
+
+
+
+
+.crypto-panel-table thead {
+    background-color: #007BFF; /* Azul padrão bootstrap */
+    color: white;
+}
+
+.crypto-panel-table th {
+    padding: 10px;
+    text-align: left;
+}
