@@ -629,12 +629,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // BLOQUEIA CAMPOS SE FOR FINALIZADA
         if (campanha.bloqueado) {
+            document.getElementById("campaign-name").disabled = true;
+            document.getElementById("campaign-period").disabled = true;
             
-            
-            document.getElementById("campaign-goal").disabled = true;
-            document.getElementById("campaign-images").disabled = true;
-            document.getElementById("video-file").disabled = true;
-           
+            document.getElementById("crypto-table").classList.add("disabled-table");
         }
     }
 });
