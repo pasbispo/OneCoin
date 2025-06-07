@@ -223,67 +223,6 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const campaignData = /* dados da campanha do MongoDB */;
-    const campanhaFinalizada = campaignData.finalizada === true;
-
-    // Preenche e bloqueia nome da campanha e período
-    document.getElementById("campaign-name").value = campaignData.nome;
-    document.getElementById("campaign-period").value = campaignData.periodo;
-
-    if (campanhaFinalizada) {
-        document.getElementById("campaign-name").disabled = true;
-        document.getElementById("campaign-period").disabled = true;
-    }
-
-    // Preencher tabela da esquerda
-    const tbody = document.querySelector("#crypto-table tbody");
-    tbody.innerHTML = "";
-    campaignData.selectedCryptos.forEach(crypto => {
-        const row = document.createElement("tr");
-
-        const cellSymbol = document.createElement("td");
-        const cellQuantity = document.createElement("td");
-        const cellValue = document.createElement("td");
-        const cellActions = document.createElement("td");
-
-        cellSymbol.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40"> ${crypto.simbolo}`;
-        cellQuantity.textContent = crypto.quantidade || "0";
-        cellValue.textContent = crypto.valorEstimado ? `${crypto.valorEstimado} USD` : "0 USD";
-
-        if (!campanhaFinalizada) {
-            const networkBtn = document.createElement("button");
-            networkBtn.textContent = "Minhas Redes";
-            networkBtn.classList.add("network-btn");
-            networkBtn.addEventListener("click", () => openNetworkModal(crypto));
-
-            const deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "Excluir";
-            deleteBtn.classList.add("delete-btn");
-            deleteBtn.addEventListener("click", () => {
-                const updated = campaignData.selectedCryptos.filter(c => c.simbolo !== crypto.simbolo);
-                localStorage.setItem("selectedCryptos", JSON.stringify(updated));
-                row.remove();
-            });
-
-            cellActions.appendChild(networkBtn);
-            cellActions.appendChild(deleteBtn);
-        } else {
-            cellActions.textContent = "-"; // Apenas placeholder se finalizada
-        }
-
-        row.appendChild(cellSymbol);
-        row.appendChild(cellQuantity);
-        row.appendChild(cellValue);
-        row.appendChild(cellActions);
-        tbody.appendChild(row);
-    });
-
-    console.log("✅ Tabela da esquerda carregada com bloqueios corretos.");
-});
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
     let cryptoTableBody = document.querySelector("#crypto-table tbody");
     cryptoTableBody.innerHTML = "";
 
