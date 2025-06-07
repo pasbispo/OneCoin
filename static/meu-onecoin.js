@@ -383,6 +383,12 @@ document.getElementById("update-button").addEventListener("click", () => {
         cellImage.appendChild(img);
         row.appendChild(cellImage);
 
+        cellImage.appendChild(symbolText);
+
+        const symbolText = document.createElement("span");
+        symbolText.textContent = ` ${crypto.simbolo}`;
+        symbolText.style.marginLeft = "8px";
+
         // 2. Célula do botão "Rede" + opções de redes
         const cellNetwork = document.createElement("td");
         const networkBtn = document.createElement("button");
