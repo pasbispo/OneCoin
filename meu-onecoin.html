@@ -1,152 +1,92 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu OneCoin</title> <!-- ✅ Faltava o título da página -->
-    <link rel="stylesheet" href="static/styles.css">
+  <meta charset="UTF-8">
+  <title>Transferência de Itens</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    table {
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Cabeçalho -->
- 
-<header class="header-container">
-    <div class="page-title-one">
-        <h1 id="campaign-page-title">Minhas Campanhas</h1>
-    </div>
-    <div class="logo-container">
-        <a href="index.html">
-            <img src="static/img/logo.png" alt="OneCoin Logo" id="campaign-logo">
-        </a>
-    </div>
-</header>
-
-
-<link rel="stylesheet" href="static/styles.css">
-</head>
-<body>
-
-
-
-<div class="container">
-    <!-- Lado esquerdo: Dados da campanha -->
-    <section class="campaign-input">
-        <h2 id="campaign-title">Informações da Campanha</h2>
-
-        <div class="form-group">
-            <label for="campaign-name">Nome da Campanha:</label>
-            <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
-        </div>
-
- <div class="form-group">
-            <label for="campaign-period">Período (dias):</label>
-            <input type="number" id="campaign-period" placeholder="Digite o período" oninput="updatePeriod()">
-        </div>
-
-<div class="form-group">
-    <label for="campaign-images">Imagens da Campanha:</label>
-    <input type="file" id="campaign-images" accept="image/*" multiple onchange="startSlideshow()">
-</div>
-
-
-
-
-
-        <div class="form-group">
-            <label for="campaign-goal">Objetivo da Campanha:</label>
-            <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 560 palavras)"></textarea>
-        </div>      
-
-<div class="form-group">
-    <label for="video-file">Selecione um vídeo:</label>
-    <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
-</div>
-
-
-
-<table id="crypto-table">
-    <thead>
-        <tr>
-            <th>Símbolo</th>
-            <th>Quantidade</th>
-            <th>Valor Estimado</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody></tbody> <!-- ✅ Agora a tabela pode receber dados dinamicamente -->
+<h2>Tabela Esquerda</h2>
+<table id="tabelaEsquerda">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Item A</td><td><button onclick="moverTemporario(this, 'direita')">→</button></td></tr>
+    <tr><td>Item B</td><td><button onclick="moverTemporario(this, 'direita')">→</button></td></tr>
+  </tbody>
 </table>
 
+<h2>Tabela Direita</h2>
+<table id="tabelaDireita">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Item X</td><td><button onclick="moverTemporario(this, 'esquerda')">←</button></td></tr>
+    <tr><td>Item Y</td><td><button onclick="moverTemporario(this, 'esquerda')">←</button></td></tr>
+  </tbody>
+</table>
 
- </section>
+<button onclick="atualizarTabelas()">Atualizar</button>
 
+<script>
+  const temporarios = {
+    esquerda: [],
+    direita: []
+  };
 
+  function moverTemporario(botao, destino) {
+    const linha = botao.closest("tr");
+    const nome = linha.cells[0].textContent;
+    const origem = destino === "direita" ? "esquerda" : "direita";
 
+    // Remove da tabela visual
+    linha.remove();
 
+    // Adiciona à lista temporária do destino
+    temporarios[destino].push(nome);
+  }
 
+  function atualizarTabelas() {
+    for (const lado of ['esquerda', 'direita']) {
+      const tabela = document.getElementById('tabela' + capitalize(lado)).querySelector('tbody');
 
-    <!-- Lado direito: Painel da campanha -->
-    <section class="campaign-panel">
-    <h2 id="panel-title">Nome da Campanha</h2>
+      temporarios[lado].forEach(nome => {
+        const novaLinha = document.createElement('tr');
+        novaLinha.innerHTML = `
+          <td>${nome}</td>
+          <td><button onclick="moverTemporario(this, '${lado === 'esquerda' ? 'direita' : 'esquerda'}')">
+            ${lado === 'esquerda' ? '→' : '←'}
+          </button></td>`;
+        tabela.appendChild(novaLinha);
+      });
 
-    <div class="period-container">
-        <p> <span id="panel-duration">0</span></p>
-    </div>
- 
-    <div id="campaign-images-container" class="centered-images">
-        <!-- As imagens da campanha serão adicionadas dinamicamente aqui -->
-    </div>
+      // Limpa os temporários após atualizar
+      temporarios[lado] = [];
+    }
+  }
 
-    <div class="horizontal-lineh"></div>
-
-
-    <p id="panel-goal">[Texto aparece aqui]</p>
-
-    <h3>Criptomoedas Selecionadas</h3>
-    <table class="crypto-panel-table">
-        <thead>
-            <tr>
-                <th>Criptomoeda</th>
-                <th>Rede</th>
-                <th>Endereço</th>
-                <th>Copiar</th>
-            </tr>
-        </thead>
-        <tbody></tbody> <!-- ✅ Aqui será preenchido dinamicamente -->
-    </table>
-
-
-<div class="video-container">
-    <video id="video-player" controls></video>
-</div>
-
-
-
-    </section>
-
-
-
-</div>
-
-<div class="button-container">
-    <button id="update-button" class="btn-primary">Atualizar</button>
-    <button id="end-campaign-button" class="btn-secondary">Fim</button>
-    <button id="new-campaign-button" class="btn-secondary">Nova Campanha</button>
-   
-</div>
-
-
-
-
-
-
-<link rel="stylesheet" href="static/styles.css">
-
-
-
-
-<script src="static/meu-onecoin.js" defer></script>
-<script src="static/escolher-criptomoedas.js" defer></script>
-  
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+</script>
 
 </body>
 </html>
