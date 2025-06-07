@@ -572,7 +572,7 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
 
     const campaignData = {
         nome,
-        periodo,
+        
         objetivo,
         imagens,
         video,
