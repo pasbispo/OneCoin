@@ -638,6 +638,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         
+
        // Recria a tabela da DIREITA
        if (campanha.rightTableData) {
            preencherTabelaDireitaSalva(campanha.rightTableData);
