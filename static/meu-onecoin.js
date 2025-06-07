@@ -566,15 +566,21 @@ const rightTableData = rightTableRows.map(row => {
     const simbolo = imgEl?.alt || "";
     const imagem = imgEl?.src || "";
 
-    // Captura os botões de rede
-    const redeButtons = Array.from(row.querySelectorAll(".network-option"));
-    const redes = redeButtons.map(btn => ({
-        nome: btn.textContent,
-        endereco: btn.getAttribute("data-endereco")
-    }));
+    const redes = [];
+    const redeButtons = row.querySelectorAll(".network-option");
+    redeButtons.forEach(btn => {
+        redes.push({
+            nome: btn.textContent,
+            endereco: btn.getAttribute("data-endereco")
+        });
+    });
 
-    return { simbolo, imagem, redes };
+    // Captura o endereço visível (pode estar na 3ª célula)
+    const endereco = row.children[2]?.textContent || "";
+
+    return { simbolo, imagem, redes, enderecoSelecionado: endereco };
 });
+
 
 
     const campaignData = {
@@ -632,7 +638,57 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Recria a tabela da DIREITA
-        preencherTabelaDireitaSalva(campanha.rightTableData);
+       function preencherTabelaDireitaSalva(dados) {
+    const tbody = document.querySelector(".crypto-panel-table tbody");
+    tbody.innerHTML = "";
+
+    dados.forEach(cripto => {
+        const row = document.createElement("tr");
+
+        // Imagem + símbolo
+        const imgCell = document.createElement("td");
+        const img = document.createElement("img");
+        img.src = cripto.imagem;
+        img.alt = cripto.simbolo;
+        img.style.width = "25px";
+        img.style.marginRight = "5px";
+        imgCell.appendChild(img);
+        row.appendChild(imgCell);
+
+        // Botões de rede
+        const redeCell = document.createElement("td");
+        const enderecoCell = document.createElement("td");
+
+        cripto.redes.forEach(rede => {
+            const btn = document.createElement("button");
+            btn.className = "network-option";
+            btn.textContent = rede.nome;
+            btn.setAttribute("data-endereco", rede.endereco);
+            btn.addEventListener("click", () => {
+                enderecoCell.textContent = rede.endereco;
+            });
+            redeCell.appendChild(btn);
+        });
+        row.appendChild(redeCell);
+
+        // Endereço visível (restaurado)
+        enderecoCell.textContent = cripto.enderecoSelecionado || cripto.redes[0]?.endereco || "";
+        row.appendChild(enderecoCell);
+
+        // Botão copiar
+        const copyCell = document.createElement("td");
+        const copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(enderecoCell.textContent);
+        });
+        copyCell.appendChild(copyBtn);
+        row.appendChild(copyCell);
+
+        tbody.appendChild(row);
+    });
+}
+
 
         // BLOQUEIA CAMPOS SE FOR FINALIZADA
         if (campanha.bloqueado) {
