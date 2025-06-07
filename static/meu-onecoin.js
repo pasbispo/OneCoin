@@ -216,61 +216,43 @@ document.getElementById("update-button").addEventListener("click", function () {
 
 
 
+
 document.addEventListener("DOMContentLoaded", function () {
-    const campaignData = window.campaignData || {}; // <- certifique-se que essa variável está sendo injetada via backend
-    const campanhaFinalizada = campaignData.finalizada === true;
-
-    // Preencher nome da campanha e período
-    const nomeInput = document.getElementById("campaign-name");
-    const periodoInput = document.getElementById("campaign-period");
-
-    if (campaignData.nome) nomeInput.value = campaignData.nome;
-    if (campaignData.periodo) periodoInput.value = campaignData.periodo;
-
-    if (campanhaFinalizada) {
-        nomeInput.disabled = true;
-        periodoInput.disabled = true;
-    }
-
-    // Carregar tabela da esquerda
-    const cryptoTableBody = document.querySelector("#crypto-table tbody");
+    let cryptoTableBody = document.querySelector("#crypto-table tbody");
     cryptoTableBody.innerHTML = "";
 
-    const cryptos = campaignData.selectedCryptos || [];
+    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
-    cryptos.forEach(crypto => {
-        const row = document.createElement("tr");
+    selectedCryptos.forEach(crypto => {
+        let row = document.createElement("tr");
 
-        const cellSymbol = document.createElement("td");
-        const cellQuantity = document.createElement("td");
-        const cellValue = document.createElement("td");
-        const cellActions = document.createElement("td");
+        let cellSymbol = document.createElement("td");
+        let cellQuantity = document.createElement("td");
+        let cellValue = document.createElement("td");
+        let cellActions = document.createElement("td");
 
         cellSymbol.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40"> ${crypto.simbolo}`;
         cellQuantity.textContent = crypto.quantidade || "0";
         cellValue.textContent = crypto.valorEstimado ? `${crypto.valorEstimado} USD` : "0 USD";
 
-        if (!campanhaFinalizada) {
-            const networkBtn = document.createElement("button");
-            networkBtn.textContent = "Minhas Redes";
-            networkBtn.classList.add("network-btn");
-            networkBtn.addEventListener("click", () => openNetworkModal(crypto));
+        let networkBtn = document.createElement("button");
+        networkBtn.textContent = "Minhas Redes";
+        networkBtn.classList.add("network-btn");
+        networkBtn.addEventListener("click", () => {
+            openNetworkModal(crypto);
+        });
 
-            const deleteBtn = document.createElement("button");
-            deleteBtn.textContent = "Excluir";
-            deleteBtn.classList.add("delete-btn");
-            deleteBtn.addEventListener("click", () => {
-                const updated = cryptos.filter(c => c.simbolo !== crypto.simbolo);
-                localStorage.setItem("selectedCryptos", JSON.stringify(updated));
-                row.remove();
-            });
+        let deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Excluir";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", () => {
+            selectedCryptos = selectedCryptos.filter(c => c.simbolo !== crypto.simbolo);
+            localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
+            row.remove();
+        });
 
-            cellActions.appendChild(networkBtn);
-            cellActions.appendChild(deleteBtn);
-        } else {
-            cellActions.textContent = "-"; // campanha finalizada, sem botões
-        }
-
+        cellActions.appendChild(networkBtn);
+        cellActions.appendChild(deleteBtn);
         row.appendChild(cellSymbol);
         row.appendChild(cellQuantity);
         row.appendChild(cellValue);
@@ -279,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cryptoTableBody.appendChild(row);
     });
 
-    console.log("✅ Tabela da esquerda carregada com os bloqueios corretos.");
+    console.log("✅ Tabela da esquerda carregada corretamente!");
 });
 
 function openNetworkModal(crypto) {
