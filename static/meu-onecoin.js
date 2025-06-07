@@ -572,7 +572,7 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
 
     const campaignData = {
         nome,
-        
+        periodo,
         objetivo,
         imagens,
         video,
@@ -629,12 +629,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // BLOQUEIA CAMPOS SE FOR FINALIZADA
         if (campanha.bloqueado) {
-            document.getElementById("campaign-name").disabled = true;
-            document.getElementById("campaign-period").disabled = true;
+            
+            
             document.getElementById("campaign-goal").disabled = true;
             document.getElementById("campaign-images").disabled = true;
             document.getElementById("video-file").disabled = true;
-            document.getElementById("crypto-table").classList.add("disabled-table");
+           
         }
     }
 });
@@ -693,77 +693,6 @@ function preencherTabelaDireitaSalva(dados) {
 
 
 
-
-
-document.getElementById("end-campaign-button").addEventListener("click", async () => {
-    const nome = document.getElementById("campaign-name").value;
-    const periodo = document.getElementById("campaign-period").value;
-    const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    if (!nome || !periodo || selectedCryptos.length === 0) {
-        alert("Preencha todos os campos e adicione ao menos uma criptomoeda.");
-        return;
-    }
-
-    // Dados da campanha
-    const campanha = {
-        nome,
-        periodo,
-        selectedCryptos,
-        finalizada: true
-    };
-
-    try {
-        // Requisição para salvar no backend/MongoDB
-        const response = await fetch("/salvar-campanha", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(campanha)
-        });
-
-        if (!response.ok) {
-            throw new Error("Erro ao salvar campanha.");
-        }
-
-        // Bloqueia campos após salvar
-        document.getElementById("campaign-name").disabled = true;
-        document.getElementById("campaign-period").disabled = true;
-        document.getElementById("end-campaign-button").disabled = true;
-
-        // Remove botões "Minhas Redes" e "Excluir" da tabela da esquerda
-        document.querySelectorAll("#crypto-table tbody tr").forEach(tr => {
-            const actionsCell = tr.querySelector("td:last-child");
-            actionsCell.innerHTML = "-";
-        });
-
-        alert("Campanha finalizada com sucesso!");
-
-        // Redireciona para "Minhas Campanhas" após 2 segundos
-        setTimeout(() => {
-            window.location.href = "/minhas-campanhas";
-        }, 2000);
-
-    } catch (error) {
-        console.error(error);
-        alert("Erro ao finalizar campanha.");
-    }
-});
-
-app.post("/salvar-campanha", async (req, res) => {
-    const campanha = req.body;
-
-    try {
-        await db.collection("campanhas").updateOne(
-            { nome: campanha.nome, usuarioId: req.user.id },
-            { $set: campanha },
-            { upsert: true }
-        );
-        res.status(200).json({ sucesso: true });
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ erro: "Erro ao salvar campanha" });
-    }
-});
 
 
 
