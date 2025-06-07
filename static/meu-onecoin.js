@@ -221,41 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     selectedCryptos.forEach(crypto => {
-        let row = document.createElement("tr");
-
-        let cellSymbol = document.createElement("td");
-        let cellQuantity = document.createElement("td");
-        let cellValue = document.createElement("td");
-        let cellActions = document.createElement("td");
-
-        cellSymbol.innerHTML = `<img src="${crypto.imagem}" alt="${crypto.simbolo}" width="40"> ${crypto.simbolo}`;
-        cellQuantity.textContent = crypto.quantidade || "0";
-        cellValue.textContent = crypto.valorEstimado ? `${crypto.valorEstimado} USD` : "0 USD";
-
-        let networkBtn = document.createElement("button");
-        networkBtn.textContent = "Minhas Redes";
-        networkBtn.classList.add("network-btn");
-        networkBtn.addEventListener("click", () => {
-            openNetworkModal(crypto);
-        });
-
-        let deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.addEventListener("click", () => {
-            selectedCryptos = selectedCryptos.filter(c => c.simbolo !== crypto.simbolo);
-            localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-            row.remove();
-        });
-
-        cellActions.appendChild(networkBtn);
-        cellActions.appendChild(deleteBtn);
-        row.appendChild(cellSymbol);
-        row.appendChild(cellQuantity);
-        row.appendChild(cellValue);
-        row.appendChild(cellActions);
-
-        cryptoTableBody.appendChild(row);
+        // ...
     });
 
     console.log("✅ Tabela da esquerda carregada corretamente!");
@@ -351,6 +317,9 @@ function openNetworkModal(crypto) {
         modal.remove();
     };
 }
+
+
+
 
 
 
