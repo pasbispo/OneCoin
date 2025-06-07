@@ -603,101 +603,48 @@ const rightTableData = rightTableRows.map(row => {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const data = urlParams.get("data");
+if (data) {
+    const campanha = JSON.parse(decodeURIComponent(data));
 
-    if (data) {
-        const campanha = JSON.parse(decodeURIComponent(data));
+    // Preenche os campos
+    document.getElementById("campaign-name").value = campanha.nome;
+    document.getElementById("campaign-period").value = campanha.periodo;
+    document.getElementById("campaign-goal").value = campanha.objetivo;
 
-        // Preenche os campos
-        document.getElementById("campaign-name").value = campanha.nome;
-        document.getElementById("campaign-period").value = campanha.periodo;
-        document.getElementById("campaign-goal").value = campanha.objetivo;
-
-        // Mostra imagens
-        const container = document.getElementById("campaign-images-container");
-        campanha.imagens.forEach(src => {
-            const img = document.createElement("img");
-            img.src = src;
-            img.style.width = "100px";
-            img.style.margin = "5px";
-            container.appendChild(img);
-        });
-
-        // Mostra vídeo
-        if (campanha.video) {
-            const video = document.getElementById("video-player");
-            video.src = campanha.video;
-            video.style.display = "block";
-        }
-
-        // Recria a tabela da ESQUERDA
-        if (campanha.selectedCryptos) {
-            localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
-        }
-
-        // Recria a tabela da DIREITA
-       function preencherTabelaDireitaSalva(dados) {
-    const tbody = document.querySelector(".crypto-panel-table tbody");
-    tbody.innerHTML = "";
-
-    dados.forEach(cripto => {
-        const row = document.createElement("tr");
-
-        // Imagem + símbolo
-        const imgCell = document.createElement("td");
+    // Mostra imagens
+    const container = document.getElementById("campaign-images-container");
+    campanha.imagens.forEach(src => {
         const img = document.createElement("img");
-        img.src = cripto.imagem;
-        img.alt = cripto.simbolo;
-        img.style.width = "25px";
-        img.style.marginRight = "5px";
-        imgCell.appendChild(img);
-        row.appendChild(imgCell);
-
-        // Botões de rede
-        const redeCell = document.createElement("td");
-        const enderecoCell = document.createElement("td");
-
-        cripto.redes.forEach(rede => {
-            const btn = document.createElement("button");
-            btn.className = "network-option";
-            btn.textContent = rede.nome;
-            btn.setAttribute("data-endereco", rede.endereco);
-            btn.addEventListener("click", () => {
-                enderecoCell.textContent = rede.endereco;
-            });
-            redeCell.appendChild(btn);
-        });
-        row.appendChild(redeCell);
-
-        // Endereço visível (restaurado)
-        enderecoCell.textContent = cripto.enderecoSelecionado || cripto.redes[0]?.endereco || "";
-        row.appendChild(enderecoCell);
-
-        // Botão copiar
-        const copyCell = document.createElement("td");
-        const copyBtn = document.createElement("button");
-        copyBtn.textContent = "Copiar";
-        copyBtn.addEventListener("click", () => {
-            navigator.clipboard.writeText(enderecoCell.textContent);
-        });
-        copyCell.appendChild(copyBtn);
-        row.appendChild(copyCell);
-
-        tbody.appendChild(row);
+        img.src = src;
+        img.style.width = "100px";
+        img.style.margin = "5px";
+        container.appendChild(img);
     });
-}
 
-
-        // BLOQUEIA CAMPOS SE FOR FINALIZADA
-        if (campanha.bloqueado) {
-            document.getElementById("campaign-name").disabled = true;
-            document.getElementById("campaign-period").disabled = true;            
-            document.getElementById("crypto-table").classList.add("disabled-table");
-        }
+    // Mostra vídeo
+    if (campanha.video) {
+        const video = document.getElementById("video-player");
+        video.src = campanha.video;
+        video.style.display = "block";
     }
-});
+
+    // Recria a tabela da ESQUERDA
+    if (campanha.selectedCryptos) {
+        localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
+    }
+
+    // ✅ RECRIA A TABELA DA DIREITA
+    if (campanha.rightTableData) {
+        preencherTabelaDireitaSalva(campanha.rightTableData);
+    }
+
+    // BLOQUEIA CAMPOS SE FOR FINALIZADA
+    if (campanha.bloqueado) {
+        document.getElementById("campaign-name").disabled = true;
+        document.getElementById("campaign-period").disabled = true;
+        document.getElementById("crypto-table").classList.add("disabled-table");
+    }
+}
 
 function preencherTabelaDireitaSalva(dados) {
     const tbody = document.querySelector(".crypto-panel-table tbody");
