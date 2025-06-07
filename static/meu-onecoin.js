@@ -559,13 +559,11 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     // Captura a tabela DIREITA
-// Captura os dados da TABELA DIREITA com base em selectedCryptos (como no botão "Atualizar")
-   const rightTableData = selectedCryptos.map(cripto => ({
-      simbolo: cripto.simbolo,
-      imagem: cripto.imagem,
-      redes: cripto.redes || []
-   }));
-
+    const rightTableData = selectedCryptos.map(cripto => ({
+        simbolo: cripto.simbolo,
+        imagem: cripto.imagem,
+        redes: cripto.redes || []
+    }));
     const campaignData = {
         nome,
         periodo,
