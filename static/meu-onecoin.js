@@ -50,15 +50,6 @@ document.getElementById("update-button").addEventListener("click", function () {
     campaignData.nome = campaignName;
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
-    const rightTableData = selectedCryptos.map(crypto => ({
-    simbolo: crypto.simbolo,
-    imagem: crypto.imagem,
-    redes: crypto.redes || []
-    }));
-
-    localStorage.setItem("rightTableData", JSON.stringify(rightTableData));
-
-
     console.log("✅ Nome atualizado:", campaignName);
 });
 
@@ -405,12 +396,9 @@ document.getElementById("update-button").addEventListener("click", () => {
 
         let selectedAddress = "";
 
-      crypto.redes?.forEach((rede, i) => {
-
-           if (!rede.nome && !rede.endereco) return; // pula redes vazias
-           const optionBtn = document.createElement("button");
-           optionBtn.textContent = rede.nome;
-
+        crypto.redes?.forEach((rede, i) => {
+            const optionBtn = document.createElement("button");
+            optionBtn.textContent = rede.nome || `Rede ${i + 1}`;
             optionBtn.addEventListener("click", () => {
                 addressCell.textContent = rede.endereco || "";
                 selectedAddress = rede.endereco || "";
