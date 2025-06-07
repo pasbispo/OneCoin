@@ -539,37 +539,51 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 document.getElementById("end-campaign-button").addEventListener("click", function () {
-    // Coletar os dados da campanha
-    const nomeCampanha = document.getElementById("campaign-name").value;
+    const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
-    const imagens = Array.from(document.getElementById("campaign-images").files).map(file => URL.createObjectURL(file));
-    const video = document.getElementById("video-file").files[0] ? URL.createObjectURL(document.getElementById("video-file").files[0]) : null;
-    const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
-    // Validação rápida
-    if (!nomeCampanha.trim()) {
-        alert("Por favor, insira o nome da campanha antes de finalizar.");
-        return;
-    }
+    // Captura imagens (como blob temporário para visualização futura)
+    const imagens = Array.from(document.getElementById("campaign-images").files).map(file =>
+        URL.createObjectURL(file)
+    );
 
-    // Criar objeto da campanha
-    const campanha = {
-        nome: nomeCampanha,
-        periodo: periodo,
-        objetivo: objetivo,
-        imagens: imagens,
-        video: video,
-        criptos: criptos,
-        bloqueado: true // 🔒 Marcamos que essa campanha está travada
+    // Captura vídeo (também como blob temporário)
+    const videoFile = document.getElementById("video-file").files[0];
+    const video = videoFile ? URL.createObjectURL(videoFile) : null;
+
+    // Salva os dados da TABELA ESQUERDA
+    const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+
+    // Salva os dados da TABELA DIREITA
+    const rightTableRows = Array.from(document.querySelector(".crypto-panel-table tbody").children);
+    const rightTableData = rightTableRows.map(row => {
+        const img = row.querySelector("img")?.src || "";
+        const simbolo = row.querySelector("img")?.alt || "";
+        const redes = Array.from(row.querySelectorAll(".network-option")).map(btn => ({
+            nome: btn.textContent,
+            endereco: btn.getAttribute("data-endereco")
+        }));
+        return { simbolo, imagem: img, redes };
+    });
+
+    // Monta o objeto da campanha
+    const campaignData = {
+        nome,
+        periodo,
+        objetivo,
+        imagens,
+        video,
+        selectedCryptos,
+        rightTableData
     };
 
-    // Salvar no localStorage (banco de campanhas do usuário)
+    // Salva a campanha no localStorage
     let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-    campaigns.push(campanha);
+    campaigns.push(campaignData);
     localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
 
-    // Redirecionar para Minhas Campanhas
+    // Redireciona para a página de campanhas
     window.location.href = "minhas-campanhas.html";
 });
 
