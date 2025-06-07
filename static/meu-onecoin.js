@@ -50,8 +50,6 @@ document.getElementById("update-button").addEventListener("click", function () {
     campaignData.nome = campaignName;
     localStorage.setItem("activeCampaign", JSON.stringify(campaignData));
 
-    console.log("✅ Nome atualizado:", campaignName);
-
     const rightTableData = selectedCryptos.map(crypto => ({
     simbolo: crypto.simbolo,
     imagem: crypto.imagem,
@@ -59,11 +57,9 @@ document.getElementById("update-button").addEventListener("click", function () {
     }));
 
     localStorage.setItem("rightTableData", JSON.stringify(rightTableData));
-    const rightTableData = JSON.parse(localStorage.getItem("rightTableData")) || [];
 
 
-
-    
+    console.log("✅ Nome atualizado:", campaignName);
 });
 
 
