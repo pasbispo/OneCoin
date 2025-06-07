@@ -261,47 +261,40 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("✅ Tabela da esquerda carregada corretamente!");
 });
 
-function preencherTabelaEsquerda() {
-    const cryptoTableBody = document.querySelector("#crypto-table tbody");
-    cryptoTableBody.innerHTML = "";
+function openNetworkModal(crypto) {
+    const modal = document.getElementById("network-modal");
+    modal.classList.add("active");
+    document.getElementById("crypto-name").textContent = crypto.simbolo;
 
-    let selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    document.getElementById("network1").value = crypto.redes?.[0]?.nome || "";
+    document.getElementById("address1").value = crypto.redes?.[0]?.endereco || "";
+    document.getElementById("network2").value = crypto.redes?.[1]?.nome || "";
+    document.getElementById("address2").value = crypto.redes?.[1]?.endereco || "";
+    document.getElementById("network3").value = crypto.redes?.[2]?.nome || "";
+    document.getElementById("address3").value = crypto.redes?.[2]?.endereco || "";
 
-    selectedCryptos.forEach(crypto => {
-        let row = document.createElement("tr");
+    document.getElementById("save-network").onclick = () => {
+        crypto.redes = [
+            {
+                nome: document.getElementById("network1").value,
+                endereco: document.getElementById("address1").value,
+            },
+            {
+                nome: document.getElementById("network2").value,
+                endereco: document.getElementById("address2").value,
+            },
+            {
+                nome: document.getElementById("network3").value,
+                endereco: document.getElementById("address3").value,
+            },
+        ];
 
-        let cellSymbol = document.createElement("td");
-        let cellQuantity = document.createElement("td");
-        let cellValue = document.createElement("td");
-        let cellActions = document.createElement("td");
+        let updated = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+        updated = updated.map(c => (c.simbolo === crypto.simbolo ? crypto : c));
+        localStorage.setItem("selectedCryptos", JSON.stringify(updated));
+        modal.classList.remove("active");
+    };
 
-        cellSymbol.innerHTML = `<img src="${crypto.imagem}" width="40"> ${crypto.simbolo}`;
-        cellQuantity.textContent = crypto.quantidade || "0";
-        cellValue.textContent = crypto.valorEstimado || "0 USD";
-
-        const networkBtn = document.createElement("button");
-        networkBtn.textContent = "Minhas Redes";
-        networkBtn.onclick = () => openNetworkModal(crypto);
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Excluir";
-        deleteBtn.onclick = () => {
-            selectedCryptos = selectedCryptos.filter(c => c.simbolo !== crypto.simbolo);
-            localStorage.setItem("selectedCryptos", JSON.stringify(selectedCryptos));
-            row.remove();
-        };
-
-        cellActions.appendChild(networkBtn);
-        cellActions.appendChild(deleteBtn);
-
-        row.appendChild(cellSymbol);
-        row.appendChild(cellQuantity);
-        row.appendChild(cellValue);
-        row.appendChild(cellActions);
-
-        cryptoTableBody.appendChild(row);
-    });
-}
     document.getElementById("close-network").onclick = () => {
         modal.classList.remove("active");
     };
@@ -704,116 +697,3 @@ function preencherTabelaDireitaSalva(dados) {
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    const dados = JSON.parse(localStorage.getItem("campaignData"));
-    const finalizada = localStorage.getItem("finalizada") === "true";
-
-    if (dados) {
-        document.getElementById("campaign-name").value = dados.nome;
-        document.getElementById("campaign-period").value = dados.periodo;
-        document.getElementById("campaign-goal").value = dados.objetivo;
-
-        // preencher tabela da esquerda
-        localStorage.setItem("selectedCryptos", JSON.stringify(dados.selectedCryptos));
-        preencherTabelaEsquerda();
-
-        // preencher tabela da direita
-        preencherTabelaDireita(dados.selectedCryptos);
-
-        // travar tudo se finalizada
-        if (finalizada) {
-            document.getElementById("campaign-name").disabled = true;
-            document.getElementById("campaign-period").disabled = true;
-            document.getElementById("campaign-goal").disabled = true;
-            document.getElementById("campaign-images").disabled = true;
-            document.getElementById("video-file").disabled = true;
-            document.querySelectorAll("#crypto-table button").forEach(btn => btn.disabled = true);
-        }
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function preencherTabelaDireita(selectedCryptos) {
-    const tbody = document.querySelector(".crypto-panel-table tbody");
-    tbody.innerHTML = "";
-
-    selectedCryptos.forEach(crypto => {
-        const row = document.createElement("tr");
-
-        const cellImage = document.createElement("td");
-        const img = document.createElement("img");
-        img.src = crypto.imagem;
-        img.alt = crypto.simbolo;
-        img.width = 40;
-        cellImage.appendChild(img);
-        row.appendChild(cellImage);
-
-        const cellNetwork = document.createElement("td");
-        const networkBtn = document.createElement("button");
-        networkBtn.textContent = "Rede";
-        networkBtn.classList.add("network-select-btn");
-
-        const networkOptions = document.createElement("div");
-        networkOptions.classList.add("network-options");
-        networkOptions.style.display = "none";
-
-        const addressCell = document.createElement("td");
-        let selectedAddress = "";
-
-        crypto.redes?.forEach((rede, i) => {
-            if (!rede.nome && !rede.endereco) return;
-            const optionBtn = document.createElement("button");
-            optionBtn.textContent = rede.nome;
-            optionBtn.addEventListener("click", () => {
-                addressCell.textContent = rede.endereco;
-                selectedAddress = rede.endereco;
-                networkBtn.textContent = rede.nome;
-                networkOptions.style.display = "none";
-            });
-            networkOptions.appendChild(optionBtn);
-        });
-
-        networkBtn.addEventListener("click", () => {
-            networkOptions.style.display = networkOptions.style.display === "none" ? "block" : "none";
-        });
-
-        cellNetwork.appendChild(networkBtn);
-        cellNetwork.appendChild(networkOptions);
-        row.appendChild(cellNetwork);
-
-        row.appendChild(addressCell);
-
-        const cellCopy = document.createElement("td");
-        const copyBtn = document.createElement("button");
-        copyBtn.textContent = "Copiar";
-        copyBtn.addEventListener("click", () => {
-            if (!selectedAddress) {
-                alert("Escolha uma rede primeiro.");
-                return;
-            }
-            navigator.clipboard.writeText(selectedAddress)
-                .then(() => alert("Endereço copiado!"))
-                .catch(() => alert("Erro ao copiar."));
-        });
-        cellCopy.appendChild(copyBtn);
-        row.appendChild(cellCopy);
-
-        tbody.appendChild(row);
-    });
-}
