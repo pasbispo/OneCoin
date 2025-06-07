@@ -572,7 +572,10 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
 
     const campaignData = {
         nome,
-        periodo,             
+        periodo,
+        objetivo,
+        imagens,
+        video,
         selectedCryptos,
         rightTableData,
         bloqueado: true // Marca a campanha como salva e travada
