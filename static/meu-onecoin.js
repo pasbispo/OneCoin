@@ -480,30 +480,6 @@ document.getElementById("update-button").addEventListener("click", () => {
 
 
 
-document.getElementById("end-campaign-button").addEventListener("click", () => {
-    const campaignData = {
-        nome: document.getElementById("campaign-name").value,
-        periodo: document.getElementById("campaign-period").value,
-        objetivo: document.getElementById("campaign-goal").value,
-        imagens: Array.from(document.getElementById("campaign-images").files).map(file => file.name),
-        video: document.getElementById("video-file").files[0]?.name || "",
-        selectedCryptos: JSON.parse(localStorage.getItem("selectedCryptos")) || [],
-    };
-
-    localStorage.setItem("finalizada", "true"); // sinalizador
-    localStorage.setItem("campaignData", JSON.stringify(campaignData));
-    alert("Campanha finalizada com sucesso!");
-
-    location.href = "minhas-campanhas.html"; // redirecionamento
-});
-
-
-
-
-
-
-
-
 
 
 
@@ -544,7 +520,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 
-// === BOTÃO FINALIZAR ===
+
 // === BOTÃO FINALIZAR ===
 document.getElementById("end-campaign-button").addEventListener("click", function () {
     const nome = document.getElementById("campaign-name").value;
@@ -648,50 +624,72 @@ function preencherTabelaDireitaSalva(dados) {
     dados.forEach(cripto => {
         const row = document.createElement("tr");
 
-        // Imagem + símbolo
-        const imgCell = document.createElement("td");
+        // 1. Imagem da criptomoeda
+        const cellImage = document.createElement("td");
         const img = document.createElement("img");
         img.src = cripto.imagem;
         img.alt = cripto.simbolo;
-        img.style.width = "25px";
-        img.style.marginRight = "5px";
-        imgCell.appendChild(img);
-        row.appendChild(imgCell);
+        img.width = 40;
+        cellImage.appendChild(img);
+        row.appendChild(cellImage);
 
-        // Botões de rede
-        const redeCell = document.createElement("td");
-        const enderecoCell = document.createElement("td"); // <- aqui em cima!
+        // 2. Botão "Rede" + opções
+        const cellNetwork = document.createElement("td");
+        const networkBtn = document.createElement("button");
+        networkBtn.textContent = "Rede";
+        networkBtn.classList.add("network-select-btn");
 
-        cripto.redes.forEach(rede => {
-            const btn = document.createElement("button");
-            btn.className = "network-option";
-            btn.textContent = rede.nome;
-            btn.setAttribute("data-endereco", rede.endereco);
-            btn.addEventListener("click", () => {
-                enderecoCell.textContent = rede.endereco;
+        const networkOptions = document.createElement("div");
+        networkOptions.classList.add("network-options");
+        networkOptions.style.display = "none";
+
+        let selectedAddress = cripto.enderecoSelecionado || "";
+
+        const addressCell = document.createElement("td");
+
+        cripto.redes.forEach((rede, i) => {
+            const optionBtn = document.createElement("button");
+            optionBtn.textContent = rede.nome || `Rede ${i + 1}`;
+            optionBtn.addEventListener("click", () => {
+                addressCell.textContent = rede.endereco || "";
+                selectedAddress = rede.endereco || "";
+                networkOptions.style.display = "none";
             });
-            redeCell.appendChild(btn);
+            networkOptions.appendChild(optionBtn);
         });
-        row.appendChild(redeCell);
 
-        // Endereço selecionado
-        enderecoCell.textContent = cripto.enderecoSelecionado || cripto.redes[0]?.endereco || "";
-        row.appendChild(enderecoCell);
+        networkBtn.addEventListener("click", () => {
+            networkOptions.style.display = networkOptions.style.display === "none" ? "block" : "none";
+        });
 
-        // Botão copiar
-        const copyCell = document.createElement("td");
+        cellNetwork.appendChild(networkBtn);
+        cellNetwork.appendChild(networkOptions);
+        row.appendChild(cellNetwork);
+
+        // 3. Endereço selecionado
+        addressCell.textContent = selectedAddress;
+        row.appendChild(addressCell);
+
+        // 4. Botão copiar
+        const cellCopy = document.createElement("td");
         const copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
         copyBtn.addEventListener("click", () => {
-            navigator.clipboard.writeText(enderecoCell.textContent);
+            if (!selectedAddress) {
+                alert("Escolha uma rede primeiro.");
+                return;
+            }
+            navigator.clipboard.writeText(selectedAddress)
+                .then(() => alert("Endereço copiado!"))
+                .catch(err => alert("Erro ao copiar."));
         });
-        copyCell.appendChild(copyBtn);
-        row.appendChild(copyCell);
+        cellCopy.appendChild(copyBtn);
+        row.appendChild(cellCopy);
 
         tbody.appendChild(row);
     });
 }
-
 
 
 
