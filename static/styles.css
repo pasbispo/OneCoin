@@ -1421,7 +1421,11 @@ th, td {
     color: white;
 }
 
-.crypto-panel-table th {
+
+.crypto-panel-table th,
+.crypto-panel-table td {
+    text-align: center;      /* Centraliza horizontalmente */
+    vertical-align: middle;  /* Centraliza verticalmente */
+    padding: 8px;            /* Espaçamento interno */
     padding: 10px;
-    text-align: left;
 }
