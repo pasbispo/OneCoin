@@ -648,37 +648,59 @@ function preencherTabelaDireitaSalva(dados) {
         const img = document.createElement("img");
         img.src = cripto.imagem;
         img.alt = cripto.simbolo;
-        img.style.width = "25px";
-        img.style.marginRight = "5px";
+        img.width = 40;
         imgCell.appendChild(img);
         row.appendChild(imgCell);
 
         // 2. Botões de rede
-        const redeCell = document.createElement("td");
-        const enderecoCell = document.createElement("td"); // precisa ser criado antes para referência
+        const networkCell = document.createElement("td");
+        const networkBtn = document.createElement("button");
+        networkBtn.textContent = "Rede";
+        networkBtn.classList.add("network-select-btn");
+
+        const networkOptions = document.createElement("div");
+        networkOptions.classList.add("network-options");
+        networkOptions.style.display = "none";
 
         cripto.redes.forEach(rede => {
-            const btn = document.createElement("button");
-            btn.className = "network-option";
-            btn.textContent = rede.nome;
-            btn.setAttribute("data-endereco", rede.endereco);
-            btn.addEventListener("click", () => {
-                enderecoCell.textContent = rede.endereco;
+            const optionBtn = document.createElement("button");
+            optionBtn.textContent = rede.nome;
+            optionBtn.setAttribute("data-endereco", rede.endereco);
+            optionBtn.addEventListener("click", () => {
+                addressCell.textContent = rede.endereco;
+                selectedAddress = rede.endereco;
+                networkOptions.style.display = "none";
             });
-            redeCell.appendChild(btn);
+            networkOptions.appendChild(optionBtn);
         });
-        row.appendChild(redeCell);
 
-        // 3. Endereço (usa o que foi salvo)
-        enderecoCell.textContent = cripto.enderecoSelecionado || cripto.redes[0]?.endereco || "";
-        row.appendChild(enderecoCell);
+        networkBtn.addEventListener("click", () => {
+            networkOptions.style.display = networkOptions.style.display === "none" ? "block" : "none";
+        });
+
+        networkCell.appendChild(networkBtn);
+        networkCell.appendChild(networkOptions);
+        row.appendChild(networkCell);
+
+        // 3. Endereço selecionado
+        const addressCell = document.createElement("td");
+        let selectedAddress = cripto.enderecoSelecionado || cripto.redes[0]?.endereco || "";
+        addressCell.textContent = selectedAddress;
+        row.appendChild(addressCell);
 
         // 4. Botão copiar
         const copyCell = document.createElement("td");
         const copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
         copyBtn.addEventListener("click", () => {
-            navigator.clipboard.writeText(enderecoCell.textContent);
+            if (!selectedAddress) {
+                alert("Escolha uma rede primeiro.");
+                return;
+            }
+            navigator.clipboard.writeText(selectedAddress)
+                .then(() => alert("Endereço copiado!"))
+                .catch(err => alert("Erro ao copiar."));
         });
         copyCell.appendChild(copyBtn);
         row.appendChild(copyCell);
