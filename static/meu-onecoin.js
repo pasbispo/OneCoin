@@ -555,10 +555,16 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
             });
         });
 
-        const endereco = row.children[2]?.textContent || "";
+const enderecoCell = row.querySelector("td:nth-child(3)");
+const endereco = enderecoCell ? enderecoCell.textContent.trim() : "";
 
-        return { simbolo, imagem, redes, enderecoSelecionado: endereco };
-    });
+return {
+    simbolo,
+    imagem,
+    redes,
+    enderecoSelecionado: endereco
+};
+
 
     // Salvar tudo
     const campaignData = {
