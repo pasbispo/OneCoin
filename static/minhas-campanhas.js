@@ -1,59 +1,59 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let campaignContainer = document.getElementById("userCampaignsBox");
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+document.addEventListener("DOMContentLoaded", async function () {
+    const campaignContainer = document.getElementById("userCampaignsBox");
 
-    if (campaigns.length === 0) {
-        campaignContainer.innerHTML = "<p>Você ainda não tem campanhas finalizadas.</p>";
-        return;
-    }
+    try {
+        const response = await fetch("http://localhost:3000/campanhas");
+        const campanhas = await response.json();
 
-    campaignContainer.innerHTML = ""; // 🔄 Limpa antes de adicionar os itens
+        if (!campanhas.length) {
+            campaignContainer.innerHTML = "<p>Você ainda não tem campanhas finalizadas.</p>";
+            return;
+        }
 
+        campaignContainer.innerHTML = "";
 
-    campaigns.forEach((campaign, index) => {
-        let campaignBox = document.createElement("div");
-        campaignBox.classList.add("campaign-box");
+        campanhas.forEach(campanha => {
+            if (!campanha.finalizada) return;
 
-        let campaignTitle = document.createElement("h3");
-        campaignTitle.textContent = campaign.nome;
+            const box = document.createElement("div");
+            box.classList.add("campaign-box");
 
-        let coinImage = document.createElement("img");
-        coinImage.src = "static/img/simbolo.png";
-        coinImage.alt = "Imagem da moeda";
+            const titulo = document.createElement("h3");
+            titulo.textContent = campanha.nome;
 
-        // ✅ Adiciona evento de clique para redirecionar
-       campaignBox.addEventListener("click", function () {
-    let campaignData = encodeURIComponent(JSON.stringify(campaign));
-    window.location.href = `meu-onecoin.html?data=${campaignData}`;
-});
+            const img = document.createElement("img");
+            img.src = campanha.imagens?.[0] || "static/img/simbolo.png";
 
+            const excluir = document.createElement("button");
+            excluir.textContent = "Excluir";
+            excluir.classList.add("campaign-delete-btn");
+            excluir.addEventListener("click", async (e) => {
+                e.stopPropagation();
+                const confirmacao = confirm("Tem certeza que deseja excluir esta campanha?");
+                if (!confirmacao) return;
 
-        // 🔴 Criar botão "Excluir" dentro do campaignBox
-        let deleteButton = document.createElement("button");
-        deleteButton.textContent = "Excluir";
-        deleteButton.classList.add("campaign-delete-btn");
-        deleteButton.addEventListener("click", function (event) {
-            event.stopPropagation(); // ✅ Impede que o clique afete o redirecionamento
-            excluirCampanha(index);
+                try {
+                    await fetch(`http://localhost:3000/campanhas/${campanha._id}`, { method: "DELETE" });
+                    location.reload();
+                } catch (err) {
+                    alert("Erro ao excluir campanha.");
+                    console.error(err);
+                }
+            });
+
+            box.appendChild(titulo);
+            box.appendChild(img);
+            box.appendChild(excluir);
+
+            box.addEventListener("click", () => {
+                window.location.href = `meu-onecoin.html?campanhaId=${campanha._id}`;
+            });
+
+            campaignContainer.appendChild(box);
         });
 
-
-
-
-
-
-
-        campaignBox.appendChild(campaignTitle);
-        campaignBox.appendChild(coinImage);
-        campaignBox.appendChild(deleteButton); // ✅ Adiciona o botão dentro do campaignBox
-        campaignContainer.appendChild(campaignBox); // ✅ Adiciona campaignBox ao campaignContainer
-    });
+    } catch (err) {
+        console.error("Erro ao carregar campanhas:", err);
+        campaignContainer.innerHTML = "<p>Erro ao carregar campanhas.</p>";
+    }
 });
-
-// 🔥 Função para excluir campanha
-function excluirCampanha(index) {
-    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-    campaigns.splice(index, 1); // ✅ Remove a campanha da lista
-    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-    location.reload(); // 🔄 Atualiza a página para refletir a exclusão
-}
