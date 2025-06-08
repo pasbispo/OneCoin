@@ -523,109 +523,138 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 // === BOTÃO FINALIZAR ===
 // === BOTÃO FINALIZAR ===
-document.getElementById("end-campaign-button").addEventListener("click", function () {
-    const nome = document.getElementById("campaign-name").value;
-    const periodo = document.getElementById("campaign-period").value;
-    const objetivo = document.getElementById("campaign-goal").value;
+document.getElementById("end-campaign-button").addEventListener("click", async () => {
+    const nome = document.getElementById("nome-campanha").value;
+    const periodo = document.getElementById("periodo-campanha").value;
+    const objetivo = document.getElementById("objetivo-campanha").value;
+    const video = document.getElementById("video-campanha").value;
 
-    // Captura imagens dinâmicas (URL temporária para visualização)
-    const imagensInput = document.getElementById("campaign-images");
-    const imagens = Array.from(imagensInput.files).map(file => URL.createObjectURL(file));
+    const imagens = Array.from(document.querySelectorAll(".imagem-dinamica img")).map(img => img.src);
 
-    // Captura vídeo
-    const videoFile = document.getElementById("video-file").files[0];
-    const video = videoFile ? URL.createObjectURL(videoFile) : null;
-
-    // Captura a tabela ESQUERDA
-    const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    // Captura a tabela DIREITA (com rede selecionada e botões)
-    const rightTableRows = Array.from(document.querySelector(".crypto-panel-table tbody").children);
-    const rightTableData = rightTableRows.map(row => {
-        const imgEl = row.querySelector("img");
-        const simbolo = imgEl?.alt || "";
-        const imagem = imgEl?.src || "";
-
-        const redes = [];
-        const redeButtons = row.querySelectorAll(".network-option, .network-options button");
-        redeButtons.forEach(btn => {
-            redes.push({
-                nome: btn.textContent,
-                endereco: btn.getAttribute("data-endereco") || btn.getAttribute("data-endereco-original") || ""
-            });
-        });
-
+    const tabelaDireita = document.querySelectorAll(".crypto-panel-table tbody tr");
+    const criptomoedas = Array.from(tabelaDireita).map(row => {
+        const simbolo = row.querySelector("img")?.alt || "";
+        const imagem = row.querySelector("img")?.src || "";
         const endereco = row.children[2]?.textContent || "";
 
-        return { simbolo, imagem, redes, enderecoSelecionado: endereco };
+        // 🟡 Você pode salvar também as redes, se quiser:
+        const redes = []; // ou extrair se já estiverem salvas
+
+        return { simbolo, imagem, enderecoSelecionado: endereco, redes };
     });
 
-    // Salvar tudo
-    const campaignData = {
+    const dadosCampanha = {
         nome,
         periodo,
         objetivo,
-        imagens,
         video,
-        selectedCryptos,
-        rightTableData,
-        bloqueado: true
+        imagens,
+        criptomoedas,
+        finalizada: true
     };
 
-    const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-    campaigns.push(campaignData);
-    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
+    const resposta = await fetch("http://localhost:3000/salvar-campanha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dadosCampanha)
+    });
 
-    // Redireciona
-    window.location.href = "minhas-campanhas.html";
+    const resultado = await resposta.json();
+    if (resposta.ok) {
+        alert("Campanha salva com sucesso!");
+        window.location.href = "minhas-campanhas.html";
+    } else {
+        alert("Erro ao salvar: " + resultado.error);
+    }
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
+
+document.addEventListener("DOMContentLoaded", async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const data = urlParams.get("data");
+    const campanhaId = urlParams.get("campanhaId");
 
-    if (data) {
-        const campanha = JSON.parse(decodeURIComponent(data));
+    if (!campanhaId) return;
 
-        // Preencher os campos
-        document.getElementById("campaign-name").value = campanha.nome || "";
-        document.getElementById("campaign-period").value = campanha.periodo || "";
-        document.getElementById("campaign-goal").value = campanha.objetivo || "";
+    try {
+        const res = await fetch(`http://localhost:3000/campanhas`);
+        const campanhas = await res.json();
+        const campanha = campanhas.find(c => c._id === campanhaId);
 
-        // Mostrar imagens
-        const container = document.getElementById("campaign-images-container");
-        campanha.imagens?.forEach(src => {
+        if (!campanha) return;
+
+        // Preenche os campos com os dados
+        document.getElementById("nome-campanha").value = campanha.nome;
+        document.getElementById("periodo-campanha").value = campanha.periodo;
+        document.getElementById("objetivo-campanha").value = campanha.objetivo;
+        document.getElementById("video-campanha").value = campanha.video;
+
+        campanha.imagens.forEach(src => {
+            const container = document.getElementById("imagens-container");
             const img = document.createElement("img");
             img.src = src;
-            img.style.width = "100px";
-            img.style.margin = "5px";
             container.appendChild(img);
         });
 
-        // Mostrar vídeo
-        if (campanha.video) {
-            const video = document.getElementById("video-player");
-            video.src = campanha.video;
-            video.style.display = "block";
-        }
+        // Tabela da esquerda: você pode reconstruir se quiser
 
-        // Restaurar tabela da esquerda
-        if (campanha.selectedCryptos) {
-            localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
-        }
+        // Tabela da direita:
+        const tbody = document.querySelector(".crypto-panel-table tbody");
+        campanha.criptomoedas.forEach(crypto => {
+            const row = document.createElement("tr");
 
-        // Restaurar tabela da direita
-        if (campanha.rightTableData) {
-            preencherTabelaDireitaSalva(campanha.rightTableData);
-        }
+            const tdImg = document.createElement("td");
+            const img = document.createElement("img");
+            img.src = crypto.imagem;
+            img.alt = crypto.simbolo;
+            img.width = 40;
+            tdImg.appendChild(img);
+            row.appendChild(tdImg);
 
-        // Bloquear campos
-        if (campanha.bloqueado) {
-            document.getElementById("campaign-name").disabled = true;
-            document.getElementById("campaign-period").disabled = true;
-            document.getElementById("crypto-table").classList.add("disabled-table");
-        }
+            const tdRede = document.createElement("td");
+            const btn = document.createElement("button");
+            btn.textContent = "Rede";
+            const options = document.createElement("div");
+            options.style.display = "none";
+
+            (crypto.redes || []).forEach(rede => {
+                const op = document.createElement("button");
+                op.textContent = rede.nome;
+                op.addEventListener("click", () => {
+                    tdEndereco.textContent = rede.endereco;
+                    selectedEndereco = rede.endereco;
+                    options.style.display = "none";
+                });
+                options.appendChild(op);
+            });
+
+            btn.addEventListener("click", () => {
+                options.style.display = options.style.display === "none" ? "block" : "none";
+            });
+
+            tdRede.appendChild(btn);
+            tdRede.appendChild(options);
+            row.appendChild(tdRede);
+
+            const tdEndereco = document.createElement("td");
+            tdEndereco.textContent = crypto.enderecoSelecionado || "";
+            row.appendChild(tdEndereco);
+
+            const tdCopy = document.createElement("td");
+            const copyBtn = document.createElement("button");
+            copyBtn.textContent = "Copiar";
+            copyBtn.addEventListener("click", () => {
+                navigator.clipboard.writeText(tdEndereco.textContent);
+                alert("Endereço copiado!");
+            });
+            tdCopy.appendChild(copyBtn);
+            row.appendChild(tdCopy);
+
+            tbody.appendChild(row);
+        });
+
+    } catch (e) {
+        console.error("Erro ao carregar campanha:", e);
     }
 });
 
