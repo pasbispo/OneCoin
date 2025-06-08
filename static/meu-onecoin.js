@@ -531,21 +531,15 @@ document.getElementById("end-campaign-button").addEventListener("click", async (
 
     const imagens = Array.from(document.querySelectorAll(".imagem-dinamica img")).map(img => img.src);
 
-   const criptomoedas = Array.from(tabelaDireita).map(row => {
-    const simbolo = row.querySelector("img")?.alt || "";
-    const imagem = row.querySelector("img")?.src || "";
-    const endereco = row.children[2]?.textContent || "";
+    const tabelaDireita = document.querySelectorAll(".crypto-panel-table tbody tr");
+    const criptomoedas = Array.from(tabelaDireita).map(row => {
+        const simbolo = row.querySelector("img")?.alt || "";
+        const imagem = row.querySelector("img")?.src || "";
+        const endereco = row.children[2]?.textContent || "";
+        const redes = []; // pode extrair redes reais se quiser salvar
 
-    const redes = Array.from(row.children[1]?.querySelectorAll("div button") || []).map(btn => {
-        return {
-            nome: btn.textContent,
-            endereco: btn.getAttribute("data-endereco") || ""
-        };
+        return { simbolo, imagem, enderecoSelecionado: endereco, redes };
     });
-
-    return { simbolo, imagem, enderecoSelecionado: endereco, redes };
-});
-
 
     const dadosCampanha = {
         nome,
