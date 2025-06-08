@@ -667,7 +667,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const options = document.createElement("div");
             options.style.display = "none";
 
-            const tdEndereco = document.createElement("td"); // <- mover antes do forEach
+             const tdEndereco = document.createElement("td"); // <- mover antes do forEach
+
             (crypto.redes || []).forEach(rede => {
                 const op = document.createElement("button");
                 op.textContent = rede.nome;
