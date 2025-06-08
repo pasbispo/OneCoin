@@ -522,20 +522,24 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 // === BOTÃO FINALIZAR ===
+// === BOTÃO FINALIZAR ===
 document.getElementById("end-campaign-button").addEventListener("click", function () {
     const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
 
-    // Captura imagens e vídeo
-    const imagens = Array.from(document.getElementById("campaign-images").files).map(file => URL.createObjectURL(file));
+    // Captura imagens dinâmicas (URL temporária para visualização)
+    const imagensInput = document.getElementById("campaign-images");
+    const imagens = Array.from(imagensInput.files).map(file => URL.createObjectURL(file));
+
+    // Captura vídeo
     const videoFile = document.getElementById("video-file").files[0];
     const video = videoFile ? URL.createObjectURL(videoFile) : null;
 
     // Captura a tabela ESQUERDA
     const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
-    // Captura a tabela DIREITA corretamente (incluindo endereço atual visível)
+    // Captura a tabela DIREITA (com rede selecionada e botões)
     const rightTableRows = Array.from(document.querySelector(".crypto-panel-table tbody").children);
     const rightTableData = rightTableRows.map(row => {
         const imgEl = row.querySelector("img");
@@ -543,11 +547,11 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
         const imagem = imgEl?.src || "";
 
         const redes = [];
-        const redeButtons = row.querySelectorAll(".network-option");
+        const redeButtons = row.querySelectorAll(".network-option, .network-options button");
         redeButtons.forEach(btn => {
             redes.push({
                 nome: btn.textContent,
-                endereco: btn.getAttribute("data-endereco")
+                endereco: btn.getAttribute("data-endereco") || btn.getAttribute("data-endereco-original") || ""
             });
         });
 
@@ -556,6 +560,7 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
         return { simbolo, imagem, redes, enderecoSelecionado: endereco };
     });
 
+    // Salvar tudo
     const campaignData = {
         nome,
         periodo,
@@ -571,8 +576,10 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     campaigns.push(campaignData);
     localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
 
+    // Redireciona
     window.location.href = "minhas-campanhas.html";
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
@@ -581,12 +588,14 @@ document.addEventListener("DOMContentLoaded", function () {
     if (data) {
         const campanha = JSON.parse(decodeURIComponent(data));
 
-        document.getElementById("campaign-name").value = campanha.nome;
-        document.getElementById("campaign-period").value = campanha.periodo;
-        document.getElementById("campaign-goal").value = campanha.objetivo;
+        // Preencher os campos
+        document.getElementById("campaign-name").value = campanha.nome || "";
+        document.getElementById("campaign-period").value = campanha.periodo || "";
+        document.getElementById("campaign-goal").value = campanha.objetivo || "";
 
+        // Mostrar imagens
         const container = document.getElementById("campaign-images-container");
-        campanha.imagens.forEach(src => {
+        campanha.imagens?.forEach(src => {
             const img = document.createElement("img");
             img.src = src;
             img.style.width = "100px";
@@ -594,21 +603,24 @@ document.addEventListener("DOMContentLoaded", function () {
             container.appendChild(img);
         });
 
+        // Mostrar vídeo
         if (campanha.video) {
             const video = document.getElementById("video-player");
             video.src = campanha.video;
             video.style.display = "block";
         }
 
+        // Restaurar tabela da esquerda
         if (campanha.selectedCryptos) {
             localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
         }
 
-        // ✅ Aqui chamamos a função de recriação da tabela da direita
+        // Restaurar tabela da direita
         if (campanha.rightTableData) {
             preencherTabelaDireitaSalva(campanha.rightTableData);
         }
 
+        // Bloquear campos
         if (campanha.bloqueado) {
             document.getElementById("campaign-name").disabled = true;
             document.getElementById("campaign-period").disabled = true;
@@ -624,17 +636,17 @@ function preencherTabelaDireitaSalva(dados) {
     dados.forEach(cripto => {
         const row = document.createElement("tr");
 
-        // 1. Imagem da criptomoeda
-        const cellImage = document.createElement("td");
+        // 1. Imagem + símbolo
+        const imgCell = document.createElement("td");
         const img = document.createElement("img");
         img.src = cripto.imagem;
         img.alt = cripto.simbolo;
         img.width = 40;
-        cellImage.appendChild(img);
-        row.appendChild(cellImage);
+        imgCell.appendChild(img);
+        row.appendChild(imgCell);
 
-        // 2. Botão "Rede" + opções
-        const cellNetwork = document.createElement("td");
+        // 2. Botões de rede
+        const networkCell = document.createElement("td");
         const networkBtn = document.createElement("button");
         networkBtn.textContent = "Rede";
         networkBtn.classList.add("network-select-btn");
@@ -643,16 +655,13 @@ function preencherTabelaDireitaSalva(dados) {
         networkOptions.classList.add("network-options");
         networkOptions.style.display = "none";
 
-        let selectedAddress = cripto.enderecoSelecionado || "";
-
-        const addressCell = document.createElement("td");
-
-        cripto.redes.forEach((rede, i) => {
+        cripto.redes.forEach(rede => {
             const optionBtn = document.createElement("button");
-            optionBtn.textContent = rede.nome || `Rede ${i + 1}`;
+            optionBtn.textContent = rede.nome;
+            optionBtn.setAttribute("data-endereco", rede.endereco);
             optionBtn.addEventListener("click", () => {
-                addressCell.textContent = rede.endereco || "";
-                selectedAddress = rede.endereco || "";
+                addressCell.textContent = rede.endereco;
+                selectedAddress = rede.endereco;
                 networkOptions.style.display = "none";
             });
             networkOptions.appendChild(optionBtn);
@@ -662,16 +671,18 @@ function preencherTabelaDireitaSalva(dados) {
             networkOptions.style.display = networkOptions.style.display === "none" ? "block" : "none";
         });
 
-        cellNetwork.appendChild(networkBtn);
-        cellNetwork.appendChild(networkOptions);
-        row.appendChild(cellNetwork);
+        networkCell.appendChild(networkBtn);
+        networkCell.appendChild(networkOptions);
+        row.appendChild(networkCell);
 
         // 3. Endereço selecionado
+        const addressCell = document.createElement("td");
+        let selectedAddress = cripto.enderecoSelecionado || cripto.redes[0]?.endereco || "";
         addressCell.textContent = selectedAddress;
         row.appendChild(addressCell);
 
         // 4. Botão copiar
-        const cellCopy = document.createElement("td");
+        const copyCell = document.createElement("td");
         const copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
         copyBtn.classList.add("copy-btn");
@@ -684,13 +695,12 @@ function preencherTabelaDireitaSalva(dados) {
                 .then(() => alert("Endereço copiado!"))
                 .catch(err => alert("Erro ao copiar."));
         });
-        cellCopy.appendChild(copyBtn);
-        row.appendChild(cellCopy);
+        copyCell.appendChild(copyBtn);
+        row.appendChild(copyCell);
 
         tbody.appendChild(row);
     });
 }
-
 
 
 
