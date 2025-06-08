@@ -1,31 +1,41 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Campanhas</title>
-    <link rel="stylesheet" href="static/styles.css">
-</head>
-<body>
-<header class="campaign-header">
-    <div class="title-container">
-        <h1 id="campaign-page-title">Minhas Campanhas</h1>
-    </div>
-    <div class="logo-container">
-        <a href="index.html">
-            <img src="static/img/logo.png" alt="OneCoin Logo" id="campaign-logo">
-        </a>
-    </div>
-</header>
+<div id="campaigns-container"></div>
 
-<div id="userCampaignsBox">
-    <p>Carregando suas campanhas...</p>
-</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
+    const container = document.getElementById("campaigns-container");
 
-<script src="static/minhas-campanhas.js"></script>
+    campaigns.forEach((campanha, index) => {
+        const div = document.createElement("div");
+        div.classList.add("campanha-item");
+        div.style.border = "1px solid gray";
+        div.style.padding = "10px";
+        div.style.margin = "10px";
+        div.style.cursor = "pointer";
 
-</body>
-</html>
+        // Mostra o nome e o período
+        div.innerHTML = `
+            <h3>${campanha.nome}</h3>
+            <p>Período: ${campanha.periodo}</p>
+            <p>Objetivo: ${campanha.objetivo}</p>
+        `;
 
+        // Mostra a primeira imagem, se houver
+        if (campanha.imagens && campanha.imagens.length > 0) {
+            const img = document.createElement("img");
+            img.src = campanha.imagens[0];
+            img.style.width = "100px";
+            img.style.display = "block";
+            div.appendChild(img);
+        }
 
+        // Redireciona com os dados da campanha na URL
+        div.addEventListener("click", () => {
+            const dataEncoded = encodeURIComponent(JSON.stringify(campanha));
+            window.location.href = `meu-onecoin.html?data=${dataEncoded}`;
+        });
 
+        container.appendChild(div);
+    });
+});
+</script>
