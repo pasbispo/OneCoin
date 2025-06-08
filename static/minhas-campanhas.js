@@ -1,53 +1,31 @@
-document.addEventListener("DOMContentLoaded", async function () {
-    const campaignContainer = document.getElementById("userCampaignsBox");
+document.addEventListener("DOMContentLoaded", function () {
+    let campaignContainer = document.getElementById("userCampaignsBox");
+    let campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
 
-    try {
-        const response = await fetch("http://localhost:3000/campanhas");
-        const campanhas = await response.json();
-
-        if (!campanhas.length) {
-            campaignContainer.innerHTML = "<p>Você ainda não tem campanhas finalizadas.</p>";
-            return;
-        }
-
-        campaignContainer.innerHTML = "";
-
-        campanhas.forEach(campanha => {
-            if (!campanha.finalizada) return;
-
-            const box = document.createElement("div");
-            box.classList.add("campaign-box");
-
-            const titulo = document.createElement("h3");
-            titulo.textContent = campanha.nome;
-
-            const img = document.createElement("img");
-            img.src = campanha.imagens?.[0] || "static/img/simbolo.png";
-
-            const excluir = document.createElement("button");
-            excluir.textContent = "Excluir";
-            excluir.addEventListener("click", async (e) => {
-                e.stopPropagation();
-                // Se quiser, crie endpoint DELETE no backend
-            });
-
-            box.appendChild(titulo);
-            box.appendChild(img);
-            box.appendChild(excluir);
-
-            box.addEventListener("click", () => {
-                window.location.href = `meu-onecoin.html?campanhaId=${campanha._id}`;
-            });
-
-            campaignContainer.appendChild(box);
-        });
-
-    } catch (err) {
-        console.error("Erro ao carregar campanhas:", err);
-        campaignContainer.innerHTML = "<p>Erro ao carregar campanhas.</p>";
+    if (campaigns.length === 0) {
+        campaignContainer.innerHTML = "<p>Você ainda não tem campanhas finalizadas.</p>";
+        return;
     }
-});
 
+    campaignContainer.innerHTML = ""; // 🔄 Limpa antes de adicionar os itens
+
+
+    campaigns.forEach((campaign, index) => {
+        let campaignBox = document.createElement("div");
+        campaignBox.classList.add("campaign-box");
+
+        let campaignTitle = document.createElement("h3");
+        campaignTitle.textContent = campaign.nome;
+
+        let coinImage = document.createElement("img");
+        coinImage.src = "static/img/simbolo.png";
+        coinImage.alt = "Imagem da moeda";
+
+        // ✅ Adiciona evento de clique para redirecionar
+       campaignBox.addEventListener("click", function () {
+    let campaignData = encodeURIComponent(JSON.stringify(campaign));
+    window.location.href = `meu-onecoin.html?data=${campaignData}`;
+});
 
 
         // 🔴 Criar botão "Excluir" dentro do campaignBox
