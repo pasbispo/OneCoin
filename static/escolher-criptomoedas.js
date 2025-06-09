@@ -299,3 +299,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+
+window.atualizarTabelaDireita = atualizarTabelaDireita;
