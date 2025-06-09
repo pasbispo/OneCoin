@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Página carregada!");
 
     // Verificando se os elementos existem
-    let campaignName = document.getElementById("panel-title");
+    let campaignName = document.getElementById("campaign-name");
     let campaignPeriod = document.getElementById("campaign-period");
     let campaignGoal = document.getElementById("campaign-goal");
     let campaignImage = document.getElementById("campaign-images");
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.getElementById("update-button").addEventListener("click", function () {
-    let campaignName = document.getElementById("panel-title").value.trim();
+    let campaignName = document.getElementById("campaign-name").value.trim();
 
     if (!campaignName) {
         alert("Digite um nome para a campanha antes de atualizar!");
@@ -429,7 +429,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     }
 
     // ✅ Limpa campos
-    document.getElementById("panel-title").value = "";
+    document.getElementById("").value = "";
     document.getElementById("campaign-period").value = "";
     document.getElementById("campaign-goal").value = "";
     document.getElementById("slideshow-image").src = "";
@@ -582,7 +582,7 @@ window.atualizarTabelaDireita = atualizarTabelaDireita;
 
 // === BOTÃO FINALIZAR ===
 document.getElementById("end-campaign-button").addEventListener("click", function () {
-    const nome = document.getElementById("panel-title").value;
+    const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
 
@@ -643,7 +643,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const campanha = JSON.parse(decodeURIComponent(data));
 
         // Preencher os campos
-        document.getElementById("panel-title").value = campanha.nome || "";
+        document.getElementById("campaign-name").value = campanha.nome || "";
         document.getElementById("campaign-period").value = campanha.periodo || "";
         document.getElementById("campaign-goal").value = campanha.objetivo || "";
 
@@ -676,7 +676,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Bloqueios
         if (campanha.bloqueado) {
-            document.getElementById("panel-title").disabled = true;
+            document.getElementById("campaign-name").disabled = true;
             document.getElementById("campaign-period").disabled = true;
             document.getElementById("crypto-table").classList.add("disabled-table");
         }
@@ -685,7 +685,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function carregarCampanhaSalva(dados) {
     // Nome da campanha
-    const nomeInput = document.getElementById("panel-title");
+    const nomeInput = document.getElementById("campaign-name");
     nomeInput.value = dados.nome || "";
     nomeInput.disabled = true;
 
