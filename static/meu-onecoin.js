@@ -651,6 +651,11 @@ function preencherTabelaDireitaSalva(dados) {
 
         let selectedAddress = crypto.enderecoSelecionado || "";
 
+        // Criar a célula de endereço ANTES de usá-la
+        const addressCell = document.createElement("td");
+        addressCell.textContent = selectedAddress;
+
+        // Preencher os botões de rede
         crypto.redes?.forEach(rede => {
             const optionBtn = document.createElement("button");
             optionBtn.textContent = rede.nome;
@@ -671,13 +676,11 @@ function preencherTabelaDireitaSalva(dados) {
         cellNetwork.appendChild(networkOptions);
         row.appendChild(cellNetwork);
 
-        // 3. Endereço
-        const addressCell = document.createElement("td");
-        addressCell.textContent = selectedAddress;
+        // 3. Endereço selecionado
         row.appendChild(addressCell);
 
         // 4. Botão copiar
-        const cellCopy = document.createElement("td");
+        const copyCell = document.createElement("td");
         const copyBtn = document.createElement("button");
         copyBtn.textContent = "Copiar";
         copyBtn.classList.add("copy-btn");
@@ -690,8 +693,8 @@ function preencherTabelaDireitaSalva(dados) {
                 .then(() => alert("Endereço copiado!"))
                 .catch(() => alert("Erro ao copiar."));
         });
-        cellCopy.appendChild(copyBtn);
-        row.appendChild(cellCopy);
+        copyCell.appendChild(copyBtn);
+        row.appendChild(copyCell);
 
         tbody.appendChild(row);
     });
