@@ -60,6 +60,17 @@ app.post('/finalizar-campanha', async (req, res) => {
     }
 });
 
+// ✅ Buscar campanha específica por ID
+app.get('/campanhas/:id', async (req, res) => {
+    try {
+        const campanha = await Campanha.findById(req.params.id);
+        if (!campanha) return res.status(404).json({ error: "Campanha não encontrada" });
+        res.json(campanha);
+    } catch (error) {
+        console.error("Erro ao buscar campanha:", error);
+        res.status(500).json({ error: "Erro ao buscar campanha" });
+    }
+});
 
 // ✅ **Recuperar campanhas do MongoDB**
 app.get('/campanhas', async (req, res) => {
