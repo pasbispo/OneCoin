@@ -693,7 +693,7 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
 
     // Montar objeto final
     const campaignData = {
-        nome,
+        panel-title,
         periodo,
         objetivo,
         imagens,
@@ -716,6 +716,7 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     // Redirecionar
     window.location.href = "minhas-campanhas.html";
 });
+
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const data = urlParams.get("data");
