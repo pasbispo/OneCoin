@@ -665,8 +665,6 @@ if (typeof atualizarTabelaDireita === "function") {
 }
 
 
-
-{
     const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
