@@ -560,17 +560,40 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
         return { simbolo, imagem, redes, enderecoSelecionado: endereco };
     });
 
+
+
+// Coletar os dados da tabela da direita
+const tabelaDireita = document.querySelectorAll(".crypto-panel-table tbody tr");
+const criptomoedas = Array.from(tabelaDireita).map(row => {
+    const simbolo = row.querySelector("img")?.alt || "";
+    const imagem = row.querySelector("img")?.src || "";
+    const endereco = row.children[2]?.textContent || "";
+
+    const redes = Array.from(row.children[1]?.querySelectorAll("div button") || []).map(btn => {
+        return {
+            nome: btn.textContent,
+            endereco: btn.getAttribute("data-endereco") || ""
+        };
+    });
+
+    return { simbolo, imagem, enderecoSelecionado: endereco, redes };
+});
+
+
+
     // Salvar tudo
-    const campaignData = {
-        nome,
-        periodo,
-        objetivo,
-        imagens,
-        video,
-        selectedCryptos,
-        rightTableData,
-        bloqueado: true
-    };
+   const campaignData = {
+    nome,
+    periodo,
+    objetivo,
+    imagens,
+    video,
+    selectedCryptos,
+    rightTableData,     // se você estiver usando isso, ok
+    criptomoedas,       // <=== ADICIONAR ISSO AQUI
+    bloqueado: true
+};
+
 
     const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
     campaigns.push(campaignData);
