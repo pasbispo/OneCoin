@@ -693,7 +693,7 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
 
     // Montar objeto final
     const campaignData = {
-        panel-title,
+        nome,
         periodo,
         objetivo,
         imagens,
