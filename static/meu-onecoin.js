@@ -567,6 +567,11 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
         bloqueado: true
     };
 
+
+
+
+
+
     // Salvar
     const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
     campaigns.push(campaignData);

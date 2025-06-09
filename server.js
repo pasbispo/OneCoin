@@ -72,6 +72,7 @@ app.get('/campanhas/:id', async (req, res) => {
     }
 });
 
+
 // ✅ **Recuperar campanhas do MongoDB**
 app.get('/campanhas', async (req, res) => {
     try {
