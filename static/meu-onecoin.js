@@ -623,81 +623,87 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function preencherTabelaDireitaSalva(dados) {
-    const tbody = document.querySelector(".crypto-panel-table tbody");
-    tbody.innerHTML = "";
+function carregarCampanhaSalva(dados) {
+    // Nome da campanha
+    const nomeInput = document.getElementById("campaign-name");
+    nomeInput.value = dados.nome || "";
+    nomeInput.disabled = true;
 
-    dados.forEach(crypto => {
+    // Período
+    const periodoInput = document.getElementById("campaign-period");
+    periodoInput.value = dados.periodo || "";
+    periodoInput.disabled = true;
+
+    // Objetivo
+    const objetivoInput = document.getElementById("campaign-goal");
+    objetivoInput.value = dados.objetivo || "";
+
+    // Imagens dinâmicas
+    const imagemContainer = document.getElementById("image-container");
+    imagemContainer.innerHTML = ""; // limpa imagens anteriores
+    (dados.imagens || []).forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.classList.add("uploaded-image"); // ou o estilo que você usa
+        imagemContainer.appendChild(img);
+    });
+
+    // Vídeo
+    const videoInput = document.getElementById("campaign-video");
+    const videoPreview = document.getElementById("video-preview");
+    if (dados.video) {
+        videoInput.value = dados.video;
+        videoPreview.src = dados.video;
+        videoPreview.style.display = "block";
+    } else {
+        videoPreview.style.display = "none";
+    }
+
+    // Tabela da esquerda (travada)
+    const tabelaEsquerda = document.getElementById("crypto-table").querySelector("tbody");
+    tabelaEsquerda.innerHTML = "";
+    (dados.criptomoedas || []).forEach(crypto => {
         const row = document.createElement("tr");
 
-        // 1. Imagem da cripto
-        const cellImage = document.createElement("td");
+        // Imagem
+        const imgCell = document.createElement("td");
         const img = document.createElement("img");
         img.src = crypto.imagem;
         img.alt = crypto.simbolo;
         img.width = 40;
-        cellImage.appendChild(img);
-        row.appendChild(cellImage);
+        imgCell.appendChild(img);
+        row.appendChild(imgCell);
 
-        // 2. Botão Rede + opções
-        const cellNetwork = document.createElement("td");
-        const networkBtn = document.createElement("button");
-        networkBtn.textContent = "Rede";
-        networkBtn.classList.add("network-select-btn");
+        // Símbolo
+        const symbolCell = document.createElement("td");
+        symbolCell.textContent = crypto.simbolo;
+        row.appendChild(symbolCell);
 
-        const networkOptions = document.createElement("div");
-        networkOptions.classList.add("network-options");
-        networkOptions.style.display = "none";
+        // Quantidade
+        const qtyCell = document.createElement("td");
+        qtyCell.textContent = crypto.quantidade || "";
+        row.appendChild(qtyCell);
 
-        let selectedAddress = crypto.enderecoSelecionado || "";
+        // Valor
+        const valorCell = document.createElement("td");
+        valorCell.textContent = crypto.valor || "";
+        row.appendChild(valorCell);
 
-        // Criar a célula de endereço ANTES de usá-la
-        const addressCell = document.createElement("td");
-        addressCell.textContent = selectedAddress;
+        // Redes (sem botão de editar)
+        const redesCell = document.createElement("td");
+        redesCell.textContent = (crypto.redes || []).map(r => r.nome).join(", ");
+        row.appendChild(redesCell);
 
-        // Preencher os botões de rede
-        crypto.redes?.forEach(rede => {
-            const optionBtn = document.createElement("button");
-            optionBtn.textContent = rede.nome;
-            optionBtn.setAttribute("data-endereco", rede.endereco);
-            optionBtn.addEventListener("click", () => {
-                addressCell.textContent = rede.endereco;
-                selectedAddress = rede.endereco;
-                networkOptions.style.display = "none";
-            });
-            networkOptions.appendChild(optionBtn);
-        });
-
-        networkBtn.addEventListener("click", () => {
-            networkOptions.style.display = networkOptions.style.display === "none" ? "block" : "none";
-        });
-
-        cellNetwork.appendChild(networkBtn);
-        cellNetwork.appendChild(networkOptions);
-        row.appendChild(cellNetwork);
-
-        // 3. Endereço selecionado
-        row.appendChild(addressCell);
-
-        // 4. Botão copiar
-        const copyCell = document.createElement("td");
-        const copyBtn = document.createElement("button");
-        copyBtn.textContent = "Copiar";
-        copyBtn.classList.add("copy-btn");
-        copyBtn.addEventListener("click", () => {
-            if (!selectedAddress) {
-                alert("Escolha uma rede primeiro.");
-                return;
-            }
-            navigator.clipboard.writeText(selectedAddress)
-                .then(() => alert("Endereço copiado!"))
-                .catch(() => alert("Erro ao copiar."));
-        });
-        copyCell.appendChild(copyBtn);
-        row.appendChild(copyCell);
-
-        tbody.appendChild(row);
+        tabelaEsquerda.appendChild(row);
     });
+
+    // Tabela da direita (interativa)
+    preencherTabelaDireitaSalva(dados.criptomoedas || []);
+
+    // Desativar botão "Finalizar"
+    document.getElementById("end-campaign-button").disabled = true;
+
+    console.log("✅ Campanha restaurada com sucesso!");
 }
 
 
