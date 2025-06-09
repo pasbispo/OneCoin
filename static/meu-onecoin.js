@@ -1,3 +1,17 @@
+window.addEventListener("DOMContentLoaded", () => {
+    const dadosSalvos = JSON.parse(localStorage.getItem("tabelaDireitaFinalizada"));
+    if (dadosSalvos) {
+        preencherTabelaDireitaSalva(dadosSalvos);
+    }
+});
+
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Página carregada!");
 
@@ -712,6 +726,79 @@ function carregarCampanhaSalva(dados) {
 }
 
 
+function preencherTabelaDireitaSalva(dados) {
+    const tbody = document.querySelector(".crypto-panel-table tbody");
+    tbody.innerHTML = "";
+
+    dados.forEach(crypto => {
+        const row = document.createElement("tr");
+
+        // Imagem
+        const cellImage = document.createElement("td");
+        const img = document.createElement("img");
+        img.src = crypto.imagem;
+        img.alt = crypto.simbolo;
+        img.width = 40;
+        cellImage.appendChild(img);
+        row.appendChild(cellImage);
+
+        // Botão Rede
+        const cellNetwork = document.createElement("td");
+        const networkBtn = document.createElement("button");
+        networkBtn.textContent = "Rede";
+        networkBtn.classList.add("network-select-btn");
+
+        const networkOptions = document.createElement("div");
+        networkOptions.classList.add("network-options");
+        networkOptions.style.display = "none";
+
+        let selectedAddress = crypto.enderecoSelecionado || "";
+
+        crypto.redes?.forEach(rede => {
+            const optionBtn = document.createElement("button");
+            optionBtn.textContent = rede.nome;
+            optionBtn.setAttribute("data-endereco", rede.endereco);
+            optionBtn.addEventListener("click", () => {
+                addressCell.textContent = rede.endereco;
+                selectedAddress = rede.endereco;
+                networkOptions.style.display = "none";
+            });
+            networkOptions.appendChild(optionBtn);
+        });
+
+        networkBtn.addEventListener("click", () => {
+            networkOptions.style.display = networkOptions.style.display === "none" ? "block" : "none";
+        });
+
+        cellNetwork.appendChild(networkBtn);
+        cellNetwork.appendChild(networkOptions);
+        row.appendChild(cellNetwork);
+
+        // Endereço
+        const addressCell = document.createElement("td");
+        addressCell.textContent = selectedAddress;
+        row.appendChild(addressCell);
+
+        // Copiar
+        const cellCopy = document.createElement("td");
+        const copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", () => {
+            if (!selectedAddress) {
+                alert("Escolha uma rede primeiro.");
+                return;
+            }
+            navigator.clipboard.writeText(selectedAddress)
+                .then(() => alert("Endereço copiado!"))
+                .catch(err => alert("Erro ao copiar."));
+        });
+        cellCopy.appendChild(copyBtn);
+        row.appendChild(cellCopy);
+
+        tbody.appendChild(row);
+    });
+}
 
 
 
