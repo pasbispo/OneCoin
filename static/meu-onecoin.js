@@ -561,16 +561,18 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     });
 
     // Salvar tudo
-    const campaignData = {
-        nome,
-        periodo,
-        objetivo,
-        imagens,
-        video,
-        selectedCryptos,
-        rightTableData,
-        bloqueado: true
-    };
+    const dadosCampanha = {
+  nome,                  // string
+  periodo,               // string
+  objetivo,              // string
+  video,                 // string (URL ou base64)
+  imagens,               // array de URLs
+  criptomoedas,          // array de { simbolo, imagem, enderecoSelecionado, redes }
+  selectedCryptos,       // (planilha esquerda)
+  rightTableData,        // (tabela direita)
+  finalizada: true       // boolean
+};
+
 
     const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
     campaigns.push(campaignData);
