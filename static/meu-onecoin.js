@@ -535,8 +535,138 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function atualizarTabelaDireita() {
+    const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    const tbody = document.querySelector(".crypto-panel-table tbody");
+    tbody.innerHTML = "";
+
+    selectedCryptos.forEach(crypto => {
+        const row = document.createElement("tr");
+
+        // Imagem
+        const cellImage = document.createElement("td");
+        const img = document.createElement("img");
+        img.src = crypto.imagem;
+        img.alt = crypto.simbolo;
+        img.width = 40;
+        cellImage.appendChild(img);
+        row.appendChild(cellImage);
+
+        // Botão de rede
+        const cellNetwork = document.createElement("td");
+        const networkBtn = document.createElement("button");
+        networkBtn.textContent = "Rede";
+        networkBtn.classList.add("network-select-btn");
+
+        const networkOptions = document.createElement("div");
+        networkOptions.classList.add("network-options");
+        networkOptions.style.display = "none";
+
+        let selectedAddress = crypto.redes?.[0]?.endereco || "";
+
+        crypto.redes?.forEach(rede => {
+            const optionBtn = document.createElement("button");
+            optionBtn.textContent = rede.nome;
+            optionBtn.setAttribute("data-endereco", rede.endereco);
+            optionBtn.addEventListener("click", () => {
+                addressCell.textContent = rede.endereco;
+                selectedAddress = rede.endereco;
+                networkOptions.style.display = "none";
+            });
+            networkOptions.appendChild(optionBtn);
+        });
+
+        networkBtn.addEventListener("click", () => {
+            networkOptions.style.display = networkOptions.style.display === "none" ? "block" : "none";
+        });
+
+        cellNetwork.appendChild(networkBtn);
+        cellNetwork.appendChild(networkOptions);
+        row.appendChild(cellNetwork);
+
+        // Endereço
+        const addressCell = document.createElement("td");
+        addressCell.textContent = selectedAddress;
+        row.appendChild(addressCell);
+
+        // Botão copiar
+        const cellCopy = document.createElement("td");
+        const copyBtn = document.createElement("button");
+        copyBtn.textContent = "Copiar";
+        copyBtn.classList.add("copy-btn");
+        copyBtn.addEventListener("click", () => {
+            if (!selectedAddress) {
+                alert("Escolha uma rede primeiro.");
+                return;
+            }
+            navigator.clipboard.writeText(selectedAddress)
+                .then(() => alert("Endereço copiado!"))
+                .catch(() => alert("Erro ao copiar o endereço."));
+        });
+        cellCopy.appendChild(copyBtn);
+        row.appendChild(cellCopy);
+
+        tbody.appendChild(row);
+    });
+}
+
+// Torna acessível globalmente
+window.atualizarTabelaDireita = atualizarTabelaDireita;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // === BOTÃO FINALIZAR ===
-document.getElementById("end-campaign-button").addEventListener("click", function () {
+document.getElementById("end-campaign-button").addEventListener("click", function () 
+
+if (typeof atualizarTabelaDireita === "function") {
+    atualizarTabelaDireita(); // Executa a função de atualização da direita antes de salvar
+}
+
+
+
+{
     const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
@@ -580,8 +710,6 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
         criptomoedas, // Apenas esse
         bloqueado: true
     };
-
-
 
 
 
