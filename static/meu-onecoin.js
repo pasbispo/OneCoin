@@ -658,13 +658,7 @@ window.atualizarTabelaDireita = atualizarTabelaDireita;
 
 
 // === BOTÃO FINALIZAR ===
-document.getElementById("end-campaign-button").addEventListener("click", function () 
-
-if (typeof atualizarTabelaDireita === "function") {
-    atualizarTabelaDireita(); // Executa a função de atualização da direita antes de salvar
-}
-
-
+document.getElementById("end-campaign-button").addEventListener("click", function () {
     const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
@@ -708,6 +702,8 @@ if (typeof atualizarTabelaDireita === "function") {
         criptomoedas, // Apenas esse
         bloqueado: true
     };
+
+
 
 
 
@@ -767,6 +763,89 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+
+function carregarCampanhaSalva(dados) {
+    // Nome da campanha
+    const nomeInput = document.getElementById("campaign-name");
+    nomeInput.value = dados.nome || "";
+    nomeInput.disabled = true;
+
+    // Período
+    const periodoInput = document.getElementById("campaign-period");
+    periodoInput.value = dados.periodo || "";
+    periodoInput.disabled = true;
+
+    // Objetivo
+    const objetivoInput = document.getElementById("campaign-goal");
+    objetivoInput.value = dados.objetivo || "";
+
+    // Imagens dinâmicas
+    const imagemContainer = document.getElementById("image-container");
+    imagemContainer.innerHTML = ""; // limpa imagens anteriores
+    (dados.imagens || []).forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.classList.add("uploaded-image"); // ou o estilo que você usa
+        imagemContainer.appendChild(img);
+    });
+
+    // Vídeo
+    const videoInput = document.getElementById("campaign-video");
+    const videoPreview = document.getElementById("video-preview");
+    if (dados.video) {
+        videoInput.value = dados.video;
+        videoPreview.src = dados.video;
+        videoPreview.style.display = "block";
+    } else {
+        videoPreview.style.display = "none";
+    }
+
+    // Tabela da esquerda (travada)
+    const tabelaEsquerda = document.getElementById("crypto-table").querySelector("tbody");
+    tabelaEsquerda.innerHTML = "";
+    (dados.criptomoedas || []).forEach(crypto => {
+        const row = document.createElement("tr");
+
+        // Imagem
+        const imgCell = document.createElement("td");
+        const img = document.createElement("img");
+        img.src = crypto.imagem;
+        img.alt = crypto.simbolo;
+        img.width = 40;
+        imgCell.appendChild(img);
+        row.appendChild(imgCell);
+
+        // Símbolo
+        const symbolCell = document.createElement("td");
+        symbolCell.textContent = crypto.simbolo;
+        row.appendChild(symbolCell);
+
+        // Quantidade
+        const qtyCell = document.createElement("td");
+        qtyCell.textContent = crypto.quantidade || "";
+        row.appendChild(qtyCell);
+
+        // Valor
+        const valorCell = document.createElement("td");
+        valorCell.textContent = crypto.valor || "";
+        row.appendChild(valorCell);
+
+        // Redes (sem botão de editar)
+        const redesCell = document.createElement("td");
+        redesCell.textContent = (crypto.redes || []).map(r => r.nome).join(", ");
+        row.appendChild(redesCell);
+
+        tabelaEsquerda.appendChild(row);
+    });
+
+    // Tabela da direita (interativa)
+    preencherTabelaDireitaSalva(dados.criptomoedas || []);
+
+    // Desativar botão "Finalizar"
+    document.getElementById("end-campaign-button").disabled = true;
+
+    console.log("✅ Campanha restaurada com sucesso!");
+}
 
 
 function preencherTabelaDireitaSalva(dados) {
