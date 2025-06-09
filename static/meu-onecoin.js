@@ -539,6 +539,26 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     // Captura a tabela ESQUERDA
     const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
+
+// Coletar os dados da tabela da direita
+const tabelaDireita = document.querySelectorAll(".crypto-panel-table tbody tr");
+const criptomoedas = Array.from(tabelaDireita).map(row => {
+    const simbolo = row.querySelector("img")?.alt || "";
+    const imagem = row.querySelector("img")?.src || "";
+    const endereco = row.children[2]?.textContent || "";
+
+    const redes = Array.from(row.children[1]?.querySelectorAll("div button") || []).map(btn => {
+        return {
+            nome: btn.textContent,
+            endereco: btn.getAttribute("data-endereco") || ""
+        };
+    });
+
+    return { simbolo, imagem, enderecoSelecionado: endereco, redes };
+});
+
+
+
     // Captura a tabela DIREITA (com rede selecionada e botões)
     const rightTableRows = Array.from(document.querySelector(".crypto-panel-table tbody").children);
     const rightTableData = rightTableRows.map(row => {
@@ -561,23 +581,6 @@ document.getElementById("end-campaign-button").addEventListener("click", functio
     });
 
 
-
-// Coletar os dados da tabela da direita
-const tabelaDireita = document.querySelectorAll(".crypto-panel-table tbody tr");
-const criptomoedas = Array.from(tabelaDireita).map(row => {
-    const simbolo = row.querySelector("img")?.alt || "";
-    const imagem = row.querySelector("img")?.src || "";
-    const endereco = row.children[2]?.textContent || "";
-
-    const redes = Array.from(row.children[1]?.querySelectorAll("div button") || []).map(btn => {
-        return {
-            nome: btn.textContent,
-            endereco: btn.getAttribute("data-endereco") || ""
-        };
-    });
-
-    return { simbolo, imagem, enderecoSelecionado: endereco, redes };
-});
 
 
 
