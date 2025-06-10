@@ -10,6 +10,8 @@
 
     <!-- Cabeçalho -->
  
+<body>
+
 <header class="header-container">
     <div class="page-title-one">
         <h1 id="campaign-page-title">Minhas Campanhas</h1>
@@ -21,16 +23,9 @@
     </div>
 </header>
 
-
-<link rel="stylesheet" href="static/styles.css">
-</head>
-<body>
-
-
-
 <div class="container">
-   <div id="tabela-esquerda">...</div>
-    <!-- Lado esquerdo: Dados da campanha -->
+
+    <!-- 🟦 Lado esquerdo - Entrada da campanha -->
     <section class="campaign-input">
         <h2 id="campaign-title">Informações da Campanha</h2>
 
@@ -39,116 +34,86 @@
             <input type="text" id="campaign-name" placeholder="Digite o nome da campanha">
         </div>
 
- <div class="form-group">
+        <div class="form-group">
             <label for="campaign-period">Período (dias):</label>
             <input type="number" id="campaign-period" placeholder="Digite o período" oninput="updatePeriod()">
         </div>
 
-<div class="form-group">
-    <label for="campaign-images">Imagens da Campanha:</label>
-    <input type="file" id="campaign-images" accept="image/*" multiple onchange="startSlideshow()">
-</div>
+        <div class="form-group">
+            <label for="campaign-images">Imagens da Campanha:</label>
+            <input type="file" id="campaign-images" accept="image/*" multiple onchange="startSlideshow()">
+        </div>
 
-
-
-
+        <!-- 👈 Aqui é onde as imagens que o usuário faz upload vão aparecer -->
+        <div id="uploaded-images-container" class="centered-images"></div>
 
         <div class="form-group">
             <label for="campaign-goal">Objetivo da Campanha:</label>
             <textarea id="campaign-goal" placeholder="Descreva o propósito da campanha (máx. 560 palavras)"></textarea>
-        </div>      
+        </div>
 
-<div class="form-group">
-    <label for="video-file">Selecione um vídeo:</label>
-    <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
-</div>
+        <div class="form-group">
+            <label for="video-file">Selecione um vídeo:</label>
+            <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
+        </div>
 
-
-
-<table id="crypto-table">
-    <thead>
-        <tr>
-            <th>Símbolo</th>
-            <th>Quantidade</th>
-            <th>Valor Estimado</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody></tbody> <!-- ✅ Agora a tabela pode receber dados dinamicamente -->
-</table>
-
-
- </section>
-
-
-
-
-
-   <div id="tabela-direita" style="display: none;">...</div>
-    <!-- Lado direito: Painel da campanha -->
-    <section class="campaign-panel">
-    <h2 id="panel-title">Nome da Campanha</h2>
-
-    <div class="period-container">
-        <p> <span id="panel-duration">0</span></p>
-    </div>
- 
-    <div id="campaign-images-container" class="centered-images">
-        <!-- As imagens da campanha serão adicionadas dinamicamente aqui -->
-    </div>
-
-    <div class="horizontal-lineh"></div>
-
-
-    <p id="panel-goal">[Texto aparece aqui]</p>
-
-    <h3>Criptomoedas Selecionadas</h3>
-    <table class="crypto-panel-table">
-        <thead>
-            <tr>
-                <th>Criptomoeda</th>
-                <th>Rede</th>
-                <th>Endereço</th>
-                <th>Copiar</th>
-            </tr>
-        </thead>
-        <tbody></tbody> <!-- ✅ Aqui será preenchido dinamicamente -->
-    </table>
-
-
-<div class="video-container">
-    <video id="video-player" controls></video>
-</div>
-
-
-
+        <table id="crypto-table">
+            <thead>
+                <tr>
+                    <th>Símbolo</th>
+                    <th>Quantidade</th>
+                    <th>Valor Estimado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </section>
 
+    <!-- 🟨 Lado direito - Visualização da campanha salva -->
+    <section class="campaign-panel">
+        <h2 id="panel-title">Nome da Campanha</h2>
 
+        <div class="period-container">
+            <p><span id="panel-duration">0</span></p>
+        </div>
+
+        <!-- 👉 Aqui vão aparecer as imagens restauradas da campanha salva -->
+        <div id="campaign-images-container" class="centered-images"></div>
+
+        <div class="horizontal-lineh"></div>
+
+        <p id="panel-goal">[Texto aparece aqui]</p>
+
+        <h3>Criptomoedas Selecionadas</h3>
+        <table class="crypto-panel-table">
+            <thead>
+                <tr>
+                    <th>Criptomoeda</th>
+                    <th>Rede</th>
+                    <th>Endereço</th>
+                    <th>Copiar</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="video-container">
+            <video id="video-player" controls></video>
+        </div>
+    </section>
 
 </div>
 
+<!-- 🔘 Botões -->
 <div class="button-container">
     <button id="update-button" class="btn-primary">Atualizar</button>
     <button id="end-campaign-button" class="btn-secondary">Finalizar</button>
     <button id="new-campaign-button" class="btn-secondary">Nova Campanha</button>
-   
 </div>
 
-
-
-
-
-
-<link rel="stylesheet" href="static/styles.css">
-
-
-
-
-
+<!-- ✅ Scripts finais -->
 <script src="static/meu-onecoin.js" defer></script>
 <script src="static/escolher-criptomoedas.js" defer></script>
-  
 
 </body>
-</html>
