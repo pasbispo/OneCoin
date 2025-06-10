@@ -520,50 +520,45 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 // === BOTÃO FINALIZAR ===
-document.getElementById("end-campaign-button").addEventListener("click", function () {
-    const nome = document.getElementById("campaign-name").value;
-    const periodo = document.getElementById("campaign-period").value;
-    const objetivo = document.getElementById("campaign-goal").value;
+document.getElementById("end-campaign-button").addEventListener("click", async () => {
+    const nome = document.getElementById("nomeCampanha").value;
+    const periodo = document.getElementById("periodoCampanha").value;
+    const objetivo = document.getElementById("objetivoCampanha").value;
+    const video = document.getElementById("videoCampanha").value;
+    const imagens = Array.from(document.querySelectorAll("#image-container img")).map(img => img.src);
+    const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
-    // Imagens
-    const imagensInput = document.getElementById("campaign-images");
-    const imagens = Array.from(imagensInput.files).map(file => URL.createObjectURL(file));
-
-    // Vídeo
-    const videoFile = document.getElementById("video-file").files[0];
-    const video = videoFile ? URL.createObjectURL(videoFile) : null;
-
-    // Tabela ESQUERDA
-    const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
-
-    // Tabela DIREITA (única versão!)
-    const tabelaDireita = document.querySelectorAll(".crypto-panel-table tbody tr");
-    const criptomoedas = Array.from(tabelaDireita).map(row => {
-        const simbolo = row.querySelector("img")?.alt || "";
-        const imagem = row.querySelector("img")?.src || "";
-        const endereco = row.children[2]?.textContent || "";
-
-        const redes = Array.from(row.children[1]?.querySelectorAll("div button") || []).map(btn => {
-            return {
-                nome: btn.textContent,
-                endereco: btn.getAttribute("data-endereco") || ""
-            };
-        });
-
-        return { simbolo, imagem, enderecoSelecionado: endereco, redes };
-    });
-
-    // Montar objeto final
-    const campaignData = {
+    const campanha = {
         nome,
         periodo,
         objetivo,
-        imagens,
         video,
-        selectedCryptos,
-        criptomoedas, // Apenas esse
-        bloqueado: true
+        imagens,
+        criptos,
+        finalizada: true
     };
+
+    try {
+        const response = await fetch("/finalizar-campanha", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(campanha)
+        });
+
+        const resultado = await response.json();
+
+        if (resultado && resultado._id) {
+            console.log("✅ Campanha salva com sucesso:", resultado);
+            // Redireciona para a página de campanhas com o ID:
+            window.location.href = `minhas-campanhas.html`;
+        } else {
+            alert("❌ Erro ao salvar campanha.");
+        }
+    } catch (err) {
+        console.error("Erro ao finalizar campanha:", err);
+        alert("❌ Falha na conexão com o servidor.");
+    }
+});
 
     // Salvar
     const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
