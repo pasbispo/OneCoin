@@ -429,7 +429,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
     }
 
     // ✅ Limpa campos
-    document.getElementById("").value = "";
+    document.getElementById("campaign-name").value = "";
     document.getElementById("campaign-period").value = "";
     document.getElementById("campaign-goal").value = "";
     document.getElementById("slideshow-image").src = "";
