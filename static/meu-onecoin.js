@@ -572,6 +572,15 @@ document.getElementById("end-campaign-button").addEventListener("click", async (
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const data = urlParams.get("data");
+ if (data) {
+        try {
+            const campanha = JSON.parse(decodeURIComponent(data));
+            preencherCamposCampanha(campanha); // ⬅️ função que você já criou
+        } catch (e) {
+            console.error("Erro ao carregar dados da campanha:", e);
+        }
+    }
+});
 
     if (data) {
         const campanha = JSON.parse(decodeURIComponent(data));
