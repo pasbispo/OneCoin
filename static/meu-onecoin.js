@@ -385,8 +385,7 @@ function openNetworkModal(crypto) {
 
 
 
-
-document.getElementById("update-button").addEventListener("click", () => {
+function atualizarTabelaDireita() {
     const selectedCryptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
     const tbody = document.querySelector(".crypto-panel-table tbody");
     tbody.innerHTML = ""; // Limpa a tabela antes de preencher
@@ -403,7 +402,6 @@ document.getElementById("update-button").addEventListener("click", () => {
         cellImage.appendChild(img);
         row.appendChild(cellImage);
 
-               
         // 2. Célula do botão "Rede" + opções de redes
         const cellNetwork = document.createElement("td");
         const networkBtn = document.createElement("button");
@@ -435,9 +433,9 @@ document.getElementById("update-button").addEventListener("click", () => {
         cellNetwork.appendChild(networkOptions);
         row.appendChild(cellNetwork);
 
-        // 3. Célula do endereço (vazio até o usuário escolher a rede)
+        // 3. Célula do endereço
         const addressCell = document.createElement("td");
-        addressCell.textContent = ""; // Será preenchido após clicar na rede
+        addressCell.textContent = "";
         row.appendChild(addressCell);
 
         // 4. Célula do botão copiar
@@ -461,9 +459,12 @@ document.getElementById("update-button").addEventListener("click", () => {
     });
 
     console.log("✅ Tabela da direita atualizada com sucesso!");
-});
+}
 
-// Torna acessível globalmente
+// Evento do botão atualizar
+document.getElementById("update-button").addEventListener("click", atualizarTabelaDireita);
+
+// Torna global (caso queira chamar de outros scripts)
 window.atualizarTabelaDireita = atualizarTabelaDireita;
 
 
@@ -711,6 +712,11 @@ function preencherTabelaDireitaSalva(dados) {
         cellImage.appendChild(img);
         row.appendChild(cellImage);
 
+        // Endereço (precisa estar acessível antes do forEach das redes)
+        const addressCell = document.createElement("td");
+        let selectedAddress = crypto.enderecoSelecionado || "";
+        addressCell.textContent = selectedAddress;
+
         // Botão Rede
         const cellNetwork = document.createElement("td");
         const networkBtn = document.createElement("button");
@@ -720,8 +726,6 @@ function preencherTabelaDireitaSalva(dados) {
         const networkOptions = document.createElement("div");
         networkOptions.classList.add("network-options");
         networkOptions.style.display = "none";
-
-        let selectedAddress = crypto.enderecoSelecionado || "";
 
         crypto.redes?.forEach(rede => {
             const optionBtn = document.createElement("button");
@@ -743,9 +747,7 @@ function preencherTabelaDireitaSalva(dados) {
         cellNetwork.appendChild(networkOptions);
         row.appendChild(cellNetwork);
 
-        // Endereço
-        const addressCell = document.createElement("td");
-        addressCell.textContent = selectedAddress;
+        // Adiciona a célula do endereço agora que foi atualizada
         row.appendChild(addressCell);
 
         // Copiar
