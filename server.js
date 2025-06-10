@@ -120,21 +120,6 @@ app.delete('/campanhas/:id', async (req, res) => {
 
 
 
-// Em seu arquivo de rotas ou servidor principal:
-const express = require("express");
-const router = express.Router();
-const Campanha = require("./models/Campanha"); // seu model do Mongoose
-
-router.post("/finalizar-campanha", async (req, res) => {
-    try {
-        const novaCampanha = new Campanha(req.body);
-        const campanhaSalva = await novaCampanha.save();
-        res.json({ _id: campanhaSalva._id });
-    } catch (err) {
-        console.error("Erro ao salvar campanha:", err);
-        res.status(500).json({ erro: "Erro ao salvar campanha" });
-    }
-});
 
 
 
