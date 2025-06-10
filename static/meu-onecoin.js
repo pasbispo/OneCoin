@@ -520,27 +520,45 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 // === BOTÃO FINALIZAR ===
-document.addEventListener("DOMContentLoaded", async () => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+document.getElementById("end-campaign-button").addEventListener("click", async () => {
+    const nome = document.getElementById("nomeCampanha").value;
+    const periodo = document.getElementById("periodoCampanha").value;
+    const objetivo = document.getElementById("objetivoCampanha").value;
+    const video = document.getElementById("videoCampanha").value;
+    const imagens = Array.from(document.querySelectorAll("#image-container img")).map(img => img.src);
+    const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
-    if (id) {
-        try {
-            const response = await fetch(`/campanhas/${id}`);
-            const campanha = await response.json();
+    const campanha = {
+        nome,
+        periodo,
+        objetivo,
+        video,
+        imagens,
+        criptos,
+        finalizada: true
+    };
 
-            if (campanha) {
-                preencherCamposCampanha(campanha); // Função que preenche a página
-            } else {
-                alert("Campanha não encontrada.");
-            }
-        } catch (e) {
-            console.error("Erro ao buscar campanha:", e);
-            alert("Erro ao carregar campanha.");
+    try {
+        const response = await fetch("/finalizar-campanha", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(campanha)
+        });
+
+        const resultado = await response.json();
+
+        if (resultado && resultado._id) {
+            console.log("✅ Campanha salva com sucesso:", resultado);
+            // Redireciona para a página de campanhas com o ID:
+            window.location.href = `minhas-campanhas.html`;
+        } else {
+            alert("❌ Erro ao salvar campanha.");
         }
+    } catch (err) {
+        console.error("Erro ao finalizar campanha:", err);
+        alert("❌ Falha na conexão com o servidor.");
     }
 });
-
 
     // Salvar
     const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
@@ -551,54 +569,70 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "minhas-campanhas.html";
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
-    const data = urlParams.get("data");
+    const id = urlParams.get("id");
 
+    if (!id) return;
 
-    if (data) {
-        const campanha = JSON.parse(decodeURIComponent(data));
+    try {
+        const response = await fetch(`/campanhas/${id}`);
+        const campanha = await response.json();
 
-        // Preencher os campos
-        document.getElementById("campaign-name").value = campanha.nome || "";
-        document.getElementById("campaign-period").value = campanha.periodo || "";
-        document.getElementById("campaign-goal").value = campanha.objetivo || "";
-
-        // Imagens
-        const container = document.getElementById("campaign-images-container");
-        campanha.imagens?.forEach(src => {
-            const img = document.createElement("img");
-            img.src = src;
-            img.style.width = "100px";
-            img.style.margin = "5px";
-            container.appendChild(img);
-        });
-
-        // Vídeo
-        if (campanha.video) {
-            const video = document.getElementById("video-player");
-            video.src = campanha.video;
-            video.style.display = "block";
+        if (!campanha) {
+            alert("Campanha não encontrada.");
+            return;
         }
 
-        // Tabela ESQUERDA
-        if (campanha.selectedCryptos) {
-            localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
-        }
-
-        // Tabela DIREITA
-        if (campanha.criptomoedas) {
-            preencherTabelaDireitaSalva(campanha.criptomoedas);
-        }
-
-        // Bloqueios
-        if (campanha.bloqueado) {
-            document.getElementById("campaign-name").disabled = true;
-            document.getElementById("campaign-period").disabled = true;
-            document.getElementById("crypto-table").classList.add("disabled-table");
-        }
+        preencherCamposComCampanha(campanha);
+    } catch (error) {
+        console.error("Erro ao carregar campanha:", error);
+        alert("Erro ao carregar dados da campanha.");
     }
 });
+function preencherCamposComCampanha(campanha) {
+    // Preencher os campos
+    document.getElementById("campaign-name").value = campanha.nome || "";
+    document.getElementById("campaign-period").value = campanha.periodo || "";
+    document.getElementById("campaign-goal").value = campanha.objetivo || "";
+
+    // Imagens
+    const container = document.getElementById("campaign-images-container");
+    container.innerHTML = "";
+    campanha.imagens?.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.width = "100px";
+        img.style.margin = "5px";
+        container.appendChild(img);
+    });
+
+    // Vídeo
+    if (campanha.video) {
+        const video = document.getElementById("video-player");
+        video.src = campanha.video;
+        video.style.display = "block";
+    }
+
+    // Tabela ESQUERDA
+    if (campanha.selectedCryptos) {
+        localStorage.setItem("selectedCryptos", JSON.stringify(campanha.selectedCryptos));
+    }
+
+    // Tabela DIREITA
+    if (campanha.criptomoedas) {
+        preencherTabelaDireitaSalva(campanha.criptomoedas);
+    }
+
+    // Bloqueios (após finalização)
+    if (campanha.finalizada || campanha.bloqueado) {
+        document.getElementById("campaign-name").disabled = true;
+        document.getElementById("campaign-period").disabled = true;
+        document.getElementById("crypto-table").classList.add("disabled-table");
+        const finalizarBtn = document.getElementById("end-campaign-button");
+        if (finalizarBtn) finalizarBtn.disabled = true;
+    }
+}
 
 function carregarCampanhaSalva(dados) {
     // Nome da campanha
@@ -616,7 +650,8 @@ function carregarCampanhaSalva(dados) {
     objetivoInput.value = dados.objetivo || "";
 
     // Imagens dinâmicas
-    const imagemContainer = document.getElementById("image-container");
+    const imagemContainer = document.getElementById("campaign-images-container");
+
     imagemContainer.innerHTML = ""; // limpa imagens anteriores
     (dados.imagens || []).forEach(src => {
         const img = document.createElement("img");
@@ -760,31 +795,4 @@ function preencherTabelaDireitaSalva(dados) {
 }
 
 
-
-function preencherCamposCampanha(campanha) {
-    document.getElementById("nome-campanha").value = campanha.nome;
-    document.getElementById("nome-campanha").disabled = true;
-
-    document.getElementById("periodo-campanha").value = campanha.periodo;
-    document.getElementById("periodo-campanha").disabled = true;
-
-    document.getElementById("objetivo").value = campanha.objetivo || "";
-
-    // Imagens
-    const containerImagens = document.getElementById("imagens-container");
-    containerImagens.innerHTML = "";
-    campanha.imagens?.forEach(url => {
-        const img = document.createElement("img");
-        img.src = url;
-        img.width = 80;
-        containerImagens.appendChild(img);
-    });
-
-    // Vídeo
-    const video = document.getElementById("video-preview");
-    if (campanha.video) {
-        video.src = campanha.video;
-        video.style.display = "block";
-    }
-}
 
