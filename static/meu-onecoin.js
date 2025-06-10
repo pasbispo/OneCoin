@@ -520,45 +520,27 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 // === BOTÃO FINALIZAR ===
-document.getElementById("end-campaign-button").addEventListener("click", async () => {
-    const nome = document.getElementById("nomeCampanha").value;
-    const periodo = document.getElementById("periodoCampanha").value;
-    const objetivo = document.getElementById("objetivoCampanha").value;
-    const video = document.getElementById("videoCampanha").value;
-    const imagens = Array.from(document.querySelectorAll("#image-container img")).map(img => img.src);
-    const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+document.addEventListener("DOMContentLoaded", async () => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
 
-    const campanha = {
-        nome,
-        periodo,
-        objetivo,
-        video,
-        imagens,
-        criptos,
-        finalizada: true
-    };
+    if (id) {
+        try {
+            const response = await fetch(`/campanhas/${id}`);
+            const campanha = await response.json();
 
-    try {
-        const response = await fetch("/finalizar-campanha", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(campanha)
-        });
-
-        const resultado = await response.json();
-
-        if (resultado && resultado._id) {
-            console.log("✅ Campanha salva com sucesso:", resultado);
-            // Redireciona para a página de campanhas com o ID:
-            window.location.href = `minhas-campanhas.html`;
-        } else {
-            alert("❌ Erro ao salvar campanha.");
+            if (campanha) {
+                preencherCamposCampanha(campanha); // Função que preenche a página
+            } else {
+                alert("Campanha não encontrada.");
+            }
+        } catch (e) {
+            console.error("Erro ao buscar campanha:", e);
+            alert("Erro ao carregar campanha.");
         }
-    } catch (err) {
-        console.error("Erro ao finalizar campanha:", err);
-        alert("❌ Falha na conexão com o servidor.");
     }
 });
+
 
     // Salvar
     const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
