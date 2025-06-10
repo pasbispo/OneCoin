@@ -24,8 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ Adiciona evento de clique para redirecionar
        campaignBox.addEventListener("click", function () {
     let campaignData = encodeURIComponent(JSON.stringify(campaign));
-    window.location.href = `meu-onecoin.html?id=${campaign._id}`;
-
+    window.location.href = `meu-onecoin.html?data=${campaignData}`;
 });
 
 
