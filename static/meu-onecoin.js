@@ -500,9 +500,10 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 // === BOTÃO FINALIZAR ===
 document.getElementById("end-campaign-button").addEventListener("click", async () => {
     const nome = document.getElementById("campaign-name").value;
-    const periodo = document.getElementById("periodoCampanha").value;
-    const objetivo = document.getElementById("objetivoCampanha").value;
-    const video = document.getElementById("videoCampanha").value;
+    const periodo = document.getElementById("campaign-period").value;
+    const objetivo = document.getElementById("campaign-goal").value;
+    const video = document.getElementById("campaign-video").value;
+
     const imagens = Array.from(document.querySelectorAll("#image-container img")).map(img => img.src);
     const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
