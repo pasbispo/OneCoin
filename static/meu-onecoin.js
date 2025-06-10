@@ -1,9 +1,19 @@
-window.addEventListener("DOMContentLoaded", () => {
-    const dadosSalvos = JSON.parse(localStorage.getItem("tabelaDireitaFinalizada"));
-    if (dadosSalvos) {
-        preencherTabelaDireitaSalva(dadosSalvos);
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataParam = urlParams.get("data");
+
+    if (dataParam) {
+        try {
+            const campanha = JSON.parse(decodeURIComponent(dataParam));
+            preencherCamposCampanha(campanha);
+            preencherTabelaEsquerda(campanha.criptomoedas);
+            preencherTabelaDireitaSalva(campanha.criptomoedas);
+        } catch (err) {
+            console.error("Erro ao carregar campanha:", err);
+        }
     }
 });
+
 
 
 
@@ -773,4 +783,30 @@ function preencherTabelaDireitaSalva(dados) {
 
 
 
+function preencherCamposCampanha(campanha) {
+    document.getElementById("nome-campanha").value = campanha.nome;
+    document.getElementById("nome-campanha").disabled = true;
+
+    document.getElementById("periodo-campanha").value = campanha.periodo;
+    document.getElementById("periodo-campanha").disabled = true;
+
+    document.getElementById("objetivo").value = campanha.objetivo || "";
+
+    // Imagens
+    const containerImagens = document.getElementById("imagens-container");
+    containerImagens.innerHTML = "";
+    campanha.imagens?.forEach(url => {
+        const img = document.createElement("img");
+        img.src = url;
+        img.width = 80;
+        containerImagens.appendChild(img);
+    });
+
+    // Vídeo
+    const video = document.getElementById("video-preview");
+    if (campanha.video) {
+        video.src = campanha.video;
+        video.style.display = "block";
+    }
+}
 
