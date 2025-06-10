@@ -499,7 +499,7 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 // === BOTÃO FINALIZAR ===
 document.getElementById("end-campaign-button").addEventListener("click", async () => {
-    const nome = document.getElementById("nomeCampanha").value;
+    const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("periodoCampanha").value;
     const objetivo = document.getElementById("objetivoCampanha").value;
     const video = document.getElementById("videoCampanha").value;
