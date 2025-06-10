@@ -538,15 +538,8 @@ document.getElementById("end-campaign-button").addEventListener("click", async (
     }
 });
 
-    // Salvar
-    const campaigns = JSON.parse(localStorage.getItem("userCampaigns")) || [];
-    campaigns.push(campaignData);
-    localStorage.setItem("userCampaigns", JSON.stringify(campaigns));
-
-    // Redirecionar
-    window.location.href = "minhas-campanhas.html";
-});
-
+    
+    
 document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -772,5 +765,23 @@ function preencherTabelaDireitaSalva(dados) {
     });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("update-button").addEventListener("click", () => {
+    const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+    preencherTabelaDireitaSalva(criptos);
+  });
+});
 
 
