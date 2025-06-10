@@ -1,25 +1,3 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const dataParam = urlParams.get("data");
-
-    if (dataParam) {
-        try {
-            const campanha = JSON.parse(decodeURIComponent(dataParam));
-            preencherCamposCampanha(campanha);
-            preencherTabelaEsquerda(campanha.criptomoedas);
-            preencherTabelaDireitaSalva(campanha.criptomoedas);
-        } catch (err) {
-            console.error("Erro ao carregar campanha:", err);
-        }
-    }
-});
-
-
-
-
-
-
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
