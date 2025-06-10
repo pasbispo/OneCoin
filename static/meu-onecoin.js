@@ -498,46 +498,50 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 // === BOTÃO FINALIZAR ===
-document.getElementById("end-campaign-button").addEventListener("click", async () => {
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("end-campaign-button").addEventListener("click", async () => {
+    console.log("🟡 Botão FINALIZAR clicado");
+
     const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
     const video = document.getElementById("campaign-video").value;
-
-    const imagens = Array.from(document.querySelectorAll("#image-container img")).map(img => img.src);
+    const imagens = Array.from(document.querySelectorAll("#campaign-images-container img")).map(img => img.src);
     const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     const campanha = {
-        nome,
-        periodo,
-        objetivo,
-        video,
-        imagens,
-        criptos,
-        finalizada: true
+      nome,
+      periodo,
+      objetivo,
+      video,
+      imagens,
+      selectedCryptos: criptos,
+      criptomoedas: criptos,
+      finalizada: true
     };
 
     try {
-        const response = await fetch("/finalizar-campanha", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(campanha)
-        });
+      const response = await fetch("/finalizar-campanha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(campanha)
+      });
 
-        const resultado = await response.json();
+      const resultado = await response.json();
 
-        if (resultado && resultado._id) {
-            console.log("✅ Campanha salva com sucesso:", resultado);
-            // Redireciona para a página de campanhas com o ID:
-            window.location.href = `minhas-campanhas.html`;
-        } else {
-            alert("❌ Erro ao salvar campanha.");
-        }
+      if (resultado && resultado._id) {
+        console.log("✅ Campanha salva com sucesso:", resultado);
+        window.location.href = `minhas-campanhas.html`;
+      } else {
+        alert("❌ Erro ao salvar campanha.");
+      }
     } catch (err) {
-        console.error("Erro ao finalizar campanha:", err);
-        alert("❌ Falha na conexão com o servidor.");
+      console.error("Erro ao finalizar campanha:", err);
+      alert("❌ Falha na conexão com o servidor.");
     }
+  });
 });
+
 
     
     
