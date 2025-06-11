@@ -583,10 +583,10 @@ async function finalizarCampanha() {
       throw new Error(`Erro ao salvar: ${err.error || salvarResponse.statusText}`);
     }
 
-
-    console.log("Resposta do backend ao salvar:", salvarData);
     const salvarData = await salvarResponse.json();
     const campanhaId = salvarData._id || salvarData.campanha?._id;
+    console.log("Resposta do backend ao salvar:", salvarData);
+    
 
     if (!campanhaId) {
       throw new Error("⚠️ ID da campanha não retornado.");
