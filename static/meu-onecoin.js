@@ -465,6 +465,29 @@ window.atualizarTabelaDireita = atualizarTabelaDireita;
 
 
 
+document.getElementById("video-file").addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  const videoPlayer = document.getElementById("video-player");
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      videoPlayer.src = e.target.result;
+      videoPlayer.style.display = "block";
+      // Guarda no localStorage ou variável para salvar depois
+      localStorage.setItem("videoBase64", e.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+
+
+
+
+
+
+
 
 
 document.getElementById("new-campaign-button").addEventListener("click", function () {
@@ -505,15 +528,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const nome = document.getElementById("campaign-name").value;
     const periodo = document.getElementById("campaign-period").value;
     const objetivo = document.getElementById("campaign-goal").value;
-    const video = document.getElementById("campaign-video").value;
     const imagens = Array.from(document.querySelectorAll("#campaign-images-container img")).map(img => img.src);
     const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
+    // ✅ Captura o vídeo salvo como base64 no localStorage
+    const videoBase64 = localStorage.getItem("videoBase64") || "";
+
     const campanha = {
-      nome: campaignName,
-      periodo: campaignPeriod,
+      nome,
+      periodo,
       objetivo,
-      video,
+      video: videoBase64, // 👈 aqui
       imagens,
       selectedCryptos: criptos,
       criptomoedas: criptos,
@@ -541,6 +566,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
 
 
     
@@ -571,6 +597,7 @@ function preencherCamposComCampanha(campanha) {
     document.getElementById("campaign-name").value = campanha.nome || "";
     document.getElementById("campaign-period").value = campanha.periodo || "";
     document.getElementById("campaign-goal").value = campanha.objetivo || "";
+
 
     // Imagens
     const container = document.getElementById("campaign-images-container");
