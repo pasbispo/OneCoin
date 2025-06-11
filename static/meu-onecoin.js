@@ -547,9 +547,9 @@ const API_BASE = "http://localhost:3000"; // ou "https://seu-dominio.com"
 
 // 📦 Botão Finalizar
 async function finalizarCampanha() {
-  const nome = document.getElementById("nome-campanha").value.trim();
-  const periodo = parseInt(document.getElementById("periodo-campanha").value);
-  const objetivo = document.getElementById("objetivo-campanha").value.trim();
+  const nome = document.getElementById("campaign-name").value.trim();
+  const periodo = parseInt(document.getElementById("campaign-period").value);
+  const objetivo = document.getElementById("campaign-goal").value.trim();
   const imagens = JSON.parse(localStorage.getItem("imagensCampanha")) || [];
   const videoBase64 = localStorage.getItem("videoBase64") || "";
   const criptomoedas = JSON.parse(localStorage.getItem("criptoTableEsquerda")) || [];
