@@ -32,8 +32,10 @@ const Campanha = mongoose.model("Campanha", CampanhaSchema);
 app.post('/salvar-campanha', async (req, res) => {
     try {
         const novaCampanha = new Campanha(req.body);
-        await novaCampanha.save();
-        res.json({ mensagem: "Campanha salva no banco de dados!" });
+        const campanhaSalva = await novaCampanha.save();
+
+        // ✅ Retornar o _id da campanha salva
+        res.json({ _id: campanhaSalva._id });
     } catch (error) {
         console.error("Erro ao salvar campanha:", error);
         res.status(500).json({ error: "Erro ao salvar campanha" });
