@@ -53,9 +53,20 @@
         </div>
 
         <div class="form-group">
-            <label for="campaign-video">Selecione um vídeo:</label>
+            <label for="video-file">Selecione um vídeo:</label>
             <input type="file" id="video-file" accept="video/*" onchange="playVideo()">
         </div>
+
+
+<!-- Campo para colar o link do vídeo -->
+<label for="campaign-video">Link do vídeo:</label>
+<input type="text" id="campaign-video" placeholder="https://exemplo.com/video.mp4" style="width: 100%; margin-bottom: 10px;">
+
+<!-- Player de vídeo que aparece depois -->
+<video id="video-player" width="400" height="300" controls style="display: none;"></video>
+
+
+
 
         <table id="crypto-table">
             <thead>

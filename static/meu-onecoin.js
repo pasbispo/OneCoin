@@ -510,8 +510,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
 
     const campanha = {
-      nome,
-      periodo,
+      nome: campaignName,
+      periodo: campaignPeriod,
       objetivo,
       video,
       imagens,
