@@ -103,21 +103,16 @@ app.get('/crypto/:symbol', async (req, res) => {
 
 
 
-
-app.delete('/campanhas/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        await Campanha.findByIdAndDelete(id);
-        res.json({ mensagem: "Campanha excluída com sucesso." });
-    } catch (error) {
-        console.error("Erro ao excluir campanha:", error);
-        res.status(500).json({ error: "Erro ao excluir campanha." });
-    }
+app.post('/salvar-campanha', async (req, res) => {
+  try {
+    const novaCampanha = new Campanha(req.body);
+    const resultado = await novaCampanha.save();
+    res.json(resultado); // 🔁 retorna campanha com _id
+  } catch (error) {
+    console.error("Erro ao salvar campanha:", error);
+    res.status(500).json({ error: "Erro ao salvar campanha" });
+  }
 });
-
-
-
-
 
 
 

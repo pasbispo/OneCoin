@@ -541,52 +541,63 @@ document.getElementById("video-file").addEventListener("change", function (event
 
 
 // === BOTÃO FINALIZAR ===
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("end-campaign-button").addEventListener("click", async () => {
-    console.log("🟡 Botão FINALIZAR clicado");
 
-    const nome = document.getElementById("campaign-name").value;
-    const periodo = document.getElementById("campaign-period").value;
-    const objetivo = document.getElementById("campaign-goal").value;
-    const imagens = Array.from(document.querySelectorAll("#campaign-images-container img")).map(img => img.src);
-    const criptos = JSON.parse(localStorage.getItem("selectedCryptos")) || [];
+async function finalizarCampanha() {
+  const nome = document.getElementById("nome-campanha").value.trim();
+  const periodo = parseInt(document.getElementById("periodo-campanha").value);
+  const objetivo = document.getElementById("objetivo-campanha").value.trim();
+  const imagens = JSON.parse(localStorage.getItem("imagensCampanha")) || [];
+  const videoBase64 = localStorage.getItem("videoBase64") || "";
+  const criptomoedas = JSON.parse(localStorage.getItem("criptoTableEsquerda")) || [];
 
-    // ✅ Captura o vídeo salvo como base64 no localStorage
-    const videoBase64 = localStorage.getItem("videoBase64") || "";
+  if (!nome || !periodo || !objetivo) {
+    alert("Preencha todos os campos obrigatórios.");
+    return;
+  }
 
-    const campanha = {
-      nome,
-      periodo,
-      objetivo,
-      video: videoBase64, // 👈 aqui
-      imagens,
-      selectedCryptos: criptos,
-      criptomoedas: criptos,
-      finalizada: true
-    };
+  const dados = {
+    nome,
+    periodo,
+    objetivo,
+    imagens,
+    video: videoBase64,
+    criptomoedas,
+    finalizada: false // Salva ainda não finalizada
+  };
 
-    try {
-      const response = await fetch("/finalizar-campanha", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(campanha)
-      });
+  try {
+    // 1. Salvar campanha
+    const salvarResponse = await fetch("/salvar-campanha", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dados)
+    });
 
-      const resultado = await response.json();
+    const salvarData = await salvarResponse.json();
+    if (!salvarResponse.ok) throw new Error("Erro ao salvar campanha");
 
-      if (resultado && resultado._id) {
-        console.log("✅ Campanha salva com sucesso:", resultado);
-        window.location.href = `minhas-campanhas.html`;
-      } else {
-        alert("❌ Erro ao salvar campanha.");
-      }
-    } catch (err) {
-      console.error("Erro ao finalizar campanha:", err);
-      alert("❌ Falha na conexão com o servidor.");
-    }
-  });
-});
+    const campanhaId = salvarData._id || salvarData.campanha?._id;
 
+    // 2. Finalizar campanha (com ID retornado)
+    const finalizarResponse = await fetch("/finalizar-campanha", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: campanhaId })
+    });
+
+    const finalizarData = await finalizarResponse.json();
+    if (!finalizarResponse.ok) throw new Error("Erro ao finalizar campanha");
+
+    alert("✅ Campanha finalizada com sucesso!");
+
+    // Redirecionar para "Minhas Campanhas"
+    window.location.href = "/minhas-campanhas.html";
+
+  } catch (err) {
+    console.error(err);
+    alert("❌ Falha ao salvar/finalizar campanha.");
+  }
+}
 
 
     
