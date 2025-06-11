@@ -8,6 +8,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "public")));
+
+
+
+
 // 🔄 **Conectar ao MongoDB Atlas** (Removida duplicação de `mongoose`)
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("✅ Conectado ao MongoDB Atlas!"))
@@ -102,6 +110,16 @@ app.get('/crypto/:symbol', async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar dados' });
     }
 });
+
+
+
+const path = require("path");
+
+// ✅ Servir os arquivos da pasta public normalmente
+app.use(express.static(path.join(__dirname, "public")));
+
+// ✅ Servir a pasta static (com suas imagens)
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 
 

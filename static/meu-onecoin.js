@@ -605,7 +605,7 @@ async function finalizarCampanha() {
     }
 
     alert("✅ Campanha finalizada com sucesso!");
-    window.location.href = "/minhas-campanhas.html";
+    window.location.href = "minhas-campanhas.html";
 
   } catch (err) {
     console.error("❌ Erro na finalização:", err);
