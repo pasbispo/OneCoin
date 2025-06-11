@@ -542,6 +542,7 @@ document.getElementById("video-file").addEventListener("change", function (event
 
 // === BOTÃO FINALIZAR ===
 
+
 // ✅ Configuração da API — ajuste para o seu ambiente se estiver em produção
 const API_BASE = "http://localhost:3000"; // ou "https://seu-dominio.com"
 
@@ -609,6 +610,7 @@ async function finalizarCampanha() {
     alert(`❌ Falha ao salvar/finalizar campanha: ${err.message}`);
   }
 }
+   
    
     
 document.addEventListener("DOMContentLoaded", async function () {
@@ -855,5 +857,13 @@ document.addEventListener("DOMContentLoaded", function () {
     preencherTabelaDireitaSalva(criptos);
   });
 });
+
+
+
+
+
+
+
+document.getElementById("end-campaign-button").addEventListener("click", finalizarCampanha);
 
 
