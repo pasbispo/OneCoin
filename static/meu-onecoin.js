@@ -515,6 +515,26 @@ document.getElementById("new-campaign-button").addEventListener("click", functio
 
 
 
+document.getElementById("video-file").addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  const videoPlayer = document.getElementById("video-player");
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      videoPlayer.src = e.target.result;
+      videoPlayer.style.display = "block";
+      localStorage.setItem("videoBase64", e.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+
+
+
+
+
 
 
 
