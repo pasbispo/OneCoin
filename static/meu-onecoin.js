@@ -542,6 +542,10 @@ document.getElementById("video-file").addEventListener("change", function (event
 
 // === BOTÃO FINALIZAR ===
 
+// ✅ Configuração da API — ajuste para o seu ambiente se estiver em produção
+const API_BASE = "http://localhost:3000"; // ou "https://seu-dominio.com"
+
+// 📦 Botão Finalizar
 async function finalizarCampanha() {
   const nome = document.getElementById("nome-campanha").value.trim();
   const periodo = parseInt(document.getElementById("periodo-campanha").value);
@@ -551,7 +555,7 @@ async function finalizarCampanha() {
   const criptomoedas = JSON.parse(localStorage.getItem("criptoTableEsquerda")) || [];
 
   if (!nome || !periodo || !objetivo) {
-    alert("Preencha todos os campos obrigatórios.");
+    alert("⚠️ Preencha todos os campos obrigatórios.");
     return;
   }
 
@@ -562,45 +566,50 @@ async function finalizarCampanha() {
     imagens,
     video: videoBase64,
     criptomoedas,
-    finalizada: false // Salva ainda não finalizada
+    finalizada: false // ⚠️ Será atualizada depois
   };
 
   try {
-    // 1. Salvar campanha
-    const salvarResponse = await fetch("/salvar-campanha", {
+    // 🔁 1. Salvar campanha
+    const salvarResponse = await fetch(`${API_BASE}/salvar-campanha`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dados)
     });
 
-    const salvarData = await salvarResponse.json();
-    if (!salvarResponse.ok) throw new Error("Erro ao salvar campanha");
+    if (!salvarResponse.ok) {
+      const err = await salvarResponse.json();
+      throw new Error(`Erro ao salvar: ${err.error || salvarResponse.statusText}`);
+    }
 
+    const salvarData = await salvarResponse.json();
     const campanhaId = salvarData._id || salvarData.campanha?._id;
 
-    // 2. Finalizar campanha (com ID retornado)
-    const finalizarResponse = await fetch("/finalizar-campanha", {
+    if (!campanhaId) {
+      throw new Error("⚠️ ID da campanha não retornado.");
+    }
+
+    // ✅ 2. Finalizar campanha
+    const finalizarResponse = await fetch(`${API_BASE}/finalizar-campanha`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: campanhaId })
     });
 
-    const finalizarData = await finalizarResponse.json();
-    if (!finalizarResponse.ok) throw new Error("Erro ao finalizar campanha");
+    if (!finalizarResponse.ok) {
+      const err = await finalizarResponse.json();
+      throw new Error(`Erro ao finalizar: ${err.error || finalizarResponse.statusText}`);
+    }
 
     alert("✅ Campanha finalizada com sucesso!");
-
-    // Redirecionar para "Minhas Campanhas"
     window.location.href = "/minhas-campanhas.html";
 
   } catch (err) {
-    console.error(err);
-    alert("❌ Falha ao salvar/finalizar campanha.");
+    console.error("❌ Erro na finalização:", err);
+    alert(`❌ Falha ao salvar/finalizar campanha: ${err.message}`);
   }
 }
-
-
-    
+   
     
 document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
